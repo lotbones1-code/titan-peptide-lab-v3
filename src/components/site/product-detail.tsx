@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -84,15 +85,14 @@ export function ProductDetail({ product }: { product: Product }) {
                 colorFrom="#10b981"
                 colorTo="#6366f1"
               />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="flex h-48 w-48 items-center justify-center rounded-3xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/10 to-teal-500/5 text-6xl font-bold text-emerald-400 shadow-2xl shadow-emerald-500/30">
-                  {product.name
-                    .split(" ")
-                    .map((w) => w[0])
-                    .slice(0, 2)
-                    .join("")}
-                </div>
-              </div>
+              <Image
+                src={product.image}
+                alt={product.name}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
             </div>
             {/* Trust badges below image */}
             <div className="mt-4 grid grid-cols-3 gap-3">

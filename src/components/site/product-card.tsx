@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BorderBeam } from "@/components/ui/border-beam";
@@ -56,16 +57,13 @@ export function ProductCard({
 
       {/* Image area */}
       <div className="relative aspect-square w-full overflow-hidden bg-gradient-to-br from-zinc-900 to-black">
-        <div className="absolute inset-0 flex items-center justify-center">
-          {/* Fallback glyph — replace with real images */}
-          <div className="flex h-32 w-32 items-center justify-center rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/10 to-teal-500/5 text-4xl font-bold text-emerald-400 shadow-2xl shadow-emerald-500/20">
-            {product.name
-              .split(" ")
-              .map((w) => w[0])
-              .slice(0, 2)
-              .join("")}
-          </div>
-        </div>
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+        />
         {/* Spotlight on hover */}
         <div
           aria-hidden
