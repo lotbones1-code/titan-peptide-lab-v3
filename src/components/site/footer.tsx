@@ -22,23 +22,30 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-5">
-            <div className="grid grid-cols-2 gap-8">
+            <div className="grid grid-cols-3 gap-8">
               <FooterCol
                 label="Catalog"
                 links={[
-                  { href: "#nasal-sprays", label: "Nasal sprays" },
-                  { href: "#all-products", label: "Injectables" },
-                  { href: "#quality", label: "Process" },
-                  { href: "#faq", label: "FAQ" },
+                  { href: "/#nasal-sprays", label: "Nasal sprays" },
+                  { href: "/#all-products", label: "Injectables" },
+                  { href: "/#quality", label: "Process" },
+                  { href: "/#faq", label: "FAQ" },
                 ]}
               />
               <FooterCol
-                label="The fine print"
+                label="Research"
                 links={[
-                  { href: "#", label: "For research use" },
-                  { href: "#", label: "Shipping" },
-                  { href: "#", label: "Returns" },
-                  { href: "#", label: "Terms" },
+                  { href: "/about", label: "About" },
+                  { href: "/lab-testing", label: "Lab testing" },
+                  { href: "/research", label: "Research hub" },
+                ]}
+              />
+              <FooterCol
+                label="Support"
+                links={[
+                  { href: "/shipping-faq", label: "Shipping & payment" },
+                  { href: "/shipping-faq#returns", label: "Returns" },
+                  { href: "/contact", label: "Contact" },
                 ]}
               />
             </div>

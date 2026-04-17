@@ -34,6 +34,26 @@ const ACCENT: Record<
     ink: "text-[oklch(0.90_0.05_310)]",
     tone: "Stack",
   },
+  "bpc157-vial": {
+    surface: "bg-[oklch(0.26_0.05_180)]",
+    ink: "text-[oklch(0.88_0.04_180)]",
+    tone: "Recovery · Injectable",
+  },
+  "tb500-vial": {
+    surface: "bg-[oklch(0.28_0.05_220)]",
+    ink: "text-[oklch(0.90_0.04_220)]",
+    tone: "Regeneration",
+  },
+  "cjc-ipa": {
+    surface: "bg-[oklch(0.26_0.06_140)]",
+    ink: "text-[oklch(0.88_0.05_140)]",
+    tone: "GH Axis",
+  },
+  retatrutide: {
+    surface: "bg-[oklch(0.28_0.08_35)]",
+    ink: "text-[oklch(0.92_0.06_35)]",
+    tone: "Metabolic · New",
+  },
 };
 
 const NEUTRAL = {

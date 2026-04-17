@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { BorderBeam } from "@/components/ui/border-beam";
 import {
   Check,
   ChevronLeft,
@@ -79,12 +78,6 @@ export function ProductDetail({ product }: { product: Product }) {
           {/* Image */}
           <div className="relative">
             <div className="relative aspect-square overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-zinc-900 to-black">
-              <BorderBeam
-                size={300}
-                duration={14}
-                colorFrom="#10b981"
-                colorTo="#6366f1"
-              />
               <Image
                 src={product.image}
                 alt={product.name}

@@ -4,6 +4,7 @@ import { NasalSpraySection } from "@/components/site/nasal-spray-section";
 import { AllProductsSection } from "@/components/site/all-products-section";
 import { QualitySection } from "@/components/site/quality-section";
 import { FAQSection } from "@/components/site/faq-section";
+import { EmailCapture } from "@/components/site/email-capture";
 import { Footer } from "@/components/site/footer";
 
 export default function HomePage() {
@@ -14,6 +15,7 @@ export default function HomePage() {
         <Hero />
         <NasalSpraySection />
         <QualitySection />
+        <EmailCapture />
         <AllProductsSection />
         <FAQSection />
       </main>
