@@ -1,0 +1,17 @@
+{
+  "id": "tb500-vial",
+  "slug": "tb-500-vial",
+  "name": "TB-500 (Injectable Vial)",
+  "category": "injectable",
+  "price": 89.99,
+  "size": "5mg lyophilized",
+  "tagline": "Systemic recovery research",
+  "description": "Thymosin Beta-4 fragment. Used in tissue repair and recovery studies. Pairs well with BPC-157 protocols.",
+  "benefits": [
+    "Thymosin Beta-4 active fragment",
+    "Tissue regeneration research",
+    "99%+ HPLC purity",
+    "Ships with COA"
+  ],
+  "image": "/products/tb500-vial.png"
+}

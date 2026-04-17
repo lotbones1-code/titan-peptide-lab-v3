@@ -1,0 +1,19 @@
+{
+  "name": "Titan Peptide Lab",
+  "domain": "titanpeptidelab.com",
+  "tagline": "Research-grade nasal spray peptides.",
+  "description": "Research-grade nasal spray peptides with HPLC-verified purity, batch-matched COAs, and cold-chain shipping.",
+  "wallets": {
+    "btc": "bc1qkshtp26f3qjkcgfdr2275wed2e8wkw25tr7vsd",
+    "eth": "0x24c5Fe40f83ae20De82ae3637b66DE8B0e5Cd362",
+    "usdcErc": "0x24c5Fe40f83ae20De82ae3637b66DE8B0e5Cd362",
+    "sol": "DEHeTxWAhXhmPBMYr5orRXDMMF1vUZ8E2vjB4CHowLQM",
+    "usdcSol": "DEHeTxWAhXhmPBMYr5orRXDMMF1vUZ8E2vjB4CHowLQM"
+  },
+  "discountCodes": {
+    "FIRST10": { "percent": 10, "label": "10% off first order" },
+    "BULK15":  { "percent": 15, "label": "15% off 3+ items" },
+    "TITAN20": { "percent": 20, "label": "20% off $250+" },
+    "VIP25":   { "percent": 25, "label": "25% VIP access" }
+  }
+}

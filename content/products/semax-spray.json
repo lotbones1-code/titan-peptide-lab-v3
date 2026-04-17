@@ -1,0 +1,19 @@
+{
+  "id": "semax-spray",
+  "slug": "semax-nasal-spray",
+  "name": "Semax Nasal Spray",
+  "category": "nasal-spray",
+  "price": 59.99,
+  "compareAtPrice": 74.99,
+  "size": "15mL · 1mg/spray",
+  "tagline": "Cognitive performance & neuroprotection",
+  "description": "Heptapeptide nootropic. Upregulates BDNF, supports memory, focus, and neural recovery. Stacks cleanly with Selank for cognitive-emotional balance.",
+  "benefits": [
+    "Memory & learning",
+    "BDNF upregulation",
+    "Neural recovery",
+    "Stress resilience"
+  ],
+  "image": "/products/semax-spray.png",
+  "featured": true
+}

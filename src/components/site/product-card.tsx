@@ -1,138 +1,97 @@
-import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import type { Product } from "@/lib/products";
 
-// Per-product accent surface — breaks the "every card identical" template smell.
-// Keys to product.id; falls back to neutral graphite.
-const ACCENT: Record<
-  string,
-  { surface: string; ink: string; tone: string }
-> = {
-  "bpc157-spray": {
-    surface: "bg-[oklch(0.32_0.06_180)]",
-    ink: "text-[oklch(0.92_0.04_180)]",
-    tone: "Recovery",
-  },
-  "selank-spray": {
-    surface: "bg-[oklch(0.30_0.08_270)]",
-    ink: "text-[oklch(0.90_0.06_270)]",
-    tone: "Calm",
-  },
-  "semax-spray": {
-    surface: "bg-[oklch(0.34_0.10_55)]",
-    ink: "text-[oklch(0.92_0.06_55)]",
-    tone: "Cognition",
-  },
-  "pt141-spray": {
-    surface: "bg-[oklch(0.32_0.10_15)]",
-    ink: "text-[oklch(0.93_0.06_15)]",
-    tone: "Arousal",
-  },
-  "selank-semax-stack": {
-    surface: "bg-[oklch(0.28_0.06_310)]",
-    ink: "text-[oklch(0.90_0.05_310)]",
-    tone: "Stack",
-  },
-  "bpc157-vial": {
-    surface: "bg-[oklch(0.26_0.05_180)]",
-    ink: "text-[oklch(0.88_0.04_180)]",
-    tone: "Recovery · Injectable",
-  },
-  "tb500-vial": {
-    surface: "bg-[oklch(0.28_0.05_220)]",
-    ink: "text-[oklch(0.90_0.04_220)]",
-    tone: "Regeneration",
-  },
-  "cjc-ipa": {
-    surface: "bg-[oklch(0.26_0.06_140)]",
-    ink: "text-[oklch(0.88_0.05_140)]",
-    tone: "GH Axis",
-  },
-  retatrutide: {
-    surface: "bg-[oklch(0.28_0.08_35)]",
-    ink: "text-[oklch(0.92_0.06_35)]",
-    tone: "Metabolic · New",
-  },
-};
+export type ProductCardProduct = Pick<
+  Product,
+  | "id"
+  | "slug"
+  | "name"
+  | "price"
+  | "compareAtPrice"
+  | "size"
+  | "tagline"
+  | "benefits"
+  | "image"
+>;
 
-const NEUTRAL = {
-  surface: "bg-[oklch(0.22_0_0)]",
-  ink: "text-zinc-400",
-  tone: "Research",
-};
-
-export function ProductCard({ product }: { product: Product }) {
-  const accent = ACCENT[product.id] ?? NEUTRAL;
-
+export function ProductCard({
+  product,
+  variant = "default",
+}: {
+  product: ProductCardProduct;
+  variant?: "default" | "stack";
+}) {
   return (
-    <Link
-      href={`/products/${product.slug}`}
-      className="group block focus-visible:outline-none"
-      aria-label={`View ${product.name}`}
+    <article
+      className={cn(
+        "group relative flex h-full flex-col overflow-hidden rounded-lg border border-white/10 bg-[#0A0F0E] text-[#E8ECF0] transition duration-300 hover:-translate-y-0.5 hover:border-[#0F9F7A]",
+        variant === "stack" && "md:grid md:grid-cols-[280px_1fr]"
+      )}
     >
-      <article className="flex flex-col">
-        {/* Product surface — each gets its own color */}
+      <Link
+        href={`/products/${product.slug}`}
+        className="relative flex min-h-72 items-center justify-center overflow-hidden bg-[#101615] p-6 outline-none focus-visible:ring-2 focus-visible:ring-[#0F9F7A]"
+      >
         <div
-          className={`relative aspect-[4/5] overflow-hidden ${accent.surface} transition-[filter] duration-500 group-hover:brightness-110 group-focus-visible:ring-2 group-focus-visible:ring-[var(--signature)] group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-background`}
-        >
-          {/* Tone label, hand-set in mono */}
-          <div
-            className={`absolute left-5 top-5 z-10 font-mono text-[10px] uppercase tracking-[0.18em] ${accent.ink} opacity-80`}
+          aria-hidden
+          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_26%,rgba(15,159,122,0.16),transparent_42%)] opacity-70"
+        />
+        <Image
+          src={product.image}
+          alt={product.name}
+          width={260}
+          height={320}
+          className="relative h-60 w-auto object-contain transition duration-500 group-hover:-translate-y-1"
+        />
+      </Link>
+
+      <div className="flex flex-1 flex-col p-5">
+        <p className="font-mono text-xs uppercase text-[#7C8986]">
+          {product.size}
+        </p>
+        <h3 className="mt-3 text-2xl font-semibold leading-tight text-[#F3F7F6]">
+          {product.name}
+        </h3>
+        <p className="mt-3 text-sm leading-6 text-[#9FABAA]">
+          {product.tagline}
+        </p>
+
+        <ul className="mt-5 grid gap-2 text-sm leading-5 text-[#C4D0CC] opacity-0 transition duration-300 group-hover:opacity-100">
+          {product.benefits.slice(0, 3).map((benefit) => (
+            <li key={benefit} className="flex gap-2">
+              <span className="mt-2 size-1 rounded-[2px] bg-[#0F9F7A]" />
+              <span>{benefit}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-auto pt-6">
+          <div className="flex items-baseline gap-3">
+            <p className="text-2xl font-semibold text-[#F3F7F6]">
+              {formatPrice(product.price)}
+            </p>
+            {product.compareAtPrice ? (
+              <p className="text-sm text-[#66736F] line-through">
+                {formatPrice(product.compareAtPrice)}
+              </p>
+            ) : null}
+          </div>
+
+          <Button
+            asChild
+            className="mt-5 h-10 w-full rounded-lg bg-[#0F9F7A] text-[#06110E] hover:bg-[#28B890]"
           >
-            {accent.tone}
-          </div>
-
-          {/* Discount tag — only when real */}
-          {product.compareAtPrice && (
-            <div className="absolute right-5 top-5 z-10 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-50">
-              −
-              {Math.round(
-                ((product.compareAtPrice - product.price) /
-                  product.compareAtPrice) *
-                  100
-              )}
-              %
-            </div>
-          )}
-
-          {/* Product photo, mid-card so it floats */}
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-            className="object-contain object-center p-10 transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-          />
-
-          {/* Hairline footer with batch indicator */}
-          <div
-            className={`absolute bottom-0 left-0 right-0 flex items-end justify-between border-t border-white/10 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.18em] ${accent.ink} opacity-70`}
-          >
-            <span>{product.size.split("·")[0].trim()}</span>
-            <span>HPLC ≥99%</span>
-          </div>
+            <Link href={`/products/${product.slug}`}>Add to cart</Link>
+          </Button>
         </div>
-
-        {/* Caption block — editorial, not card */}
-        <div className="mt-5 flex items-start justify-between gap-4">
-          <div className="min-w-0 flex-1">
-            <h3 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em] text-zinc-50">
-              {product.name.replace(/ Nasal Spray$/i, "")}
-            </h3>
-            <p className="mt-1 text-sm text-zinc-400">{product.tagline}.</p>
-          </div>
-          <div className="flex flex-col items-end gap-2">
-            <div className="flex items-baseline gap-1.5 font-mono text-sm tabular-nums text-zinc-50">
-              <span className="text-[10px] uppercase tracking-[0.18em] text-zinc-500">
-                $
-              </span>
-              {product.price.toFixed(2)}
-            </div>
-            <ArrowUpRight className="h-4 w-4 text-zinc-500 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--signature)]" />
-          </div>
-        </div>
-      </article>
-    </Link>
+      </div>
+    </article>
   );
+}
+
+export function formatPrice(price: number) {
+  return Number.isInteger(price) ? `$${price}` : `$${price.toFixed(2)}`;
 }

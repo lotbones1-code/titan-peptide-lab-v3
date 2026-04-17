@@ -91,7 +91,7 @@ export function ProductDetail({ product }: { product: Product }) {
             <div className="mt-4 grid grid-cols-3 gap-3">
               <TrustChip icon={ShieldCheck} label="HPLC ≥99%" />
               <TrustChip icon={FileCheck2} label="Batch COA" />
-              <TrustChip icon={Truck} label="Free $150+" />
+              <TrustChip icon={Truck} label="Free shipping" />
             </div>
           </div>
 

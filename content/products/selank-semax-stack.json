@@ -1,0 +1,19 @@
+{
+  "id": "selank-semax-stack",
+  "slug": "selank-semax-stack",
+  "name": "Selank + Semax Stack",
+  "category": "stack",
+  "price": 105.0,
+  "compareAtPrice": 120.0,
+  "size": "2 × 15mL",
+  "tagline": "The legendary cognitive-emotional pair",
+  "description": "The classic dual-spray protocol. Selank for calm, Semax for sharp. Run them in tandem for balanced cognitive performance under load.",
+  "benefits": [
+    "Save $15 vs separate",
+    "Balanced stack",
+    "Most popular combo",
+    "Researcher favorite"
+  ],
+  "image": "/products/selank-semax-stack.png",
+  "bestseller": true
+}

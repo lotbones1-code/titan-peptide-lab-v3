@@ -1,23 +1,27 @@
-import { Header } from "@/components/site/header";
-import { Hero } from "@/components/site/hero";
-import { NasalSpraySection } from "@/components/site/nasal-spray-section";
-import { AllProductsSection } from "@/components/site/all-products-section";
-import { QualitySection } from "@/components/site/quality-section";
-import { FAQSection } from "@/components/site/faq-section";
-import { EmailCapture } from "@/components/site/email-capture";
+import { FAQ } from "@/components/site/faq";
 import { Footer } from "@/components/site/footer";
+import { Hero } from "@/components/site/hero";
+import { HowItWorks } from "@/components/site/how-it-works";
+import { Nav } from "@/components/site/nav";
+import { Newsletter } from "@/components/site/newsletter";
+import { PaymentMethods } from "@/components/site/payment-methods";
+import { Products } from "@/components/site/products";
+import { QualitySection } from "@/components/site/quality-section";
+import { TrustStrip } from "@/components/site/trust-strip";
 
 export default function HomePage() {
   return (
     <>
-      <Header />
+      <Nav />
       <main>
         <Hero />
-        <NasalSpraySection />
+        <TrustStrip />
+        <Products />
         <QualitySection />
-        <EmailCapture />
-        <AllProductsSection />
-        <FAQSection />
+        <HowItWorks />
+        <PaymentMethods />
+        <FAQ />
+        <Newsletter />
       </main>
       <Footer />
     </>

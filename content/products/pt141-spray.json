@@ -1,0 +1,19 @@
+{
+  "id": "pt141-spray",
+  "slug": "pt-141-nasal-spray",
+  "name": "PT-141 Nasal Spray",
+  "category": "nasal-spray",
+  "price": 69.99,
+  "compareAtPrice": 89.99,
+  "size": "10mL · 1mg/spray",
+  "tagline": "Libido & arousal research",
+  "description": "Bremelanotide (PT-141) — melanocortin receptor agonist. Acts on central nervous system pathways. Fast-onset, non-hormonal research compound.",
+  "benefits": [
+    "Central nervous system action",
+    "Non-hormonal",
+    "Fast onset (~45 min)",
+    "Unisex research use"
+  ],
+  "image": "/products/pt141-spray.png",
+  "featured": true
+}

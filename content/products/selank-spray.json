@@ -1,0 +1,20 @@
+{
+  "id": "selank-spray",
+  "slug": "selank-nasal-spray",
+  "name": "Selank Nasal Spray",
+  "category": "nasal-spray",
+  "price": 59.99,
+  "compareAtPrice": 74.99,
+  "size": "15mL · 750mcg/spray",
+  "tagline": "Calm focus without sedation",
+  "description": "Russian-developed anxiolytic nootropic peptide. Modulates GABA and serotonin pathways for calm, alert cognition. Trusted by researchers for anxiety and attention studies.",
+  "benefits": [
+    "Reduces anxiety",
+    "Enhances focus",
+    "Non-sedating",
+    "Mood stabilizing"
+  ],
+  "image": "/products/selank-spray.png",
+  "featured": true,
+  "bestseller": true
+}

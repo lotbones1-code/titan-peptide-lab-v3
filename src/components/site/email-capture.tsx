@@ -16,7 +16,7 @@ export function EmailCapture() {
           {/* Label */}
           <div className="lg:col-span-4">
             <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-500">
-              §03a &mdash; The Research List
+              §04a &mdash; The Research List
             </div>
             <p className="mt-6 max-w-xs text-sm leading-[1.7] text-zinc-400">
               New certificates, stack guides from the bench, and restock

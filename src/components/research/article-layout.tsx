@@ -26,11 +26,11 @@ export function ArticleLayout({
   children,
 }: ArticleLayoutProps) {
   return (
-    <article className="bg-stone-50 text-stone-900">
+    <article className="bg-[#F3F7F6] text-[#07100E]">
       {/* Masthead */}
-      <header className="border-b border-stone-200">
+      <header className="border-b border-[#07100E]/12">
         <div className="mx-auto max-w-5xl px-6 py-20 lg:py-28">
-          <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.18em] text-stone-500">
+          <div className="flex items-center gap-3 font-mono text-[10px] uppercase text-[#52635F]">
             <Link
               href="/research"
               className="transition-colors hover:text-[oklch(0.68_0.17_78)]"
@@ -41,18 +41,18 @@ export function ArticleLayout({
             <span>{eyebrow}</span>
           </div>
 
-          <h1 className="mt-8 font-serif text-[clamp(2.25rem,5.5vw,4.5rem)] font-normal leading-[0.98] tracking-[-0.02em] text-stone-900 text-pretty">
+          <h1 className="mt-8 font-serif text-4xl font-normal leading-none text-[#07100E] text-pretty md:text-6xl lg:text-7xl">
             {title}
           </h1>
 
-          <p className="mt-8 max-w-2xl font-serif text-xl leading-[1.55] text-stone-600 italic">
+          <p className="mt-8 max-w-2xl font-serif text-2xl italic leading-9 text-[#52635F]">
             {lede}
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-[0.18em] text-stone-500">
+          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] uppercase text-[#52635F]">
             <span>{readingTime}</span>
             <span aria-hidden>·</span>
-            <span>Updated {updated}</span>
+            <span>Published {updated}</span>
             <span aria-hidden>·</span>
             <span className="text-[oklch(0.68_0.17_78)]">
               For research use only
@@ -66,19 +66,19 @@ export function ArticleLayout({
         <div className="grid gap-12 lg:grid-cols-[220px_1fr] lg:gap-16">
           {/* TOC */}
           <aside className="lg:sticky lg:top-24 lg:self-start">
-            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-stone-500">
+            <div className="font-mono text-[10px] uppercase text-[#52635F]">
               Contents
             </div>
             <nav className="mt-5">
               <ol className="space-y-3 text-sm">
                 {toc.map((item, i) => (
                   <li key={item.id} className="flex gap-3">
-                    <span className="font-mono text-[10px] tabular-nums text-stone-400 pt-1">
+                    <span className="pt-1 font-mono text-[10px] tabular-nums text-[#7A8783]">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <a
                       href={`#${item.id}`}
-                      className="text-stone-700 leading-snug transition-colors hover:text-[oklch(0.68_0.17_78)]"
+                      className="leading-snug text-[#273632] transition-colors hover:text-[oklch(0.68_0.17_78)]"
                     >
                       {item.label}
                     </a>
@@ -92,7 +92,7 @@ export function ArticleLayout({
           <div className="max-w-prose">
             <div className="prose-research">{children}</div>
 
-            <div className="mt-20 border-t border-stone-300 pt-6 font-mono text-[10px] uppercase tracking-[0.18em] text-stone-500">
+            <div className="mt-20 border-t border-[#07100E]/16 pt-6 font-mono text-[10px] uppercase text-[#52635F]">
               End of entry — return to{" "}
               <Link
                 href="/research"
@@ -122,14 +122,14 @@ export function Section({
   return (
     <section id={id} className="mt-16 scroll-mt-24 first:mt-0">
       {kicker ? (
-        <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-stone-500">
+        <div className="font-mono text-[10px] uppercase text-[#52635F]">
           {kicker}
         </div>
       ) : null}
-      <h2 className="mt-3 font-serif text-3xl font-normal leading-tight text-stone-900 md:text-4xl">
+      <h2 className="mt-3 font-serif text-3xl font-normal leading-tight text-[#07100E] md:text-4xl">
         {title}
       </h2>
-      <div className="mt-6 space-y-5 text-[17px] leading-[1.75] text-stone-800">
+      <div className="mt-6 space-y-5 text-[17px] leading-[1.75] text-[#273632]">
         {children}
       </div>
     </section>
@@ -144,7 +144,7 @@ export function Gold({ children }: { children: ReactNode }) {
 
 export function PullNote({ children }: { children: ReactNode }) {
   return (
-    <aside className="my-10 border-l-2 border-[oklch(0.68_0.17_78)] bg-stone-100/60 px-6 py-5 font-serif text-lg italic leading-[1.6] text-stone-700">
+    <aside className="my-10 border-l-2 border-[oklch(0.68_0.17_78)] bg-white/70 px-6 py-5 font-serif text-lg italic leading-[1.6] text-[#273632]">
       {children}
     </aside>
   );
@@ -157,16 +157,16 @@ export function References({
 }) {
   return (
     <section id="references" className="mt-16 scroll-mt-24">
-      <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-stone-500">
+      <div className="font-mono text-[10px] uppercase text-[#52635F]">
         Bibliography
       </div>
-      <h2 className="mt-3 font-serif text-3xl font-normal leading-tight text-stone-900">
+      <h2 className="mt-3 font-serif text-3xl font-normal leading-tight text-[#07100E]">
         References
       </h2>
-      <ol className="mt-6 space-y-4 text-sm leading-[1.65] text-stone-700">
+      <ol className="mt-6 space-y-4 text-sm leading-[1.65] text-[#273632]">
         {items.map((r) => (
           <li key={r.n} className="grid grid-cols-[2rem_1fr] gap-3">
-            <span className="font-mono text-[11px] tabular-nums text-stone-500 pt-0.5">
+            <span className="pt-0.5 font-mono text-[11px] tabular-nums text-[#52635F]">
               [{String(r.n).padStart(2, "0")}]
             </span>
             {r.href ? (
@@ -195,19 +195,19 @@ export function FAQ({
 }) {
   return (
     <section id="faq" className="mt-16 scroll-mt-24">
-      <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-stone-500">
+      <div className="font-mono text-[10px] uppercase text-[#52635F]">
         Frequently asked
       </div>
-      <h2 className="mt-3 font-serif text-3xl font-normal leading-tight text-stone-900">
+      <h2 className="mt-3 font-serif text-3xl font-normal leading-tight text-[#07100E]">
         Research questions
       </h2>
-      <dl className="mt-8 divide-y divide-stone-300 border-y border-stone-300">
+      <dl className="mt-8 divide-y divide-[#07100E]/16 border-y border-[#07100E]/16">
         {items.map((it, i) => (
           <div key={i} className="py-6">
-            <dt className="font-serif text-xl leading-snug text-stone-900">
+            <dt className="font-serif text-xl leading-snug text-[#07100E]">
               {it.q}
             </dt>
-            <dd className="mt-3 text-[15px] leading-[1.7] text-stone-700">
+            <dd className="mt-3 text-[15px] leading-[1.7] text-[#273632]">
               {it.a}
             </dd>
           </div>
@@ -219,12 +219,12 @@ export function FAQ({
 
 export function Disclaimer() {
   return (
-    <div className="mt-16 border border-stone-300 bg-stone-100 p-6 text-sm leading-[1.7] text-stone-700">
-      <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-stone-500">
+    <div className="mt-16 border border-[#07100E]/16 bg-white/70 p-6 text-sm leading-[1.7] text-[#273632]">
+      <div className="font-mono text-[10px] uppercase text-[#52635F]">
         Disclaimer
       </div>
       <p className="mt-3">
-        <strong className="text-stone-900">
+        <strong className="text-[#07100E]">
           For research purposes only. Not for human consumption.
         </strong>{" "}
         This article is a literature summary written for qualified researchers

@@ -42,19 +42,19 @@ const SECTIONS = [
     label: "§S2",
     heading: "Payment",
     blurb:
-      "Crypto first, because it clears same day and removes a payment processor from the research supply chain. Wire and ACH available on orders over $500.",
+      "Crypto-only checkout, because it clears quickly and removes card processors from the research supply chain.",
     items: [
       {
         q: "Which cryptocurrencies do you accept?",
-        a: "BTC, ETH, USDC (ERC-20 and Solana), and SOL. Each invoice generates a single-use deposit address. Funds confirmed inside two confirmations; the order moves to fill immediately after.",
+        a: "BTC, ETH, USDC ERC-20, and SOL / USDC SPL. Use the wallet address or QR code shown at checkout; the order moves to fulfillment after payment confirmation.",
       },
       {
-        q: "Why crypto first?",
-        a: "Three reasons. One: it clears in minutes, so orders ship the same day. Two: no chargeback theatre &mdash; the price you see is the price you pay. Three: no card processor sitting between you, a research laboratory, and a legally-compliant product. Everyone ships to fewer problems.",
+        q: "Why crypto only?",
+        a: "It clears quickly, avoids card-processor freezes in this category, and keeps fulfillment tied to a confirmed on-chain transaction.",
       },
       {
         q: "Can I pay by card?",
-        a: "Not directly. Card processors in this category tend to freeze accounts and refuse terminal reactivation, which would compromise the laboratory&rsquo;s ability to fulfill the rest of the day&rsquo;s orders. Wire or ACH is available on request for orders above $500.",
+        a: "No. Checkout is crypto-only. Contact support before ordering if your lab requires a custom procurement path.",
       },
       {
         q: "What discount codes are active right now?",
