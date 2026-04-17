@@ -1,44 +1,50 @@
 import { ProductCard } from "./product-card";
 import { NASAL_SPRAYS } from "@/lib/products";
-import { Wind } from "lucide-react";
 
 export function NasalSpraySection() {
   return (
     <section
       id="nasal-sprays"
-      className="relative border-b border-white/5 py-24"
+      className="relative border-b border-white/8 py-24 lg:py-32"
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-40"
-        style={{
-          background:
-            "radial-gradient(ellipse 70% 40% at 50% 0%, rgba(16,185,129,0.08), transparent 60%)",
-        }}
-      />
-      <div className="relative mx-auto max-w-7xl px-6">
-        <div className="flex flex-col items-center text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3 py-1 text-xs font-medium text-emerald-300">
-            <Wind className="h-3.5 w-3.5" />
-            Primary format
+      <div className="mx-auto max-w-7xl px-6">
+        {/* Editorial section header — sidebound caption left, large heading right.
+            Breaks the centered "badge + title + subtitle" template pattern. */}
+        <header className="grid gap-x-12 gap-y-10 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-500">
+              §01 — Catalog
+            </div>
+            <p className="mt-6 max-w-xs text-sm leading-[1.7] text-zinc-400">
+              Four nasal sprays. Each ships with the chromatogram from its own
+              batch — printed, signed, dated. Not a representative one.
+            </p>
           </div>
-          <h2 className="mt-6 max-w-2xl text-balance text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
-            Nasal sprays.{" "}
-            <span className="text-zinc-500">The low-friction way in.</span>
-          </h2>
-          <p className="mt-5 max-w-2xl text-balance text-lg text-zinc-400">
-            No needles. No reconstitution. No guessing. Precision atomizers
-            deliver a consistent research dose every time.
-          </p>
-        </div>
+          <div className="lg:col-span-8">
+            <h2 className="font-serif text-[clamp(2.25rem,5.5vw,4.5rem)] font-normal leading-[0.98] tracking-[-0.02em] text-zinc-50 text-pretty">
+              Four sprays. One{" "}
+              <em className="text-[var(--signature)] not-italic">
+                certificate
+              </em>{" "}
+              per box.
+            </h2>
+          </div>
+        </header>
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {/* Asymmetric grid — first card spans wider on desktop to break monotony */}
+        <div className="mt-20 grid grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2 lg:grid-cols-3">
           {NASAL_SPRAYS.map((product, i) => (
-            <ProductCard
+            <div
               key={product.id}
-              product={product}
-              featured={i === 0 || i === 1}
-            />
+              className={
+                // Featured first card spans 2 columns on lg, others single
+                i === 0
+                  ? "md:col-span-2 lg:col-span-2"
+                  : "lg:col-span-1"
+              }
+            >
+              <ProductCard product={product} />
+            </div>
           ))}
         </div>
       </div>

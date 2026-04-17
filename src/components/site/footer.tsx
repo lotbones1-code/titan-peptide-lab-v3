@@ -1,78 +1,90 @@
 import Link from "next/link";
-import { Beaker } from "lucide-react";
-import { BRAND } from "@/lib/products";
+
+const YEAR = new Date().getFullYear();
 
 export function Footer() {
   return (
-    <footer className="py-16">
+    <footer className="border-t border-white/8 bg-[oklch(0.09_0.005_240)] pt-24 pb-12">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="grid gap-12 md:grid-cols-4">
-          <div className="md:col-span-2">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400 to-teal-600 shadow-lg shadow-emerald-500/20">
-                <Beaker className="h-4 w-4 text-white" />
-              </div>
-              <span className="text-sm font-semibold tracking-tight">
-                {BRAND.name}
-              </span>
-            </Link>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-zinc-500">
-              Research-grade peptides, HPLC-verified purity, batch-matched COA,
-              discreet shipping. Nasal sprays and injectables.
+        {/* Colophon-style masthead — big, editorial */}
+        <div className="grid gap-x-12 gap-y-16 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <h2 className="font-serif text-[clamp(2.5rem,6vw,5rem)] font-normal leading-[0.92] tracking-[-0.02em] text-zinc-50 text-pretty">
+              Titan Peptide
+              <br />
+              <em className="italic text-zinc-500">Laboratory</em>
+            </h2>
+            <p className="mt-8 max-w-md text-sm leading-[1.7] text-zinc-400">
+              Published from the laboratory. All compounds shipped for{" "}
+              <span className="text-zinc-200">in-vitro research use only</span>
+              , with the batch-matched certificate of analysis enclosed.
             </p>
           </div>
-          <div>
-            <h4 className="text-xs font-medium uppercase tracking-widest text-zinc-500">
-              Shop
-            </h4>
-            <ul className="mt-4 space-y-2 text-sm">
-              <li>
-                <Link
-                  href="#nasal-sprays"
-                  className="text-zinc-400 hover:text-white"
-                >
-                  Nasal Sprays
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#all-products"
-                  className="text-zinc-400 hover:text-white"
-                >
-                  All Peptides
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#quality"
-                  className="text-zinc-400 hover:text-white"
-                >
-                  Quality Standards
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-xs font-medium uppercase tracking-widest text-zinc-500">
-              Legal
-            </h4>
-            <ul className="mt-4 space-y-2 text-sm">
-              <li className="text-zinc-400">For research use only</li>
-              <li className="text-zinc-400">Not for human consumption</li>
-              <li className="text-zinc-400">Ship worldwide</li>
-            </ul>
+
+          <div className="lg:col-span-5">
+            <div className="grid grid-cols-2 gap-8">
+              <FooterCol
+                label="Catalog"
+                links={[
+                  { href: "#nasal-sprays", label: "Nasal sprays" },
+                  { href: "#all-products", label: "Injectables" },
+                  { href: "#quality", label: "Process" },
+                  { href: "#faq", label: "FAQ" },
+                ]}
+              />
+              <FooterCol
+                label="The fine print"
+                links={[
+                  { href: "#", label: "For research use" },
+                  { href: "#", label: "Shipping" },
+                  { href: "#", label: "Returns" },
+                  { href: "#", label: "Terms" },
+                ]}
+              />
+            </div>
           </div>
         </div>
-        <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-white/5 pt-8 md:flex-row md:items-center">
-          <p className="text-xs text-zinc-600">
-            © {new Date().getFullYear()} {BRAND.name}. All peptides sold for
-            in-vitro research purposes only.
-          </p>
-          <p className="text-xs text-zinc-600">
-            HPLC purity verified · COA in every order
-          </p>
+
+        {/* Colophon rule */}
+        <div className="mt-20 flex flex-col items-start justify-between gap-4 border-t border-zinc-900 pt-6 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-600 md:flex-row md:items-center">
+          <span>
+            © {YEAR} Titan Peptide Laboratory · Colophon set in Instrument
+            Serif &amp; Geist
+          </span>
+          <span>
+            <span className="text-[var(--signature)]">●</span> Shipping from
+            Reno, NV · 48 h turnaround
+          </span>
         </div>
       </div>
     </footer>
+  );
+}
+
+function FooterCol({
+  label,
+  links,
+}: {
+  label: string;
+  links: { href: string; label: string }[];
+}) {
+  return (
+    <div>
+      <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+        {label}
+      </div>
+      <ul className="mt-5 space-y-3 text-sm">
+        {links.map((l) => (
+          <li key={l.label}>
+            <Link
+              href={l.href}
+              className="text-zinc-300 transition-colors hover:text-zinc-50 focus-visible:outline-none focus-visible:text-zinc-50"
+            >
+              {l.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

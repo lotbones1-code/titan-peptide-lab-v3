@@ -1,63 +1,63 @@
-"use client";
-
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Beaker, ShoppingCart } from "lucide-react";
-import { BRAND } from "@/lib/products";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-white/5 bg-black/60 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400 to-teal-600 shadow-lg shadow-emerald-500/20 transition-transform group-hover:scale-110">
-            <Beaker className="h-4 w-4 text-white" />
-          </div>
-          <span className="text-sm font-semibold tracking-tight">
-            {BRAND.name}
+    <header className="sticky top-0 z-50 border-b border-white/8 bg-background/85 backdrop-blur-xl">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6">
+        {/* Wordmark — typography is the logo */}
+        <Link
+          href="/"
+          className="group flex items-baseline gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--signature)] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          aria-label="Titan Peptide Lab — home"
+        >
+          <span className="font-serif text-xl leading-none text-zinc-50">
+            Titan
+          </span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500 transition-colors group-hover:text-[var(--signature)]">
+            / Peptide Lab
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          <Link
-            href="#nasal-sprays"
-            className="text-sm text-zinc-400 transition-colors hover:text-white"
-          >
-            Nasal Sprays
-          </Link>
-          <Link
-            href="#all-products"
-            className="text-sm text-zinc-400 transition-colors hover:text-white"
-          >
-            All Peptides
-          </Link>
-          <Link
-            href="#quality"
-            className="text-sm text-zinc-400 transition-colors hover:text-white"
-          >
-            Quality
-          </Link>
-          <Link
-            href="#faq"
-            className="text-sm text-zinc-400 transition-colors hover:text-white"
-          >
-            FAQ
-          </Link>
+        {/* Nav — small, sentence-case, no decoration */}
+        <nav
+          aria-label="Primary"
+          className="hidden items-center gap-10 md:flex"
+        >
+          <NavLink href="#nasal-sprays">Catalog</NavLink>
+          <NavLink href="#quality">Process</NavLink>
+          <NavLink href="#all-products">Injectables</NavLink>
+          <NavLink href="#faq">FAQ</NavLink>
         </nav>
 
-        <div className="flex items-center gap-3">
-          <Button
-            asChild
-            size="sm"
-            className="bg-white text-black hover:bg-zinc-100"
-          >
-            <Link href="#nasal-sprays">
-              <ShoppingCart className="mr-1.5 h-3.5 w-3.5" />
-              Shop
-            </Link>
-          </Button>
-        </div>
+        {/* CTA — single primary, ties to signature color via subtle dot */}
+        <Link
+          href="#nasal-sprays"
+          className="group inline-flex items-center gap-2.5 rounded-full border border-white/15 px-4 py-1.5 text-xs text-zinc-200 transition-colors hover:border-[var(--signature)] hover:text-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--signature)] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        >
+          <span
+            aria-hidden
+            className="h-1.5 w-1.5 rounded-full bg-[var(--signature)] transition-transform group-hover:scale-110"
+          />
+          Browse catalog
+        </Link>
       </div>
     </header>
+  );
+}
+
+function NavLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className="text-sm text-zinc-400 transition-colors hover:text-zinc-50 focus-visible:outline-none focus-visible:text-zinc-50"
+    >
+      {children}
+    </Link>
   );
 }

@@ -1,142 +1,126 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { BorderBeam } from "@/components/ui/border-beam";
-import { NumberTicker } from "@/components/ui/number-ticker";
-import { AuroraText } from "@/components/ui/aurora-text";
-import { ShimmerButton } from "@/components/ui/shimmer-button";
-import { ArrowRight, ShieldCheck, FlaskConical, Truck } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-white/5">
-      {/* Ambient gradient */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-60"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 50% at 50% 0%, rgba(16,185,129,0.15), transparent 60%), radial-gradient(ellipse 60% 40% at 80% 30%, rgba(99,102,241,0.1), transparent 50%)",
-        }}
-      />
-      {/* Grid texture */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-        }}
-      />
+    <section className="relative border-b border-white/8">
+      <div className="mx-auto max-w-7xl px-6 pt-20 pb-24 lg:pt-28 lg:pb-32">
+        {/* Eyebrow */}
+        <div className="mb-12 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-500">
+          <span className="h-px w-8 bg-zinc-700" />
+          <span>Issue 04 — Spring 2026</span>
+          <span aria-hidden>·</span>
+          <span>Titan Peptide Laboratory</span>
+        </div>
 
-      <div className="relative mx-auto max-w-7xl px-6 pt-24 pb-20 lg:pt-32 lg:pb-28">
-        <div className="flex flex-col items-center text-center">
-          <Badge
-            variant="outline"
-            className="mb-6 border-emerald-500/20 bg-emerald-500/5 px-3 py-1 text-xs font-medium text-emerald-300 backdrop-blur"
-          >
-            <span className="mr-2 inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-            New: PT-141 Nasal Spray in stock
-          </Badge>
+        {/* Editorial 2-column. Headline left, spec column right. */}
+        <div className="grid gap-x-12 gap-y-16 lg:grid-cols-12">
+          {/* Headline column */}
+          <div className="lg:col-span-8">
+            <h1 className="font-serif text-[clamp(3rem,8vw,7.5rem)] font-normal leading-[0.92] tracking-[-0.02em] text-zinc-50 text-pretty">
+              Peptides,
+              <br />
+              measured by{" "}
+              <em className="text-[var(--signature)] not-italic">
+                milligram
+              </em>
+              ,<br />
+              shipped by{" "}
+              <em className="font-serif italic text-zinc-300">batch</em>.
+            </h1>
 
-          <h1 className="max-w-4xl text-balance text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl">
-            Research-grade peptides.{" "}
-            <AuroraText className="font-semibold">No needles.</AuroraText>
-            <br className="hidden md:block" />
-            <span className="text-zinc-400">No guesswork.</span>
-          </h1>
+            <p className="mt-10 max-w-xl text-base leading-[1.7] text-zinc-400">
+              Every order ships with the HPLC chromatogram from{" "}
+              <span className="text-zinc-200">its own batch</span> — not a
+              representative one. Read the certificate, then read the spray.
+              That&rsquo;s the whole pitch.
+            </p>
 
-          <p className="mt-8 max-w-2xl text-balance text-lg leading-relaxed text-zinc-400 md:text-xl">
-            Premium nasal spray peptides, HPLC-verified to ≥99% purity.
-            Batch-matched COAs in every order. Discreet shipping. The clean way
-            to run research protocols.
-          </p>
-
-          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
-            <Link href="#nasal-sprays">
-              <ShimmerButton
-                className="h-12 text-sm font-semibold"
-                shimmerColor="#10b981"
-                background="rgba(15, 159, 122, 1)"
+            <div className="mt-10 flex items-center gap-6">
+              <Link
+                href="#nasal-sprays"
+                className="group inline-flex items-center gap-2 rounded-full bg-[var(--signature)] px-6 py-3 text-sm font-medium text-[var(--signature-foreground)] transition-colors hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--signature)] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
-                <span className="flex items-center">
-                  Shop Nasal Sprays
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </span>
-              </ShimmerButton>
-            </Link>
-            <Button
-              asChild
-              variant="ghost"
-              size="lg"
-              className="h-12 text-sm text-zinc-300 hover:bg-white/5 hover:text-white"
-            >
-              <Link href="#quality">See our quality standards</Link>
-            </Button>
+                Browse the catalog
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+              <Link
+                href="#quality"
+                className="text-sm text-zinc-400 underline decoration-zinc-700 underline-offset-[6px] transition-colors hover:text-zinc-100 hover:decoration-zinc-400 focus-visible:outline-none focus-visible:text-zinc-100"
+              >
+                How we test
+              </Link>
+            </div>
           </div>
 
-          {/* Trust row */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-sm text-zinc-500">
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="h-4 w-4 text-emerald-400" />
-              <span>HPLC-verified ≥99%</span>
+          {/* Spec column — replaces fake stats card */}
+          <aside className="lg:col-span-4 lg:pt-4">
+            <div className="border-t border-zinc-800 pt-6">
+              <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+                Currently in stock
+              </div>
+              <ul className="mt-5 space-y-4 text-sm">
+                <SpecRow name="BPC-157 nasal" lot="TPL-2604-A" purity="99.4%" />
+                <SpecRow name="Selank nasal" lot="TPL-2604-B" purity="99.1%" />
+                <SpecRow name="Semax nasal" lot="TPL-2604-C" purity="99.3%" />
+                <SpecRow name="PT-141 nasal" lot="TPL-2604-D" purity="98.9%" />
+              </ul>
+              <div className="mt-6 border-t border-zinc-800 pt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+                <span className="text-[var(--signature)]">●</span> Ships within
+                48 hours · Cold chain available
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <FlaskConical className="h-4 w-4 text-emerald-400" />
-              <span>Batch-matched COA</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Truck className="h-4 w-4 text-emerald-400" />
-              <span>Free shipping over $150</span>
-            </div>
-          </div>
+          </aside>
         </div>
 
-        {/* Social proof card */}
-        <div className="relative mx-auto mt-20 max-w-4xl">
-          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-8 md:p-10 backdrop-blur">
-            <BorderBeam
-              size={200}
-              duration={12}
-              colorFrom="#10b981"
-              colorTo="#6366f1"
+        {/* Wide editorial image — proof element */}
+        <figure className="mt-24 overflow-hidden border border-white/8">
+          <div className="relative aspect-[16/7] w-full bg-zinc-900">
+            <Image
+              src="/products/bpc157-spray.png"
+              alt="BPC-157 nasal spray bottle, batch TPL-2604-A, photographed on neutral seamless"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center"
             />
-            <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-              <Stat value={2147} suffix="+" label="Orders shipped" />
-              <Stat value={99.2} suffix="%" label="Avg HPLC purity" />
-              <Stat value={4.9} suffix="/5" label="Verified reviews" decimals={1} />
-              <Stat value={48} suffix="h" label="Ship time" />
+            {/* Caption overlay */}
+            <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between bg-gradient-to-t from-black/60 to-transparent p-6 md:p-8">
+              <figcaption className="font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-300">
+                Plate 01 — BPC-157, 30 mg / 15 mL, atomizer head
+              </figcaption>
+              <div className="hidden font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-400 md:block">
+                Batch TPL-2604-A · HPLC 99.4%
+              </div>
             </div>
           </div>
-        </div>
+        </figure>
       </div>
     </section>
   );
 }
 
-function Stat({
-  value,
-  suffix,
-  label,
-  decimals = 0,
+function SpecRow({
+  name,
+  lot,
+  purity,
 }: {
-  value: number;
-  suffix?: string;
-  label: string;
-  decimals?: number;
+  name: string;
+  lot: string;
+  purity: string;
 }) {
   return (
-    <div className="flex flex-col items-center text-center">
-      <div className="flex items-baseline gap-0.5 text-3xl font-semibold tracking-tight text-white md:text-4xl">
-        <NumberTicker value={value} decimalPlaces={decimals} />
-        {suffix && <span>{suffix}</span>}
+    <li className="grid grid-cols-[1fr_auto] items-baseline gap-3 border-b border-zinc-900 pb-3">
+      <div>
+        <div className="text-zinc-100">{name}</div>
+        <div className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-zinc-500">
+          Lot {lot}
+        </div>
       </div>
-      <div className="mt-1 text-xs font-medium uppercase tracking-widest text-zinc-500">
-        {label}
+      <div className="font-mono text-xs tabular-nums text-[var(--signature)]">
+        {purity}
       </div>
-    </div>
+    </li>
   );
 }

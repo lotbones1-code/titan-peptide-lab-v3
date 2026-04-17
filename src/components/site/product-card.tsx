@@ -1,132 +1,118 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { BorderBeam } from "@/components/ui/border-beam";
-import { Check, ArrowUpRight, Zap } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import type { Product } from "@/lib/products";
 
-export function ProductCard({
-  product,
-  featured,
-}: {
-  product: Product;
-  featured?: boolean;
-}) {
-  const discount = product.compareAtPrice
-    ? Math.round(
-        ((product.compareAtPrice - product.price) / product.compareAtPrice) *
-          100
-      )
-    : 0;
+// Per-product accent surface — breaks the "every card identical" template smell.
+// Keys to product.id; falls back to neutral graphite.
+const ACCENT: Record<
+  string,
+  { surface: string; ink: string; tone: string }
+> = {
+  "bpc157-spray": {
+    surface: "bg-[oklch(0.32_0.06_180)]",
+    ink: "text-[oklch(0.92_0.04_180)]",
+    tone: "Recovery",
+  },
+  "selank-spray": {
+    surface: "bg-[oklch(0.30_0.08_270)]",
+    ink: "text-[oklch(0.90_0.06_270)]",
+    tone: "Calm",
+  },
+  "semax-spray": {
+    surface: "bg-[oklch(0.34_0.10_55)]",
+    ink: "text-[oklch(0.92_0.06_55)]",
+    tone: "Cognition",
+  },
+  "pt141-spray": {
+    surface: "bg-[oklch(0.32_0.10_15)]",
+    ink: "text-[oklch(0.93_0.06_15)]",
+    tone: "Arousal",
+  },
+  "selank-semax-stack": {
+    surface: "bg-[oklch(0.28_0.06_310)]",
+    ink: "text-[oklch(0.90_0.05_310)]",
+    tone: "Stack",
+  },
+};
+
+const NEUTRAL = {
+  surface: "bg-[oklch(0.22_0_0)]",
+  ink: "text-zinc-400",
+  tone: "Research",
+};
+
+export function ProductCard({ product }: { product: Product }) {
+  const accent = ACCENT[product.id] ?? NEUTRAL;
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-white/[0.01] transition-all hover:border-emerald-500/30">
-      {featured && (
-        <BorderBeam
-          size={120}
-          duration={10}
-          colorFrom="#10b981"
-          colorTo="#6366f1"
-        />
-      )}
-
-      {/* Top badges */}
-      <div className="absolute top-3 left-3 right-3 z-10 flex items-start justify-between">
-        <div className="flex flex-col gap-1.5">
-          {product.bestseller && (
-            <Badge className="bg-amber-500/10 text-amber-300 border border-amber-500/20 text-[10px] uppercase tracking-wider">
-              <Zap className="mr-1 h-3 w-3" />
-              Bestseller
-            </Badge>
-          )}
-          {product.newArrival && (
-            <Badge className="bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 text-[10px] uppercase tracking-wider">
-              New arrival
-            </Badge>
-          )}
-        </div>
-        {discount > 0 && (
-          <Badge className="bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 text-[10px] font-bold">
-            −{discount}%
-          </Badge>
-        )}
-      </div>
-
-      {/* Image area */}
-      <div className="relative aspect-square w-full overflow-hidden bg-gradient-to-br from-zinc-900 to-black">
-        <Image
-          src={product.image}
-          alt={product.name}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        {/* Spotlight on hover */}
+    <Link
+      href={`/products/${product.slug}`}
+      className="group block focus-visible:outline-none"
+      aria-label={`View ${product.name}`}
+    >
+      <article className="flex flex-col">
+        {/* Product surface — each gets its own color */}
         <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          style={{
-            background:
-              "radial-gradient(circle at 50% 50%, rgba(16,185,129,0.15), transparent 60%)",
-          }}
-        />
-      </div>
-
-      {/* Content */}
-      <div className="p-5">
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex-1">
-            <h3 className="text-base font-semibold text-white">
-              {product.name}
-            </h3>
-            <p className="mt-0.5 text-xs text-zinc-500">{product.size}</p>
-          </div>
-        </div>
-
-        <p className="mt-3 text-sm text-zinc-400 leading-relaxed">
-          {product.tagline}
-        </p>
-
-        <ul className="mt-4 space-y-1.5">
-          {product.benefits.slice(0, 3).map((b) => (
-            <li
-              key={b}
-              className="flex items-start gap-2 text-xs text-zinc-400"
-            >
-              <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-emerald-400" />
-              <span>{b}</span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-5 flex items-end justify-between">
-          <div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-semibold tracking-tight text-white">
-                ${product.price}
-              </span>
-              {product.compareAtPrice && (
-                <span className="text-sm text-zinc-600 line-through">
-                  ${product.compareAtPrice}
-                </span>
-              )}
-            </div>
-          </div>
-          <Button
-            asChild
-            size="sm"
-            className="bg-white text-black hover:bg-emerald-400 hover:text-black"
+          className={`relative aspect-[4/5] overflow-hidden ${accent.surface} transition-[filter] duration-500 group-hover:brightness-110 group-focus-visible:ring-2 group-focus-visible:ring-[var(--signature)] group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-background`}
+        >
+          {/* Tone label, hand-set in mono */}
+          <div
+            className={`absolute left-5 top-5 z-10 font-mono text-[10px] uppercase tracking-[0.18em] ${accent.ink} opacity-80`}
           >
-            <Link href={`/products/${product.slug}`}>
-              Buy
-              <ArrowUpRight className="ml-1 h-3.5 w-3.5" />
-            </Link>
-          </Button>
+            {accent.tone}
+          </div>
+
+          {/* Discount tag — only when real */}
+          {product.compareAtPrice && (
+            <div className="absolute right-5 top-5 z-10 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-50">
+              −
+              {Math.round(
+                ((product.compareAtPrice - product.price) /
+                  product.compareAtPrice) *
+                  100
+              )}
+              %
+            </div>
+          )}
+
+          {/* Product photo, mid-card so it floats */}
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+            className="object-contain object-center p-10 transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          />
+
+          {/* Hairline footer with batch indicator */}
+          <div
+            className={`absolute bottom-0 left-0 right-0 flex items-end justify-between border-t border-white/10 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.18em] ${accent.ink} opacity-70`}
+          >
+            <span>{product.size.split("·")[0].trim()}</span>
+            <span>HPLC ≥99%</span>
+          </div>
         </div>
-      </div>
-    </div>
+
+        {/* Caption block — editorial, not card */}
+        <div className="mt-5 flex items-start justify-between gap-4">
+          <div className="min-w-0 flex-1">
+            <h3 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em] text-zinc-50">
+              {product.name.replace(/ Nasal Spray$/i, "")}
+            </h3>
+            <p className="mt-1 text-sm text-zinc-400">{product.tagline}.</p>
+          </div>
+          <div className="flex flex-col items-end gap-2">
+            <div className="flex items-baseline gap-1.5 font-mono text-sm tabular-nums text-zinc-50">
+              <span className="text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+                $
+              </span>
+              {product.price.toFixed(2)}
+            </div>
+            <ArrowUpRight className="h-4 w-4 text-zinc-500 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--signature)]" />
+          </div>
+        </div>
+      </article>
+    </Link>
   );
 }
