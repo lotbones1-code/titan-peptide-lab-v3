@@ -44,8 +44,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark h-full antialiased ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
-      style={{ colorScheme: "dark" }}
+      className={`h-full antialiased ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
+      style={{ colorScheme: "light" }}
     >
       <body className="min-h-full bg-background text-foreground font-sans">
         <Grain />

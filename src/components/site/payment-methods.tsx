@@ -44,39 +44,39 @@ const CHAINS: Chain[] = [
 const STEPS = [
   {
     icon: PackageCheck,
-    title: "Pick product",
-    body: "Choose the nasal spray or stack and confirm the order total.",
+    title: "Choose product",
+    body: "Select the nasal spray or stack, then confirm the order total.",
   },
   {
     icon: Send,
     title: "Send crypto",
-    body: "Use BTC, ETH, USDC ERC-20, or SOL / USDC SPL at checkout.",
+    body: "Use BTC, ETH, USDC ERC-20, SOL, or USDC SPL on the selected chain.",
   },
   {
     icon: FileCheck2,
-    title: "Get COA + tracking",
-    body: "Manual fulfillment within 24h with batch COA and shipping tracking.",
+    title: "Receive confirmation",
+    body: "Manual review, batch COA, and tracking are sent after payment clears.",
   },
 ];
 
 export function PaymentMethods() {
   return (
-    <section className="border-b border-white/10 bg-[#080C0B] py-20 lg:py-28">
+    <section className="border-b border-[#dde4da] bg-[linear-gradient(180deg,#eef4ef_0%,#edf2eb_100%)] py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <Reveal>
           <div className="grid gap-8 lg:grid-cols-[0.42fr_0.58fr] lg:items-end">
             <div>
-              <p className="font-mono text-xs uppercase text-[#77E1C3]">
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#60736b]">
                 Crypto checkout
               </p>
-              <h2 className="mt-4 text-4xl font-semibold leading-tight text-[#F3F7F6] md:text-5xl">
-                Clear payment path. No card rails.
+              <h2 className="mt-4 max-w-xl font-serif text-[clamp(2.5rem,4.5vw,4.3rem)] leading-[0.96] tracking-[-0.04em] text-[#13211c]">
+                A payment flow that feels orderly, not improvised.
               </h2>
             </div>
-            <p className="max-w-2xl text-lg leading-8 text-[#9FABAA]">
-              Checkout is crypto-only. Send payment on the selected chain, then
-              receive manual order confirmation, the batch-matched COA, and
-              tracking once packed.
+            <p className="max-w-2xl text-lg leading-8 text-[#55645d]">
+              It is still crypto-only, but the presentation should be clearer,
+              calmer, and more premium. The point is reducing hesitation before
+              the buyer ever sees a wallet string.
             </p>
           </div>
         </Reveal>
@@ -84,17 +84,17 @@ export function PaymentMethods() {
         <div className="mt-12 grid gap-4 lg:grid-cols-3">
           {STEPS.map(({ icon: Icon, title, body }, index) => (
             <Reveal key={title} delay={index * 0.04}>
-              <div className="h-full rounded-lg border border-white/10 bg-white/[0.04] p-6">
+              <div className="h-full rounded-[1.5rem] border border-[#d8dfd7] bg-white/84 p-6 shadow-[0_18px_50px_-38px_rgba(19,33,28,0.3)]">
                 <div className="flex items-center justify-between">
-                  <Icon className="size-6 text-[#77E1C3]" />
-                  <span className="font-mono text-xs text-[#66736F]">
-                    0{index + 1}
+                  <span className="grid size-11 place-items-center rounded-full bg-[#edf4ef] text-[#2d7b62]">
+                    <Icon className="size-5" />
                   </span>
+                  <span className="font-mono text-xs text-[#7a8680]">0{index + 1}</span>
                 </div>
-                <h3 className="mt-8 text-2xl font-semibold text-[#F3F7F6]">
+                <h3 className="mt-8 font-serif text-[1.9rem] leading-[1.02] tracking-[-0.03em] text-[#13211c]">
                   {title}
                 </h3>
-                <p className="mt-3 text-sm leading-6 text-[#9FABAA]">{body}</p>
+                <p className="mt-3 text-sm leading-7 text-[#596761]">{body}</p>
               </div>
             </Reveal>
           ))}
@@ -103,15 +103,13 @@ export function PaymentMethods() {
         <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {CHAINS.map((chain, index) => (
             <Reveal key={chain.key} delay={index * 0.035}>
-              <div className="h-full rounded-lg border border-white/10 bg-[#101615] p-5">
+              <div className="h-full rounded-[1.5rem] border border-[#d8dfd7] bg-[linear-gradient(180deg,#fffdf9_0%,#f4efe7_100%)] p-5 shadow-[0_18px_50px_-38px_rgba(19,33,28,0.28)]">
                 <div className="flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
                     <ChainLogo chain={chain.key} />
                     <div>
-                      <h3 className="font-semibold text-[#F3F7F6]">
-                        {chain.label}
-                      </h3>
-                      <p className="text-sm text-[#7C8986]">{chain.asset}</p>
+                      <h3 className="font-medium text-[#13211c]">{chain.label}</h3>
+                      <p className="text-sm text-[#66746d]">{chain.asset}</p>
                     </div>
                   </div>
                   <img
@@ -120,10 +118,10 @@ export function PaymentMethods() {
                     width={86}
                     height={86}
                     loading="lazy"
-                    className="rounded-lg border border-white/10 bg-white p-1"
+                    className="rounded-xl border border-[#d8dfd7] bg-white p-1"
                   />
                 </div>
-                <p className="mt-5 break-all font-mono text-[11px] leading-5 text-[#9FABAA]">
+                <p className="mt-5 break-all font-mono text-[11px] leading-5 text-[#5c6a63]">
                   {chain.address}
                 </p>
               </div>
@@ -132,9 +130,9 @@ export function PaymentMethods() {
         </div>
 
         <Reveal delay={0.08}>
-          <p className="mt-8 rounded-lg border border-[#0F9F7A]/25 bg-[#0F9F7A]/10 p-4 text-sm leading-6 text-[#CFE7DF]">
-            Manual order fulfillment within 24h. COA matched to your batch.
-            Shipping tracking is sent after payment confirmation and packing.
+          <p className="mt-8 rounded-[1.35rem] border border-[#d3ddd5] bg-white/75 p-4 text-sm leading-7 text-[#33423b] shadow-sm">
+            Manual review within 24 hours, batch-matched COA included, tracking
+            sent after payment confirmation and packing.
           </p>
         </Reveal>
       </div>
@@ -149,7 +147,7 @@ function qrUrl(value: string) {
 function ChainLogo({ chain }: { chain: string }) {
   if (chain === "btc") {
     return (
-      <span className="grid size-11 place-items-center rounded-lg bg-[#F7931A] text-lg font-semibold text-white">
+      <span className="grid size-11 place-items-center rounded-full bg-[#F7931A] text-lg font-semibold text-white">
         ₿
       </span>
     );
@@ -157,7 +155,7 @@ function ChainLogo({ chain }: { chain: string }) {
 
   if (chain === "eth") {
     return (
-      <span className="grid size-11 place-items-center rounded-lg bg-[#DDE4FF]">
+      <span className="grid size-11 place-items-center rounded-full bg-[#E3E8FF]">
         <svg viewBox="0 0 32 32" aria-hidden className="size-7">
           <path d="M16 2 7 16.4 16 21l9-4.6L16 2Z" fill="#627EEA" />
           <path d="M7 18.1 16 30l9-11.9-9 4.6-9-4.6Z" fill="#3C3C3D" />
@@ -168,14 +166,14 @@ function ChainLogo({ chain }: { chain: string }) {
 
   if (chain === "usdcErc") {
     return (
-      <span className="grid size-11 place-items-center rounded-lg bg-[#2775CA] text-sm font-semibold text-white">
+      <span className="grid size-11 place-items-center rounded-full bg-[#2775CA] text-sm font-semibold text-white">
         USDC
       </span>
     );
   }
 
   return (
-    <span className="grid size-11 place-items-center rounded-lg bg-[#101615]">
+    <span className="grid size-11 place-items-center rounded-full bg-[#13211c]">
       <svg viewBox="0 0 40 40" aria-hidden className="size-8">
         <path d="M9 12h22l-4 4H5l4-4Z" fill="#00FFA3" />
         <path d="M9 18h22l-4 4H5l4-4Z" fill="#DC1FFF" />

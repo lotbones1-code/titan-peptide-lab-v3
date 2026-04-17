@@ -2,22 +2,22 @@ const STEPS = [
   {
     n: "01",
     title: "Lot intake",
-    body: "Every nasal spray batch is assigned a Titan lot code before fill. That lot code follows the bottle, internal record, certificate, and checkout note.",
+    body: "Every nasal spray batch gets a Titan lot code before fill. That code stays tied to the bottle, internal record, certificate, and checkout reference.",
   },
   {
     n: "02",
     title: "HPLC purity screen",
-    body: "Release threshold is HPLC purity of at least 99%. Chromatogram, method, test date, and reviewer initials are retained for each lot.",
+    body: "Release threshold is HPLC purity of at least 99%. Chromatogram, method, test date, and reviewer initials stay attached to each lot record.",
   },
   {
     n: "03",
-    title: "QR certificate match",
-    body: "The QR on the certificate resolves to the same lot code printed on the order record. No representative COAs are substituted across batches.",
+    title: "COA match",
+    body: "The certificate references the exact same lot carried through the order workflow. No representative COAs get swapped across batches.",
   },
   {
     n: "04",
     title: "Cold-chain dispatch",
-    body: "Orders are packed for temperature control, then manually fulfilled with tracking and the matching certificate within 24 hours.",
+    body: "Liquid orders are packed for temperature control, fulfilled manually, and sent with tracking plus the matching certificate within 24 hours.",
   },
 ];
 
@@ -32,29 +32,29 @@ export function QualitySection() {
   return (
     <section
       id="quality"
-      className="border-b border-white/10 bg-[#E8ECF0] py-20 text-[#07100E] lg:py-28"
+      className="border-b border-[#dde4da] bg-[linear-gradient(180deg,#fffdfa_0%,#f5f0e8_100%)] py-20 text-[#13211c] lg:py-28"
     >
       <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-6 lg:grid-cols-[0.42fr_0.58fr] lg:px-8">
         <div className="lg:sticky lg:top-24 lg:self-start">
-          <p className="font-mono text-xs uppercase text-[#426158]">
+          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6c7a73]">
             Quality system
           </p>
-          <h2 className="mt-5 max-w-lg text-4xl font-semibold leading-tight md:text-5xl">
-            How purity proof stays attached to the bottle.
+          <h2 className="mt-5 max-w-lg font-serif text-[clamp(2.6rem,4.8vw,4.7rem)] leading-[0.96] tracking-[-0.04em]">
+            The certificate stays attached to the bottle, not just the brand.
           </h2>
-          <p className="mt-5 max-w-md text-base leading-7 text-[#52635F]">
-            The quality workflow is built around batch identity. The compound,
-            certificate, QR lookup, and shipment record all point back to the
-            same lot.
+          <p className="mt-5 max-w-md text-base leading-8 text-[#55645d]">
+            The whole point of the workflow is keeping batch identity intact.
+            Compound, certificate, QR lookup, and shipping note all resolve to
+            the same lot instead of a generic promise page.
           </p>
 
-          <div className="mt-10 grid grid-cols-2 border border-[#07100E]/12">
+          <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-[1.5rem] border border-[#d9e0d7] bg-[#d9e0d7] shadow-sm">
             {METRICS.map(([value, label]) => (
-              <div key={label} className="border-[#07100E]/12 p-5 odd:border-r [&:nth-child(-n+2)]:border-b">
-                <p className="font-serif text-4xl italic leading-none text-[#07100E]">
+              <div key={label} className="bg-white/88 p-5">
+                <p className="font-serif text-4xl italic leading-none text-[#13211c]">
                   {value}
                 </p>
-                <p className="mt-2 text-sm leading-5 text-[#52635F]">{label}</p>
+                <p className="mt-2 text-sm leading-5 text-[#55645d]">{label}</p>
               </div>
             ))}
           </div>
@@ -64,16 +64,14 @@ export function QualitySection() {
           {STEPS.map((step) => (
             <li
               key={step.n}
-              className="grid gap-6 rounded-lg border border-[#07100E]/12 bg-white/55 p-6 sm:grid-cols-[72px_1fr]"
+              className="grid gap-6 rounded-[1.5rem] border border-[#d8dfd7] bg-white/82 p-6 shadow-[0_18px_50px_-38px_rgba(19,33,28,0.32)] sm:grid-cols-[88px_1fr]"
             >
-              <span className="font-mono text-sm text-[#0F9F7A]">
-                {step.n}
-              </span>
+              <span className="font-mono text-sm text-[#2d7b62]">{step.n}</span>
               <div>
-                <h3 className="text-2xl font-semibold leading-tight">
+                <h3 className="font-serif text-[2rem] leading-[1.02] tracking-[-0.03em]">
                   {step.title}
                 </h3>
-                <p className="mt-3 max-w-2xl text-base leading-7 text-[#52635F]">
+                <p className="mt-3 max-w-2xl text-base leading-7 text-[#55645d]">
                   {step.body}
                 </p>
               </div>

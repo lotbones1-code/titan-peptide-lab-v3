@@ -31,25 +31,25 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-[#060908] py-16 text-[#E8ECF0]">
+    <footer className="border-t border-[#dde4da] bg-[linear-gradient(180deg,#f3efe8_0%,#ece6dc_100%)] py-16 text-[#13211c]">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        <div className="grid gap-12 border-b border-white/10 pb-12 lg:grid-cols-[1.25fr_2fr]">
+        <div className="grid gap-12 border-b border-[#d9e0d7] pb-12 lg:grid-cols-[1.25fr_2fr]">
           <div>
             <Link
               href="/"
-              className="font-mono text-xs uppercase text-[#F3F7F6] outline-none hover:text-white focus-visible:text-white"
+              className="font-serif text-[1.7rem] leading-none tracking-[-0.03em] text-[#13211c] outline-none hover:opacity-80 focus-visible:opacity-80"
             >
               {BRAND.name}
             </Link>
-            <p className="mt-5 max-w-sm text-base leading-7 text-[#9FABAA]">
-              Research-grade nasal spray peptides with HPLC-verified purity,
-              batch-matched COAs, and crypto-only fulfillment.
+            <p className="mt-5 max-w-sm text-base leading-8 text-[#5c6a63]">
+              Premium nasal spray peptides with lot-matched COAs, cleaner
+              checkout language, and a calmer trust-building experience.
             </p>
 
             <form className="mt-8 max-w-md">
               <label
                 htmlFor="footer-email"
-                className="font-mono text-xs uppercase text-[#7C8986]"
+                className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6c7a73]"
               >
                 Research notes
               </label>
@@ -58,11 +58,11 @@ export function Footer() {
                   id="footer-email"
                   type="email"
                   placeholder="email@lab.org"
-                  className="h-11 min-w-0 flex-1 rounded-lg border border-white/10 bg-white/[0.04] px-3 text-sm text-white outline-none placeholder:text-[#66736F] focus:border-[#0F9F7A]"
+                  className="h-11 min-w-0 flex-1 rounded-full border border-[#cdd7ce] bg-white px-4 text-sm text-[#13211c] outline-none placeholder:text-[#7a8680] focus:border-[#2d7b62]"
                 />
                 <button
                   type="submit"
-                  className="h-11 rounded-lg bg-[#E8ECF0] px-4 text-sm font-medium text-[#06110E] hover:bg-white"
+                  className="h-11 rounded-full bg-[#1e6f58] px-5 text-sm font-medium text-[#f8fbf8] hover:bg-[#175946]"
                 >
                   Join
                 </button>
@@ -78,11 +78,11 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="grid gap-8 border-b border-white/10 py-8 lg:grid-cols-[0.35fr_0.65fr]">
-          <p className="font-mono text-xs uppercase text-[#7C8986]">
+        <div className="grid gap-8 border-b border-[#d9e0d7] py-8 lg:grid-cols-[0.35fr_0.65fr]">
+          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6c7a73]">
             Wallet addresses
           </p>
-          <dl className="grid gap-3 text-[11px] leading-5 text-[#8E9C98] md:grid-cols-2">
+          <dl className="grid gap-3 text-[11px] leading-5 text-[#5d6a64] md:grid-cols-2">
             <WalletRow label="BTC" value={WALLETS.btc} />
             <WalletRow label="ETH" value={WALLETS.eth} />
             <WalletRow label="USDC ERC-20" value={WALLETS.usdcErc} />
@@ -90,7 +90,7 @@ export function Footer() {
           </dl>
         </div>
 
-        <div className="flex flex-col gap-4 pt-8 text-sm leading-6 text-[#7C8986] lg:flex-row lg:items-start lg:justify-between">
+        <div className="flex flex-col gap-4 pt-8 text-sm leading-6 text-[#617069] lg:flex-row lg:items-start lg:justify-between">
           <p>© 2026 {BRAND.name}. {BRAND.domain}</p>
           <p className="max-w-3xl">
             Products are sold for laboratory research purposes only. Not for
@@ -112,13 +112,15 @@ function FooterColumn({
 }) {
   return (
     <div>
-      <h3 className="font-mono text-xs uppercase text-[#F3F7F6]">{title}</h3>
+      <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#495850]">
+        {title}
+      </h3>
       <ul className="mt-4 space-y-3">
         {links.map(([label, href]) => (
           <li key={`${title}-${label}`}>
             <Link
               href={href}
-              className="text-sm text-[#9FABAA] outline-none transition-colors hover:text-[#E8ECF0] focus-visible:text-[#E8ECF0]"
+              className="text-sm text-[#5f6e67] outline-none transition-colors hover:text-[#13211c] focus-visible:text-[#13211c]"
             >
               {label}
             </Link>
@@ -132,8 +134,8 @@ function FooterColumn({
 function WalletRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="grid gap-1">
-      <dt className="font-mono uppercase text-[#66736F]">{label}</dt>
-      <dd className="break-all font-mono text-[#AAB7B3]">{value}</dd>
+      <dt className="font-mono uppercase text-[#728079]">{label}</dt>
+      <dd className="break-all font-mono text-[#4d5c55]">{value}</dd>
     </div>
   );
 }

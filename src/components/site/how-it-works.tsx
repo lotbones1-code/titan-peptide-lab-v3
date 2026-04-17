@@ -4,43 +4,43 @@ import { Reveal } from "./reveal";
 const STEPS = [
   {
     icon: SprayCan,
-    title: "Select your peptide",
-    text: "Choose a nasal spray or stack.",
+    title: "Pick your spray",
+    text: "Choose the compound or stack that fits the protocol you are running.",
   },
   {
     icon: Send,
-    title: "Send crypto",
-    text: "BTC, ETH, USDC ERC-20, or SOL / USDC SPL.",
+    title: "Confirm payment",
+    text: "Checkout supports BTC, ETH, USDC ERC-20, SOL, and USDC SPL.",
   },
   {
     icon: PackageCheck,
-    title: "Ships in 24h",
-    text: "Cold-chain handling with tracking.",
+    title: "Packed within 24h",
+    text: "Liquid orders are prepared for cold-chain handling before dispatch.",
   },
   {
     icon: FileCheck2,
-    title: "COA follows",
-    text: "Certificate matched to the bottle lot.",
+    title: "Receive proof",
+    text: "Tracking and batch-matched COA stay tied to the order record.",
   },
 ];
 
 export function HowItWorks() {
   return (
-    <section className="border-b border-white/10 py-20 lg:py-28">
+    <section className="border-b border-[#dde4da] bg-[#f4efe8] py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <Reveal>
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
-            <p className="font-mono text-xs uppercase text-[#77E1C3]">
-              Order flow
-            </p>
-            <h2 className="mt-3 text-4xl font-semibold text-[#E8ECF0] md:text-5xl">
-              From selection to batch-matched delivery.
-            </h2>
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6b7972]">
+                Order flow
+              </p>
+              <h2 className="mt-4 max-w-3xl font-serif text-[clamp(2.5rem,4.5vw,4.3rem)] leading-[0.96] tracking-[-0.04em] text-[#13211c]">
+                The buying experience should feel clean, not underground.
+              </h2>
             </div>
-            <p className="max-w-md text-base leading-7 text-[#8B95A3]">
-              Batch proof stays attached to the order from checkout through
-              delivery.
+            <p className="max-w-md text-base leading-8 text-[#55645d]">
+              That means clearer steps, batch language that makes sense, and a
+              stronger sense of confidence from first click to delivered order.
             </p>
           </div>
         </Reveal>
@@ -48,17 +48,17 @@ export function HowItWorks() {
         <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {STEPS.map(({ icon: Icon, title, text }, index) => (
             <Reveal key={title} delay={index * 0.04}>
-              <div className="h-full rounded-lg border border-white/10 bg-white/[0.04] p-6">
+              <div className="h-full rounded-[1.5rem] border border-[#d9e0d7] bg-white/84 p-6 shadow-[0_18px_50px_-38px_rgba(19,33,28,0.3)]">
                 <div className="flex items-center justify-between">
-                  <Icon className="size-6 text-[#0F9F7A]" />
-                  <span className="text-sm text-[#8B95A3]">
-                    0{index + 1}
+                  <span className="grid size-11 place-items-center rounded-full bg-[#edf4ef] text-[#2d7b62]">
+                    <Icon className="size-5" />
                   </span>
+                  <span className="font-mono text-xs text-[#7b8781]">0{index + 1}</span>
                 </div>
-                <h3 className="mt-8 text-2xl font-semibold text-[#E8ECF0]">
+                <h3 className="mt-8 font-serif text-[1.9rem] leading-[1.02] tracking-[-0.03em] text-[#13211c]">
                   {title}
                 </h3>
-                <p className="mt-3 text-sm leading-6 text-[#8B95A3]">{text}</p>
+                <p className="mt-3 text-sm leading-7 text-[#596761]">{text}</p>
               </div>
             </Reveal>
           ))}
