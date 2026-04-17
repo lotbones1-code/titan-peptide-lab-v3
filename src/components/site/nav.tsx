@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 const LINKS = [
-  { href: "#products", label: "Catalog" },
+  { href: "/products", label: "Catalog" },
   { href: "/lab-testing", label: "COAs" },
   { href: "/research", label: "Research" },
   { href: "/contact", label: "Contact" },
