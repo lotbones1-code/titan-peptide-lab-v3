@@ -1,4 +1,4 @@
-import { Header } from "@/components/site/header";
+import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 
 export const metadata = {
@@ -10,7 +10,7 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <>
-      <Header />
+      <Nav />
       <main className="bg-[linear-gradient(180deg,#fbf8f2_0%,#f6f1e9_54%,#efe9df_100%)] text-[#13211c]">
         <section className="border-b border-[#dde4da] py-24 lg:py-32">
           <div className="mx-auto max-w-7xl px-6">

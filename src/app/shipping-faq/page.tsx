@@ -1,4 +1,4 @@
-import { Header } from "@/components/site/header";
+import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 
 export const metadata = {
@@ -96,7 +96,7 @@ const SECTIONS = [
 export default function ShippingFAQPage() {
   return (
     <>
-      <Header />
+      <Nav />
       <main className="bg-[linear-gradient(180deg,#faf7f1_0%,#f4efe7_55%,#eee7dc_100%)] text-[#13211c]">
         <section className="border-b border-[#dde4da] py-24 lg:py-32">
           <div className="mx-auto max-w-7xl px-6">

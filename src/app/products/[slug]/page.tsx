@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { PRODUCTS } from "@/lib/products";
-import { Header } from "@/components/site/header";
+import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { ProductDetail } from "@/components/site/product-detail";
 
@@ -19,7 +19,7 @@ export default async function ProductPage({
 
   return (
     <>
-      <Header />
+      <Nav />
       <main>
         <ProductDetail product={product} />
       </main>

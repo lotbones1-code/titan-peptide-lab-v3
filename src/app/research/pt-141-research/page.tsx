@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Header } from "@/components/site/header";
+import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import {
   ArticleLayout,
@@ -94,7 +94,7 @@ export default function PT141Page() {
 
   return (
     <>
-      <Header />
+      <Nav />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }}

@@ -1,4 +1,4 @@
-import { Header } from "@/components/site/header";
+import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 
 export const metadata = {
@@ -55,7 +55,7 @@ const TESTS = [
 export default function LabTestingPage() {
   return (
     <>
-      <Header />
+      <Nav />
       <main className="bg-[linear-gradient(180deg,#fbf8f2_0%,#f5efe6_56%,#efe8dd_100%)] text-[#13211c]">
         <section className="border-b border-[#dde4da] py-24 lg:py-32">
           <div className="mx-auto max-w-7xl px-6">
