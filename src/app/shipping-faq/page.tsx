@@ -13,27 +13,27 @@ const SECTIONS = [
     label: "§S1",
     heading: "Shipping",
     blurb:
-      "Dispatched from Reno, Nevada within 48 hours of payment confirmation. Discreet outer carton, insulated inner with phase-change pack on temperature-sensitive items.",
+      "Dispatched from Reno within 24 to 48 hours of payment confirmation. Clean outer carton, insulated inner pack, and colder handling where liquids require it.",
     items: [
       {
         q: "How fast does an order leave the laboratory?",
-        a: "Orders paid by crypto before 14:00 PT usually ship same-day. Everything else inside 48 hours. Tracking number arrives by email the moment the dispatch log is closed; no bulk-send delays.",
+        a: "Orders confirmed before 14:00 PT usually move same day. Everything else leaves inside 48 hours. Tracking is sent as soon as the dispatch record is closed.",
       },
       {
         q: "What does the package look like?",
-        a: "A plain white outer carton with a return address labeled &lsquo;TPL Research&rsquo; &mdash; no compound names, no laboratory branding on the outside. Inside: an insulated pouch, a phase-change cold pack for sensitive peptides, the vials, the printed certificate, and a desiccant card.",
+        a: "A plain outer carton with a neutral return label. Inside are the product, packing protection, printed certificate, and temperature-conscious handling where needed.",
       },
       {
-        q: "Which peptides ship cold?",
-        a: "All nasal sprays and any reconstituted liquid. Lyophilized powder ships ambient in double-wall paperboard &mdash; it&rsquo;s stable for weeks at room temperature, and the cold pack only reduces shelf life on arrival.",
+        q: "Which products ship cold?",
+        a: "Nasal sprays and other liquid formats receive cold-conscious packing. Lyophilized powder generally ships ambient.",
       },
       {
         q: "Do you ship internationally?",
-        a: "Yes &mdash; worldwide. DHL Express with a flat $45 handling fee on top of carrier cost. You handle the import paperwork on your end; we handle stability in transit. Refused or seized parcels are not refunded (that&rsquo;s a jurisdictional question, not a product question).",
+        a: "Yes. International orders are handled with express carriers and the buyer remains responsible for local import rules.",
       },
       {
         q: "What about tracking?",
-        a: "USPS Priority or UPS Ground domestically, DHL Express internationally. Tracking is live from the moment the label is generated. If a tracking number hasn&rsquo;t moved within 48 hours of dispatch, email support&mdash;we&rsquo;ll chase it.",
+        a: "Domestic orders use USPS Priority or UPS Ground. International orders use DHL Express when applicable. If tracking does not move within 48 hours, contact support.",
       },
     ],
   },
@@ -42,27 +42,27 @@ const SECTIONS = [
     label: "§S2",
     heading: "Payment",
     blurb:
-      "Crypto-only checkout, because it clears quickly and removes card processors from the research supply chain.",
+      "Crypto-only checkout, clearer presentation, and faster confirmation once the payment is received on the selected chain.",
     items: [
       {
         q: "Which cryptocurrencies do you accept?",
-        a: "BTC, ETH, USDC ERC-20, and SOL / USDC SPL. Use the wallet address or QR code shown at checkout; the order moves to fulfillment after payment confirmation.",
+        a: "BTC, ETH, USDC ERC-20, SOL, and USDC SPL. Use the wallet string or QR code shown at checkout.",
       },
       {
         q: "Why crypto only?",
-        a: "It clears quickly, avoids card-processor freezes in this category, and keeps fulfillment tied to a confirmed on-chain transaction.",
+        a: "It clears quickly, removes card processor instability from the category, and keeps fulfillment tied to a confirmed transaction.",
       },
       {
         q: "Can I pay by card?",
-        a: "No. Checkout is crypto-only. Contact support before ordering if your lab requires a custom procurement path.",
+        a: "No. Checkout is crypto-only at the moment.",
       },
       {
         q: "What discount codes are active right now?",
-        a: "FIRST10 &mdash; 10% off your first order. BULK15 &mdash; 15% off three or more items. TITAN20 &mdash; 20% off when your cart crosses $250. VIP25 &mdash; 25%, applied automatically on your third repeat order. Codes stack with the BULK tier but not with each other.",
+        a: "FIRST10 for first orders, BULK15 for 3 or more items, TITAN20 above $250, and VIP25 on the third repeat order. Codes do not stack with each other.",
       },
       {
         q: "Is there a volume contract for laboratories?",
-        a: "Yes. Contact qa@titanpeptidelab.com with the compounds, quantities, and cadence. We&rsquo;ll quote a standing rate with priority dispatch and a dedicated QA contact.",
+        a: "Yes. Email qa@titanpeptidelab.com with compound list, quantity, and cadence for a standing quote.",
       },
     ],
   },
@@ -71,23 +71,23 @@ const SECTIONS = [
     label: "§S3",
     heading: "Returns",
     blurb:
-      "Every product is sold for in-vitro research use only and ships with a batch-matched certificate. Returns policy reflects the category.",
+      "Because the products are sold for research use only, the returns policy is built around quality incidents and shipment issues, not casual restocking.",
     items: [
       {
-        q: "What&rsquo;s your returns policy?",
-        a: "If a vial arrives broken, mislabeled, or fails visual inspection, email a photograph to support within 48 hours of delivery and we replace it free of charge. Outside of that: the product is sold for in-vitro research use only and opened vials cannot be accepted back into stock.",
+        q: "What is your returns policy?",
+        a: "If a product arrives broken, mislabeled, or fails visual inspection, email support within 48 hours with photos and the order can be replaced.",
       },
       {
-        q: "What if the certificate doesn&rsquo;t match the vial?",
-        a: "That shouldn&rsquo;t happen &mdash; the same lot number is printed on both. If it does, hold the product, photograph both labels, and email qa@titanpeptidelab.com. We treat this as a quality incident and ship a replacement from the same lot immediately.",
+        q: "What if the certificate does not match the bottle?",
+        a: "Hold the product and email QA immediately. That is treated as a quality incident and reviewed urgently.",
       },
       {
         q: "What if the peptide fails my own in-house assay?",
-        a: "Send us the chromatogram and the method. If it disagrees with ours we&rsquo;ll pull the retained sample from that batch, re-run it, and ship a replacement from a different lot if the retest disagrees. That has happened twice in four years.",
+        a: "Send the chromatogram and method. Titan will compare against the retained sample and review whether a replacement batch is warranted.",
       },
       {
-        q: "Lost package?",
-        a: "If tracking shows delivered and the package isn&rsquo;t at your address, file a claim with the carrier and copy support@titanpeptidelab.com. We&rsquo;ll reship at cost once the carrier closes the claim.",
+        q: "What if the package is lost?",
+        a: "If tracking shows delivered but the package is missing, open a carrier claim and copy support@titanpeptidelab.com so the file can be tracked on our side too.",
       },
     ],
   },
@@ -97,46 +97,36 @@ export default function ShippingFAQPage() {
   return (
     <>
       <Header />
-      <main>
-        <section className="border-b border-white/8 py-24 lg:py-32">
+      <main className="bg-[linear-gradient(180deg,#faf7f1_0%,#f4efe7_55%,#eee7dc_100%)] text-[#13211c]">
+        <section className="border-b border-[#dde4da] py-24 lg:py-32">
           <div className="mx-auto max-w-7xl px-6">
-            <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-500">
-              §S &mdash; Shipping, Payment, Returns
+            <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#718079]">
+              §S — Shipping, Payment, Returns
             </div>
 
             <div className="mt-12 grid gap-x-12 gap-y-8 lg:grid-cols-12">
               <div className="lg:col-span-4">
-                <h1 className="font-serif text-[clamp(2rem,4.5vw,3.75rem)] font-normal leading-[0.98] tracking-[-0.02em] text-zinc-50 text-pretty">
-                  The{" "}
-                  <em className="font-serif italic text-zinc-300">
-                    logistics
-                  </em>
-                  .
+                <h1 className="font-serif text-[clamp(2.3rem,4.8vw,4.1rem)] leading-[0.96] tracking-[-0.04em] text-[#13211c] text-pretty">
+                  The <em className="italic text-[#61736a]">logistics</em>.
                 </h1>
-                <p className="mt-6 max-w-xs text-sm leading-[1.7] text-zinc-400">
-                  For anything not covered here, email{" "}
-                  <a
-                    href="mailto:support@titanpeptidelab.com"
-                    className="text-zinc-200 underline decoration-zinc-700 underline-offset-[6px] hover:text-[var(--signature)] hover:decoration-[var(--signature)]"
-                  >
-                    support@titanpeptidelab.com
-                  </a>
-                  . Replies inside 24&ndash;48 hours, usually same day.
+                <p className="mt-6 max-w-xs text-sm leading-7 text-[#586761]">
+                  For anything not covered here, email support@titanpeptidelab.com.
+                  Replies usually arrive inside 24 to 48 hours.
                 </p>
               </div>
 
               <div className="lg:col-span-8">
                 {SECTIONS.map((s) => (
                   <div key={s.id} id={s.id} className="mt-12 first:mt-0">
-                    <div className="flex items-baseline gap-5 border-t border-zinc-800 pt-6">
-                      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--signature)] tabular-nums">
+                    <div className="flex items-baseline gap-5 border-t border-[#d8dfd7] pt-6">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#1e6f58] tabular-nums">
                         {s.label}
                       </span>
-                      <h2 className="font-serif text-3xl font-normal leading-snug text-zinc-50">
+                      <h2 className="font-serif text-3xl leading-snug text-[#13211c]">
                         {s.heading}
                       </h2>
                     </div>
-                    <p className="mt-4 max-w-xl text-sm leading-[1.7] text-zinc-400">
+                    <p className="mt-4 max-w-xl text-sm leading-7 text-[#586761]">
                       {s.blurb}
                     </p>
 
@@ -144,45 +134,40 @@ export default function ShippingFAQPage() {
                       {s.items.map((f, i) => (
                         <details
                           key={f.q}
-                          className="group border-t border-zinc-800 [&_summary::-webkit-details-marker]:hidden last-of-type:border-b"
+                          className="group rounded-[1.3rem] border border-[#d9e0d7] bg-white/78 px-5 shadow-[0_16px_40px_-34px_rgba(19,33,28,0.22)] [&_summary::-webkit-details-marker]:hidden mt-3"
                         >
-                          <summary className="flex cursor-pointer items-baseline justify-between gap-6 py-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--signature)] focus-visible:ring-offset-2 focus-visible:ring-offset-background">
+                          <summary className="flex cursor-pointer items-baseline justify-between gap-6 py-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58] focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf7f1]">
                             <span className="flex items-baseline gap-5">
-                              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500 tabular-nums">
+                              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#718079] tabular-nums">
                                 {String(i + 1).padStart(2, "0")}
                               </span>
-                              <span className="font-serif text-xl leading-snug text-zinc-50">
+                              <span className="font-serif text-xl leading-snug text-[#13211c]">
                                 {f.q}
                               </span>
                             </span>
-                            <span
-                              aria-hidden
-                              className="font-serif text-2xl text-zinc-500 transition-transform group-open:rotate-45"
-                            >
+                            <span aria-hidden className="font-serif text-2xl text-[#738079] transition-transform group-open:rotate-45">
                               +
                             </span>
                           </summary>
-                          <dd
-                            className="pb-8 pl-[3.25rem] pr-12 text-sm leading-[1.75] text-zinc-400"
-                            dangerouslySetInnerHTML={{ __html: f.a }}
-                          />
+                          <dd className="pb-8 pl-[3.25rem] pr-12 text-sm leading-7 text-[#586761]">
+                            {f.a}
+                          </dd>
                         </details>
                       ))}
                     </dl>
                   </div>
                 ))}
 
-                {/* Discount code strip */}
-                <div className="mt-16 bg-[var(--paper)] p-8 text-[var(--paper-foreground)] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)]">
-                  <div className="flex items-baseline justify-between border-b border-zinc-300 pb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-600">
+                <div className="mt-16 rounded-[1.8rem] border border-[#d7dfd6] bg-[linear-gradient(180deg,#fffdfa_0%,#f2ede5_100%)] p-8 text-[#13211c] shadow-[0_28px_70px_-42px_rgba(19,33,28,0.34)]">
+                  <div className="flex items-baseline justify-between border-b border-[#d8dfd7] pb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-[#6f7b75]">
                     <span>Active discount codes</span>
                     <span>Apply at checkout</span>
                   </div>
                   <dl className="mt-6 grid gap-6 sm:grid-cols-2">
                     <Code code="FIRST10" v="10% off your first order" />
-                    <Code code="BULK15" v="15% off 3 + items" />
+                    <Code code="BULK15" v="15% off 3+ items" />
                     <Code code="TITAN20" v="20% off orders over $250" />
-                    <Code code="VIP25" v="25% auto, 3rd repeat order" />
+                    <Code code="VIP25" v="25% auto on the 3rd repeat order" />
                   </dl>
                 </div>
               </div>
@@ -197,11 +182,11 @@ export default function ShippingFAQPage() {
 
 function Code({ code, v }: { code: string; v: string }) {
   return (
-    <div className="border-b border-zinc-300 pb-3">
-      <div className="font-mono text-xl font-semibold tracking-tight text-zinc-900">
+    <div className="border-b border-[#d9e0d7] pb-3">
+      <div className="font-mono text-xl font-semibold tracking-tight text-[#13211c]">
         {code}
       </div>
-      <div className="mt-1 text-sm text-zinc-700">{v}</div>
+      <div className="mt-1 text-sm text-[#55645d]">{v}</div>
     </div>
   );
 }

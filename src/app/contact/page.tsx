@@ -8,90 +8,46 @@ export const metadata = {
     "Write the laboratory. Replies inside 24–48 hours from the QA bench.",
 };
 
-// TODO: replace this mailto with a Formspree endpoint when the form ID is provisioned,
-// e.g. action="https://formspree.io/f/xxxxxxxx" method="POST".
 const FORM_ACTION = "mailto:support@titanpeptidelab.com";
 
 export default function ContactPage() {
   return (
     <>
       <Header />
-      <main>
-        <section className="border-b border-white/8 py-24 lg:py-32">
+      <main className="bg-[linear-gradient(180deg,#faf7f1_0%,#f4efe7_58%,#eee7dc_100%)] text-[#13211c]">
+        <section className="border-b border-[#dde4da] py-24 lg:py-32">
           <div className="mx-auto max-w-7xl px-6">
-            <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-500">
-              §C &mdash; Correspondence
+            <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#718079]">
+              §C — Correspondence
             </div>
 
             <div className="mt-12 grid gap-x-12 gap-y-16 lg:grid-cols-12">
-              {/* Left: preamble */}
               <div className="lg:col-span-5">
-                <h1 className="font-serif text-[clamp(2.25rem,5vw,4rem)] font-normal leading-[0.98] tracking-[-0.02em] text-zinc-50 text-pretty">
-                  Write the{" "}
-                  <em className="font-serif italic text-zinc-300">
-                    laboratory
-                  </em>
-                  .
+                <h1 className="font-serif text-[clamp(2.4rem,5vw,4.4rem)] leading-[0.96] tracking-[-0.04em] text-[#13211c] text-pretty">
+                  Write the <em className="italic text-[#60736a]">laboratory</em>.
                 </h1>
 
-                <p className="mt-8 max-w-md text-base leading-[1.7] text-zinc-400">
-                  Replies inside 24&ndash;48 hours, usually same-day from the
-                  QA bench. For faster resolution on common questions, most of
-                  the answers you need are already printed on the{" "}
+                <p className="mt-8 max-w-md text-base leading-8 text-[#586761]">
+                  Replies inside 24–48 hours, usually same day from the QA bench.
+                  For the most common questions, the fastest answer is usually on the {" "}
                   <Link
                     href="/shipping-faq"
-                    className="text-zinc-200 underline decoration-zinc-700 underline-offset-[6px] hover:text-[var(--signature)] hover:decoration-[var(--signature)]"
+                    className="text-[#203129] underline decoration-[#b9c7bf] underline-offset-[6px] hover:text-[#1e6f58] hover:decoration-[#1e6f58]"
                   >
-                    shipping &amp; payment page
+                    shipping and payment page
                   </Link>
                   .
                 </p>
 
-                <dl className="mt-12 space-y-6 text-sm">
-                  <div className="grid grid-cols-[120px_1fr] items-baseline gap-4 border-t border-zinc-800 pt-4">
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
-                      General
-                    </dt>
-                    <dd>
-                      <a
-                        href="mailto:support@titanpeptidelab.com"
-                        className="text-zinc-200 underline decoration-zinc-700 underline-offset-[6px] hover:text-[var(--signature)] hover:decoration-[var(--signature)]"
-                      >
-                        support@titanpeptidelab.com
-                      </a>
-                    </dd>
-                  </div>
-                  <div className="grid grid-cols-[120px_1fr] items-baseline gap-4 border-t border-zinc-800 pt-4">
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
-                      QA / COA
-                    </dt>
-                    <dd>
-                      <a
-                        href="mailto:qa@titanpeptidelab.com"
-                        className="text-zinc-200 underline decoration-zinc-700 underline-offset-[6px] hover:text-[var(--signature)] hover:decoration-[var(--signature)]"
-                      >
-                        qa@titanpeptidelab.com
-                      </a>
-                    </dd>
-                  </div>
-                  <div className="grid grid-cols-[120px_1fr] items-baseline gap-4 border-t border-zinc-800 pt-4">
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
-                      Volume
-                    </dt>
-                    <dd>
-                      <a
-                        href="mailto:hello@titanpeptidelab.com"
-                        className="text-zinc-200 underline decoration-zinc-700 underline-offset-[6px] hover:text-[var(--signature)] hover:decoration-[var(--signature)]"
-                      >
-                        hello@titanpeptidelab.com
-                      </a>
-                    </dd>
-                  </div>
-                  <div className="grid grid-cols-[120px_1fr] items-baseline gap-4 border-t border-zinc-800 border-b pb-4 pt-4">
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+                <dl className="mt-12 space-y-6 text-sm text-[#35443d]">
+                  <ContactRow label="General" value="support@titanpeptidelab.com" />
+                  <ContactRow label="QA / COA" value="qa@titanpeptidelab.com" />
+                  <ContactRow label="Volume" value="hello@titanpeptidelab.com" />
+                  <div className="grid grid-cols-[120px_1fr] items-baseline gap-4 border-y border-[#d8dfd7] py-4">
+                    <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#738079]">
                       Post
                     </dt>
-                    <dd className="text-zinc-300">
+                    <dd className="text-[#55645d]">
                       Titan Peptide Laboratory
                       <br />
                       Reno, NV, United States
@@ -100,17 +56,15 @@ export default function ContactPage() {
                 </dl>
               </div>
 
-              {/* Right: the form, presented as correspondence */}
               <div className="lg:col-span-7">
-                <figure className="bg-[var(--paper)] p-8 text-[var(--paper-foreground)] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)]">
-                  <div className="flex items-baseline justify-between border-b border-zinc-300 pb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-600">
-                    <span>Correspondence &mdash; for the attention of</span>
+                <figure className="rounded-[1.85rem] border border-[#d7dfd6] bg-[linear-gradient(180deg,#fffdfa_0%,#f3eee6_100%)] p-8 text-[#13211c] shadow-[0_28px_70px_-42px_rgba(19,33,28,0.34)]">
+                  <div className="flex items-baseline justify-between border-b border-[#d8dfd7] pb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-[#6f7b75]">
+                    <span>Correspondence slip</span>
                     <span>TPL / Support Desk</span>
                   </div>
 
-                  <h2 className="mt-6 font-serif text-3xl leading-[1.05] text-zinc-900">
-                    A note to the{" "}
-                    <em className="italic text-zinc-500">laboratory</em>.
+                  <h2 className="mt-6 font-serif text-3xl leading-[1.05] text-[#13211c]">
+                    A note to the <em className="italic text-[#66756e]">laboratory</em>.
                   </h2>
 
                   <form
@@ -121,12 +75,7 @@ export default function ContactPage() {
                   >
                     <div className="grid gap-6 sm:grid-cols-2">
                       <Field label="Your name" name="name" required />
-                      <Field
-                        label="Email"
-                        name="email"
-                        type="email"
-                        required
-                      />
+                      <Field label="Email" name="email" type="email" required />
                     </div>
 
                     <Field label="Subject" name="subject" />
@@ -134,7 +83,7 @@ export default function ContactPage() {
                     <div>
                       <label
                         htmlFor="topic"
-                        className="block font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-600"
+                        className="block font-mono text-[10px] uppercase tracking-[0.18em] text-[#738079]"
                       >
                         Topic
                       </label>
@@ -142,10 +91,10 @@ export default function ContactPage() {
                         id="topic"
                         name="topic"
                         defaultValue=""
-                        className="mt-2 w-full border-0 border-b border-zinc-400 bg-transparent py-2 font-serif text-lg text-zinc-900 focus:border-zinc-900 focus:outline-none focus:ring-0"
+                        className="mt-2 w-full border-0 border-b border-[#bfcac2] bg-transparent py-2 font-serif text-lg text-[#13211c] focus:border-[#13211c] focus:outline-none focus:ring-0"
                       >
                         <option value="" disabled>
-                          Select&hellip;
+                          Select…
                         </option>
                         <option>General question</option>
                         <option>Order status</option>
@@ -158,7 +107,7 @@ export default function ContactPage() {
                     <div>
                       <label
                         htmlFor="message"
-                        className="block font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-600"
+                        className="block font-mono text-[10px] uppercase tracking-[0.18em] text-[#738079]"
                       >
                         Message
                       </label>
@@ -167,65 +116,43 @@ export default function ContactPage() {
                         name="message"
                         rows={7}
                         required
-                        className="mt-2 w-full border-0 border-b border-zinc-400 bg-transparent py-2 font-serif text-lg leading-snug text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-900 focus:outline-none focus:ring-0"
-                        placeholder="Lot number, order ID, or what you&rsquo;re trying to do&hellip;"
+                        className="mt-2 w-full border-0 border-b border-[#bfcac2] bg-transparent py-2 font-serif text-lg leading-snug text-[#13211c] placeholder:text-[#94a09a] focus:border-[#13211c] focus:outline-none focus:ring-0"
+                        placeholder="Lot number, order ID, or what you are trying to do…"
                       />
                     </div>
 
                     <div className="flex items-center justify-between pt-6">
-                      <p className="max-w-xs font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-600">
-                        Reply inside 24&ndash;48 h &middot; from the QA bench
+                      <p className="max-w-xs font-mono text-[10px] uppercase tracking-[0.18em] text-[#738079]">
+                        Reply inside 24–48 h · from the QA bench
                       </p>
                       <button
                         type="submit"
-                        className="group inline-flex items-center gap-2.5 rounded-full border border-zinc-900/30 px-5 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-900 transition-colors hover:border-zinc-900 hover:bg-zinc-900 hover:text-[var(--paper)]"
+                        className="group inline-flex items-center gap-2.5 rounded-full border border-[#13211c]/20 px-5 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-[#13211c] transition-colors hover:border-[#13211c] hover:bg-[#13211c] hover:text-[#fffdfa]"
                       >
                         <span
                           aria-hidden
-                          className="h-1.5 w-1.5 rounded-full bg-[var(--signature)] transition-transform group-hover:scale-110"
+                          className="h-1.5 w-1.5 rounded-full bg-[#1e6f58] transition-transform group-hover:scale-110"
                         />
                         Send to laboratory
                       </button>
                     </div>
                   </form>
 
-                  <div className="mt-10 border-t border-zinc-300 pt-4">
-                    <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-600">
+                  <div className="mt-10 border-t border-[#d8dfd7] pt-4">
+                    <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6f7b75]">
                       Read first
                     </div>
                     <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm">
-                      <Link
-                        href="/shipping-faq#shipping"
-                        className="text-zinc-700 underline decoration-zinc-400 underline-offset-[4px] hover:text-zinc-900"
-                      >
-                        Shipping
-                      </Link>
-                      <Link
-                        href="/shipping-faq#payment"
-                        className="text-zinc-700 underline decoration-zinc-400 underline-offset-[4px] hover:text-zinc-900"
-                      >
-                        Payment &amp; crypto
-                      </Link>
-                      <Link
-                        href="/shipping-faq#returns"
-                        className="text-zinc-700 underline decoration-zinc-400 underline-offset-[4px] hover:text-zinc-900"
-                      >
-                        Returns
-                      </Link>
-                      <Link
-                        href="/lab-testing"
-                        className="text-zinc-700 underline decoration-zinc-400 underline-offset-[4px] hover:text-zinc-900"
-                      >
-                        Lab testing
-                      </Link>
+                      <ReadLink href="/shipping-faq#shipping">Shipping</ReadLink>
+                      <ReadLink href="/shipping-faq#payment">Payment and crypto</ReadLink>
+                      <ReadLink href="/shipping-faq#returns">Returns</ReadLink>
+                      <ReadLink href="/lab-testing">Lab testing</ReadLink>
                     </div>
                   </div>
                 </figure>
 
-                <figcaption className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
-                  Plate C &mdash; Correspondence slip. Form posts to{" "}
-                  <span className="text-zinc-400">support@titanpeptidelab.com</span>
-                  .
+                <figcaption className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-[#7b8781]">
+                  Plate C — Correspondence slip. Form posts to support@titanpeptidelab.com.
                 </figcaption>
               </div>
             </div>
@@ -234,6 +161,24 @@ export default function ContactPage() {
       </main>
       <Footer />
     </>
+  );
+}
+
+function ContactRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="grid grid-cols-[120px_1fr] items-baseline gap-4 border-t border-[#d8dfd7] pt-4">
+      <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#738079]">
+        {label}
+      </dt>
+      <dd>
+        <a
+          href={`mailto:${value}`}
+          className="text-[#203129] underline decoration-[#b9c7bf] underline-offset-[6px] hover:text-[#1e6f58] hover:decoration-[#1e6f58]"
+        >
+          {value}
+        </a>
+      </dd>
+    </div>
   );
 }
 
@@ -252,7 +197,7 @@ function Field({
     <div>
       <label
         htmlFor={name}
-        className="block font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-600"
+        className="block font-mono text-[10px] uppercase tracking-[0.18em] text-[#738079]"
       >
         {label}
         {required ? " *" : ""}
@@ -262,8 +207,19 @@ function Field({
         name={name}
         type={type}
         required={required}
-        className="mt-2 w-full border-0 border-b border-zinc-400 bg-transparent py-2 font-serif text-lg text-zinc-900 focus:border-zinc-900 focus:outline-none focus:ring-0"
+        className="mt-2 w-full border-0 border-b border-[#bfcac2] bg-transparent py-2 font-serif text-lg text-[#13211c] focus:border-[#13211c] focus:outline-none focus:ring-0"
       />
     </div>
+  );
+}
+
+function ReadLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className="text-[#53615b] underline decoration-[#c6d0c8] underline-offset-[4px] hover:text-[#13211c]"
+    >
+      {children}
+    </Link>
   );
 }

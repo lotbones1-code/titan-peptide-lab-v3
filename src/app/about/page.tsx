@@ -11,172 +11,147 @@ export default function AboutPage() {
   return (
     <>
       <Header />
-      <main>
-        <section className="border-b border-white/8 py-24 lg:py-32">
+      <main className="bg-[linear-gradient(180deg,#fbf8f2_0%,#f6f1e9_54%,#efe9df_100%)] text-[#13211c]">
+        <section className="border-b border-[#dde4da] py-24 lg:py-32">
           <div className="mx-auto max-w-7xl px-6">
-            <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-500">
+            <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#718079]">
               §A — About the Laboratory
             </div>
 
             <div className="mt-12 grid gap-x-12 gap-y-16 lg:grid-cols-12">
-              {/* Left: editorial body */}
               <article className="lg:col-span-7">
-                <h1 className="font-serif text-[clamp(2.5rem,6vw,5rem)] font-normal leading-[0.92] tracking-[-0.02em] text-zinc-50 text-pretty">
+                <h1 className="font-serif text-[clamp(2.8rem,6vw,5.4rem)] leading-[0.92] tracking-[-0.04em] text-[#13211c] text-pretty">
                   Founded in research,
                   <br />
-                  <em className="italic text-zinc-400">built for integrity</em>.
+                  <em className="italic text-[#5d7368]">built for integrity</em>.
                 </h1>
 
-                <div className="mt-12 space-y-7 text-base leading-[1.8] text-zinc-300">
-                  <p className="font-serif text-2xl italic leading-snug text-zinc-200">
-                    We started in 2019, in a converted analytical suite in Reno,
-                    Nevada &mdash; two chemists, one QA lead, a second-hand Agilent
-                    1260, and a conviction that the research peptide market had
-                    stopped taking purity seriously.
+                <div className="mt-12 space-y-7 text-[15px] leading-8 text-[#42524b] sm:text-base">
+                  <p className="font-serif text-[1.8rem] italic leading-[1.35] text-[#23322c]">
+                    Titan started as a response to a basic failure in the
+                    peptide market, too many sellers acting like the label was
+                    the product instead of the batch data behind it.
                   </p>
 
                   <p>
-                    At the time, the category had drifted. Vendors were
-                    shipping boutique labels around anonymous bulk powder, and
-                    the &ldquo;certificate of analysis&rdquo; enclosed was usually
-                    a stock PDF dated a year earlier. Researchers had no way to
-                    verify that the chromatogram in the envelope corresponded
-                    to the vial in the box. That gap &mdash; between the document and
-                    the compound &mdash; is the thing we were built to close.
+                    Back then, the category was full of anonymous powder,
+                    generic certificates, and vague purity claims. The PDF in
+                    the envelope usually had no real relationship to the vial in
+                    the box. That gap, between the document and the compound,
+                    is the exact thing this laboratory was built to close.
                   </p>
 
                   <p>
-                    Titan Peptide Laboratory operates on one discipline:{" "}
-                    <span className="text-[var(--signature)]">
-                      every bottle ships with the chromatogram from its own
-                      batch
-                    </span>
-                    . Same lot number on the vial, the certificate, and the
-                    outbox log. No representative samples. No inherited tests.
-                    No rounded purity figures. When the analyzer reads 99.42%,
-                    the certificate reads 99.42% &mdash; not &ldquo;&gt;99%&rdquo;.
+                    Titan operates on one discipline, the bottle, certificate,
+                    and order log should all resolve to the same lot. No
+                    representative COAs. No inherited test results. No softened
+                    purity language. When a run reads 99.42%, that is what gets
+                    recorded, not a rounded claim designed for easier marketing.
                   </p>
 
-                  <h2 className="pt-8 font-serif text-3xl font-normal leading-snug text-zinc-50">
+                  <h2 className="pt-8 font-serif text-3xl leading-snug text-[#13211c]">
                     The philosophy.
                   </h2>
 
                   <p>
-                    We take a narrow view of what a peptide vendor should do.
-                    We synthesize, we verify, we dispatch. We don&rsquo;t
-                    produce clinical claims, we don&rsquo;t market to patient
-                    populations, and we don&rsquo;t publish dosing protocols.
-                    Everything leaves this laboratory labeled &ldquo;for in-vitro
-                    research use only&rdquo; because that is the only accurate
-                    description of what it is.
+                    We take a narrow view of what a peptide lab should do. We
+                    formulate, verify, and dispatch. We do not market to
+                    patient outcomes, blur into medical claims, or pad the copy
+                    with clinical theatre. Everything on the site is structured
+                    around research credibility first.
                   </p>
 
                   <p>
-                    The research community is under-served by theatre and
-                    over-served by hedge. The editorial voice you read on this
-                    site &mdash; plain, verifiable, unhurried &mdash; is the voice of the
-                    bench. If you&rsquo;ve ever stared at a certificate wondering
-                    whether the numbers on it had anything to do with the
-                    powder in front of you, this laboratory is for you.
+                    That is why the tone is deliberate, a little quieter, and a
+                    lot more specific. The people who buy from a serious lab are
+                    not looking for hype. They are looking for evidence that the
+                    operation behind the bottle is actually disciplined.
                   </p>
 
-                  <h2 className="pt-8 font-serif text-3xl font-normal leading-snug text-zinc-50">
-                    Sourcing &amp; the supply chain.
+                  <h2 className="pt-8 font-serif text-3xl leading-snug text-[#13211c]">
+                    Supply chain discipline.
                   </h2>
 
                   <p>
-                    We synthesize in-house for our nasal spray line and partner
-                    with a single GMP-audited manufacturing facility for bulk
-                    lyophilized API. That partner has held an unbroken ISO
-                    9001 registration since 2011 and is audited twice a year by
-                    our QA lead in person. We don&rsquo;t rotate suppliers for
-                    cost reasons. Consistency of input is a precondition of
-                    consistency of output.
+                    The nasal spray line is filled against tightly controlled
+                    source material and matched to retained lot records. Bulk
+                    API is handled through a single audited manufacturing
+                    relationship instead of being shuffled between cheaper
+                    suppliers. Consistency of input is treated as a quality
+                    requirement, not a pricing lever.
                   </p>
 
                   <p>
-                    Every incoming lot is quarantined, re-identified by
-                    HPLC-UV and ESI-MS, and cross-checked against the
-                    supplier&rsquo;s certificate before it&rsquo;s released to
-                    fill. If the two disagree by more than the method&rsquo;s
-                    stated uncertainty, the lot is held and the supplier is
-                    notified. That has happened three times in four years.
-                    None of that material reached a customer.
+                    Incoming lots are quarantined, re-identified, screened, and
+                    only then released to fill. If the incoming data and the
+                    internal read disagree beyond method tolerance, the batch is
+                    held. That policy matters more than any slogan on the
+                    homepage because it is what protects the customer from a bad
+                    lot actually leaving the building.
                   </p>
 
-                  <h2 className="pt-8 font-serif text-3xl font-normal leading-snug text-zinc-50">
-                    Who we are.
+                  <h2 className="pt-8 font-serif text-3xl leading-snug text-[#13211c]">
+                    Who this is for.
                   </h2>
 
                   <p>
-                    The team is small by design: four chemists, one QA lead
-                    who signs every release, one operations manager, and a
-                    part-time analytical consultant who runs the ISO 17025
-                    retests. We keep it that way because every person on the
-                    floor should be able to look at a chromatogram and tell
-                    you, without checking notes, which column it came off and
-                    what the peak at 3.8 minutes is.
-                  </p>
-
-                  <p>
-                    We are not venture-backed. We&rsquo;re not trying to scale
-                    into a consumer brand. The laboratory is customer-funded,
-                    which means the only constituency we answer to is the
-                    researcher who just opened the box.
+                    Titan is for buyers who care about whether the proof is
+                    attached to the product. Researchers, repeat buyers, labs,
+                    and serious hobbyists all end up asking the same question,
+                    does the certificate in front of me actually belong to this
+                    bottle? The entire brand exists to make that answer clearer.
                   </p>
                 </div>
 
-                {/* Signature */}
-                <div className="mt-16 border-t border-zinc-800 pt-8">
-                  <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+                <div className="mt-16 border-t border-[#d8dfd7] pt-8">
+                  <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#708079]">
                     Signed
                   </div>
-                  <div className="mt-3 font-serif text-3xl italic text-zinc-200">
+                  <div className="mt-3 font-serif text-3xl italic text-[#23322c]">
                     Dr. M. Voss
                   </div>
-                  <div className="mt-1 text-sm text-zinc-500">
-                    QA Lead, Titan Peptide Laboratory &middot; Reno, NV
+                  <div className="mt-1 text-sm text-[#6d7a74]">
+                    QA Lead, Titan Peptide Laboratory · Reno, NV
                   </div>
                 </div>
               </article>
 
-              {/* Right: paper COA artifact — sticky */}
               <aside className="lg:col-span-5">
                 <div className="lg:sticky lg:top-24">
-                  <figure className="bg-[var(--paper)] p-8 text-[var(--paper-foreground)] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.6)]">
-                    <div className="flex items-baseline justify-between border-b border-zinc-300 pb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-600">
-                      <span>Laboratory Masthead</span>
+                  <figure className="rounded-[1.8rem] border border-[#d7dfd6] bg-[linear-gradient(180deg,#fffdfa_0%,#f2ede5_100%)] p-8 text-[#13211c] shadow-[0_26px_70px_-40px_rgba(19,33,28,0.35)]">
+                    <div className="flex items-baseline justify-between border-b border-[#d8dfd7] pb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-[#6f7b75]">
+                      <span>Laboratory masthead</span>
                       <span>EST. 2019</span>
                     </div>
 
-                    <h3 className="mt-6 font-serif text-3xl leading-[1.05] text-zinc-900">
+                    <h3 className="mt-6 font-serif text-3xl leading-[1.05] text-[#13211c]">
                       Titan Peptide
                       <br />
-                      <span className="italic text-zinc-500">Laboratory</span>
+                      <span className="italic text-[#6a7771]">Laboratory</span>
                     </h3>
 
                     <dl className="mt-8 space-y-4 text-sm">
-                      <Row k="Founded" v="2019 &middot; Reno, NV" />
+                      <Row k="Founded" v="2019 · Reno, NV" />
                       <Row k="Floor team" v="7" />
                       <Row k="Reject threshold" v="< 99.0% purity" highlight />
                       <Row k="Release rule" v="Batch-matched COA" />
-                      <Row k="Audit cycle" v="Twice / year, in person" />
-                      <Row k="ISO 17025 partner" v="Independent retest" />
-                      <Row k="Investor type" v="Customer-funded" />
+                      <Row k="Audit cycle" v="Twice / year" />
+                      <Row k="Independent retest" v="ISO 17025 partner" />
+                      <Row k="Funding" v="Customer-backed" />
                     </dl>
 
-                    <div className="mt-8 border-t border-zinc-300 pt-4">
-                      <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-600">
+                    <div className="mt-8 border-t border-[#d8dfd7] pt-4">
+                      <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6f7b75]">
                         Discipline
                       </div>
-                      <div className="mt-2 font-serif text-lg italic text-zinc-700">
-                        The certificate is the product.
+                      <div className="mt-2 font-serif text-lg italic text-[#41504a]">
+                        The certificate stays attached to the batch.
                       </div>
                     </div>
                   </figure>
 
-                  <figcaption className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
-                    Plate A &mdash; Laboratory masthead, for reference only.
+                  <figcaption className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-[#7d8983]">
+                    Plate A — Laboratory masthead, for reference only.
                   </figcaption>
                 </div>
               </aside>
@@ -199,12 +174,12 @@ function Row({
   highlight?: boolean;
 }) {
   return (
-    <div className="grid grid-cols-[140px_1fr] items-baseline gap-4 border-b border-zinc-200 pb-2">
-      <dt className="font-mono text-[10px] uppercase tracking-[0.16em] text-zinc-600">
+    <div className="grid grid-cols-[140px_1fr] items-baseline gap-4 border-b border-[#d9e0d7] pb-2">
+      <dt className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#738079]">
         {k}
       </dt>
       <dd
-        className={`font-mono tabular-nums ${highlight ? "text-base font-semibold text-zinc-900" : "text-xs text-zinc-700"}`}
+        className={`font-mono tabular-nums ${highlight ? "text-base font-semibold text-[#13211c]" : "text-xs text-[#53615b]"}`}
         dangerouslySetInnerHTML={{ __html: v }}
       />
     </div>
