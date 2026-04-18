@@ -14,7 +14,8 @@
     "add:promo": "node scripts/add-promo.mjs",
     "remove:product": "node scripts/remove-product.mjs",
     "push": "node scripts/push.mjs",
-    "deploy": "node scripts/deploy.mjs"
+    "deploy": "node scripts/deploy.mjs",
+    "ship": "node scripts/ship.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
