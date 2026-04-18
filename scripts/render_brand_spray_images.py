@@ -52,11 +52,11 @@ def font(path: str, size: int) -> ImageFont.FreeTypeFont:
     return ImageFont.truetype(path, size)
 
 
-FONT_TITAN = font(FONT_ROUNDED, 42)
-FONT_PRODUCT = font(FONT_BOLD, 34)
-FONT_META = font(FONT_REG, 20)
-FONT_MICRO = font(FONT_REG, 16)
-FONT_BOX_PRODUCT = font(FONT_BOLD, 30)
+FONT_TITAN = font(FONT_ROUNDED, 34)
+FONT_PRODUCT = font(FONT_BOLD, 48)
+FONT_META = font(FONT_REG, 18)
+FONT_MICRO = font(FONT_REG, 15)
+FONT_BOX_PRODUCT = font(FONT_BOLD, 58)
 FONT_BOX_META = font(FONT_REG, 18)
 
 
@@ -107,38 +107,37 @@ def vignette(img: Image.Image):
 
 def label_block(draw: ImageDraw.ImageDraw, x: int, y: int, w: int, h: int, accent: str, title: str, meta: str, align: str = "left"):
     draw.rounded_rectangle((x, y, x + w, y + h), radius=22, fill=PAPER, outline=BORDER, width=2)
-    draw.rounded_rectangle((x, y, x + 20, y + h), radius=22, fill=accent)
-    tx = x + 42
+    draw.rounded_rectangle((x, y, x + 16, y + h), radius=22, fill=accent)
+    tx = x + 34
     if align == "center":
         draw_centered_text(draw, (x + w // 2, y + 18), "TITAN", FONT_TITAN, INK)
-        draw_centered_text(draw, (x + w // 2, y + 76), title, FONT_PRODUCT, INK)
-        draw_centered_text(draw, (x + w // 2, y + 124), meta, FONT_META, MUTED)
-        draw_centered_text(draw, (x + w // 2, y + h - 52), "RESEARCH USE ONLY", FONT_MICRO, MUTED)
+        draw_centered_text(draw, (x + w // 2, y + 54), title, FONT_PRODUCT, INK)
+        draw_centered_text(draw, (x + w // 2, y + 118), "NASAL SPRAY", FONT_META, MUTED)
+        draw_centered_text(draw, (x + w // 2, y + 142), meta, FONT_META, MUTED)
+        draw_centered_text(draw, (x + w // 2, y + h - 42), "RESEARCH USE ONLY", FONT_MICRO, MUTED)
         return
-    draw.text((tx, y + 18), "TITAN", font=FONT_TITAN, fill=INK)
-    draw.text((tx, y + 78), title, font=FONT_PRODUCT, fill=INK)
-    draw.text((tx, y + 128), meta, font=FONT_META, fill=MUTED)
-    draw.text((tx, y + h - 58), "RESEARCH USE ONLY", font=FONT_MICRO, fill=MUTED)
-    draw.text((tx, y + h - 34), "HPLC VERIFIED  ·  LOT-MATCHED COA", font=FONT_MICRO, fill=MUTED)
+    draw.text((tx, y + 16), "TITAN", font=FONT_TITAN, fill=INK)
+    draw.text((tx, y + 62), title, font=FONT_PRODUCT, fill=INK)
+    draw.text((tx, y + 116), "NASAL SPRAY", font=FONT_META, fill=MUTED)
+    draw.text((tx, y + 142), meta, font=FONT_META, fill=MUTED)
+    draw.text((tx, y + h - 44), "RESEARCH USE ONLY", font=FONT_MICRO, fill=MUTED)
 
 
 def draw_carton(base: Image.Image, accent: str, product: dict, x: int, y: int, w: int = 290, h: int = 770):
-    add_shadow(base, (x, y, x + w, y + h), radius=26, dy=18, alpha=40)
+    add_shadow(base, (x, y, x + w, y + h), radius=24, dy=18, alpha=32)
     d = ImageDraw.Draw(base)
     d.rounded_rectangle((x, y, x + w, y + h), radius=34, fill="#FBF9F4", outline="#D9D2C5", width=2)
-    d.rounded_rectangle((x + 24, y + 28, x + w - 24, y + 112), radius=26, fill=accent)
-    draw_centered_text(d, (x + w // 2, y + 46), "TITAN", FONT_TITAN, PAPER)
-    d.text((x + 36, y + 164), short_name(product['name']), font=FONT_BOX_PRODUCT, fill=INK)
-    d.text((x + 36, y + 214), product['size'], font=FONT_BOX_META, fill=MUTED)
-    d.text((x + 36, y + 262), "PRECISION NASAL SPRAY", font=FONT_BOX_META, fill=INK)
-    d.text((x + 36, y + 290), "LAB STANDARD PACKAGING", font=FONT_MICRO, fill=MUTED)
-    d.rounded_rectangle((x + 36, y + 352, x + w - 36, y + 366), radius=7, fill=accent)
-    d.text((x + 36, y + 394), "HPLC VERIFIED", font=FONT_META, fill=INK)
-    d.text((x + 36, y + 428), "BATCH-MATCHED COA", font=FONT_META, fill=INK)
-    d.text((x + 36, y + 462), "RESEARCH USE ONLY", font=FONT_META, fill=INK)
-    d.text((x + 36, y + h - 92), "15 mL metered atomizer", font=FONT_MICRO, fill=MUTED)
-    d.text((x + 36, y + h - 62), "Cold-chain dispatch where required", font=FONT_MICRO, fill=MUTED)
-    d.text((x + 36, y + h - 32), "titanpeptidelab.com", font=FONT_MICRO, fill=MUTED)
+    d.rounded_rectangle((x + 24, y + 28, x + w - 24, y + 90), radius=22, fill=accent)
+    draw_centered_text(d, (x + w // 2, y + 40), "TITAN", FONT_TITAN, PAPER)
+    draw_centered_text(d, (x + w // 2, y + 148), short_name(product['name']), FONT_BOX_PRODUCT, INK)
+    draw_centered_text(d, (x + w // 2, y + 232), "NASAL SPRAY", FONT_BOX_META, MUTED)
+    draw_centered_text(d, (x + w // 2, y + 258), product['size'], FONT_BOX_META, MUTED)
+    d.rounded_rectangle((x + 34, y + 332, x + w - 34, y + 346), radius=7, fill=accent)
+    draw_centered_text(d, (x + w // 2, y + 376), "COMPOUND-LED FORMULATION", FONT_META, INK)
+    draw_centered_text(d, (x + w // 2, y + 406), "LOT-MATCHED COA", FONT_META, INK)
+    draw_centered_text(d, (x + w // 2, y + 436), "RESEARCH USE ONLY", FONT_META, INK)
+    d.text((x + 34, y + h - 74), "universal crypto checkout", font=FONT_MICRO, fill=MUTED)
+    d.text((x + 34, y + h - 46), "titanpeptidelab.com", font=FONT_MICRO, fill=MUTED)
 
 
 def draw_bottle(base: Image.Image, accent: str, product: dict, x: int, y: int, scale: float = 1.0):
@@ -181,11 +180,11 @@ def draw_bottle(base: Image.Image, accent: str, product: dict, x: int, y: int, s
     label_y = y + 132
     label_w = body_w - 48
     label_h = int(250 * scale)
-    label_block(d, label_x, label_y, label_w, label_h, accent, short_name(product['name']), product['size'])
+    label_block(d, label_x, label_y, label_w, label_h, accent, short_name(product['name']), product['size'], align="center")
 
-    d.rounded_rectangle((x + 24, y + body_h - 110, x + body_w - 24, y + body_h - 84), radius=10, fill=accent)
-    d.text((x + 32, y + body_h - 74), "HPLC VERIFIED", font=FONT_MICRO, fill=INK)
-    d.text((x + 32, y + body_h - 48), "LOT-MATCHED COA", font=FONT_MICRO, fill=MUTED)
+    d.rounded_rectangle((x + 24, y + body_h - 110, x + body_w - 24, y + body_h - 88), radius=10, fill=accent)
+    d.text((x + 32, y + body_h - 72), "COMPOUND NAME FIRST", font=FONT_MICRO, fill=INK)
+    d.text((x + 32, y + body_h - 46), "LOT-MATCHED COA", font=FONT_MICRO, fill=MUTED)
 
 
 def make_background() -> Image.Image:
