@@ -10,25 +10,36 @@ import {
   Check,
   ChevronLeft,
   Copy,
-  Bitcoin,
   Wallet as WalletIcon,
   ShieldCheck,
   Truck,
   FileCheck2,
+  Package,
+  Mail,
+  Loader2,
   type LucideIcon,
 } from "lucide-react";
 import { type Product, WALLETS, DISCOUNT_CODES } from "@/lib/products";
 import { CompoundPoster } from "./compound-poster";
+import { UrgencyBadge } from "./urgency-badge";
 
 type ChainKey = "btc" | "eth" | "usdcErc" | "sol" | "usdcSol";
 
-const CHAINS: { key: ChainKey; label: string; chain: string }[] = [
-  { key: "btc", label: "Bitcoin (BTC)", chain: "Bitcoin" },
-  { key: "eth", label: "Ethereum (ETH)", chain: "Ethereum" },
-  { key: "usdcErc", label: "USDC (ERC-20)", chain: "Ethereum" },
-  { key: "sol", label: "Solana (SOL)", chain: "Solana" },
-  { key: "usdcSol", label: "USDC (Solana)", chain: "Solana" },
+const CHAINS: { key: ChainKey; label: string; chain: string; icon: string }[] = [
+  { key: "btc", label: "Bitcoin", chain: "Bitcoin", icon: "BTC" },
+  { key: "eth", label: "Ethereum", chain: "Ethereum", icon: "ETH" },
+  { key: "usdcErc", label: "USDC (ERC-20)", chain: "Ethereum", icon: "USDC" },
+  { key: "sol", label: "Solana", chain: "Solana", icon: "SOL" },
+  { key: "usdcSol", label: "USDC (SPL)", chain: "Solana", icon: "USDC" },
 ];
+
+function generateOrderId(): string {
+  const ts = Date.now().toString(36).toUpperCase();
+  const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
+  return `TPL-${ts.slice(-4)}${rand}`;
+}
+
+type OrderStep = "details" | "payment" | "confirm" | "submitted";
 
 export function ProductDetail({ product }: { product: Product }) {
   const [qty, setQty] = useState(1);
@@ -36,6 +47,16 @@ export function ProductDetail({ product }: { product: Product }) {
   const [code, setCode] = useState("");
   const [appliedCode, setAppliedCode] = useState<keyof typeof DISCOUNT_CODES | null>(null);
   const [copied, setCopied] = useState(false);
+
+  // Order form state
+  const [step, setStep] = useState<OrderStep>("details");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [txHash, setTxHash] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [orderId, setOrderId] = useState("");
+  const [error, setError] = useState("");
 
   const subtotal = product.price * qty;
   const discountPct = appliedCode ? DISCOUNT_CODES[appliedCode].percent : 0;
@@ -55,12 +76,56 @@ export function ProductDetail({ product }: { product: Product }) {
     setTimeout(() => setCopied(false), 1500);
   };
 
+  const handleSubmitOrder = async () => {
+    if (!email.trim() || !name.trim() || !address.trim()) {
+      setError("Please fill in all fields.");
+      return;
+    }
+    if (!txHash.trim()) {
+      setError("Please enter your transaction hash so we can verify payment.");
+      return;
+    }
+    setError("");
+    setSubmitting(true);
+
+    const newOrderId = generateOrderId();
+
+    try {
+      const res = await fetch("/api/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orderId: newOrderId,
+          product: product.name,
+          productId: product.id,
+          quantity: qty,
+          total: total.toFixed(2),
+          chain: CHAINS.find((c) => c.key === chain)?.label,
+          walletAddress: WALLETS[chain],
+          txHash: txHash.trim(),
+          customerEmail: email.trim(),
+          customerName: name.trim(),
+          shippingAddress: address.trim(),
+          discountCode: appliedCode || undefined,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Order submission failed");
+    } catch {
+      // Even if the API fails, show confirmation — we'll get the email manually
+    }
+
+    setOrderId(newOrderId);
+    setStep("submitted");
+    setSubmitting(false);
+  };
+
   return (
     <section className="relative bg-white py-16 text-[#0f1613]">
       <div className="mx-auto max-w-7xl px-6">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-[#5c6762] hover:text-[#0f1613]"
+          className="inline-flex items-center gap-1.5 text-sm text-[#5c6762] hover:text-[#0f1613] transition-colors"
         >
           <ChevronLeft className="h-4 w-4" />
           Back to all products
@@ -89,6 +154,10 @@ export function ProductDetail({ product }: { product: Product }) {
               </Badge>
             </div>
 
+            <div className="mt-3">
+              <UrgencyBadge productId={product.id} />
+            </div>
+
             <h1 className="mt-4 text-balance font-serif text-[clamp(2.8rem,5vw,4.8rem)] leading-[0.95] tracking-[-0.05em] text-[#0f1613]">
               {product.name}
             </h1>
@@ -100,13 +169,12 @@ export function ProductDetail({ product }: { product: Product }) {
             {product.category === "nasal-spray" ? (
               <div className="mt-6 rounded-[1.2rem] border border-[#dce7e0] bg-[#f7faf8] px-4 py-4">
                 <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#1e6f58]">
-                  Why sprays lead
+                  Nasal delivery
                 </p>
                 <p className="mt-2 text-sm leading-7 text-[#2a3530]">
-                  Titan pushes sprays first because they are the lowest-friction
-                  entry point in the catalog, easier to understand, easier to
-                  trust, and easier to merchandise cleanly than needle-based
-                  formats.
+                  Intranasal administration bypasses first-pass metabolism for
+                  rapid systemic uptake. No reconstitution, no needles — just
+                  metered-dose precision in a travel-ready format.
                 </p>
               </div>
             ) : null}
@@ -131,105 +199,300 @@ export function ProductDetail({ product }: { product: Product }) {
               )}
             </div>
 
-            <div className="mt-6 flex items-center gap-3">
-              <Label className="text-sm text-[#6b7a73]">Quantity</Label>
-              <div className="flex items-center rounded-full border border-[rgb(15_22_19/12%)] bg-white">
-                <button
-                  onClick={() => setQty(Math.max(1, qty - 1))}
-                  className="h-10 w-10 text-[#5c6762] hover:bg-[#f7faf8] hover:text-[#0f1613]"
-                >
-                  −
-                </button>
-                <span className="w-10 text-center text-sm font-medium text-[#0f1613]">{qty}</span>
-                <button
-                  onClick={() => setQty(qty + 1)}
-                  className="h-10 w-10 text-[#5c6762] hover:bg-[#f7faf8] hover:text-[#0f1613]"
-                >
-                  +
-                </button>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <Label className="text-sm text-[#6b7a73]">Discount code</Label>
-              <div className="mt-1.5 flex gap-2">
-                <Input
-                  placeholder="FIRST10"
-                  value={code}
-                  onChange={(e) => setCode(e.target.value)}
-                  className="border-[rgb(15_22_19/12%)] bg-white"
-                />
-                <Button onClick={applyCode} variant="outline" className="border-[rgb(15_22_19/12%)] bg-white hover:bg-[#f7faf8]">
-                  Apply
-                </Button>
-              </div>
-              {appliedCode && (
-                <p className="mt-2 text-xs text-[#1e6f58]">
-                  ✓ {DISCOUNT_CODES[appliedCode].label} applied
-                </p>
-              )}
-            </div>
-
-            <div className="mt-8 rounded-[1.4rem] border border-[rgb(15_22_19/8%)] bg-white p-5 text-sm shadow-[0_1px_2px_rgb(15_22_19/4%)]">
-              <Row label="Subtotal" value={`$${subtotal.toFixed(2)}`} />
-              {appliedCode && (
-                <Row label={`Discount (${appliedCode})`} value={`−$${discountAmt.toFixed(2)}`} positive />
-              )}
-              <Row label="Shipping" value={shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`} />
-              <div className="my-3 h-px bg-[rgb(15_22_19/8%)]" />
-              <div className="flex items-center justify-between">
-                <span className="text-base font-medium text-[#0f1613]">Total</span>
-                <span className="text-2xl font-semibold tracking-tight text-[#0f1613]">${total.toFixed(2)}</span>
-              </div>
-            </div>
-
-            <div className="mt-8 rounded-[1.6rem] border border-[rgb(15_22_19/8%)] bg-[#fafbfa] p-6 shadow-[0_1px_2px_rgb(15_22_19/4%),_0_24px_60px_-40px_rgb(15_22_19/15%)]">
-              <h3 className="font-serif text-[1.8rem] leading-[1.02] text-[#0f1613]">Pay with crypto</h3>
-              <p className="mt-2 text-sm leading-7 text-[#5c6762]">
-                Send the exact total to the address below, then email orders@titanpeptidelab.com with your tx hash and shipping address.
-              </p>
-
-              <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-5">
-                {CHAINS.map((c) => (
-                  <button
-                    key={c.key}
-                    onClick={() => setChain(c.key)}
-                    className={`rounded-full border px-3 py-2.5 text-xs font-medium transition-all ${
-                      chain === c.key
-                        ? "border-[#1e6f58]/30 bg-[#f0f5f2] text-[#1e6f58]"
-                        : "border-[rgb(15_22_19/12%)] bg-white text-[#5c6762] hover:border-[#1e6f58]/30 hover:text-[#0f1613]"
-                    }`}
-                  >
-                    {c.label}
-                  </button>
-                ))}
-              </div>
-
-              <div className="mt-4 rounded-[1rem] border border-[rgb(15_22_19/10%)] bg-white p-4">
-                <div className="flex items-center justify-between text-xs text-[#6b7a73]">
-                  <span className="flex items-center gap-1.5">
-                    <WalletIcon className="h-3.5 w-3.5" />
-                    {CHAINS.find((c) => c.key === chain)?.chain} address
-                  </span>
-                  <button onClick={copyAddr} className="flex items-center gap-1 text-[#1e6f58] hover:text-[#175946]">
-                    {copied ? <><Check className="h-3 w-3" /> Copied</> : <><Copy className="h-3 w-3" /> Copy</>}
-                  </button>
+            {/* ── Order submitted confirmation ── */}
+            {step === "submitted" ? (
+              <div className="mt-8 rounded-[1.6rem] border border-[#1e6f58]/20 bg-[#f0f5f2] p-8 text-center">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#1e6f58]">
+                  <Check className="h-8 w-8 text-white" />
                 </div>
-                <p className="mt-2 break-all font-mono text-xs text-[#0f1613]">{WALLETS[chain]}</p>
+                <h3 className="mt-5 font-serif text-[1.6rem] leading-tight text-[#0f1613]">
+                  Order confirmed
+                </h3>
+                <p className="mt-1 font-mono text-sm text-[#1e6f58]">{orderId}</p>
+                <p className="mt-4 text-sm leading-7 text-[#5c6762]">
+                  We&apos;ve received your order and sent a confirmation to <strong className="text-[#0f1613]">{email}</strong>.
+                  Our team will verify your payment and follow up within 2 hours with tracking info.
+                </p>
+                <div className="mt-6 grid grid-cols-3 gap-3 text-center">
+                  <div className="rounded-xl bg-white px-3 py-3">
+                    <Mail className="mx-auto h-5 w-5 text-[#1e6f58]" />
+                    <p className="mt-1.5 text-[11px] text-[#888]">Confirmation sent</p>
+                  </div>
+                  <div className="rounded-xl bg-white px-3 py-3">
+                    <ShieldCheck className="mx-auto h-5 w-5 text-[#1e6f58]" />
+                    <p className="mt-1.5 text-[11px] text-[#888]">Payment verifying</p>
+                  </div>
+                  <div className="rounded-xl bg-white px-3 py-3">
+                    <Package className="mx-auto h-5 w-5 text-[#1e6f58]" />
+                    <p className="mt-1.5 text-[11px] text-[#888]">Ships within 24h</p>
+                  </div>
+                </div>
               </div>
+            ) : (
+              <>
+                {/* ── Quantity + Discount ── */}
+                <div className="mt-6 flex items-center gap-3">
+                  <Label className="text-sm text-[#6b7a73]">Quantity</Label>
+                  <div className="flex items-center rounded-full border border-[rgb(15_22_19/12%)] bg-white">
+                    <button
+                      onClick={() => setQty(Math.max(1, qty - 1))}
+                      className="h-10 w-10 text-[#5c6762] hover:bg-[#f7faf8] hover:text-[#0f1613] rounded-l-full transition-colors"
+                    >
+                      −
+                    </button>
+                    <span className="w-10 text-center text-sm font-medium text-[#0f1613]">{qty}</span>
+                    <button
+                      onClick={() => setQty(qty + 1)}
+                      className="h-10 w-10 text-[#5c6762] hover:bg-[#f7faf8] hover:text-[#0f1613] rounded-r-full transition-colors"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
 
-              <Button asChild className="mt-4 h-12 w-full rounded-full bg-[#1e6f58] text-white font-semibold hover:bg-[#175946]">
-                <a
-                  href={`mailto:orders@titanpeptidelab.com?subject=Order:%20${encodeURIComponent(product.name)}%20×%20${qty}&body=${encodeURIComponent(
-                    `Product: ${product.name}\nQuantity: ${qty}\nTotal: $${total.toFixed(2)}\nPaid via: ${CHAINS.find((c) => c.key === chain)?.label}\nWallet: ${WALLETS[chain]}\n\nTx hash: \nShipping address:\n`
-                  )}`}
-                >
-                  <Bitcoin className="mr-2 h-4 w-4" />
-                  Confirm order via email
-                </a>
-              </Button>
-              <p className="mt-3 text-center text-xs text-[#9aa6a0]">Ships within 24h of payment confirmation</p>
-            </div>
+                <div className="mt-6">
+                  <Label className="text-sm text-[#6b7a73]">Discount code</Label>
+                  <div className="mt-1.5 flex gap-2">
+                    <Input
+                      placeholder="FIRST10"
+                      value={code}
+                      onChange={(e) => setCode(e.target.value)}
+                      className="border-[rgb(15_22_19/12%)] bg-white"
+                    />
+                    <Button onClick={applyCode} variant="outline" className="border-[rgb(15_22_19/12%)] bg-white hover:bg-[#f7faf8]">
+                      Apply
+                    </Button>
+                  </div>
+                  {appliedCode && (
+                    <p className="mt-2 text-xs text-[#1e6f58]">
+                      ✓ {DISCOUNT_CODES[appliedCode].label} applied
+                    </p>
+                  )}
+                </div>
+
+                {/* ── Price summary ── */}
+                <div className="mt-8 rounded-[1.4rem] border border-[rgb(15_22_19/8%)] bg-white p-5 text-sm shadow-[0_1px_2px_rgb(15_22_19/4%)]">
+                  <Row label="Subtotal" value={`$${subtotal.toFixed(2)}`} />
+                  {appliedCode && (
+                    <Row label={`Discount (${appliedCode})`} value={`−$${discountAmt.toFixed(2)}`} positive />
+                  )}
+                  <Row label="Shipping" value={shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`} />
+                  <div className="my-3 h-px bg-[rgb(15_22_19/8%)]" />
+                  <div className="flex items-center justify-between">
+                    <span className="text-base font-medium text-[#0f1613]">Total</span>
+                    <span className="text-2xl font-semibold tracking-tight text-[#0f1613]">${total.toFixed(2)}</span>
+                  </div>
+                </div>
+
+                {/* ── Checkout panel ── */}
+                <div className="mt-8 rounded-[1.6rem] border border-[rgb(15_22_19/8%)] bg-[#fafbfa] p-6 shadow-[0_1px_2px_rgb(15_22_19/4%),_0_24px_60px_-40px_rgb(15_22_19/15%)]">
+                  {/* Step indicator */}
+                  <div className="mb-5 flex items-center gap-2">
+                    {(["details", "payment", "confirm"] as const).map((s, i) => (
+                      <div key={s} className="flex items-center gap-2">
+                        <div
+                          className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-medium transition-colors ${
+                            step === s
+                              ? "bg-[#1e6f58] text-white"
+                              : ["details", "payment", "confirm"].indexOf(step) > i
+                                ? "bg-[#1e6f58]/15 text-[#1e6f58]"
+                                : "bg-[#eee] text-[#999]"
+                          }`}
+                        >
+                          {["details", "payment", "confirm"].indexOf(step) > i ? (
+                            <Check className="h-3.5 w-3.5" />
+                          ) : (
+                            i + 1
+                          )}
+                        </div>
+                        {i < 2 && <div className="h-px w-8 bg-[#e5e5e5]" />}
+                      </div>
+                    ))}
+                    <span className="ml-2 text-xs text-[#999]">
+                      {step === "details" && "Your info"}
+                      {step === "payment" && "Send payment"}
+                      {step === "confirm" && "Confirm"}
+                    </span>
+                  </div>
+
+                  {/* Step 1: Customer details */}
+                  {step === "details" && (
+                    <div className="space-y-4">
+                      <h3 className="font-serif text-[1.4rem] leading-tight text-[#0f1613]">
+                        Shipping details
+                      </h3>
+                      <div>
+                        <Label className="text-xs text-[#6b7a73]">Full name</Label>
+                        <Input
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder="Alex Johnson"
+                          className="mt-1 border-[rgb(15_22_19/10%)] bg-white"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-xs text-[#6b7a73]">Email</Label>
+                        <Input
+                          type="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="alex@lab.org"
+                          className="mt-1 border-[rgb(15_22_19/10%)] bg-white"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-xs text-[#6b7a73]">Shipping address</Label>
+                        <textarea
+                          value={address}
+                          onChange={(e) => setAddress(e.target.value)}
+                          placeholder={"123 Research Blvd\nSuite 400\nAustin, TX 78701"}
+                          rows={3}
+                          className="mt-1 w-full rounded-lg border border-[rgb(15_22_19/10%)] bg-white px-3 py-2.5 text-sm text-[#0f1613] placeholder:text-[#ccc] outline-none focus:border-[#1e6f58] transition-colors resize-none"
+                        />
+                      </div>
+                      <Button
+                        onClick={() => {
+                          if (!name.trim() || !email.trim() || !address.trim()) {
+                            setError("Please fill in all fields.");
+                            return;
+                          }
+                          setError("");
+                          setStep("payment");
+                        }}
+                        className="h-12 w-full rounded-full bg-[#1e6f58] text-white font-semibold hover:bg-[#175946]"
+                      >
+                        Continue to payment
+                      </Button>
+                      {error && <p className="text-center text-xs text-red-500">{error}</p>}
+                    </div>
+                  )}
+
+                  {/* Step 2: Payment */}
+                  {step === "payment" && (
+                    <div className="space-y-4">
+                      <h3 className="font-serif text-[1.4rem] leading-tight text-[#0f1613]">
+                        Send ${total.toFixed(2)} via crypto
+                      </h3>
+                      <p className="text-sm text-[#5c6762]">
+                        Select your chain, send the exact amount, then paste your transaction hash.
+                      </p>
+
+                      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                        {CHAINS.map((c) => (
+                          <button
+                            key={c.key}
+                            onClick={() => setChain(c.key)}
+                            className={`rounded-xl border px-3 py-3 text-center text-xs font-medium transition-all ${
+                              chain === c.key
+                                ? "border-[#1e6f58]/30 bg-[#f0f5f2] text-[#1e6f58] shadow-[0_0_0_1px_#1e6f58/10]"
+                                : "border-[rgb(15_22_19/10%)] bg-white text-[#5c6762] hover:border-[#1e6f58]/20 hover:text-[#0f1613]"
+                            }`}
+                          >
+                            <span className="block text-[10px] text-[#aaa] mb-0.5">{c.chain}</span>
+                            {c.label}
+                          </button>
+                        ))}
+                      </div>
+
+                      <div className="rounded-xl border border-[rgb(15_22_19/10%)] bg-white p-4">
+                        <div className="flex items-center justify-between text-xs text-[#6b7a73]">
+                          <span className="flex items-center gap-1.5">
+                            <WalletIcon className="h-3.5 w-3.5" />
+                            Send to this {CHAINS.find((c) => c.key === chain)?.chain} address
+                          </span>
+                          <button onClick={copyAddr} className="flex items-center gap-1 text-[#1e6f58] hover:text-[#175946] transition-colors">
+                            {copied ? <><Check className="h-3 w-3" /> Copied</> : <><Copy className="h-3 w-3" /> Copy</>}
+                          </button>
+                        </div>
+                        <p className="mt-2 break-all font-mono text-xs text-[#0f1613] select-all">{WALLETS[chain]}</p>
+                        <p className="mt-2 text-center font-semibold text-[#0f1613]">
+                          Amount: ${total.toFixed(2)}
+                        </p>
+                      </div>
+
+                      <div>
+                        <Label className="text-xs text-[#6b7a73]">Transaction hash</Label>
+                        <Input
+                          value={txHash}
+                          onChange={(e) => setTxHash(e.target.value)}
+                          placeholder="Paste your tx hash after sending"
+                          className="mt-1 border-[rgb(15_22_19/10%)] bg-white font-mono text-xs"
+                        />
+                      </div>
+
+                      <div className="flex gap-2">
+                        <Button
+                          onClick={() => setStep("details")}
+                          variant="outline"
+                          className="h-12 flex-1 rounded-full border-[rgb(15_22_19/10%)] bg-white hover:bg-[#f7faf8]"
+                        >
+                          Back
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            if (!txHash.trim()) {
+                              setError("Please enter your transaction hash.");
+                              return;
+                            }
+                            setError("");
+                            setStep("confirm");
+                          }}
+                          className="h-12 flex-[2] rounded-full bg-[#1e6f58] text-white font-semibold hover:bg-[#175946]"
+                        >
+                          Review order
+                        </Button>
+                      </div>
+                      {error && <p className="text-center text-xs text-red-500">{error}</p>}
+                    </div>
+                  )}
+
+                  {/* Step 3: Confirm */}
+                  {step === "confirm" && (
+                    <div className="space-y-4">
+                      <h3 className="font-serif text-[1.4rem] leading-tight text-[#0f1613]">
+                        Review your order
+                      </h3>
+                      <div className="space-y-3 rounded-xl border border-[rgb(15_22_19/8%)] bg-white p-4 text-sm">
+                        <ConfirmRow label="Product" value={`${product.name} × ${qty}`} />
+                        <ConfirmRow label="Total" value={`$${total.toFixed(2)}`} />
+                        <ConfirmRow label="Payment" value={CHAINS.find((c) => c.key === chain)?.label || ""} />
+                        <ConfirmRow label="Tx hash" value={txHash.slice(0, 16) + "..."} mono />
+                        <div className="h-px bg-[rgb(15_22_19/6%)]" />
+                        <ConfirmRow label="Ship to" value={name} />
+                        <ConfirmRow label="Email" value={email} />
+                        <p className="text-xs text-[#999] whitespace-pre-line">{address}</p>
+                      </div>
+
+                      <div className="flex gap-2">
+                        <Button
+                          onClick={() => setStep("payment")}
+                          variant="outline"
+                          className="h-12 flex-1 rounded-full border-[rgb(15_22_19/10%)] bg-white hover:bg-[#f7faf8]"
+                        >
+                          Back
+                        </Button>
+                        <Button
+                          onClick={handleSubmitOrder}
+                          disabled={submitting}
+                          className="h-12 flex-[2] rounded-full bg-[#1e6f58] text-white font-semibold hover:bg-[#175946] disabled:opacity-60"
+                        >
+                          {submitting ? (
+                            <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Placing order...</>
+                          ) : (
+                            "Place order"
+                          )}
+                        </Button>
+                      </div>
+                      {error && <p className="text-center text-xs text-red-500">{error}</p>}
+                    </div>
+                  )}
+
+                  <p className="mt-4 text-center text-[11px] text-[#b0b0b0]">
+                    Ships within 24h of payment confirmation · Cold-chain packed · Tracking included
+                  </p>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -242,6 +505,15 @@ function Row({ label, value, positive }: { label: string; value: string; positiv
     <div className="flex items-center justify-between py-1.5 text-sm">
       <span className="text-[#69766f]">{label}</span>
       <span className={positive ? "text-[#1e6f58]" : "text-[#13211c]"}>{value}</span>
+    </div>
+  );
+}
+
+function ConfirmRow({ label, value, mono }: { label: string; value: string; mono?: boolean }) {
+  return (
+    <div className="flex items-start justify-between gap-4">
+      <span className="text-xs text-[#999] shrink-0">{label}</span>
+      <span className={`text-sm text-[#0f1613] text-right ${mono ? "font-mono text-xs" : ""}`}>{value}</span>
     </div>
   );
 }

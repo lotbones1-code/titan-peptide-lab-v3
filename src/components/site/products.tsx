@@ -1,193 +1,112 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { NASAL_SPRAYS, PRODUCTS, type Product } from "@/lib/products";
-import { ProductCard, formatPrice } from "./product-card";
-import { Reveal } from "./reveal";
-import { CompoundPoster } from "./compound-poster";
+"use client";
 
-const SPEC_ROWS = [
-  ["Format", "Precision nasal atomizer"],
-  ["Purity", "HPLC ≥99%"],
-  ["COA", "Lot-matched certificate"],
-  ["Dispatch", "Cold-chain handling"],
-];
+import Link from "next/link";
+import { motion } from "motion/react";
+import { NASAL_SPRAYS, PRODUCTS, type Product } from "@/lib/products";
+import { formatPrice } from "./product-card";
+import { Reveal } from "./reveal";
+import { ArrowUpRight } from "lucide-react";
 
 export function Products() {
-  const featured =
-    NASAL_SPRAYS.find((product) => product.id === "bpc157-spray") ??
-    NASAL_SPRAYS[0];
-  const rest = NASAL_SPRAYS.filter((product) => product.id !== featured.id);
-  const stack = PRODUCTS.find((product) => product.id === "selank-semax-stack");
+  const sprays = NASAL_SPRAYS;
+  const stack = PRODUCTS.find((p) => p.id === "selank-semax-stack");
 
   return (
-    <section id="products" className="border-b border-[rgb(15_22_19/8%)] bg-[#fafafa] py-20 lg:py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+    <section id="products" className="py-24 lg:py-32">
+      <div className="mx-auto max-w-7xl px-6">
         <Reveal>
-          <div className="grid gap-8 lg:grid-cols-[0.35fr_0.65fr] lg:items-end">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6b7a73]">
-              Nasal spray catalog
-            </p>
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>
-              <h2 className="max-w-3xl font-serif text-[clamp(2.8rem,5vw,4.6rem)] leading-[0.96] tracking-[-0.04em] text-[#0f1613]">
-                Nasal sprays first, everything else after.
-              </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-[#5c6762]">
-                The top of the catalog should immediately answer the buyer’s
-                easiest question: where do I start? Titan starts with spray
-                formats, cleaner trust signals, and the products that are
-                easiest to understand without friction.
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#1e6f58]">
+                Catalog
               </p>
+              <h2 className="mt-4 max-w-2xl font-serif text-[clamp(2.4rem,5vw,4rem)] leading-[0.96] tracking-[-0.03em] text-[#0f1613]">
+                Six compounds, one standard.
+              </h2>
             </div>
+            <p className="max-w-sm text-[15px] leading-relaxed text-[#5c6762]">
+              Every bottle ships with a batch-matched COA and cold-chain
+              packing. No needles, no reconstitution.
+            </p>
           </div>
         </Reveal>
 
-        <Reveal delay={0.03}>
-          <div className="mt-8 grid gap-3 sm:grid-cols-3">
-            {[
-              ["No needles", "Lower hesitation, cleaner entry point"],
-              ["Lot-matched proof", "Every spray tied back to batch release"],
-              ["Fastest catalog read", "Lead offers merchandised before injectables"],
-            ].map(([label, value]) => (
-              <div
-                key={label}
-                className="rounded-[1.25rem] border border-[rgb(15_22_19/8%)] bg-white px-4 py-4 shadow-[0_1px_2px_rgb(15_22_19/4%)]"
-              >
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6b7a73]">
-                  {label}
-                </p>
-                <p className="mt-2 text-sm leading-6 text-[#2a3530]">{value}</p>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.05}>
-          <FeaturedProduct product={featured} />
-        </Reveal>
-
-        <div className="mt-7 grid grid-cols-1 gap-5 lg:grid-cols-3">
-          {rest.map((product, index) => (
-            <Reveal key={product.id} delay={index * 0.04}>
-              <ProductCard product={product} />
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {sprays.map((product, i) => (
+            <Reveal key={product.id} delay={i * 0.05}>
+              <CatalogCard product={product} />
             </Reveal>
           ))}
+          {stack && (
+            <Reveal delay={sprays.length * 0.05}>
+              <CatalogCard product={stack} featured />
+            </Reveal>
+          )}
         </div>
 
-        {stack ? (
-          <Reveal delay={0.08}>
-            <div className="mt-6 grid gap-5 rounded-[1.75rem] border border-[rgb(15_22_19/8%)] bg-white p-6 shadow-[0_24px_60px_-45px_rgb(15_22_19/18%),_0_2px_6px_-2px_rgb(15_22_19/6%)] md:grid-cols-[1fr_auto] md:items-center">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#1e6f58]">
-                  Stack option
-                </p>
-                <h3 className="mt-3 font-serif text-[2rem] leading-[1.02] tracking-[-0.03em] text-[#0f1613]">
-                  {stack.name}
-                </h3>
-                <p className="mt-3 max-w-2xl text-sm leading-7 text-[#5c6762]">
-                  {stack.tagline}. {stack.size}. Built for buyers who want the
-                  calm and focus pairing without piecing it together manually.
-                </p>
-              </div>
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="text-right">
-                  <p className="text-3xl font-semibold text-[#0f1613]">
-                    {formatPrice(stack.price)}
-                  </p>
-                  {stack.compareAtPrice ? (
-                    <p className="text-sm text-[#9aa6a0] line-through">
-                      {formatPrice(stack.compareAtPrice)}
-                    </p>
-                  ) : null}
-                </div>
-                <Button
-                  asChild
-                  className="h-11 rounded-full bg-[#1e6f58] px-5 text-white hover:bg-[#175946]"
-                >
-                  <Link href={`/products/${stack.slug}`}>View Stack</Link>
-                </Button>
-              </div>
-            </div>
-          </Reveal>
-        ) : null}
+        <Reveal delay={0.1}>
+          <p className="mt-8 text-center text-[13px] text-[#999]">
+            All products are sold for laboratory research purposes only.
+            Use code <span className="font-medium text-[#1e6f58]">FIRST10</span> for 10% off your first order.
+          </p>
+        </Reveal>
       </div>
     </section>
   );
 }
 
-function FeaturedProduct({ product }: { product: Product }) {
+function CatalogCard({ product, featured }: { product: Product; featured?: boolean }) {
   return (
-    <article className="mt-14 grid overflow-hidden rounded-[2rem] border border-[rgb(15_22_19/8%)] bg-white text-[#0f1613] shadow-[0_34px_90px_-50px_rgb(15_22_19/20%),_0_4px_12px_-4px_rgb(15_22_19/6%)] lg:grid-cols-[0.92fr_1.08fr]">
-      <div className="border-b border-[rgb(15_22_19/6%)] bg-[#fafbfa] lg:border-b-0 lg:border-r">
-        <CompoundPoster product={product} variant="feature" className="min-h-[420px] rounded-none border-0 shadow-none lg:min-h-[640px]" />
+    <Link
+      href={`/products/${product.slug}`}
+      className={`group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border p-7 transition-all duration-300 hover:shadow-[0_8px_40px_-12px_rgba(0,0,0,0.12)] ${
+        featured
+          ? "border-[#1e6f58]/20 bg-[#f0f5f2]"
+          : "border-[#e5e5e5] bg-white hover:border-[#1e6f58]/30"
+      }`}
+    >
+      {/* Ghost text background */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-2 -right-2 font-serif text-[5rem] font-bold leading-none tracking-[-0.06em] text-[#0f1613]/[0.03] transition-all duration-500 group-hover:text-[#0f1613]/[0.06]"
+      >
+        {product.name.replace(" Nasal Spray", "").split(" ")[0]}
       </div>
 
-      <div className="p-6 sm:p-8 lg:p-10">
-        <div className="flex flex-wrap items-center gap-3">
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#1e6f58]">
-            Featured nasal spray
-          </p>
-          <span className="rounded-full border border-[rgb(15_22_19/10%)] bg-white px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#5c6762]">
-            Best entry point
-          </span>
+      <div className="relative">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <h3 className="font-serif text-[1.5rem] leading-tight tracking-[-0.02em] text-[#0f1613]">
+              {product.name.replace(" Nasal Spray", "")}
+            </h3>
+            <p className="mt-1 text-[12px] text-[#999]">{product.size}</p>
+          </div>
+          <motion.div
+            className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#e5e5e5] text-[#ccc] transition-all duration-300 group-hover:border-[#1e6f58] group-hover:bg-[#1e6f58] group-hover:text-white"
+          >
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </motion.div>
         </div>
-        <h3 className="mt-4 max-w-xl font-serif text-[clamp(2.5rem,5vw,4.4rem)] leading-[0.95] tracking-[-0.045em] text-[#0f1613]">
-          {product.name}
-        </h3>
-        <p className="mt-3 text-sm text-[#6b7a73]">{product.size}</p>
-        <p className="mt-6 max-w-xl text-lg leading-8 text-[#2a3530]">
-          {product.description}
+
+        <p className="mt-4 text-[14px] leading-relaxed text-[#5c6762]">
+          {product.tagline}
         </p>
-
-        <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_240px]">
-          <ul className="grid gap-3">
-            {product.benefits.map((benefit) => (
-              <li key={benefit} className="flex gap-3 text-sm text-[#2a3530]">
-                <span className="mt-2 size-1.5 rounded-full bg-[#1e6f58]" />
-                <span>{benefit}</span>
-              </li>
-            ))}
-          </ul>
-
-          <dl className="divide-y divide-[rgb(15_22_19/6%)] rounded-[1.2rem] border border-[rgb(15_22_19/8%)] bg-[#fafafa] px-4 font-mono text-xs">
-            {SPEC_ROWS.map(([label, value]) => (
-              <div key={label} className="grid grid-cols-[82px_1fr] gap-3 py-3">
-                <dt className="uppercase text-[#6b7a73]">{label}</dt>
-                <dd className="text-[#0f1613]">{value}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-
-        <div className="mt-9 flex flex-col gap-5 border-t border-[rgb(15_22_19/8%)] pt-7 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-baseline gap-3">
-            <p className="text-4xl font-semibold">{formatPrice(product.price)}</p>
-            {product.compareAtPrice ? (
-              <p className="text-lg text-[#9aa6a0] line-through">
-                {formatPrice(product.compareAtPrice)}
-              </p>
-            ) : null}
-          </div>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Button
-              asChild
-              className="h-11 rounded-full bg-[#1e6f58] px-5 text-white hover:bg-[#175946]"
-            >
-              <Link href={`/products/${product.slug}`}>Shop Spray</Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="h-11 rounded-full border-[rgb(15_22_19/12%)] bg-white px-5 text-[#0f1613] hover:border-[#1e6f58]/50 hover:bg-[#f7faf8]"
-            >
-              <Link href="/research/bpc-157-nasal-spray">
-                Read research
-                <ArrowRight className="size-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
       </div>
-    </article>
+
+      <div className="relative mt-6 flex items-center justify-between border-t border-[#e5e5e5]/60 pt-4">
+        <span className="text-[18px] font-semibold tracking-tight text-[#0f1613]">
+          {formatPrice(product.price)}
+        </span>
+        {product.compareAtPrice ? (
+          <span className="text-[13px] text-[#bbb] line-through">
+            {formatPrice(product.compareAtPrice)}
+          </span>
+        ) : (
+          <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-[#1e6f58]">
+            ≥99% HPLC
+          </span>
+        )}
+      </div>
+    </Link>
   );
 }

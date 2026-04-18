@@ -1,14 +1,14 @@
 import { cn } from "@/lib/utils";
 import type { Product } from "@/lib/products";
 
-const THEMES: Record<string, { wash: string; line: string; ink: string; chip: string }> = {
-  "bpc157-spray": { wash: "#DEE9E2", line: "#6F8E7B", ink: "#183026", chip: "#EEF4F0" },
-  "selank-spray": { wash: "#E2E7F3", line: "#7288B5", ink: "#1D2942", chip: "#F0F3F9" },
-  "semax-spray": { wash: "#EFE3C8", line: "#C79A47", ink: "#4A3512", chip: "#FBF4E8" },
-  "pt141-spray": { wash: "#ECD8E2", line: "#9F6A7F", ink: "#44212F", chip: "#F8EFF3" },
-  "oxytocin-spray": { wash: "#F0DDD6", line: "#D27D69", ink: "#49281E", chip: "#FBF1EE" },
-  "dsip-spray": { wash: "#E0E5F2", line: "#6876A6", ink: "#202A45", chip: "#F0F3FA" },
-  "selank-semax-stack": { wash: "#E6E9F0", line: "#8892B4", ink: "#222B3C", chip: "#F3F5F9" },
+const THEMES: Record<string, { line: string; tint: string }> = {
+  "bpc157-spray": { line: "#5F8A76", tint: "#EDF3EF" },
+  "selank-spray": { line: "#7487B0", tint: "#EEF1F7" },
+  "semax-spray": { line: "#B88A3D", tint: "#F7F1E5" },
+  "pt141-spray": { line: "#98677B", tint: "#F5EDF1" },
+  "oxytocin-spray": { line: "#C77D69", tint: "#F8F0EC" },
+  "dsip-spray": { line: "#6577A4", tint: "#EEF1F8" },
+  "selank-semax-stack": { line: "#6F7C97", tint: "#EEF1F5" },
 };
 
 function shortName(name: string) {
@@ -18,7 +18,7 @@ function shortName(name: string) {
 function formatLabel(category: Product["category"]) {
   if (category === "nasal-spray") return "Nasal spray";
   if (category === "injectable") return "Injectable";
-  if (category === "stack") return "Stack";
+  if (category === "stack") return "Research stack";
   return "Research";
 }
 
@@ -36,76 +36,77 @@ export function CompoundPoster({
 
   const titleClass =
     variant === "feature"
-      ? "text-[clamp(3.6rem,6vw,6rem)]"
+      ? "text-[clamp(3rem,4.4vw,4.4rem)]"
       : variant === "detail"
-        ? "text-[clamp(3.4rem,5vw,5.2rem)]"
+        ? "text-[clamp(2.8rem,4.2vw,4rem)]"
         : variant === "hero"
-          ? "text-[clamp(2.1rem,4vw,3.3rem)]"
-          : "text-[clamp(2rem,3.4vw,2.7rem)]";
+          ? "text-[clamp(2rem,3.1vw,2.9rem)]"
+          : "text-[clamp(1.9rem,2.7vw,2.5rem)]";
 
   return (
     <div
       className={cn(
-        "group relative overflow-hidden rounded-[1.8rem] border border-[rgb(15_22_19/8%)] bg-[#faf7f1] shadow-[0_1px_2px_rgb(15_22_19/4%),_0_24px_60px_-40px_rgb(15_22_19/12%)]",
+        "relative overflow-hidden rounded-[1.75rem] border border-[rgb(17_17_17/8%)] bg-[#faf8f2] shadow-[0_1px_2px_rgb(17_17_17/4%),_0_18px_40px_-32px_rgb(17_17_17/14%)]",
         className,
       )}
     >
       <div
-        className="absolute inset-0"
+        aria-hidden
+        className="absolute inset-0 opacity-60"
         style={{
-          background: `radial-gradient(circle at 16% 18%, ${theme.wash} 0%, rgba(255,255,255,0) 42%), linear-gradient(180deg, #fbf8f2 0%, #f6f1e8 100%)`,
+          backgroundImage:
+            "linear-gradient(to right, rgba(17,17,17,0.035) 1px, transparent 1px), linear-gradient(to bottom, rgba(17,17,17,0.035) 1px, transparent 1px)",
+          backgroundSize: variant === "card" ? "30px 30px" : "34px 34px",
+          maskImage: "linear-gradient(180deg, rgba(0,0,0,0.3), transparent 85%)",
         }}
       />
-      <div
-        aria-hidden
-        className="absolute bottom-3 right-3 font-semibold uppercase tracking-[-0.06em] opacity-[0.06]"
-        style={{ color: theme.ink, fontSize: variant === "card" ? "5rem" : variant === "hero" ? "7rem" : "8rem", lineHeight: 0.9 }}
-      >
-        {name}
-      </div>
-      <div
-        aria-hidden
-        className="absolute inset-y-5 left-5 w-3 rounded-full"
-        style={{ background: theme.line }}
-      />
+      <div aria-hidden className="absolute inset-x-0 top-0 h-[3px]" style={{ background: theme.line }} />
+      <div aria-hidden className="absolute right-6 top-6 h-20 w-20 rounded-full border border-[rgb(17_17_17/6%)]" style={{ background: theme.tint }} />
 
       <div className="relative flex h-full flex-col justify-between p-6 sm:p-7">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#5d6963]">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#5f6662]">
               Titan Peptide Lab
             </p>
-            <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#7b847f]">
+            <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#7a817d]">
               {formatLabel(product.category)}
             </p>
           </div>
-          <span
-            className="rounded-full border px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em]"
-            style={{ borderColor: `${theme.line}26`, color: theme.ink, background: theme.chip }}
-          >
-            Compound-led
-          </span>
-        </div>
-
-        <div className="mt-8 max-w-[82%]">
-          <h3 className={cn("font-semibold tracking-[-0.06em] text-[#101820]", titleClass)}>
-            {name}
-          </h3>
-          <p className="mt-3 text-sm uppercase tracking-[0.22em] text-[#66706b]">
-            {product.category === "stack" ? "Research stack" : "Precision nasal spray"}
-          </p>
-          <p className="mt-2 text-sm leading-6 text-[#44504a]">{product.size}</p>
-        </div>
-
-        <div className="mt-8 flex items-center justify-between gap-3 border-t border-[rgb(15_22_19/8%)] pt-4">
-          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#66706b]">
+          <span className="rounded-full border border-[rgb(17_17_17/8%)] bg-white/90 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#505652]">
             Lot-matched COA
           </span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#66706b]">
-            Universal crypto checkout
-          </span>
+        </div>
+
+        <div className="mt-10 max-w-[34rem]">
+          <h3 className={cn("font-semibold leading-[0.94] tracking-[-0.05em] text-[#111111]", titleClass)}>
+            {name}
+          </h3>
+          <p className="mt-4 max-w-[28rem] text-sm leading-6 text-[#4e5551]">
+            {product.category === "stack"
+              ? "Two-compound stack, merchandised as a cleaner single decision."
+              : "Clean entry-format presentation, built to feel credible before the buyer even reads the research page."}
+          </p>
+        </div>
+
+        <div className="mt-8 grid gap-3 sm:grid-cols-2">
+          <Metric label="Format" value={formatLabel(product.category)} tint={theme.tint} />
+          <Metric label="Size" value={product.size} tint={theme.tint} />
+          <Metric label="Proof" value="HPLC release" tint={theme.tint} />
+          <Metric label="Checkout" value="Universal crypto" tint={theme.tint} />
         </div>
       </div>
+    </div>
+  );
+}
+
+function Metric({ label, value, tint }: { label: string; value: string; tint: string }) {
+  return (
+    <div className="rounded-[1rem] border border-[rgb(17_17_17/7%)] bg-white/92 px-4 py-3">
+      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#7a817d]">{label}</p>
+      <p className="mt-2 text-sm font-medium text-[#111111]" style={{ background: `linear-gradient(180deg, transparent 65%, ${tint} 65%)` }}>
+        {value}
+      </p>
     </div>
   );
 }
