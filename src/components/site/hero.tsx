@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, FileCheck2, ShieldCheck, Snowflake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NASAL_SPRAYS } from "@/lib/products";
 import { Reveal } from "./reveal";
+import { CompoundPoster } from "./compound-poster";
 
 const HERO_PRODUCTS = NASAL_SPRAYS.slice(0, 3);
 
@@ -111,29 +111,13 @@ export function Hero() {
                 return (
                   <div
                     key={product.id}
-                    className={`relative rounded-[1.5rem] border border-[rgb(15_22_19/8%)] bg-white p-4 shadow-[0_22px_44px_-28px_rgb(15_22_19/18%)] ${
-                      elevated ? "sm:-translate-y-6 ring-1 ring-[#1e6f58]/10" : ""
-                    }`}
+                    className={`${elevated ? "sm:-translate-y-6" : ""}`}
                   >
-                    <div className="absolute inset-x-8 top-3 h-16 rounded-full bg-[#f0f5f2] blur-2xl" />
-                    <div className="relative flex items-center justify-between text-[11px] text-[#6b7a73]">
-                      <span className="font-mono uppercase tracking-[0.18em]">
-                        {product.name.replace(" Nasal Spray", "")}
-                      </span>
-                      <span className="font-medium text-[#0f1613]">${product.price.toFixed(2)}</span>
-                    </div>
-                    <div className="relative mt-4 flex min-h-[220px] items-end justify-center sm:min-h-[260px]">
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        width={260}
-                        height={320}
-                        priority={elevated}
-                        className={`h-auto w-auto object-contain ${
-                          elevated ? "max-h-[260px] sm:max-h-[310px]" : "max-h-[220px] sm:max-h-[270px]"
-                        }`}
-                      />
-                    </div>
+                    <CompoundPoster
+                      product={product}
+                      variant="hero"
+                      className={`h-full min-h-[260px] ${elevated ? "ring-1 ring-[#1e6f58]/10" : ""}`}
+                    />
                   </div>
                 );
               })}

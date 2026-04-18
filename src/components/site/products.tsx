@@ -1,10 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NASAL_SPRAYS, PRODUCTS, type Product } from "@/lib/products";
 import { ProductCard, formatPrice } from "./product-card";
 import { Reveal } from "./reveal";
+import { CompoundPoster } from "./compound-poster";
 
 const SPEC_ROWS = [
   ["Format", "Precision nasal atomizer"],
@@ -118,19 +118,8 @@ export function Products() {
 function FeaturedProduct({ product }: { product: Product }) {
   return (
     <article className="mt-14 grid overflow-hidden rounded-[2rem] border border-[rgb(15_22_19/8%)] bg-white text-[#0f1613] shadow-[0_34px_90px_-50px_rgb(15_22_19/20%),_0_4px_12px_-4px_rgb(15_22_19/6%)] lg:grid-cols-[0.92fr_1.08fr]">
-      <div className="relative min-h-[420px] border-b border-[rgb(15_22_19/6%)] bg-[#fafbfa] p-8 lg:border-b-0 lg:border-r">
-        <div
-          aria-hidden
-          className="absolute inset-x-10 top-10 h-28 rounded-full bg-[#e8f1ec] blur-3xl opacity-60"
-        />
-        <Image
-          src={product.image}
-          alt={product.name}
-          width={520}
-          height={640}
-          priority
-          className="relative mx-auto h-[360px] w-auto object-contain lg:h-[500px]"
-        />
+      <div className="border-b border-[rgb(15_22_19/6%)] bg-[#fafbfa] lg:border-b-0 lg:border-r">
+        <CompoundPoster product={product} variant="feature" className="min-h-[420px] rounded-none border-0 shadow-none lg:min-h-[640px]" />
       </div>
 
       <div className="p-6 sm:p-8 lg:p-10">

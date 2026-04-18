@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -19,6 +18,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { type Product, WALLETS, DISCOUNT_CODES } from "@/lib/products";
+import { CompoundPoster } from "./compound-poster";
 
 type ChainKey = "btc" | "eth" | "usdcErc" | "sol" | "usdcSol";
 
@@ -68,17 +68,7 @@ export function ProductDetail({ product }: { product: Product }) {
 
         <div className="mt-8 grid gap-12 lg:grid-cols-2">
           <div className="relative">
-            <div className="relative aspect-square overflow-hidden rounded-[1.8rem] border border-[rgb(15_22_19/8%)] bg-[#fafbfa] shadow-[0_1px_2px_rgb(15_22_19/4%),_0_24px_60px_-40px_rgb(15_22_19/18%)]">
-              <div aria-hidden className="absolute inset-x-12 top-8 h-28 rounded-full bg-[#e8f1ec] blur-3xl opacity-60" />
-              <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-contain p-8"
-              />
-            </div>
+            <CompoundPoster product={product} variant="detail" className="aspect-square" />
             <div className="mt-4 grid grid-cols-3 gap-3">
               <TrustChip icon={ShieldCheck} label="HPLC ≥99%" />
               <TrustChip icon={FileCheck2} label="Batch COA" />

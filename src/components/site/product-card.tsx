@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/lib/products";
+import { CompoundPoster } from "./compound-poster";
 
 export type ProductCardProduct = Pick<
   Product,
@@ -34,19 +34,9 @@ export function ProductCard({
     >
       <Link
         href={`/products/${product.slug}`}
-        className="relative flex min-h-72 items-center justify-center overflow-hidden border-b border-[rgb(15_22_19/6%)] bg-[#fafbfa] p-6 outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58] md:border-b-0 md:border-r"
+        className="relative flex min-h-72 overflow-hidden border-b border-[rgb(15_22_19/6%)] bg-[#fafbfa] outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58] md:border-b-0 md:border-r"
       >
-        <div
-          aria-hidden
-          className="absolute inset-x-8 top-6 h-24 rounded-full bg-[#e8f1ec] blur-3xl opacity-60"
-        />
-        <Image
-          src={product.image}
-          alt={product.name}
-          width={260}
-          height={320}
-          className="relative h-60 w-auto object-contain transition duration-500 group-hover:-translate-y-1"
-        />
+        <CompoundPoster product={product} variant="card" className="min-h-72 w-full rounded-none border-0 shadow-none" />
       </Link>
 
       <div className="flex flex-1 flex-col p-6">
