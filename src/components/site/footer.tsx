@@ -15,40 +15,34 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-[#0f1613] text-[#6b7f75]">
-      <div className="mx-auto max-w-7xl px-6 pt-20 pb-12">
-        <div className="grid gap-14 pb-14 border-b border-[#1e3a2e] lg:grid-cols-[1.2fr_2fr]">
+    <footer className="border-t border-[#e5e5e5] bg-white text-[#666]">
+      <div className="mx-auto max-w-7xl px-6 pb-12 pt-18">
+        <div className="grid gap-14 border-b border-[#e5e5e5] pb-12 lg:grid-cols-[1.2fr_2fr]">
           <div>
             <Link
               href="/"
-              className="font-serif text-2xl tracking-tight text-white hover:opacity-70 transition-opacity"
+              className="font-serif text-2xl tracking-tight text-[#1a1a1a] transition-opacity hover:opacity-70"
             >
               {BRAND.name}
             </Link>
-            <p className="mt-4 max-w-sm text-[14px] leading-relaxed">
-              Nasal-first peptide research catalog. HPLC-verified purity,
-              lot-matched certificates, cold-chain dispatch.
+            <p className="mt-4 max-w-sm text-[14px] leading-7 text-[#5c6762]">
+              Nasal-first peptide research catalog. Cleaner proof, lighter design, and a checkout path that feels more premium than underground.
             </p>
 
-            <form className="mt-8 max-w-sm">
-              <label htmlFor="footer-email" className="text-[13px] text-[#4a5e55]">
-                Get research updates and 10% off your first order
-              </label>
-              <div className="mt-2 flex gap-2">
-                <input
-                  id="footer-email"
-                  type="email"
-                  placeholder="email@lab.org"
-                  className="h-10 flex-1 rounded-lg border border-[#1e3a2e] bg-transparent px-3 text-[14px] text-white placeholder:text-[#3a4e45] outline-none focus:border-[#4a9b7f] transition-colors"
-                />
-                <button
-                  type="submit"
-                  className="h-10 rounded-lg bg-[#1e6f58] px-5 text-[13px] font-medium text-white hover:bg-[#258d6e] transition-colors"
-                >
-                  Subscribe
-                </button>
-              </div>
-            </form>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/lab-testing"
+                className="inline-flex h-11 items-center rounded-full border border-[#e5e5e5] bg-[#faf9f7] px-5 text-[13px] font-medium text-[#1a1a1a] transition-colors hover:border-[#1e6f58] hover:text-[#1e6f58]"
+              >
+                View lab proof
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex h-11 items-center rounded-full bg-[#1e6f58] px-5 text-[13px] font-medium text-white transition-colors hover:bg-[#175946]"
+              >
+                Contact Titan
+              </Link>
+            </div>
           </div>
 
           <div className="grid gap-8 sm:grid-cols-3">
@@ -74,8 +68,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="py-8 border-b border-[#1e3a2e]">
-          <p className="text-[13px] text-[#3a4e45] mb-4">Payment — crypto only</p>
+        <div className="border-b border-[#e5e5e5] py-8">
+          <p className="mb-4 text-[13px] text-[#999]">Payment — crypto only</p>
           <dl className="grid gap-3 text-[12px] md:grid-cols-2">
             <WalletRow label="BTC" value={WALLETS.btc} />
             <WalletRow label="ETH / USDC ERC-20" value={WALLETS.eth} />
@@ -84,10 +78,9 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col gap-4 pt-8 text-[13px] lg:flex-row lg:justify-between">
-          <p className="text-[#4a5e55]">&copy; 2026 {BRAND.name}</p>
-          <p className="max-w-2xl text-[#3a4e45]">
-            Products are sold for laboratory research purposes only. Not for
-            human consumption. Statements have not been evaluated by the FDA.
+          <p className="text-[#999]">&copy; 2026 {BRAND.name}</p>
+          <p className="max-w-2xl text-[#999]">
+            Products are sold for laboratory research purposes only. Not for human consumption. Statements have not been evaluated by the FDA.
           </p>
         </div>
       </div>
@@ -104,13 +97,13 @@ function FooterColumn({
 }) {
   return (
     <div>
-      <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#4a5e55]">{title}</h3>
+      <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#999]">{title}</h3>
       <ul className="mt-4 space-y-2.5">
         {links.map((link) => (
           <li key={link.href}>
             <Link
               href={link.href}
-              className="text-[14px] text-[#6b7f75] hover:text-white transition-colors"
+              className="text-[14px] text-[#666] transition-colors hover:text-[#1a1a1a]"
             >
               {link.label}
             </Link>
@@ -124,8 +117,8 @@ function FooterColumn({
 function WalletRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex gap-3">
-      <dt className="shrink-0 text-[#4a5e55] w-32">{label}</dt>
-      <dd className="break-all font-mono text-[#6b7f75]">{value}</dd>
+      <dt className="w-32 shrink-0 text-[#999]">{label}</dt>
+      <dd className="break-all font-mono text-[#666]">{value}</dd>
     </div>
   );
 }

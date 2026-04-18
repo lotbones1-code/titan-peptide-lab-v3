@@ -3,109 +3,146 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 
-const EASE = [0.22, 1, 0.36, 1] as const;
-
-const LINE_VARIANTS = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: EASE as unknown as [number, number, number, number], delay: 0.15 + i * 0.1 },
-  }),
-};
+const STATES = [
+  {
+    title: "Calm focus",
+    body: "Selank and Semax protocols for people who want clear thinking without the wired feeling.",
+    accent: "#EAF4EF",
+    delay: 0.18,
+  },
+  {
+    title: "Deeper recovery",
+    body: "BPC-157 and DSIP concepts built around repair, sleep quality, and feeling physically back.",
+    accent: "#F3F6EC",
+    delay: 0.28,
+  },
+  {
+    title: "Social ease",
+    body: "Oxytocin and calm-state research positioned around composure, warmth, and regulation.",
+    accent: "#F6F1EA",
+    delay: 0.38,
+  },
+];
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-[#0f1613]">
-      {/* Subtle radial glow */}
+    <section className="relative overflow-hidden border-b border-[#e5e5e5] bg-[#faf9f7]">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 70% 50% at 30% 60%, rgba(30,111,88,0.15) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 80% 20%, rgba(30,111,88,0.08) 0%, transparent 60%)",
+            "radial-gradient(circle at 14% 18%, rgba(30,111,88,0.08), transparent 28%), radial-gradient(circle at 88% 20%, rgba(30,111,88,0.05), transparent 24%), linear-gradient(180deg, rgba(255,255,255,0.94) 0%, rgba(250,249,247,1) 100%)",
         }}
       />
 
-      <div className="relative mx-auto max-w-7xl px-6 pb-20 pt-28 sm:pb-28 sm:pt-36 lg:pb-36 lg:pt-44">
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.05 }}
-          className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#4a9b7f]"
-        >
-          HPLC-verified &middot; Cold-chain shipped &middot; Crypto checkout
-        </motion.p>
-
-        <h1 className="mt-8 max-w-4xl">
-          <motion.span
-            custom={0}
-            variants={LINE_VARIANTS}
-            initial="hidden"
-            animate="visible"
-            className="block font-serif text-[clamp(3rem,7.5vw,6.5rem)] leading-[0.92] tracking-[-0.03em] text-white"
+      <div className="relative mx-auto grid max-w-7xl gap-14 px-6 pb-20 pt-20 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-center lg:pb-28 lg:pt-28">
+        <div>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45 }}
+            className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#1e6f58]"
           >
-            The peptide lab
-          </motion.span>
-          <motion.span
-            custom={1}
-            variants={LINE_VARIANTS}
-            initial="hidden"
-            animate="visible"
-            className="block font-serif text-[clamp(3rem,7.5vw,6.5rem)] italic leading-[0.92] tracking-[-0.03em] text-[#4a9b7f]"
-          >
-            that shows its work.
-          </motion.span>
-        </h1>
+            HPLC-verified · Lot-matched COA · Cold-chain shipped
+          </motion.p>
 
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-8 max-w-lg text-[17px] leading-relaxed text-[#8a9b93]"
-        >
-          Six nasal spray compounds. Every lot HPLC-screened to &ge;99% purity
-          with a matched certificate of analysis. Manual fulfillment, cold-chain
-          packed, shipped within 24 hours.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.65 }}
-          className="mt-10 flex flex-wrap items-center gap-4"
-        >
-          <Link
-            href="/products"
-            className="group inline-flex h-13 items-center gap-2 rounded-full bg-[#1e6f58] px-8 text-[15px] font-medium text-white transition-all hover:bg-[#258d6e] hover:shadow-[0_0_24px_-4px_rgba(30,111,88,0.5)]"
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.08 }}
+            className="mt-6 max-w-4xl font-serif text-[clamp(3rem,7vw,6rem)] leading-[0.94] tracking-[-0.05em] text-[#1a1a1a]"
           >
-            Browse the catalog
-            <span className="inline-block transition-transform group-hover:translate-x-1">&rarr;</span>
-          </Link>
-          <Link
-            href="/research/bpc-157-nasal-spray"
-            className="inline-flex h-13 items-center rounded-full border border-[#2a3d34] px-7 text-[15px] text-[#8a9b93] transition-colors hover:border-[#4a9b7f] hover:text-[#4a9b7f]"
-          >
-            Read the research
-          </Link>
-        </motion.div>
+            Nasal peptide sprays,
+            <br />
+            verified and shipped cold.
+          </motion.h1>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.85 }}
-          className="mt-10 inline-flex items-center gap-2.5 rounded-full border border-[#1e3a2e] bg-[#0f1613]/60 px-5 py-2.5 backdrop-blur-sm"
-        >
-          <span className="text-[13px] text-[#6b7f75]">First order?</span>
-          <span className="rounded-full bg-[#1e6f58]/20 px-3 py-0.5 text-[13px] font-semibold text-[#4a9b7f]">
-            FIRST10
-          </span>
-          <span className="text-[13px] text-[#6b7f75]">for 10% off</span>
-        </motion.div>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.16 }}
+            className="mt-7 max-w-2xl text-[17px] leading-8 text-[#5c6762]"
+          >
+            Titan is the all-white, trust-first version of the category. Six spray compounds,
+            one stack, cleaner proof surfaces, simpler checkout, and a sharper nasal-first story
+            that feels premium instead of sketchy.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.24 }}
+            className="mt-9 flex flex-wrap gap-3"
+          >
+            <span className="rounded-full border border-[#e5e5e5] bg-white px-4 py-2 text-[13px] text-[#666] shadow-[0_2px_10px_-6px_rgba(0,0,0,0.12)]">
+              6 sprays + 1 stack
+            </span>
+            <span className="rounded-full border border-[#e5e5e5] bg-white px-4 py-2 text-[13px] text-[#666] shadow-[0_2px_10px_-6px_rgba(0,0,0,0.12)]">
+              FIRST10 for first orders
+            </span>
+            <span className="rounded-full border border-[#e5e5e5] bg-white px-4 py-2 text-[13px] text-[#666] shadow-[0_2px_10px_-6px_rgba(0,0,0,0.12)]">
+              Same-day if paid before 2 PM PT
+            </span>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.32 }}
+            className="mt-10 flex flex-wrap items-center gap-4"
+          >
+            <Link
+              href="/products"
+              className="inline-flex h-12 items-center rounded-full bg-[#1e6f58] px-7 text-[15px] font-medium text-white transition-colors hover:bg-[#175946]"
+            >
+              Shop nasal sprays
+            </Link>
+            <Link
+              href="/lab-testing"
+              className="inline-flex h-12 items-center rounded-full border border-[#e5e5e5] bg-white px-7 text-[15px] text-[#555] transition-colors hover:border-[#1e6f58] hover:text-[#1e6f58]"
+            >
+              See lab proof
+            </Link>
+          </motion.div>
+        </div>
+
+        <div className="relative">
+          <div className="absolute inset-x-8 top-10 h-40 rounded-full bg-[#e8f1ec] blur-3xl" aria-hidden />
+          <div className="relative space-y-4">
+            {STATES.map((state, index) => (
+              <motion.div
+                key={state.title}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: state.delay }}
+                className={`rounded-[1.75rem] border border-[#e5e5e5] bg-white p-6 shadow-[0_18px_40px_-26px_rgba(15,22,19,0.18)] ${
+                  index === 1 ? "translate-x-4" : index === 2 ? "-translate-x-3" : ""
+                }`}
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#1e6f58]">
+                      Healthy-state concept
+                    </p>
+                    <h2 className="mt-3 font-serif text-[1.9rem] leading-[1] tracking-[-0.03em] text-[#1a1a1a]">
+                      {state.title}
+                    </h2>
+                  </div>
+                  <span
+                    aria-hidden
+                    className="block h-16 w-16 rounded-full border border-[#e5e5e5]"
+                    style={{ background: state.accent }}
+                  />
+                </div>
+                <p className="mt-4 text-[14px] leading-7 text-[#5c6762]">
+                  {state.body}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
-
-      {/* Bottom fade to next section */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#faf9f7] to-transparent" />
     </section>
   );
 }

@@ -3,8 +3,6 @@ import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { BRAND } from "@/lib/products";
 import { AIAdvisor } from "@/components/site/ai-advisor";
-import { EmailCapture } from "@/components/site/email-capture";
-import { RecentPurchaseToast } from "@/components/site/urgency-badge";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,11 +59,9 @@ export default function RootLayout({
       className={`h-full antialiased ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
       style={{ colorScheme: "light" }}
     >
-      <body className="min-h-full bg-[#faf9f7] text-[#1a1a1a] font-sans">
+      <body className="min-h-full bg-[#faf9f7] font-sans text-[#1a1a1a]">
         {children}
         <AIAdvisor />
-        <EmailCapture />
-        <RecentPurchaseToast />
       </body>
     </html>
   );

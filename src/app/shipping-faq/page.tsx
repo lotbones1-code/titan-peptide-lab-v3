@@ -4,7 +4,7 @@ import { Footer } from "@/components/site/footer";
 export const metadata = {
   title: "Shipping, Payment & Returns — Titan Peptide Laboratory",
   description:
-    "Discreet US domestic shipping, cold pack handling, crypto payment, active discount codes, and returns policy for research-use products.",
+    "US and international shipping, cold-pack handling, global crypto checkout guidance, active discount codes, and returns policy for research-use products.",
 };
 
 const SECTIONS = [
@@ -13,11 +13,11 @@ const SECTIONS = [
     label: "§S1",
     heading: "Shipping",
     blurb:
-      "Dispatched from Reno within 24 to 48 hours of payment confirmation. Clean outer carton, insulated inner pack, and colder handling where liquids require it.",
+      "Dispatched from Reno after payment confirmation. Clean outer carton, insulated inner pack, and region-aware handling for both US and international buyers.",
     items: [
       {
         q: "How fast does an order leave the laboratory?",
-        a: "Orders confirmed before 14:00 PT usually move same day. Everything else leaves inside 48 hours. Tracking is sent as soon as the dispatch record is closed.",
+        a: "Orders confirmed before 14:00 PT usually move same day. Everything else leaves inside 48 hours. Tracking is sent as soon as the dispatch record is closed, whether the destination is domestic or international.",
       },
       {
         q: "What does the package look like?",
@@ -29,11 +29,11 @@ const SECTIONS = [
       },
       {
         q: "Do you ship internationally?",
-        a: "Yes. International orders are handled with express carriers and the buyer remains responsible for local import rules.",
+        a: "Yes. We support US, Canada, Latin America, Europe, the UK, Asia-Pacific, and selected Middle East and Africa destinations. The buyer remains responsible for local import rules, customs, VAT, or brokerage where applicable.",
       },
       {
         q: "What about tracking?",
-        a: "Domestic orders use USPS Priority or UPS Ground. International orders use DHL Express when applicable. If tracking does not move within 48 hours, contact support.",
+        a: "Domestic orders use USPS Priority or UPS Ground. International orders use DHL Express or the cleanest available tracked lane for the destination. If tracking does not move within 48 hours, contact support.",
       },
     ],
   },
@@ -42,15 +42,15 @@ const SECTIONS = [
     label: "§S2",
     heading: "Payment",
     blurb:
-      "Crypto-only checkout, clearer presentation, and faster confirmation once the payment is received on the selected chain.",
+      "Crypto-only checkout, clearer regional guidance, and faster confirmation once the payment is received on the selected chain.",
     items: [
       {
         q: "Which cryptocurrencies do you accept?",
-        a: "BTC, ETH, USDC ERC-20, SOL, and USDC SPL. Use the wallet string or QR code shown at checkout.",
+        a: "BTC, ETH, USDC ERC-20, SOL, and USDC SPL. US buyers usually prefer Solana rails for speed, while international buyers often prefer BTC, ETH, or USDC ERC-20 depending on local exchange access.",
       },
       {
         q: "Why crypto only?",
-        a: "It clears quickly, removes card processor instability from the category, and keeps fulfillment tied to a confirmed transaction.",
+        a: "It clears quickly, works across borders, removes card processor instability from the category, and keeps fulfillment tied to a confirmed transaction.",
       },
       {
         q: "Can I pay by card?",
@@ -58,7 +58,7 @@ const SECTIONS = [
       },
       {
         q: "What discount codes are active right now?",
-        a: "FIRST10 for first orders, BULK15 for 3 or more items, TITAN20 above $250, and VIP25 on the third repeat order. Codes do not stack with each other.",
+        a: "FIRST10 for first orders, BULK15 for 3 or more items, TITAN20 above $250, and VIP25 on the third repeat order. Codes do not stack, and free-shipping thresholds vary by destination region.",
       },
       {
         q: "Is there a volume contract for laboratories?",
@@ -71,7 +71,7 @@ const SECTIONS = [
     label: "§S3",
     heading: "Returns",
     blurb:
-      "Because the products are sold for research use only, the returns policy is built around quality incidents and shipment issues, not casual restocking.",
+      "Because the products are sold for research use only, the returns policy is built around quality incidents, shipment issues, and cross-border delivery clarity, not casual restocking.",
     items: [
       {
         q: "What is your returns policy?",
@@ -97,8 +97,8 @@ export default function ShippingFAQPage() {
   return (
     <>
       <Nav />
-      <main className="bg-[linear-gradient(180deg,#faf7f1_0%,#f4efe7_55%,#eee7dc_100%)] text-[#13211c]">
-        <section className="border-b border-[#dde4da] py-24 lg:py-32">
+      <main className="bg-[#faf9f7] text-[#13211c]">
+        <section className="border-b border-[#e5e5e5] py-24 lg:py-32">
           <div className="mx-auto max-w-7xl px-6">
             <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#718079]">
               §S — Shipping, Payment, Returns
@@ -111,7 +111,7 @@ export default function ShippingFAQPage() {
                 </h1>
                 <p className="mt-6 max-w-xs text-sm leading-7 text-[#586761]">
                   For anything not covered here, email support@titanpeptidelab.com.
-                  Replies usually arrive inside 24 to 48 hours.
+                  Replies usually arrive inside 24 to 48 hours, with destination-specific help for buyers inside and outside America.
                 </p>
               </div>
 
@@ -134,7 +134,7 @@ export default function ShippingFAQPage() {
                       {s.items.map((f, i) => (
                         <details
                           key={f.q}
-                          className="group rounded-[1.3rem] border border-[#d9e0d7] bg-white/78 px-5 shadow-[0_16px_40px_-34px_rgba(19,33,28,0.22)] [&_summary::-webkit-details-marker]:hidden mt-3"
+                          className="group mt-3 rounded-[1.3rem] border border-[#e5e5e5] bg-white px-5 shadow-[0_16px_40px_-34px_rgba(19,33,28,0.12)] [&_summary::-webkit-details-marker]:hidden"
                         >
                           <summary className="flex cursor-pointer items-baseline justify-between gap-6 py-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58] focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf7f1]">
                             <span className="flex items-baseline gap-5">
@@ -158,7 +158,7 @@ export default function ShippingFAQPage() {
                   </div>
                 ))}
 
-                <div className="mt-16 rounded-[1.8rem] border border-[#d7dfd6] bg-[linear-gradient(180deg,#fffdfa_0%,#f2ede5_100%)] p-8 text-[#13211c] shadow-[0_28px_70px_-42px_rgba(19,33,28,0.34)]">
+                <div className="mt-16 rounded-[1.8rem] border border-[#e5e5e5] bg-white p-8 text-[#13211c] shadow-[0_24px_60px_-40px_rgba(19,33,28,0.14)]">
                   <div className="flex items-baseline justify-between border-b border-[#d8dfd7] pb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-[#6f7b75]">
                     <span>Active discount codes</span>
                     <span>Apply at checkout</span>

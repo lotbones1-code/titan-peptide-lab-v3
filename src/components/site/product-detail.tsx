@@ -15,15 +15,20 @@ import {
   Truck,
   FileCheck2,
   Package,
-  Mail,
   Loader2,
   type LucideIcon,
 } from "lucide-react";
 import { type Product, WALLETS, DISCOUNT_CODES } from "@/lib/products";
 import { CompoundPoster } from "./compound-poster";
-import { UrgencyBadge } from "./urgency-badge";
 
 type ChainKey = "btc" | "eth" | "usdcErc" | "sol" | "usdcSol";
+type ShippingRegionKey =
+  | "us"
+  | "canada"
+  | "latin-america"
+  | "europe-uk"
+  | "asia-pacific"
+  | "middle-east-africa";
 
 const CHAINS: { key: ChainKey; label: string; chain: string; icon: string }[] = [
   { key: "btc", label: "Bitcoin", chain: "Bitcoin", icon: "BTC" },
@@ -31,6 +36,71 @@ const CHAINS: { key: ChainKey; label: string; chain: string; icon: string }[] = 
   { key: "usdcErc", label: "USDC (ERC-20)", chain: "Ethereum", icon: "USDC" },
   { key: "sol", label: "Solana", chain: "Solana", icon: "SOL" },
   { key: "usdcSol", label: "USDC (SPL)", chain: "Solana", icon: "USDC" },
+];
+
+const SHIPPING_REGIONS: {
+  key: ShippingRegionKey;
+  label: string;
+  shipping: number;
+  freeThreshold: number;
+  note: string;
+  customs: string;
+  recommendedChains: ChainKey[];
+}[] = [
+  {
+    key: "us",
+    label: "United States",
+    shipping: 12,
+    freeThreshold: 150,
+    note: "US domestic shipping with standard cold-conscious packing.",
+    customs: "No customs step for US domestic orders.",
+    recommendedChains: ["usdcSol", "sol", "btc", "eth"],
+  },
+  {
+    key: "canada",
+    label: "Canada",
+    shipping: 18,
+    freeThreshold: 200,
+    note: "Canada orders ship with international labeling and tracking.",
+    customs: "Buyer may need to handle taxes or customs on arrival.",
+    recommendedChains: ["btc", "eth", "usdcErc", "usdcSol"],
+  },
+  {
+    key: "latin-america",
+    label: "Latin America",
+    shipping: 24,
+    freeThreshold: 250,
+    note: "Latin America orders get extra address review before dispatch.",
+    customs: "Buyer remains responsible for local import rules and duties.",
+    recommendedChains: ["btc", "usdcErc", "eth", "usdcSol"],
+  },
+  {
+    key: "europe-uk",
+    label: "Europe / UK",
+    shipping: 28,
+    freeThreshold: 250,
+    note: "Europe and UK orders move through tracked express lanes where available.",
+    customs: "VAT, duties, or brokerage can be collected locally by the carrier.",
+    recommendedChains: ["btc", "eth", "usdcErc", "usdcSol"],
+  },
+  {
+    key: "asia-pacific",
+    label: "Asia-Pacific",
+    shipping: 32,
+    freeThreshold: 300,
+    note: "Asia-Pacific orders receive extra address verification and export review.",
+    customs: "Buyer remains responsible for local import restrictions and carrier fees.",
+    recommendedChains: ["btc", "eth", "usdcErc", "usdcSol"],
+  },
+  {
+    key: "middle-east-africa",
+    label: "Middle East / Africa",
+    shipping: 34,
+    freeThreshold: 300,
+    note: "Long-haul destinations are reviewed manually before release.",
+    customs: "Buyer remains responsible for customs, duties, and local regulations.",
+    recommendedChains: ["btc", "eth", "usdcErc"],
+  },
 ];
 
 function generateOrderId(): string {
@@ -52,16 +122,20 @@ export function ProductDetail({ product }: { product: Product }) {
   const [step, setStep] = useState<OrderStep>("details");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [country, setCountry] = useState("");
+  const [shippingRegion, setShippingRegion] = useState<ShippingRegionKey>("us");
   const [address, setAddress] = useState("");
   const [txHash, setTxHash] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [orderId, setOrderId] = useState("");
   const [error, setError] = useState("");
 
+  const shippingProfile =
+    SHIPPING_REGIONS.find((region) => region.key === shippingRegion) ?? SHIPPING_REGIONS[0];
   const subtotal = product.price * qty;
   const discountPct = appliedCode ? DISCOUNT_CODES[appliedCode].percent : 0;
   const discountAmt = subtotal * (discountPct / 100);
-  const shipping = subtotal - discountAmt >= 150 ? 0 : 12;
+  const shipping = subtotal - discountAmt >= shippingProfile.freeThreshold ? 0 : shippingProfile.shipping;
   const total = Math.max(0, subtotal - discountAmt + shipping);
 
   const applyCode = () => {
@@ -76,8 +150,8 @@ export function ProductDetail({ product }: { product: Product }) {
     setTimeout(() => setCopied(false), 1500);
   };
 
-  const handleSubmitOrder = async () => {
-    if (!email.trim() || !name.trim() || !address.trim()) {
+  const handleSubmitOrder = () => {
+    if (!email.trim() || !name.trim() || !country.trim() || !address.trim()) {
       setError("Please fill in all fields.");
       return;
     }
@@ -89,30 +163,29 @@ export function ProductDetail({ product }: { product: Product }) {
     setSubmitting(true);
 
     const newOrderId = generateOrderId();
+    const paymentLabel = CHAINS.find((c) => c.key === chain)?.label ?? chain;
+    const subject = encodeURIComponent(`Titan order request ${newOrderId}`);
+    const body = encodeURIComponent(
+      [
+        `Order ID: ${newOrderId}`,
+        `Product: ${product.name}`,
+        `Product ID: ${product.id}`,
+        `Quantity: ${qty}`,
+        `Total: ${total.toFixed(2)}`,
+        `Payment rail: ${paymentLabel}`,
+        `Wallet sent to: ${WALLETS[chain]}`,
+        `Transaction hash: ${txHash.trim()}`,
+        `Customer name: ${name.trim()}`,
+        `Customer email: ${email.trim()}`,
+        `Shipping region: ${shippingProfile.label}`,
+        `Country: ${country.trim()}`,
+        `Shipping address: ${address.trim()}`,
+        `Discount code: ${appliedCode || "None"}`,
+      ].join("\n")
+    );
 
-    try {
-      const res = await fetch("/api/order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          orderId: newOrderId,
-          product: product.name,
-          productId: product.id,
-          quantity: qty,
-          total: total.toFixed(2),
-          chain: CHAINS.find((c) => c.key === chain)?.label,
-          walletAddress: WALLETS[chain],
-          txHash: txHash.trim(),
-          customerEmail: email.trim(),
-          customerName: name.trim(),
-          shippingAddress: address.trim(),
-          discountCode: appliedCode || undefined,
-        }),
-      });
-
-      if (!res.ok) throw new Error("Order submission failed");
-    } catch {
-      // Even if the API fails, show confirmation — we'll get the email manually
+    if (typeof window !== "undefined") {
+      window.location.href = `mailto:support@titanpeptidelab.com?subject=${subject}&body=${body}`;
     }
 
     setOrderId(newOrderId);
@@ -152,10 +225,6 @@ export function ProductDetail({ product }: { product: Product }) {
               <Badge className="border border-[rgb(15_22_19/10%)] bg-white text-[#5c6762] capitalize">
                 {product.category.replace("-", " ")}
               </Badge>
-            </div>
-
-            <div className="mt-3">
-              <UrgencyBadge productId={product.id} />
             </div>
 
             <h1 className="mt-4 text-balance font-serif text-[clamp(2.8rem,5vw,4.8rem)] leading-[0.95] tracking-[-0.05em] text-[#0f1613]">
@@ -206,25 +275,25 @@ export function ProductDetail({ product }: { product: Product }) {
                   <Check className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="mt-5 font-serif text-[1.6rem] leading-tight text-[#0f1613]">
-                  Order confirmed
+                  Order draft ready
                 </h3>
                 <p className="mt-1 font-mono text-sm text-[#1e6f58]">{orderId}</p>
                 <p className="mt-4 text-sm leading-7 text-[#5c6762]">
-                  We&apos;ve received your order and sent a confirmation to <strong className="text-[#0f1613]">{email}</strong>.
-                  Our team will verify your payment and follow up within 2 hours with tracking info.
+                  Your order request was prepared for <strong className="text-[#0f1613]">support@titanpeptidelab.com</strong>.
+                  If your mail app did not open, send your order ID and payment hash through the contact page and we will match it manually.
                 </p>
-                <div className="mt-6 grid grid-cols-3 gap-3 text-center">
+                <div className="mt-6 grid grid-cols-2 gap-3 text-center sm:grid-cols-3">
                   <div className="rounded-xl bg-white px-3 py-3">
-                    <Mail className="mx-auto h-5 w-5 text-[#1e6f58]" />
-                    <p className="mt-1.5 text-[11px] text-[#888]">Confirmation sent</p>
+                    <Package className="mx-auto h-5 w-5 text-[#1e6f58]" />
+                    <p className="mt-1.5 text-[11px] text-[#888]">Draft prepared</p>
                   </div>
                   <div className="rounded-xl bg-white px-3 py-3">
                     <ShieldCheck className="mx-auto h-5 w-5 text-[#1e6f58]" />
-                    <p className="mt-1.5 text-[11px] text-[#888]">Payment verifying</p>
+                    <p className="mt-1.5 text-[11px] text-[#888]">Payment ready to verify</p>
                   </div>
                   <div className="rounded-xl bg-white px-3 py-3">
-                    <Package className="mx-auto h-5 w-5 text-[#1e6f58]" />
-                    <p className="mt-1.5 text-[11px] text-[#888]">Ships within 24h</p>
+                    <WalletIcon className="mx-auto h-5 w-5 text-[#1e6f58]" />
+                    <p className="mt-1.5 text-[11px] text-[#888]">Reference saved</p>
                   </div>
                 </div>
               </div>
@@ -321,6 +390,9 @@ export function ProductDetail({ product }: { product: Product }) {
                       <h3 className="font-serif text-[1.4rem] leading-tight text-[#0f1613]">
                         Shipping details
                       </h3>
+                      <p className="text-sm leading-7 text-[#5c6762]">
+                        Built for US and international buyers. Pick your destination region first so shipping, customs language, and payment guidance stay accurate.
+                      </p>
                       <div>
                         <Label className="text-xs text-[#6b7a73]">Full name</Label>
                         <Input
@@ -340,19 +412,53 @@ export function ProductDetail({ product }: { product: Product }) {
                           className="mt-1 border-[rgb(15_22_19/10%)] bg-white"
                         />
                       </div>
+                      <div className="grid gap-4 sm:grid-cols-2">
+                        <div>
+                          <Label className="text-xs text-[#6b7a73]">Shipping region</Label>
+                          <select
+                            value={shippingRegion}
+                            onChange={(e) => setShippingRegion(e.target.value as ShippingRegionKey)}
+                            className="mt-1 h-10 w-full rounded-lg border border-[rgb(15_22_19/10%)] bg-white px-3 text-sm text-[#0f1613] outline-none transition-colors focus:border-[#1e6f58]"
+                          >
+                            {SHIPPING_REGIONS.map((region) => (
+                              <option key={region.key} value={region.key}>
+                                {region.label}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div>
+                          <Label className="text-xs text-[#6b7a73]">Country</Label>
+                          <Input
+                            value={country}
+                            onChange={(e) => setCountry(e.target.value)}
+                            placeholder="United States"
+                            className="mt-1 border-[rgb(15_22_19/10%)] bg-white"
+                          />
+                        </div>
+                      </div>
+                      <div className="rounded-[1rem] border border-[rgb(15_22_19/8%)] bg-[#faf9f7] px-4 py-3">
+                        <p className="text-sm font-medium text-[#0f1613]">{shippingProfile.note}</p>
+                        <p className="mt-1 text-xs leading-6 text-[#6b7a73]">
+                          {shipping === 0
+                            ? `You unlocked free shipping for ${shippingProfile.label}.`
+                            : `Shipping for ${shippingProfile.label} is $${shipping.toFixed(2)}, free from $${shippingProfile.freeThreshold.toFixed(2)}.`}
+                        </p>
+                        <p className="mt-1 text-xs leading-6 text-[#6b7a73]">{shippingProfile.customs}</p>
+                      </div>
                       <div>
                         <Label className="text-xs text-[#6b7a73]">Shipping address</Label>
                         <textarea
                           value={address}
                           onChange={(e) => setAddress(e.target.value)}
                           placeholder={"123 Research Blvd\nSuite 400\nAustin, TX 78701"}
-                          rows={3}
+                          rows={4}
                           className="mt-1 w-full rounded-lg border border-[rgb(15_22_19/10%)] bg-white px-3 py-2.5 text-sm text-[#0f1613] placeholder:text-[#ccc] outline-none focus:border-[#1e6f58] transition-colors resize-none"
                         />
                       </div>
                       <Button
                         onClick={() => {
-                          if (!name.trim() || !email.trim() || !address.trim()) {
+                          if (!name.trim() || !email.trim() || !country.trim() || !address.trim()) {
                             setError("Please fill in all fields.");
                             return;
                           }
@@ -374,8 +480,19 @@ export function ProductDetail({ product }: { product: Product }) {
                         Send ${total.toFixed(2)} via crypto
                       </h3>
                       <p className="text-sm text-[#5c6762]">
-                        Select your chain, send the exact amount, then paste your transaction hash.
+                        Checkout stays global here. Pick the rail that is easiest in your region, send the exact amount, then paste your transaction hash.
                       </p>
+
+                      <div className="rounded-[1rem] border border-[rgb(15_22_19/8%)] bg-[#faf9f7] px-4 py-3 text-sm text-[#5c6762]">
+                        <p className="font-medium text-[#0f1613]">Best-fit rails for {shippingProfile.label}</p>
+                        <p className="mt-1 leading-6">
+                          {shippingProfile.recommendedChains
+                            .map((key) => CHAINS.find((chainOption) => chainOption.key === key)?.label)
+                            .filter(Boolean)
+                            .join(" · ")}
+                        </p>
+                        <p className="mt-1 text-xs leading-6 text-[#6b7a73]">{shippingProfile.customs}</p>
+                      </div>
 
                       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                         {CHAINS.map((c) => (
@@ -407,6 +524,9 @@ export function ProductDetail({ product }: { product: Product }) {
                         <p className="mt-2 break-all font-mono text-xs text-[#0f1613] select-all">{WALLETS[chain]}</p>
                         <p className="mt-2 text-center font-semibold text-[#0f1613]">
                           Amount: ${total.toFixed(2)}
+                        </p>
+                        <p className="mt-2 text-center text-xs leading-6 text-[#6b7a73]">
+                          Shipping to {country || shippingProfile.label} · {shipping === 0 ? "free shipping unlocked" : `$${shipping.toFixed(2)} shipping included`}
                         </p>
                       </div>
 
@@ -456,6 +576,8 @@ export function ProductDetail({ product }: { product: Product }) {
                         <ConfirmRow label="Product" value={`${product.name} × ${qty}`} />
                         <ConfirmRow label="Total" value={`$${total.toFixed(2)}`} />
                         <ConfirmRow label="Payment" value={CHAINS.find((c) => c.key === chain)?.label || ""} />
+                        <ConfirmRow label="Region" value={shippingProfile.label} />
+                        <ConfirmRow label="Country" value={country} />
                         <ConfirmRow label="Tx hash" value={txHash.slice(0, 16) + "..."} mono />
                         <div className="h-px bg-[rgb(15_22_19/6%)]" />
                         <ConfirmRow label="Ship to" value={name} />
@@ -477,9 +599,9 @@ export function ProductDetail({ product }: { product: Product }) {
                           className="h-12 flex-[2] rounded-full bg-[#1e6f58] text-white font-semibold hover:bg-[#175946] disabled:opacity-60"
                         >
                           {submitting ? (
-                            <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Placing order...</>
+                            <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Preparing order...</>
                           ) : (
-                            "Place order"
+                            "Prepare order email"
                           )}
                         </Button>
                       </div>
@@ -488,7 +610,7 @@ export function ProductDetail({ product }: { product: Product }) {
                   )}
 
                   <p className="mt-4 text-center text-[11px] text-[#b0b0b0]">
-                    Ships within 24h of payment confirmation · Cold-chain packed · Tracking included
+                    US and international orders supported · Ships after payment confirmation · Tracking included
                   </p>
                 </div>
               </>
