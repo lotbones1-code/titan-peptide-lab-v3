@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { PRODUCTS } from "@/lib/products";
+import { BRAND, PRODUCTS } from "@/lib/products";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { ProductDetail } from "@/components/site/product-detail";
@@ -44,7 +44,7 @@ export default async function ProductPage({
     "@type": "Product",
     name: product.name,
     description: product.description,
-    image: `https://titanpeptidelab.com${product.image}`,
+    image: `https://${BRAND.domain}${product.image}`,
     brand: { "@type": "Brand", name: "Titan Peptide Lab" },
     offers: {
       "@type": "Offer",

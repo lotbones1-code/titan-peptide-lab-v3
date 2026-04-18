@@ -137,7 +137,7 @@ def draw_carton(base: Image.Image, accent: str, product: dict, x: int, y: int, w
     draw_centered_text(d, (x + w // 2, y + 406), "LOT-MATCHED COA", FONT_META, INK)
     draw_centered_text(d, (x + w // 2, y + 436), "RESEARCH USE ONLY", FONT_META, INK)
     d.text((x + 34, y + h - 74), "universal crypto checkout", font=FONT_MICRO, fill=MUTED)
-    d.text((x + 34, y + h - 46), "titanpeptidelab.com", font=FONT_MICRO, fill=MUTED)
+    d.text((x + 34, y + h - 46), "www.titanpeptidelab.com", font=FONT_MICRO, fill=MUTED)
 
 
 def draw_bottle(base: Image.Image, accent: str, product: dict, x: int, y: int, scale: float = 1.0):
