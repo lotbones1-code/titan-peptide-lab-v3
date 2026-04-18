@@ -61,19 +61,19 @@ const STEPS = [
 
 export function PaymentMethods() {
   return (
-    <section className="border-b border-[#dde4da] bg-[linear-gradient(180deg,#eef4ef_0%,#edf2eb_100%)] py-20 lg:py-28">
+    <section className="border-b border-[rgb(15_22_19/8%)] bg-[#fafafa] py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <Reveal>
           <div className="grid gap-8 lg:grid-cols-[0.42fr_0.58fr] lg:items-end">
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#60736b]">
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#1e6f58]">
                 Crypto checkout
               </p>
-              <h2 className="mt-4 max-w-xl font-serif text-[clamp(2.5rem,4.5vw,4.3rem)] leading-[0.96] tracking-[-0.04em] text-[#13211c]">
+              <h2 className="mt-4 max-w-xl font-serif text-[clamp(2.5rem,4.5vw,4.3rem)] leading-[0.96] tracking-[-0.04em] text-[#0f1613]">
                 A payment flow that feels orderly, not improvised.
               </h2>
             </div>
-            <p className="max-w-2xl text-lg leading-8 text-[#55645d]">
+            <p className="max-w-2xl text-lg leading-8 text-[#5c6762]">
               It is still crypto-only, but the presentation should be clearer,
               calmer, and more premium. The point is reducing hesitation before
               the buyer ever sees a wallet string.
@@ -84,17 +84,17 @@ export function PaymentMethods() {
         <div className="mt-12 grid gap-4 lg:grid-cols-3">
           {STEPS.map(({ icon: Icon, title, body }, index) => (
             <Reveal key={title} delay={index * 0.04}>
-              <div className="h-full rounded-[1.5rem] border border-[#d8dfd7] bg-white/84 p-6 shadow-[0_18px_50px_-38px_rgba(19,33,28,0.3)]">
+              <div className="h-full rounded-[1.5rem] border border-[rgb(15_22_19/8%)] bg-white p-6 shadow-[0_1px_2px_rgb(15_22_19/4%),_0_12px_32px_-20px_rgb(15_22_19/12%)]">
                 <div className="flex items-center justify-between">
-                  <span className="grid size-11 place-items-center rounded-full bg-[#edf4ef] text-[#2d7b62]">
+                  <span className="grid size-11 place-items-center rounded-full bg-[#f0f5f2] text-[#1e6f58]">
                     <Icon className="size-5" />
                   </span>
-                  <span className="font-mono text-xs text-[#7a8680]">0{index + 1}</span>
+                  <span className="font-mono text-xs text-[#9aa6a0]">0{index + 1}</span>
                 </div>
-                <h3 className="mt-8 font-serif text-[1.9rem] leading-[1.02] tracking-[-0.03em] text-[#13211c]">
+                <h3 className="mt-8 font-serif text-[1.9rem] leading-[1.02] tracking-[-0.03em] text-[#0f1613]">
                   {title}
                 </h3>
-                <p className="mt-3 text-sm leading-7 text-[#596761]">{body}</p>
+                <p className="mt-3 text-sm leading-7 text-[#5c6762]">{body}</p>
               </div>
             </Reveal>
           ))}
@@ -103,13 +103,13 @@ export function PaymentMethods() {
         <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {CHAINS.map((chain, index) => (
             <Reveal key={chain.key} delay={index * 0.035}>
-              <div className="h-full rounded-[1.5rem] border border-[#d8dfd7] bg-[linear-gradient(180deg,#fffdf9_0%,#f4efe7_100%)] p-5 shadow-[0_18px_50px_-38px_rgba(19,33,28,0.28)]">
+              <div className="h-full rounded-[1.5rem] border border-[rgb(15_22_19/8%)] bg-white p-5 shadow-[0_1px_2px_rgb(15_22_19/4%),_0_12px_32px_-20px_rgb(15_22_19/12%)]">
                 <div className="flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
                     <ChainLogo chain={chain.key} />
                     <div>
-                      <h3 className="font-medium text-[#13211c]">{chain.label}</h3>
-                      <p className="text-sm text-[#66746d]">{chain.asset}</p>
+                      <h3 className="font-medium text-[#0f1613]">{chain.label}</h3>
+                      <p className="text-sm text-[#6b7a73]">{chain.asset}</p>
                     </div>
                   </div>
                   <img
@@ -118,10 +118,10 @@ export function PaymentMethods() {
                     width={86}
                     height={86}
                     loading="lazy"
-                    className="rounded-xl border border-[#d8dfd7] bg-white p-1"
+                    className="rounded-xl border border-[rgb(15_22_19/10%)] bg-white p-1"
                   />
                 </div>
-                <p className="mt-5 break-all font-mono text-[11px] leading-5 text-[#5c6a63]">
+                <p className="mt-5 break-all font-mono text-[11px] leading-5 text-[#5c6762]">
                   {chain.address}
                 </p>
               </div>
@@ -130,7 +130,7 @@ export function PaymentMethods() {
         </div>
 
         <Reveal delay={0.08}>
-          <p className="mt-8 rounded-[1.35rem] border border-[#d3ddd5] bg-white/75 p-4 text-sm leading-7 text-[#33423b] shadow-sm">
+          <p className="mt-8 rounded-[1.35rem] border border-[rgb(15_22_19/8%)] bg-white p-4 text-sm leading-7 text-[#2a3530] shadow-[0_1px_2px_rgb(15_22_19/4%)]">
             Manual review within 24 hours, batch-matched COA included, tracking
             sent after payment confirmation and packing.
           </p>

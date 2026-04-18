@@ -13,7 +13,7 @@ export default function HomePage() {
   return (
     <>
       <Nav />
-      <main className="bg-[linear-gradient(180deg,#fbf8f2_0%,#f7f3ec_38%,#f4f1eb_100%)] text-[#13211c]">
+      <main className="bg-white text-[#0f1613]">
         <Hero />
         <TrustStrip />
         <Products />
