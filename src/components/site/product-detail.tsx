@@ -107,6 +107,20 @@ export function ProductDetail({ product }: { product: Product }) {
             <p className="mt-6 text-lg leading-8 text-[#2a3530]">{product.tagline}</p>
             <p className="mt-3 text-sm leading-7 text-[#5c6762]">{product.description}</p>
 
+            {product.category === "nasal-spray" ? (
+              <div className="mt-6 rounded-[1.2rem] border border-[#dce7e0] bg-[#f7faf8] px-4 py-4">
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#1e6f58]">
+                  Why sprays lead
+                </p>
+                <p className="mt-2 text-sm leading-7 text-[#2a3530]">
+                  Titan pushes sprays first because they are the lowest-friction
+                  entry point in the catalog, easier to understand, easier to
+                  trust, and easier to merchandise cleanly than needle-based
+                  formats.
+                </p>
+              </div>
+            ) : null}
+
             <ul className="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
               {product.benefits.map((b) => (
                 <li key={b} className="flex items-start gap-2 text-sm text-[#2a3530]">

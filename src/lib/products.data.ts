@@ -6,8 +6,8 @@ import type { Product } from "./products";
 export const BRAND_DATA = {
   "name": "Titan Peptide Lab",
   "domain": "titanpeptidelab.com",
-  "tagline": "Research-grade nasal spray peptides.",
-  "description": "Research-grade nasal spray peptides with HPLC-verified purity, batch-matched COAs, and cold-chain shipping."
+  "tagline": "Nasal-first peptide research catalog.",
+  "description": "A nasal-first peptide catalog built around low-friction spray formats, HPLC-verified purity, batch-matched COAs, and cold-chain shipping."
 } as const;
 
 export const WALLETS_DATA = {
@@ -79,6 +79,26 @@ export const PRODUCTS_DATA: Product[] = [
     "bestseller": true
   },
   {
+    "id": "oxytocin-spray",
+    "slug": "oxytocin-nasal-spray",
+    "name": "Oxytocin Nasal Spray",
+    "category": "nasal-spray",
+    "price": 74.99,
+    "compareAtPrice": 94.99,
+    "size": "15mL · 400mcg/spray",
+    "tagline": "Connection, calm, and social regulation research",
+    "description": "Intranasal oxytocin peptide for social bonding, stress response, and calm-state research. Built for labs studying trust, social cognition, and autonomic regulation in a familiar spray format.",
+    "benefits": [
+      "Social cognition research",
+      "Stress regulation studies",
+      "Intranasal peptide delivery",
+      "Lot-matched COA included"
+    ],
+    "image": "/products/oxytocin-spray.png",
+    "featured": true,
+    "newArrival": true
+  },
+  {
     "id": "pt141-spray",
     "slug": "pt-141-nasal-spray",
     "name": "PT-141 Nasal Spray",
@@ -134,6 +154,25 @@ export const PRODUCTS_DATA: Product[] = [
     ],
     "image": "/products/selank-semax-stack.png",
     "bestseller": true
+  },
+  {
+    "id": "dsip-spray",
+    "slug": "dsip-nasal-spray",
+    "name": "DSIP Nasal Spray",
+    "category": "nasal-spray",
+    "price": 62.99,
+    "compareAtPrice": 79.99,
+    "size": "15mL · 500mcg/spray",
+    "tagline": "Sleep quality and recovery-state research",
+    "description": "Delta Sleep-Inducing Peptide delivered through a precision nasal atomizer. Suited to sleep architecture, recovery, and downshift-state research where a non-invasive format matters.",
+    "benefits": [
+      "Sleep architecture studies",
+      "Recovery-state support",
+      "Low-friction spray format",
+      "HPLC-verified purity"
+    ],
+    "image": "/products/dsip-spray.png",
+    "newArrival": true
   },
   {
     "id": "retatrutide",

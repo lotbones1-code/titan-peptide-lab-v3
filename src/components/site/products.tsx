@@ -30,14 +30,35 @@ export function Products() {
             </p>
             <div>
               <h2 className="max-w-3xl font-serif text-[clamp(2.8rem,5vw,4.6rem)] leading-[0.96] tracking-[-0.04em] text-[#0f1613]">
-                Start with the easiest format to trust.
+                Nasal sprays first, everything else after.
               </h2>
               <p className="mt-5 max-w-2xl text-lg leading-8 text-[#5c6762]">
-                The front of the catalog is intentionally simple, premium nasal
-                sprays, clear batch proof, and checkout language that reads more
-                like a real lab brand than a crypto side quest.
+                The top of the catalog should immediately answer the buyer’s
+                easiest question: where do I start? Titan starts with spray
+                formats, cleaner trust signals, and the products that are
+                easiest to understand without friction.
               </p>
             </div>
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.03}>
+          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            {[
+              ["No needles", "Lower hesitation, cleaner entry point"],
+              ["Lot-matched proof", "Every spray tied back to batch release"],
+              ["Fastest catalog read", "Lead offers merchandised before injectables"],
+            ].map(([label, value]) => (
+              <div
+                key={label}
+                className="rounded-[1.25rem] border border-[rgb(15_22_19/8%)] bg-white px-4 py-4 shadow-[0_1px_2px_rgb(15_22_19/4%)]"
+              >
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6b7a73]">
+                  {label}
+                </p>
+                <p className="mt-2 text-sm leading-6 text-[#2a3530]">{value}</p>
+              </div>
+            ))}
           </div>
         </Reveal>
 
@@ -163,7 +184,7 @@ function FeaturedProduct({ product }: { product: Product }) {
               asChild
               className="h-11 rounded-full bg-[#1e6f58] px-5 text-white hover:bg-[#175946]"
             >
-              <Link href={`/products/${product.slug}`}>View Product</Link>
+              <Link href={`/products/${product.slug}`}>Shop Spray</Link>
             </Button>
             <Button
               asChild

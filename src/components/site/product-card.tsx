@@ -15,6 +15,7 @@ export type ProductCardProduct = Pick<
   | "tagline"
   | "benefits"
   | "image"
+  | "category"
 >;
 
 export function ProductCard({
@@ -51,16 +52,25 @@ export function ProductCard({
       <div className="flex flex-1 flex-col p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6b7a73]">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="rounded-full border border-[rgb(15_22_19/10%)] bg-[#f7faf8] px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#1e6f58]">
+                {product.category === "nasal-spray"
+                  ? "Nasal spray"
+                  : product.category === "injectable"
+                    ? "Injectable"
+                    : "Stack"}
+              </span>
+              <span className="rounded-full border border-[rgb(15_22_19/10%)] bg-[#f0f5f2] px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#1e6f58]">
+                COA ready
+              </span>
+            </div>
+            <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#6b7a73]">
               {product.size}
             </p>
             <h3 className="mt-3 font-serif text-[2rem] leading-[1.02] tracking-[-0.03em] text-[#0f1613]">
               {product.name}
             </h3>
           </div>
-          <span className="rounded-full border border-[rgb(15_22_19/10%)] bg-[#f0f5f2] px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#1e6f58]">
-            COA ready
-          </span>
         </div>
 
         <p className="mt-4 text-sm leading-7 text-[#5c6762]">{product.tagline}</p>
@@ -90,7 +100,9 @@ export function ProductCard({
             asChild
             className="mt-5 h-11 w-full rounded-full bg-[#1e6f58] text-white hover:bg-[#175946]"
           >
-            <Link href={`/products/${product.slug}`}>View Product</Link>
+            <Link href={`/products/${product.slug}`}>
+              {product.category === "nasal-spray" ? "Shop Spray" : "View Product"}
+            </Link>
           </Button>
         </div>
       </div>

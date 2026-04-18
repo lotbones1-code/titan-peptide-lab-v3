@@ -30,15 +30,16 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Shared style block — all positive descriptions, no negations
 STYLE = (
-    "Professional pharmaceutical product photography. Dark slate grey "
-    "seamless paper studio backdrop. Hard key light from upper-right at 45 "
-    "degrees casts a single soft contact shadow directly under the product. "
-    "Shot on Hasselblad medium format with 80mm macro lens at f/8, tack-sharp "
-    "focus across the entire product. Centered composition, slight 3/4 angle, "
-    "product fills 60 percent of vertical frame. Editorial lab-grade "
-    "aesthetic, like a clinical research catalog crossed with Aesop "
-    "apothecary minimalism. Cream and bone-white label colors only. Sharp "
-    "professional pharmaceutical industry product shot, vertical 2:3 portrait."
+    "Professional pharmaceutical product photography. Soft warm stone "
+    "seamless paper studio backdrop with pale mineral tones, like an expensive "
+    "editorial skincare campaign for a clinical lab brand. Bright diffused key "
+    "light from upper-left with a soft grounding shadow directly under the "
+    "product. Shot on Hasselblad medium format with 80mm macro lens at f/8, "
+    "tack-sharp focus across the entire product. Centered composition, slight "
+    "3/4 angle, product fills 60 percent of vertical frame. Clean high-end "
+    "research aesthetic, refined, calm, premium, trustworthy. Cream, bone, "
+    "soft sage, and amber only. Sharp professional pharmaceutical product shot, "
+    "vertical 2:3 portrait."
 )
 
 WIDTH, HEIGHT = 1024, 1536
@@ -56,13 +57,13 @@ VIAL_ANCHOR = (
 )
 
 SPRAY_ANCHOR = (
-    "Pharmaceutical nasal spray bottle, 30ml, exactly like an over-the-counter "
-    "saline nasal mist. Frosted amber glass cylindrical body with a brushed "
-    "white plastic nasal spray atomizer pump nozzle on top, the long thin "
-    "white nozzle visible. Clear plastic protective cap removed and laid on "
-    "its side beside the bottle. Plain matte cream rectangular wrap-around "
-    "label with thin sans-serif lettering (blurry, illegible). Single small "
-    "bottle, hero macro shot."
+    "Premium pharmaceutical nasal spray bottle, 30ml, exactly like an elegant "
+    "clinical saline mist. Frosted amber glass cylindrical body with a clean "
+    "white plastic nasal atomizer pump nozzle on top, the long thin nozzle "
+    "visible and proportionally realistic. Clear protective cap removed and "
+    "placed neatly beside the bottle. Plain matte cream wrap-around label with "
+    "thin sans-serif lettering (blurry, illegible). Single small bottle on a "
+    "pale stone surface, hero macro shot, expensive but clinical."
 )
 
 PRODUCTS: dict[str, tuple[str, int]] = {
@@ -76,14 +77,17 @@ PRODUCTS: dict[str, tuple[str, int]] = {
     "selank-spray.png": (SPRAY_ANCHOR, 207),
     "semax-spray.png": (SPRAY_ANCHOR, 208),
     "spray-generic.png": (SPRAY_ANCHOR, 209),
+    "oxytocin-spray.png": (SPRAY_ANCHOR, 212),
+    "dsip-spray.png": (SPRAY_ANCHOR, 213),
     "selank-semax-stack.png": (
-        "Two identical pharmaceutical nasal spray bottles standing upright "
-        "side by side touching, both 30ml frosted amber glass cylinders with "
-        "brushed white plastic nasal spray atomizer pump nozzles on top. "
-        "Both clear plastic protective caps removed and laid in front. Both "
-        "have matching plain matte cream wrap-around labels with thin "
-        "blurry sans-serif lettering. Symmetric composition, identical "
-        "side-light, single contact shadow connecting both bottles.",
+        "Two identical premium pharmaceutical nasal spray bottles standing "
+        "upright side by side touching, both 30ml frosted amber glass "
+        "cylinders with clean white nasal spray atomizer pump nozzles on top. "
+        "Both clear protective caps removed and laid neatly in front. Both "
+        "have matching plain matte cream wrap-around labels with thin blurry "
+        "sans-serif lettering. Symmetric composition on pale stone surface, "
+        "clean high-end editorial clinical lighting, single soft contact "
+        "shadow connecting both bottles.",
         210,
     ),
     "cjc-ipa.png": (

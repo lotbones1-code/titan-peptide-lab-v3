@@ -50,12 +50,12 @@ export default function ProductsPage() {
             </p>
             <div className="mt-4 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
               <h1 className="font-serif text-[clamp(2.8rem,5vw,4.4rem)] leading-[0.96] tracking-[-0.04em] text-[#13211c]">
-                Every compound,<br />one place.
+                Start with sprays,<br />then go deeper.
               </h1>
               <p className="max-w-md text-[15px] leading-7 text-[#596761] lg:text-right">
-                Nasal sprays, injectable vials, and research stacks — all
-                independently verified by HPLC and mass spectrometry. Lot-matched
-                COA ships with every order.
+                The catalog is built nasal-first. Sprays lead because they are
+                the easiest format to trust, while injectables and stacks stay
+                available for buyers who want them.
               </p>
             </div>
 

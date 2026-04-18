@@ -1,0 +1,20 @@
+{
+  "id": "oxytocin-spray",
+  "slug": "oxytocin-nasal-spray",
+  "name": "Oxytocin Nasal Spray",
+  "category": "nasal-spray",
+  "price": 74.99,
+  "compareAtPrice": 94.99,
+  "size": "15mL · 400mcg/spray",
+  "tagline": "Connection, calm, and social regulation research",
+  "description": "Intranasal oxytocin peptide for social bonding, stress response, and calm-state research. Built for labs studying trust, social cognition, and autonomic regulation in a familiar spray format.",
+  "benefits": [
+    "Social cognition research",
+    "Stress regulation studies",
+    "Intranasal peptide delivery",
+    "Lot-matched COA included"
+  ],
+  "image": "/products/oxytocin-spray.png",
+  "featured": true,
+  "newArrival": true
+}

@@ -1,8 +1,8 @@
 {
   "name": "Titan Peptide Lab",
   "domain": "titanpeptidelab.com",
-  "tagline": "Research-grade nasal spray peptides.",
-  "description": "Research-grade nasal spray peptides with HPLC-verified purity, batch-matched COAs, and cold-chain shipping.",
+  "tagline": "Nasal-first peptide research catalog.",
+  "description": "A nasal-first peptide catalog built around low-friction spray formats, HPLC-verified purity, batch-matched COAs, and cold-chain shipping.",
   "wallets": {
     "btc": "bc1qkshtp26f3qjkcgfdr2275wed2e8wkw25tr7vsd",
     "eth": "0x24c5Fe40f83ae20De82ae3637b66DE8B0e5Cd362",

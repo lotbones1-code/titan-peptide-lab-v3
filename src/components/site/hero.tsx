@@ -40,31 +40,28 @@ export function Hero() {
       <div className="mx-auto grid max-w-7xl gap-12 px-5 pb-18 pt-14 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,1.05fr)] lg:px-8 lg:pb-24 lg:pt-20">
         <Reveal className="relative z-10 flex flex-col justify-center">
           <div className="inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(15_22_19/10%)] bg-white px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-[#5c6762] shadow-[0_1px_2px_rgb(15_22_19/4%)]">
-            Nasal sprays, batch-linked proof, fast dispatch
+            No needles, nasal-first, lot-linked proof
           </div>
 
           <h1 className="mt-7 max-w-4xl font-serif text-[clamp(3.4rem,7vw,6.8rem)] font-normal leading-[0.92] tracking-[-0.05em] text-[#0f1613]">
-            Clean formulation,
+            Premium nasal sprays,
             <br />
-            clear <em className="text-[#2d7b62] not-italic">proof</em>,
-            zero guesswork.
+            built to be <em className="text-[#2d7b62] not-italic">trusted</em> at first glance.
           </h1>
 
           <p className="mt-7 max-w-2xl text-[1.05rem] leading-8 text-[#5c6762] sm:text-[1.125rem]">
-            Titan is built around the easiest entry point in the catalog,
-            nasal spray peptides with documented purity, matched certificates,
-            and a checkout flow that feels direct instead of sketchy.
+            Titan should feel like the cleanest way into the category. Start with nasal sprays, get the easiest format to trust, and see lot-matched proof, cleaner checkout, and sharper product presentation before you ever think about injectables.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3 text-sm text-[#2a3530]">
             <div className="rounded-full border border-[rgb(15_22_19/9%)] bg-white px-4 py-2 shadow-[0_1px_2px_rgb(15_22_19/4%)]">
-              4 flagship nasal SKUs
+              6 flagship spray SKUs
             </div>
             <div className="rounded-full border border-[rgb(15_22_19/9%)] bg-white px-4 py-2 shadow-[0_1px_2px_rgb(15_22_19/4%)]">
-              First order code: FIRST10
+              Selank + Semax stack ready
             </div>
             <div className="rounded-full border border-[rgb(15_22_19/9%)] bg-white px-4 py-2 shadow-[0_1px_2px_rgb(15_22_19/4%)]">
-              Ships in 24h after payment
+              FIRST10 on first order
             </div>
           </div>
 
@@ -100,7 +97,7 @@ export function Hero() {
                   Signature nasal lineup
                 </p>
                 <h2 className="mt-3 max-w-sm font-serif text-3xl leading-[1] tracking-[-0.04em] text-[#0f1613] sm:text-[2.35rem]">
-                  Built to look premium before the checkout even starts.
+                  The nasal-first shelf, cleaned up to feel premium and direct.
                 </h2>
               </div>
               <div className="rounded-full border border-[rgb(15_22_19/10%)] bg-white px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[#5c6762] shadow-[0_1px_2px_rgb(15_22_19/4%)]">
