@@ -18,6 +18,7 @@ Labels are intentionally blank/minimal — the site UI overlays the product name
 
 from __future__ import annotations
 
+import subprocess
 import sys
 import time
 import urllib.parse
@@ -65,6 +66,16 @@ SPRAY_ANCHOR = (
     "thin sans-serif lettering (blurry, illegible). Single small bottle on a "
     "pale stone surface, hero macro shot, expensive but clinical."
 )
+
+LOCAL_SPRAYS = {
+    "bpc157-spray.png",
+    "pt141-spray.png",
+    "selank-spray.png",
+    "semax-spray.png",
+    "oxytocin-spray.png",
+    "dsip-spray.png",
+    "selank-semax-stack.png",
+}
 
 PRODUCTS: dict[str, tuple[str, int]] = {
     # filename: (subject prompt, seed)
@@ -121,7 +132,18 @@ def fetch(prompt: str, out_path: Path, seed: int) -> int:
 def main() -> int:
     only = set(sys.argv[1:])
     failures: list[str] = []
+
+    local_targets = sorted((only & LOCAL_SPRAYS) if only else LOCAL_SPRAYS)
+    if local_targets:
+        print(f"[render] local spray packshots: {', '.join(local_targets)}", flush=True)
+        subprocess.run(
+            [sys.executable, str(ROOT / 'scripts' / 'render_brand_spray_images.py'), *local_targets],
+            check=True,
+        )
+
     for fname, (subject, seed) in PRODUCTS.items():
+        if fname in LOCAL_SPRAYS:
+            continue
         if only and fname not in only:
             continue
         out_path = OUT_DIR / fname
