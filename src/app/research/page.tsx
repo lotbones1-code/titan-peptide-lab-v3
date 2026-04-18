@@ -64,8 +64,30 @@ const ARTICLES = [
     refs: 10,
   },
   {
-    slug: "nasal-stack-protocols",
+    slug: "oxytocin-bonding-social",
     n: "05",
+    title: "Oxytocin",
+    subtitle: "Social-cognition neuropeptide and the intranasal delivery paradigm",
+    summary:
+      "A cyclic nonapeptide synthesized in the hypothalamus, studied for effects on trust, empathic accuracy, and face processing via OXTR and partial V1a cross-reactivity. Reviews both the behavioral findings and the methodological caveats around intranasal central exposure.",
+    tag: "Social",
+    readingTime: "12 min",
+    refs: 9,
+  },
+  {
+    slug: "dsip-sleep-recovery",
+    n: "06",
+    title: "DSIP (Delta Sleep-Inducing Peptide)",
+    subtitle: "Slow-wave sleep modulation and HPA-axis literature",
+    summary:
+      "A nonapeptide originally isolated from rabbit cerebral venous blood during electrically-induced sleep. Reviews four decades of literature on EEG delta-wave facilitation, HPA-axis dampening, withdrawal-syndrome applications, and stress-adaptation findings.",
+    tag: "Sleep",
+    readingTime: "12 min",
+    refs: 9,
+  },
+  {
+    slug: "nasal-stack-protocols",
+    n: "07",
     title: "Nasal stack protocols",
     subtitle: "Rationale and separation when combining intranasal peptides",
     summary:
@@ -81,6 +103,8 @@ const TAG_PALETTE: Record<string, string> = {
   Anxiolytic: "bg-[#f0ede6] text-[#5a4a2a]",
   Nootropic: "bg-[#ebeef7] text-[#2a3a7a]",
   Melanocortin: "bg-[#f2e8f0] text-[#6a2a5a]",
+  Social: "bg-[#f5ece8] text-[#7a3a2a]",
+  Sleep: "bg-[#e8ecf2] text-[#2a3e5a]",
   Protocol: "bg-[#eef2eb] text-[#324030]",
 };
 
