@@ -5,7 +5,7 @@
 //   pnpm run ship -- -m "redesign: white palette" # custom commit message
 //
 // Target repo: ~/titanpeptidelab-source (git remote lotbones1-code/titanpeptidelab)
-// Serves: https://titanpeptidelab.com (via CNAME)
+// Serves: https://www.titanpeptidelab.com (via CNAME)
 
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
@@ -101,7 +101,7 @@ function main() {
   console.log("[ship] 5/5 push");
   run("git", ["push", "origin", "main"], { cwd: PAGES_REPO });
 
-  console.log(`[ship] ✅ live → https://titanpeptidelab.com  (msg: ${msg})`);
+  console.log(`[ship] ✅ live → https://www.titanpeptidelab.com  (msg: ${msg})`);
 }
 
 main();

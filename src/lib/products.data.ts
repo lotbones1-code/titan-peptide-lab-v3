@@ -5,7 +5,7 @@ import type { Product } from "./products";
 
 export const BRAND_DATA = {
   "name": "Titan Peptide Lab",
-  "domain": "titanpeptidelab.com",
+  "domain": "www.titanpeptidelab.com",
   "tagline": "Nasal-first peptide research catalog.",
   "description": "A nasal-first peptide catalog built around low-friction spray formats, HPLC-verified purity, batch-matched COAs, and cold-chain shipping."
 } as const;
