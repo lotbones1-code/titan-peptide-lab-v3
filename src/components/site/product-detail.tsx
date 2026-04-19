@@ -154,7 +154,7 @@ export function ProductDetail({ product }: { product: Product }) {
               <Label className="text-sm text-[#6b7a73]">Discount code</Label>
               <div className="mt-1.5 flex gap-2">
                 <Input
-                  placeholder="FIRST10"
+                  placeholder="Enter code"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
                   className="border-[rgb(15_22_19/12%)] bg-white"

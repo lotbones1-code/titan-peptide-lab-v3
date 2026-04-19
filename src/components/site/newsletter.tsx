@@ -11,13 +11,13 @@ export function Newsletter() {
             <div className="grid gap-6 md:grid-cols-[1fr_1.1fr] md:items-end">
               <div>
                 <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#1e6f58]">
-                  First order
+                  Subscribers only
                 </p>
                 <h3 className="mt-3 max-w-lg font-serif text-[clamp(2.2rem,4vw,3.5rem)] leading-[0.97] tracking-[-0.04em] text-[#0f1613]">
-                  FIRST10 takes 10% off the first order.
+                  Get 10% off your first order.
                 </h3>
                 <p className="mt-4 text-sm leading-7 text-[#5c6762]">
-                  Better welcome messaging, less friction. That is the point.
+                  Subscribe to receive your exclusive discount code, compound releases, and protocol updates.
                 </p>
                 <p className="mt-2 text-sm text-[#6b7a73]">
                   Laboratory research purposes only. Not for human consumption.

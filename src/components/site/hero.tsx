@@ -61,7 +61,7 @@ export function Hero() {
               Selank + Semax stack ready
             </div>
             <div className="rounded-full border border-[rgb(15_22_19/9%)] bg-white px-4 py-2 shadow-[0_1px_2px_rgb(15_22_19/4%)]">
-              FIRST10 on first order
+              10% off — subscribers only
             </div>
           </div>
 

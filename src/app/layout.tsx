@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { Grain } from "@/components/site/grain";
+import { AnnouncementBar } from "@/components/site/announcement-bar";
+import { AIAdvisor } from "@/components/site/ai-advisor";
+import { EmailCapture } from "@/components/site/email-capture";
+import { OrganizationJsonLd, WebsiteJsonLd, FAQJsonLd } from "@/components/site/json-ld";
 import { BRAND } from "@/lib/products";
 
 const geistSans = Geist({
@@ -48,8 +52,14 @@ export default function RootLayout({
       style={{ colorScheme: "light" }}
     >
       <body className="min-h-full bg-background text-foreground font-sans">
+        <OrganizationJsonLd />
+        <WebsiteJsonLd />
+        <FAQJsonLd />
         <Grain />
+        <AnnouncementBar />
         {children}
+        <AIAdvisor />
+        <EmailCapture />
       </body>
     </html>
   );

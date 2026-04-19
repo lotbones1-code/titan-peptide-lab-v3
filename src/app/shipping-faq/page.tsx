@@ -58,7 +58,7 @@ const SECTIONS = [
       },
       {
         q: "What discount codes are active right now?",
-        a: "FIRST10 for first orders, BULK15 for 3 or more items, TITAN20 above $250, and VIP25 on the third repeat order. Codes do not stack with each other.",
+        a: "Discount codes are sent exclusively to newsletter subscribers. Subscribe on the homepage to receive your code. Codes do not stack with each other.",
       },
       {
         q: "Is there a volume contract for laboratories?",
@@ -160,14 +160,14 @@ export default function ShippingFAQPage() {
 
                 <div className="mt-16 rounded-[1.8rem] border border-[#d7dfd6] bg-[linear-gradient(180deg,#fffdfa_0%,#f2ede5_100%)] p-8 text-[#13211c] shadow-[0_28px_70px_-42px_rgba(19,33,28,0.34)]">
                   <div className="flex items-baseline justify-between border-b border-[#d8dfd7] pb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-[#6f7b75]">
-                    <span>Active discount codes</span>
-                    <span>Apply at checkout</span>
+                    <span>Exclusive discounts</span>
+                    <span>Subscribers only</span>
                   </div>
                   <dl className="mt-6 grid gap-6 sm:grid-cols-2">
-                    <Code code="FIRST10" v="10% off your first order" />
-                    <Code code="BULK15" v="15% off 3+ items" />
-                    <Code code="TITAN20" v="20% off orders over $250" />
-                    <Code code="VIP25" v="25% auto on the 3rd repeat order" />
+                    <Code code="10% off" v="First order — subscribe to unlock" />
+                    <Code code="15% off" v="3+ items — subscribers" />
+                    <Code code="20% off" v="Orders over $250 — subscribers" />
+                    <Code code="25% off" v="3rd repeat order — auto-applied" />
                   </dl>
                 </div>
               </div>

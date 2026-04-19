@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { MobileNav } from "./mobile-nav";
 
 const LINKS = [
   { href: "/products", label: "Catalog" },
@@ -50,6 +51,7 @@ export function Nav() {
           <Button className="h-10 rounded-full bg-[#1e6f58] px-4 text-white hover:bg-[#175946]">
             Cart (0)
           </Button>
+          <MobileNav />
         </div>
       </div>
     </header>
