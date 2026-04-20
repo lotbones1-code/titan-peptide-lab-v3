@@ -10,60 +10,75 @@ const FAQS = [
   {
     question: "How do you verify purity?",
     answer:
-      "Every batch is third-party HPLC tested. The COA is tied to the lot linked with your order instead of a generic certificate library page.",
+      "Every batch is third-party HPLC tested to \u226599%. The COA is tied to the lot linked with your order \u2014 not a generic certificate library page.",
   },
   {
     question: "How fast do you ship?",
     answer:
-      "Manual fulfillment is completed within 24 hours after payment confirmation. Tracking is sent once the package is packed.",
+      "Manual fulfillment is completed within 24 hours after payment confirmation. Tracking is sent once the package is packed with cold-chain handling.",
   },
   {
-    question: "Can I pay with crypto?",
+    question: "What payment methods do you accept?",
     answer:
-      "Yes. Checkout is crypto-only and supports BTC, ETH, USDC ERC-20, SOL, and USDC SPL.",
+      "Checkout is crypto-only. We support BTC, ETH, USDC (ERC-20), SOL, and USDC (SPL).",
   },
   {
     question: "Are these for human use?",
     answer:
-      "No. All products are sold for laboratory research purposes only and not for human consumption.",
+      "No. All products are sold for laboratory research purposes only and are not intended for human consumption.",
   },
   {
     question: "Do you accept returns?",
-    answer: "Unopened items within 14 days. Contact support for an RMA.",
+    answer:
+      "Unopened items within 14 days. Contact support@titanpeptidelab.com for an RMA.",
   },
   {
-    question: "How should nasal spray peptides be stored?",
+    question: "How should peptides be stored?",
     answer:
-      "Refrigerate at 2 to 8°C. Storage guidance and stability notes are provided alongside the batch documentation.",
+      "Refrigerate at 2\u20138\u00b0C. Storage guidance and stability notes are provided alongside the batch documentation.",
   },
 ];
 
 export function FAQ() {
   return (
-    <section id="faq" className="border-b border-[#dde4da] bg-[#f8f5ef] py-20 lg:py-28">
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-6 md:grid-cols-[0.8fr_1.2fr] lg:px-8">
+    <section
+      id="faq"
+      className="border-b border-[rgb(15_22_19/6%)] bg-[#fafbfa] py-24 lg:py-32"
+    >
+      <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-6 md:grid-cols-[0.8fr_1.2fr] lg:px-8">
         <Reveal>
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#66756d]">
-            FAQ
-          </p>
-          <h2 className="mt-4 max-w-lg font-serif text-[clamp(2.5rem,4.5vw,4.2rem)] leading-[0.96] tracking-[-0.04em] text-[#13211c]">
-            Questions buyers ask before they trust the order.
+          <div className="flex items-center gap-3">
+            <div className="h-px w-8 bg-[#1e6f58]" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">
+              FAQ
+            </span>
+          </div>
+          <h2 className="mt-6 max-w-lg font-serif text-[clamp(2.2rem,4.2vw,3.4rem)] leading-[0.96] tracking-[-0.03em] text-[#0f1613]">
+            Questions researchers ask before placing an order.
           </h2>
-          <p className="mt-5 max-w-md text-base leading-8 text-[#55645d]">
-            The right answers should feel crisp and specific, especially around
-            purity, shipping speed, and how the certificate is matched.
+          <p className="mt-5 max-w-md text-[14px] leading-[1.7] text-[#5c6762]">
+            Crisp answers on purity, shipping, payment, and how the certificate
+            is matched to the batch.
           </p>
         </Reveal>
 
         <Reveal>
-          <div className="rounded-[1.75rem] border border-[#d9e0d7] bg-white/82 px-6 shadow-[0_18px_50px_-38px_rgba(19,33,28,0.28)] sm:px-8">
-            <Accordion type="single" collapsible className="border-t border-[#d9e0d7]">
+          <div className="rounded-xl border border-[rgb(15_22_19/8%)] bg-white px-6 sm:px-8">
+            <Accordion
+              type="single"
+              collapsible
+              className="divide-y divide-[rgb(15_22_19/6%)]"
+            >
               {FAQS.map((item) => (
-                <AccordionItem key={item.question} value={item.question}>
-                  <AccordionTrigger className="text-base text-[#13211c]">
+                <AccordionItem
+                  key={item.question}
+                  value={item.question}
+                  className="border-0"
+                >
+                  <AccordionTrigger className="text-[14px] font-medium text-[#0f1613]">
                     {item.question}
                   </AccordionTrigger>
-                  <AccordionContent className="max-w-2xl text-[#596761]">
+                  <AccordionContent className="max-w-2xl text-[13.5px] leading-[1.7] text-[#5c6762]">
                     {item.answer}
                   </AccordionContent>
                 </AccordionItem>

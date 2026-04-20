@@ -2,7 +2,7 @@ import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 
 export const metadata = {
-  title: "Shipping, Payment & Returns — Titan Peptide Laboratory",
+  title: "Shipping, Payment & Returns \u2014 The Titan Peptide Company",
   description:
     "Discreet US domestic shipping, cold pack handling, crypto payment, active discount codes, and returns policy for research-use products.",
 };
@@ -10,10 +10,10 @@ export const metadata = {
 const SECTIONS = [
   {
     id: "shipping",
-    label: "§S1",
+    label: "01",
     heading: "Shipping",
     blurb:
-      "Dispatched from Reno within 24 to 48 hours of payment confirmation. Clean outer carton, insulated inner pack, and colder handling where liquids require it.",
+      "Dispatched from Reno within 24 to 48 hours of payment confirmation. Clean outer carton, insulated inner pack, and cold-chain handling where liquids require it.",
     items: [
       {
         q: "How fast does an order leave the laboratory?",
@@ -39,7 +39,7 @@ const SECTIONS = [
   },
   {
     id: "payment",
-    label: "§S2",
+    label: "02",
     heading: "Payment",
     blurb:
       "Crypto-only checkout, clearer presentation, and faster confirmation once the payment is received on the selected chain.",
@@ -58,7 +58,7 @@ const SECTIONS = [
       },
       {
         q: "What discount codes are active right now?",
-        a: "Discount codes are sent exclusively to newsletter subscribers. Subscribe on the homepage to receive your code. Codes do not stack with each other.",
+        a: "Discount codes are sent exclusively to newsletter subscribers. Subscribe on the homepage to receive your code. Codes do not stack.",
       },
       {
         q: "Is there a volume contract for laboratories?",
@@ -68,7 +68,7 @@ const SECTIONS = [
   },
   {
     id: "returns",
-    label: "§S3",
+    label: "03",
     heading: "Returns",
     blurb:
       "Because the products are sold for research use only, the returns policy is built around quality incidents and shipment issues, not casual restocking.",
@@ -97,59 +97,66 @@ export default function ShippingFAQPage() {
   return (
     <>
       <Nav />
-      <main className="bg-[linear-gradient(180deg,#faf7f1_0%,#f4efe7_55%,#eee7dc_100%)] text-[#13211c]">
-        <section className="border-b border-[#dde4da] py-24 lg:py-32">
-          <div className="mx-auto max-w-7xl px-6">
-            <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#718079]">
-              §S — Shipping, Payment, Returns
+      <main className="bg-white text-[#0f1613]">
+        <section className="border-b border-[rgb(15_22_19/6%)] py-24 lg:py-32">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-3">
+              <div className="h-px w-8 bg-[#1e6f58]" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">
+                Shipping, payment & returns
+              </span>
             </div>
 
-            <div className="mt-12 grid gap-x-12 gap-y-8 lg:grid-cols-12">
+            <div className="mt-12 grid gap-x-14 gap-y-8 lg:grid-cols-12">
               <div className="lg:col-span-4">
-                <h1 className="font-serif text-[clamp(2.3rem,4.8vw,4.1rem)] leading-[0.96] tracking-[-0.04em] text-[#13211c] text-pretty">
-                  The <em className="italic text-[#61736a]">logistics</em>.
+                <h1 className="font-serif text-[clamp(2.2rem,4.5vw,3.4rem)] leading-[0.96] tracking-[-0.03em] text-[#0f1613] text-pretty">
+                  The logistics.
                 </h1>
-                <p className="mt-6 max-w-xs text-sm leading-7 text-[#586761]">
-                  For anything not covered here, email support@titanpeptidelab.com.
-                  Replies usually arrive inside 24 to 48 hours.
+                <p className="mt-5 max-w-xs text-[14px] leading-[1.7] text-[#5c6762]">
+                  For anything not covered here, email
+                  support@titanpeptidelab.com. Replies usually arrive inside
+                  24\u201348 hours.
                 </p>
               </div>
 
               <div className="lg:col-span-8">
                 {SECTIONS.map((s) => (
                   <div key={s.id} id={s.id} className="mt-12 first:mt-0">
-                    <div className="flex items-baseline gap-5 border-t border-[#d8dfd7] pt-6">
-                      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#1e6f58] tabular-nums">
+                    <div className="flex items-baseline gap-4 border-t border-[rgb(15_22_19/8%)] pt-6">
+                      <span className="text-[12px] font-semibold text-[#1e6f58] tabular-nums">
                         {s.label}
                       </span>
-                      <h2 className="font-serif text-3xl leading-snug text-[#13211c]">
+                      <h2 className="font-serif text-[1.5rem] leading-[1.1] tracking-[-0.02em] text-[#0f1613]">
                         {s.heading}
                       </h2>
                     </div>
-                    <p className="mt-4 max-w-xl text-sm leading-7 text-[#586761]">
+                    <p className="mt-4 max-w-xl text-[13.5px] leading-[1.7] text-[#5c6762]">
                       {s.blurb}
                     </p>
 
-                    <dl className="mt-8">
+                    <dl className="mt-6 space-y-2.5">
                       {s.items.map((f, i) => (
                         <details
                           key={f.q}
-                          className="group rounded-[1.3rem] border border-[#d9e0d7] bg-white/78 px-5 shadow-[0_16px_40px_-34px_rgba(19,33,28,0.22)] [&_summary::-webkit-details-marker]:hidden mt-3"
+                          className="group rounded-xl border border-[rgb(15_22_19/8%)] bg-white px-5 [&_summary::-webkit-details-marker]:hidden"
                         >
-                          <summary className="flex cursor-pointer items-baseline justify-between gap-6 py-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58] focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf7f1]">
-                            <span className="flex items-baseline gap-5">
-                              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#718079] tabular-nums">
+                          <summary className="flex cursor-pointer items-baseline justify-between gap-4 py-5 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58]">
+                            <span className="flex items-baseline gap-4">
+                              <span className="text-[11px] font-semibold text-[#8a9690] tabular-nums">
                                 {String(i + 1).padStart(2, "0")}
                               </span>
-                              <span className="font-serif text-xl leading-snug text-[#13211c]">
+                              <span className="text-[14px] font-medium text-[#0f1613]">
                                 {f.q}
                               </span>
                             </span>
-                            <span aria-hidden className="font-serif text-2xl text-[#738079] transition-transform group-open:rotate-45">
+                            <span
+                              aria-hidden
+                              className="text-lg text-[#8a9690] transition-transform group-open:rotate-45"
+                            >
                               +
                             </span>
                           </summary>
-                          <dd className="pb-8 pl-[3.25rem] pr-12 text-sm leading-7 text-[#586761]">
+                          <dd className="pb-6 pl-[2.75rem] pr-8 text-[13.5px] leading-[1.7] text-[#5c6762]">
                             {f.a}
                           </dd>
                         </details>
@@ -158,16 +165,21 @@ export default function ShippingFAQPage() {
                   </div>
                 ))}
 
-                <div className="mt-16 rounded-[1.8rem] border border-[#d7dfd6] bg-[linear-gradient(180deg,#fffdfa_0%,#f2ede5_100%)] p-8 text-[#13211c] shadow-[0_28px_70px_-42px_rgba(19,33,28,0.34)]">
-                  <div className="flex items-baseline justify-between border-b border-[#d8dfd7] pb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-[#6f7b75]">
-                    <span>Exclusive discounts</span>
-                    <span>Subscribers only</span>
+                {/* Discount codes */}
+                <div className="mt-14 rounded-xl border border-[rgb(15_22_19/8%)] bg-[#fafbfa] p-8">
+                  <div className="flex items-baseline justify-between border-b border-[rgb(15_22_19/6%)] pb-4">
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
+                      Discount tiers
+                    </span>
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
+                      Subscribers only
+                    </span>
                   </div>
-                  <dl className="mt-6 grid gap-6 sm:grid-cols-2">
-                    <Code code="10% off" v="First order — subscribe to unlock" />
-                    <Code code="15% off" v="3+ items — subscribers" />
-                    <Code code="20% off" v="Orders over $250 — subscribers" />
-                    <Code code="25% off" v="3rd repeat order — auto-applied" />
+                  <dl className="mt-6 grid gap-5 sm:grid-cols-2">
+                    <Code code="10% off" v="First order \u2014 subscribe to unlock" />
+                    <Code code="15% off" v="3+ items \u2014 subscribers" />
+                    <Code code="20% off" v="Orders over $250 \u2014 subscribers" />
+                    <Code code="25% off" v="3rd repeat order \u2014 auto-applied" />
                   </dl>
                 </div>
               </div>
@@ -182,11 +194,11 @@ export default function ShippingFAQPage() {
 
 function Code({ code, v }: { code: string; v: string }) {
   return (
-    <div className="border-b border-[#d9e0d7] pb-3">
-      <div className="font-mono text-xl font-semibold tracking-tight text-[#13211c]">
+    <div className="border-b border-[rgb(15_22_19/6%)] pb-3">
+      <div className="font-serif text-[1.25rem] tracking-[-0.02em] text-[#0f1613]">
         {code}
       </div>
-      <div className="mt-1 text-sm text-[#55645d]">{v}</div>
+      <div className="mt-1 text-[13px] text-[#5c6762]">{v}</div>
     </div>
   );
 }

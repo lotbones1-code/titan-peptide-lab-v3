@@ -10,23 +10,16 @@ import { cn } from "@/lib/utils";
 type Filter = "all" | ProductCategory;
 
 const FILTERS: { value: Filter; label: string }[] = [
-  { value: "all", label: "All Products" },
+  { value: "all", label: "All" },
   { value: "nasal-spray", label: "Nasal Sprays" },
   { value: "injectable", label: "Injectables" },
   { value: "stack", label: "Stacks" },
 ];
 
-const CATEGORY_LABELS: Record<ProductCategory, string> = {
-  "nasal-spray": "Nasal Spray",
-  injectable: "Injectable",
-  oral: "Oral",
-  stack: "Stack",
-};
-
 const TRUST = [
-  "HPLC ≥99% purity on every batch",
+  "HPLC \u226599% purity on every batch",
   "Lot-matched COA with every order",
-  "Cold-chain dispatch within 24 h",
+  "Cold-chain dispatch within 24h",
   "Mass-spec identity confirmed",
 ];
 
@@ -41,32 +34,36 @@ export default function ProductsPage() {
   return (
     <>
       <Nav />
-      <main>
+      <main className="bg-white text-[#0f1613]">
         {/* Page header */}
-        <section className="border-b border-[#dde4da] bg-[#fbf8f2] pb-12 pt-16 lg:pb-16 lg:pt-20">
+        <section className="border-b border-[rgb(15_22_19/6%)] pb-14 pt-16 lg:pb-16 lg:pt-20">
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6d7b74]">
-              Research catalog
-            </p>
-            <div className="mt-4 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
-              <h1 className="font-serif text-[clamp(2.8rem,5vw,4.4rem)] leading-[0.96] tracking-[-0.04em] text-[#13211c]">
-                Start with sprays,<br />then go deeper.
+            <div className="flex items-center gap-3">
+              <div className="h-px w-8 bg-[#1e6f58]" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">
+                Research catalog
+              </span>
+            </div>
+            <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+              <h1 className="font-serif text-[clamp(2.4rem,4.8vw,3.8rem)] leading-[0.96] tracking-[-0.03em] text-[#0f1613]">
+                Start with sprays,
+                <br />
+                then go deeper.
               </h1>
-              <p className="max-w-md text-[15px] leading-7 text-[#596761] lg:text-right">
+              <p className="max-w-md text-[14px] leading-[1.7] text-[#5c6762] lg:text-right">
                 The catalog is built nasal-first. Sprays lead because they are
                 the easiest format to trust, while injectables and stacks stay
-                available for buyers who want them.
+                available for researchers who want them.
               </p>
             </div>
 
-            {/* Trust strip */}
             <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3">
               {TRUST.map((item) => (
                 <li
                   key={item}
-                  className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-[#53625c]"
+                  className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#8a9690]"
                 >
-                  <span className="size-1.5 rounded-full bg-[#2d7b62]" />
+                  <span className="size-1 rounded-full bg-[#1e6f58]" />
                   {item}
                 </li>
               ))}
@@ -75,44 +72,37 @@ export default function ProductsPage() {
         </section>
 
         {/* Filter + grid */}
-        <section className="bg-[#f5f1ea] py-14 lg:py-20">
+        <section className="bg-[#fafbfa] py-14 lg:py-20">
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-            {/* Filter tabs */}
-            <div className="mb-10 flex flex-wrap gap-2">
+            <div className="mb-10 flex flex-wrap items-center gap-2">
               {FILTERS.map((f) => (
                 <button
                   key={f.value}
                   onClick={() => setActive(f.value)}
                   className={cn(
-                    "h-9 rounded-full border px-5 font-mono text-[11px] uppercase tracking-[0.16em] transition-colors",
+                    "h-9 rounded-lg border px-4 text-[12px] font-semibold uppercase tracking-[0.06em] transition-colors",
                     active === f.value
-                      ? "border-[#1e6f58] bg-[#1e6f58] text-[#f8fbf8]"
-                      : "border-[#cfd8cf] bg-white/70 text-[#53625c] hover:border-[#2d7b62]/50 hover:bg-white"
+                      ? "border-[#0f1613] bg-[#0f1613] text-white"
+                      : "border-[rgb(15_22_19/10%)] bg-white text-[#5c6762] hover:border-[rgb(15_22_19/18%)] hover:text-[#0f1613]"
                   )}
                 >
                   {f.label}
                 </button>
               ))}
-              <span className="ml-auto self-center font-mono text-[11px] uppercase tracking-[0.16em] text-[#8a9690]">
-                {filtered.length} {filtered.length === 1 ? "product" : "products"}
+              <span className="ml-auto text-[12px] text-[#8a9690]">
+                {filtered.length}{" "}
+                {filtered.length === 1 ? "product" : "products"}
               </span>
             </div>
 
-            {/* Grid */}
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {filtered.map((product) => (
-                <div key={product.id} className="flex flex-col">
-                  {/* Category label */}
-                  <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#8a9690]">
-                    {CATEGORY_LABELS[product.category]}
-                  </p>
-                  <ProductCard product={product} />
-                </div>
+                <ProductCard key={product.id} product={product} />
               ))}
             </div>
 
             {filtered.length === 0 && (
-              <p className="py-20 text-center text-sm text-[#8a9690]">
+              <p className="py-20 text-center text-[14px] text-[#8a9690]">
                 No products in this category yet.
               </p>
             )}
@@ -120,45 +110,38 @@ export default function ProductsPage() {
         </section>
 
         {/* Bottom trust block */}
-        <section className="border-t border-[#dde4da] bg-[#fbf8f2] py-14">
+        <section className="border-t border-[rgb(15_22_19/6%)] bg-white py-16">
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-            <div className="grid gap-8 md:grid-cols-3">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6d7b74]">
-                  Purity
-                </p>
-                <h3 className="mt-3 font-serif text-[1.6rem] leading-tight tracking-[-0.025em] text-[#13211c]">
-                  HPLC and mass-spec on every lot.
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-[#596761]">
-                  We don't ship without a certificate. Every batch is
-                  independently analyzed — not by us, by the lab.
-                </p>
-              </div>
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6d7b74]">
-                  Dispatch
-                </p>
-                <h3 className="mt-3 font-serif text-[1.6rem] leading-tight tracking-[-0.025em] text-[#13211c]">
-                  Cold-chain, same-day if ordered before 2 PM.
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-[#596761]">
-                  Temperature-controlled packaging as standard. Tracking
-                  emailed within hours of dispatch.
-                </p>
-              </div>
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6d7b74]">
-                  Compliance
-                </p>
-                <h3 className="mt-3 font-serif text-[1.6rem] leading-tight tracking-[-0.025em] text-[#13211c]">
-                  Research use only. No prescription implied.
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-[#596761]">
-                  All compounds are sold strictly for in-vitro and laboratory
-                  research purposes. Not for human consumption.
-                </p>
-              </div>
+            <div className="grid gap-10 md:grid-cols-3">
+              {[
+                {
+                  label: "Purity",
+                  title: "HPLC and mass-spec on every lot.",
+                  text: "We don\u2019t ship without a certificate. Every batch is independently analyzed \u2014 not by us, by the lab.",
+                },
+                {
+                  label: "Dispatch",
+                  title: "Cold-chain, same-day if ordered before 2 PM.",
+                  text: "Temperature-controlled packaging as standard. Tracking emailed within hours of dispatch.",
+                },
+                {
+                  label: "Compliance",
+                  title: "Research use only. No prescription implied.",
+                  text: "All compounds are sold strictly for in-vitro and laboratory research purposes. Not for human consumption.",
+                },
+              ].map((item) => (
+                <div key={item.label}>
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">
+                    {item.label}
+                  </span>
+                  <h3 className="mt-3 font-serif text-[1.25rem] leading-[1.2] tracking-[-0.02em] text-[#0f1613]">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 text-[13.5px] leading-[1.7] text-[#5c6762]">
+                    {item.text}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </section>

@@ -4,22 +4,27 @@ import { Reveal } from "./reveal";
 
 export function Newsletter() {
   return (
-    <section className="bg-white py-20">
+    <section className="bg-[#f8f6f2] py-24">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <Reveal>
-          <div className="rounded-[2rem] border border-[rgb(15_22_19/8%)] bg-[#fafbfa] p-6 shadow-[0_1px_2px_rgb(15_22_19/4%),_0_24px_60px_-40px_rgb(15_22_19/15%)] md:p-8">
-            <div className="grid gap-6 md:grid-cols-[1fr_1.1fr] md:items-end">
+          <div className="rounded-[2rem] border border-[rgb(15_22_19/8%)] bg-[#0f1613] p-8 text-white shadow-[0_35px_90px_-50px_rgba(15,22,19,0.8)] md:p-12">
+            <div className="grid gap-8 md:grid-cols-[1fr_1fr] md:items-end">
               <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#1e6f58]">
-                  Subscribers only
-                </p>
-                <h3 className="mt-3 max-w-lg font-serif text-[clamp(2.2rem,4vw,3.5rem)] leading-[0.97] tracking-[-0.04em] text-[#0f1613]">
-                  Get 10% off your first order.
+                <div className="flex items-center gap-3">
+                  <div className="h-px w-8 bg-[#8eb8aa]" />
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8eb8aa]">
+                    Research notes
+                  </span>
+                </div>
+                <h3 className="mt-5 max-w-md font-serif text-[clamp(2.2rem,3.8vw,3.2rem)] leading-[0.95] tracking-[-0.04em] text-white">
+                  Get first access to new compounds and release notes.
                 </h3>
-                <p className="mt-4 text-sm leading-7 text-[#5c6762]">
-                  Subscribe to receive your exclusive discount code, compound releases, and protocol updates.
+                <p className="mt-4 max-w-md text-[14px] leading-[1.8] text-white/68">
+                  Join the Titan list for first-order pricing, launch alerts,
+                  and batch-system updates that make the brand feel bigger than
+                  a storefront.
                 </p>
-                <p className="mt-2 text-sm text-[#6b7a73]">
+                <p className="mt-2 text-[12px] text-white/42">
                   Laboratory research purposes only. Not for human consumption.
                 </p>
               </div>
@@ -30,13 +35,13 @@ export function Newsletter() {
                   required
                   placeholder="research@lab.com"
                   aria-label="Email address"
-                  className="h-12 rounded-full border-[rgb(15_22_19/12%)] bg-white px-5 text-[#0f1613] placeholder:text-[#9aa6a0]"
+                  className="h-11 rounded-full border-white/12 bg-white px-5 text-[14px] text-[#0f1613] placeholder:text-[#a0a9a4]"
                 />
                 <Button
                   type="submit"
-                  className="h-12 rounded-full bg-[#1e6f58] px-6 text-white hover:bg-[#175946]"
+                  className="h-11 rounded-full bg-[#1e6f58] px-6 text-[13px] font-medium text-white hover:bg-[#255f4f]"
                 >
-                  Subscribe
+                  Join Titan
                 </Button>
               </form>
             </div>

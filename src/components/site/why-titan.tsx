@@ -1,74 +1,90 @@
 "use client";
 
-import { motion } from "motion/react";
 import { Reveal } from "./reveal";
 
 const POINTS = [
   {
-    label: "Purity",
+    label: "Purity verification",
+    stat: "\u226599% HPLC",
     detail:
-      "Every batch is HPLC-verified to ≥99%. We reject anything below our internal threshold, not 95%, not 98%.",
+      "Every batch is HPLC-verified to \u226599%. Anything below our internal threshold is rejected outright \u2014 not softened, not relabeled.",
   },
   {
-    label: "Lot-matched COA",
+    label: "Lot-matched certificates",
+    stat: "1:1 batch link",
     detail:
-      "Your certificate belongs to your specific batch. No generic library PDFs, no recycled test data from a different production run.",
+      "Your certificate belongs to your specific batch. No generic library PDFs. No recycled test data from a different production run.",
   },
   {
-    label: "Cold-chain shipping",
+    label: "Cold-chain logistics",
+    stat: "Every liquid order",
     detail:
-      "Temperature-controlled packaging on every liquid order so the bottle arrives intact, not cooked in transit.",
+      "Temperature-controlled packaging on every liquid order. The bottle arrives intact because we treat cold-chain as standard, not optional.",
   },
   {
     label: "Same-day dispatch",
+    stat: "Cut-off 2 PM PT",
     detail:
-      "Orders confirmed before 2 PM PT move the same day, with tracking and payment review following quickly after.",
+      "Orders confirmed before 2 PM Pacific ship the same day, with tracking and batch documentation following within hours.",
   },
   {
-    label: "6-test release",
+    label: "6-point release panel",
+    stat: "All six must clear",
     detail:
-      "Identity, purity, sterility, endotoxin, heavy metals, residual solvents. All six must clear before a lot ships.",
+      "Identity, purity, sterility, endotoxin, heavy metals, residual solvents. Every gate must pass before a lot is released to fill.",
   },
   {
-    label: "ISO 17025 partner",
+    label: "ISO 17025 partner lab",
+    stat: "Accredited retest",
     detail:
-      "Independent retesting through an accredited lab so the proof reads like a system, not a claim.",
+      "Independent retesting through an accredited laboratory so the proof reads as a system, not a single data point.",
   },
 ];
 
 export function WhyTitan() {
   return (
-    <section className="border-b border-[#e5e5e5] bg-white py-24 lg:py-32">
-      <div className="mx-auto max-w-7xl px-6">
-        <Reveal>
-          <div className="max-w-2xl">
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#1e6f58]">
-              Why Titan
-            </p>
-            <h2 className="mt-4 font-serif text-[clamp(2.2rem,4.5vw,3.8rem)] leading-[0.98] tracking-[-0.03em] text-[#1a1a1a]">
-              The standard other suppliers skip.
-            </h2>
-            <p className="mt-5 max-w-xl text-[15px] leading-8 text-[#5c6762]">
-              Most peptide vendors sell convenience. Titan sells proof, cleaner surfaces, and a more confident first impression.
-              The job here is making the product feel premium before the order form even starts.
-            </p>
-          </div>
-        </Reveal>
+    <section className="border-b border-[rgb(15_22_19/7%)] bg-[#f8f6f2] py-24 lg:py-32">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <Reveal>
+            <div className="lg:sticky lg:top-24">
+              <div className="flex items-center gap-3">
+                <div className="h-px w-8 bg-[#1e6f58]" />
+                <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">
+                  Why Titan
+                </span>
+              </div>
+              <h2 className="mt-6 max-w-lg font-serif text-[clamp(2.6rem,5vw,4.25rem)] leading-[0.92] tracking-[-0.04em] text-[#0f1613]">
+                Built like a category leader, not a reseller.
+              </h2>
+              <p className="mt-6 max-w-md text-[15px] leading-[1.85] text-[#55625c]">
+                The goal is not just to sell peptides. It is to make each lot
+                feel governed by a visible operating system, with stricter proof,
+                cleaner packaging language, and less ambiguity at every step.
+              </p>
+            </div>
+          </Reveal>
 
-        <dl className="mt-14 grid gap-px overflow-hidden rounded-[1.8rem] border border-[#e5e5e5] bg-[#e5e5e5] sm:grid-cols-2 lg:grid-cols-3">
-          {POINTS.map((pt, i) => (
-            <Reveal key={pt.label} delay={i * 0.04}>
-              <motion.div className="flex h-full flex-col bg-[#faf9f7] p-7 transition-colors hover:bg-white">
-                <dt className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#1e6f58]">
-                  {pt.label}
-                </dt>
-                <dd className="mt-3 text-[14px] leading-7 text-[#5c6762]">
-                  {pt.detail}
-                </dd>
-              </motion.div>
-            </Reveal>
-          ))}
-        </dl>
+          <div className="grid gap-4">
+            {POINTS.map((pt, i) => (
+              <Reveal key={pt.label} delay={i * 0.04}>
+                <div className="grid gap-5 rounded-[1.75rem] border border-[rgb(15_22_19/8%)] bg-white p-7 shadow-[0_20px_60px_-38px_rgba(15,22,19,0.22)] sm:grid-cols-[190px_1fr] sm:items-start">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1e6f58]">
+                      {pt.label}
+                    </p>
+                    <p className="mt-3 font-serif text-[1.65rem] leading-[1.02] tracking-[-0.03em] text-[#0f1613]">
+                      {pt.stat}
+                    </p>
+                  </div>
+                  <p className="text-[14px] leading-[1.8] text-[#55625c]">
+                    {pt.detail}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

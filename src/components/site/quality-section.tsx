@@ -1,8 +1,10 @@
+import { Reveal } from "./reveal";
+
 const STEPS = [
   {
     n: "01",
     title: "Lot intake",
-    body: "Every nasal spray batch gets a Titan lot code before fill. That code stays tied to the bottle, internal record, certificate, and checkout reference.",
+    body: "Every batch receives a Titan lot code before fill. That code stays tied to the bottle, internal record, certificate, and checkout reference throughout the workflow.",
   },
   {
     n: "02",
@@ -22,60 +24,68 @@ const STEPS = [
 ];
 
 const METRICS = [
-  ["≥99%", "HPLC release threshold"],
-  ["1:1", "Bottle lot to COA match"],
-  ["24h", "Manual fulfillment window"],
-  ["QR", "Certificate lookup path"],
+  ["\u226599%", "HPLC release threshold"],
+  ["1:1", "Bottle-to-COA match"],
+  ["24h", "Fulfillment window"],
+  ["QR", "Certificate lookup"],
 ];
 
 export function QualitySection() {
   return (
     <section
       id="quality"
-      className="border-b border-[rgb(15_22_19/8%)] bg-white py-20 text-[#0f1613] lg:py-28"
+      className="border-b border-[rgb(15_22_19/7%)] bg-[#f3efe8] py-24 lg:py-32"
     >
-      <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-6 lg:grid-cols-[0.42fr_0.58fr] lg:px-8">
+      <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-6 lg:grid-cols-[0.46fr_0.54fr] lg:px-8">
         <div className="lg:sticky lg:top-24 lg:self-start">
-          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#1e6f58]">
-            Quality system
-          </p>
-          <h2 className="mt-5 max-w-lg font-serif text-[clamp(2.6rem,4.8vw,4.7rem)] leading-[0.96] tracking-[-0.04em]">
-            The certificate stays attached to the bottle, not just the brand.
-          </h2>
-          <p className="mt-5 max-w-md text-base leading-8 text-[#5c6762]">
-            The whole point of the workflow is keeping batch identity intact.
-            Compound, certificate, QR lookup, and shipping note all resolve to
-            the same lot instead of a generic promise page.
-          </p>
+          <div className="rounded-[2rem] bg-[#0f1613] p-8 text-white shadow-[0_30px_90px_-44px_rgba(15,22,19,0.8)] lg:p-10">
+            <div className="flex items-center gap-3">
+              <div className="h-px w-8 bg-[#8eb8aa]" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8eb8aa]">
+                Quality system
+              </span>
+            </div>
+            <h2 className="mt-6 max-w-lg font-serif text-[clamp(2.5rem,4.8vw,4rem)] leading-[0.92] tracking-[-0.04em] text-white">
+              The lot record stays intact from intake to doorstep.
+            </h2>
+            <p className="mt-5 max-w-md text-[15px] leading-[1.85] text-white/68">
+              Compound, certificate, QR lookup, reviewer notes, and shipping
+              flow all resolve to the same release record. That is the system
+              the brand sits on top of.
+            </p>
 
-          <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-[1.5rem] border border-[rgb(15_22_19/8%)] bg-[rgb(15_22_19/6%)]">
-            {METRICS.map(([value, label]) => (
-              <div key={label} className="bg-white p-5">
-                <p className="font-serif text-4xl italic leading-none text-[#0f1613]">
-                  {value}
-                </p>
-                <p className="mt-2 text-sm leading-5 text-[#5c6762]">{label}</p>
-              </div>
-            ))}
+            <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-[1.4rem] border border-white/10 bg-white/10">
+              {METRICS.map(([value, label]) => (
+                <div key={label} className="bg-white/6 p-5 backdrop-blur-sm">
+                  <p className="font-serif text-[2rem] leading-none tracking-[-0.03em] text-white">
+                    {value}
+                  </p>
+                  <p className="mt-2 text-[12px] leading-relaxed text-white/50">
+                    {label}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        <ol className="grid gap-5">
-          {STEPS.map((step) => (
-            <li
-              key={step.n}
-              className="grid gap-6 rounded-[1.5rem] border border-[rgb(15_22_19/8%)] bg-white p-6 shadow-[0_1px_2px_rgb(15_22_19/4%),_0_12px_32px_-20px_rgb(15_22_19/12%)] sm:grid-cols-[88px_1fr]"
-            >
-              <span className="font-mono text-sm text-[#1e6f58]">{step.n}</span>
-              <div>
-                <h3 className="font-serif text-[2rem] leading-[1.02] tracking-[-0.03em]">
-                  {step.title}
-                </h3>
-                <p className="mt-3 max-w-2xl text-base leading-7 text-[#5c6762]">
-                  {step.body}
-                </p>
-              </div>
-            </li>
+        <ol className="grid gap-4">
+          {STEPS.map((step, i) => (
+            <Reveal key={step.n} delay={i * 0.04}>
+              <li className="grid gap-5 rounded-[1.75rem] border border-[rgb(15_22_19/8%)] bg-white p-7 shadow-[0_20px_60px_-38px_rgba(15,22,19,0.18)] sm:grid-cols-[88px_1fr]">
+                <span className="font-serif text-[1.6rem] leading-none tracking-[-0.03em] text-[#1e6f58]">
+                  {step.n}
+                </span>
+                <div>
+                  <h3 className="font-serif text-[1.65rem] leading-[1.05] tracking-[-0.03em] text-[#0f1613]">
+                    {step.title}
+                  </h3>
+                  <p className="mt-3 max-w-2xl text-[14px] leading-[1.8] text-[#55625c]">
+                    {step.body}
+                  </p>
+                </div>
+              </li>
+            </Reveal>
           ))}
         </ol>
       </div>

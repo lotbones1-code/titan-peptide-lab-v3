@@ -12,19 +12,27 @@ import { SocialProof } from "@/components/site/social-proof";
 import { WhyTitan } from "@/components/site/why-titan";
 import { ProductListJsonLd } from "@/components/site/json-ld";
 
+/* DESIGN SPEC
+Mood: sovereign clinical luxury.
+Palette: ink #0f1613, titan green #1e6f58, paper #f6f3ee, white #ffffff, muted text #66736d.
+Typography: Instrument Serif for display, Inter for body.
+Layout: editorial two-column hero, dark trust moments, large asymmetric sections with tight max-width rhythm.
+Key interaction: subtle lift, glow, and border refinement on hover.
+Image plan: compound-name-led posters only, no fake bottles or rendered product shots.
+*/
 export default function HomePage() {
   return (
     <>
       <ProductListJsonLd />
       <Nav />
-      <main className="bg-white text-[#0f1613]">
+      <main className="bg-[#f8f6f2] text-[#0f1613]">
         <Hero />
         <TrustStrip />
-        <Products />
         <WhyTitan />
-        <SocialProof />
+        <Products />
         <QualitySection />
         <HowItWorks />
+        <SocialProof />
         <PaymentMethods />
         <FAQ />
         <Newsletter />

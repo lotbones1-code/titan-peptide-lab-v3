@@ -1,24 +1,23 @@
-import { FileCheck2, PackageCheck, Send, SprayCan } from "lucide-react";
 import { Reveal } from "./reveal";
 
 const STEPS = [
   {
-    icon: SprayCan,
-    title: "Pick your spray",
-    text: "Choose the compound or stack that fits the protocol you are running.",
+    n: "01",
+    title: "Select compound",
+    text: "Choose the nasal spray, injectable, or stack that fits your research protocol.",
   },
   {
-    icon: Send,
+    n: "02",
     title: "Confirm payment",
-    text: "Checkout supports BTC, ETH, USDC ERC-20, SOL, and USDC SPL.",
+    text: "Checkout supports BTC, ETH, USDC (ERC-20), SOL, and USDC (SPL).",
   },
   {
-    icon: PackageCheck,
+    n: "03",
     title: "Packed within 24h",
     text: "Liquid orders are prepared for cold-chain handling before dispatch.",
   },
   {
-    icon: FileCheck2,
+    n: "04",
     title: "Receive proof",
     text: "Tracking and batch-matched COA stay tied to the order record.",
   },
@@ -26,39 +25,41 @@ const STEPS = [
 
 export function HowItWorks() {
   return (
-    <section className="border-b border-[#dde4da] bg-[#f4efe8] py-20 lg:py-28">
+    <section className="border-b border-[rgb(15_22_19/7%)] bg-white py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <Reveal>
-          <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6b7972]">
-                Order flow
-              </p>
-              <h2 className="mt-4 max-w-3xl font-serif text-[clamp(2.5rem,4.5vw,4.3rem)] leading-[0.96] tracking-[-0.04em] text-[#13211c]">
-                The buying experience should feel clean, not underground.
+              <div className="flex items-center gap-3">
+                <div className="h-px w-8 bg-[#1e6f58]" />
+                <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">
+                  Order flow
+                </span>
+              </div>
+              <h2 className="mt-6 max-w-2xl font-serif text-[clamp(2.5rem,4.8vw,4rem)] leading-[0.92] tracking-[-0.04em] text-[#0f1613]">
+                Clear enough for first-time buyers, tight enough for repeat researchers.
               </h2>
             </div>
-            <p className="max-w-md text-base leading-8 text-[#55645d]">
-              That means clearer steps, batch language that makes sense, and a
-              stronger sense of confidence from first click to delivered order.
+            <p className="max-w-md text-[14px] leading-[1.8] text-[#55625c]">
+              The site should feel as controlled as the fulfillment process,
+              with clean decisions, visible proof, and no sketchy handoffs.
             </p>
           </div>
         </Reveal>
 
-        <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {STEPS.map(({ icon: Icon, title, text }, index) => (
+        <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {STEPS.map(({ n, title, text }, index) => (
             <Reveal key={title} delay={index * 0.04}>
-              <div className="h-full rounded-[1.5rem] border border-[#d9e0d7] bg-white/84 p-6 shadow-[0_18px_50px_-38px_rgba(19,33,28,0.3)]">
-                <div className="flex items-center justify-between">
-                  <span className="grid size-11 place-items-center rounded-full bg-[#edf4ef] text-[#2d7b62]">
-                    <Icon className="size-5" />
-                  </span>
-                  <span className="font-mono text-xs text-[#7b8781]">0{index + 1}</span>
-                </div>
-                <h3 className="mt-8 font-serif text-[1.9rem] leading-[1.02] tracking-[-0.03em] text-[#13211c]">
+              <div className="flex h-full flex-col rounded-[1.75rem] border border-[rgb(15_22_19/8%)] bg-[#faf8f4] p-6 shadow-[0_18px_50px_-36px_rgba(15,22,19,0.18)] transition-transform duration-300 hover:-translate-y-1">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1e6f58]">
+                  {n}
+                </span>
+                <h3 className="mt-6 font-serif text-[1.55rem] leading-[1.05] tracking-[-0.03em] text-[#0f1613]">
                   {title}
                 </h3>
-                <p className="mt-3 text-sm leading-7 text-[#596761]">{text}</p>
+                <p className="mt-3 text-[13.5px] leading-[1.8] text-[#55625c]">
+                  {text}
+                </p>
               </div>
             </Reveal>
           ))}

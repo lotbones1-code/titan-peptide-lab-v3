@@ -1,43 +1,56 @@
-import { FileCheck2, ShieldCheck, Snowflake } from "lucide-react";
 import { Reveal } from "./reveal";
 
 const ITEMS = [
   {
-    icon: ShieldCheck,
-    label: "Purity threshold",
-    note: "Third-party HPLC screen before release",
+    stat: "\u226599%",
+    label: "HPLC purity",
+    note: "Third-party verified on every batch before release",
   },
   {
-    icon: FileCheck2,
-    label: "COA matching",
-    note: "Certificate tied to the lot on your bottle",
+    stat: "1:1",
+    label: "Lot-matched COA",
+    note: "Certificate tied to the exact bottle in your order",
   },
   {
-    icon: Snowflake,
-    label: "Cold-chain packing",
-    note: "Temperature-conscious dispatch on liquid orders",
+    stat: "6-point",
+    label: "Release panel",
+    note: "Identity, purity, sterility, endotoxin, metals, solvents",
+  },
+  {
+    stat: "24h",
+    label: "Cold-chain dispatch",
+    note: "Temperature-controlled packaging, not optional",
   },
 ];
 
 export function TrustStrip() {
   return (
-    <section className="border-b border-[rgb(15_22_19/8%)] bg-[#fafafa] py-5">
-      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        <Reveal className="grid gap-3 md:grid-cols-3">
-          {ITEMS.map(({ icon: Icon, label, note }) => (
-            <div
-              key={label}
-              className="flex items-start gap-3 rounded-[1.1rem] border border-[rgb(15_22_19/8%)] bg-white px-4 py-4 text-sm text-[#0f1613] shadow-[0_1px_2px_rgb(15_22_19/4%)]"
-            >
-              <span className="grid size-10 shrink-0 place-items-center rounded-full bg-[#f0f5f2] text-[#1e6f58]">
-                <Icon className="size-4" />
-              </span>
-              <div>
-                <p className="font-medium text-[#0f1613]">{label}</p>
-                <p className="mt-1 text-sm leading-6 text-[#5c6762]">{note}</p>
-              </div>
+    <section className="border-b border-[rgb(15_22_19/8%)] bg-[#0f1613] text-white">
+      <div className="mx-auto max-w-7xl px-5 py-10 sm:px-6 lg:px-8 lg:py-12">
+        <Reveal>
+          <div className="grid gap-px overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-[1.15fr_repeat(4,1fr)]">
+            <div className="flex flex-col justify-between bg-[#121b18] p-6 lg:p-7">
+              <p className="text-[11px] uppercase tracking-[0.18em] text-white/45">
+                Titan operating standard
+              </p>
+              <p className="mt-10 max-w-xs font-serif text-[2rem] leading-[0.95] tracking-[-0.04em] text-white lg:text-[2.3rem]">
+                Premium packaging means nothing without proof behind it.
+              </p>
             </div>
-          ))}
+            {ITEMS.map(({ stat, label, note }) => (
+              <div key={label} className="flex flex-col bg-[#0f1613] p-6">
+                <span className="font-serif text-[2rem] tracking-[-0.04em] text-white">
+                  {stat}
+                </span>
+                <span className="mt-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8eb8aa]">
+                  {label}
+                </span>
+                <p className="mt-3 text-[13px] leading-relaxed text-white/58">
+                  {note}
+                </p>
+              </div>
+            ))}
+          </div>
         </Reveal>
       </div>
     </section>

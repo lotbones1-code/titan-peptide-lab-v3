@@ -1,152 +1,144 @@
 import Link from "next/link";
-import { ArrowRight, FileCheck2, ShieldCheck, Snowflake } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NASAL_SPRAYS } from "@/lib/products";
 import { Reveal } from "./reveal";
 import { CompoundPoster } from "./compound-poster";
 
 const HERO_PRODUCTS = NASAL_SPRAYS.slice(0, 3);
-
-const PROOF_ITEMS = [
-  {
-    icon: ShieldCheck,
-    label: "HPLC release",
-    value: "≥99% purity gate",
-  },
-  {
-    icon: FileCheck2,
-    label: "Batch proof",
-    value: "Lot-matched COA",
-  },
-  {
-    icon: Snowflake,
-    label: "Dispatch",
-    value: "Cold-chain packed",
-  },
-];
+const PRIMARY_PRODUCT = HERO_PRODUCTS[0];
+const SECONDARY_PRODUCTS = HERO_PRODUCTS.slice(1);
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-[rgb(15_22_19/8%)] bg-white">
+    <section className="relative overflow-hidden border-b border-[rgb(15_22_19/7%)] bg-[#f8f6f2]">
       <div
         aria-hidden
-        className="absolute left-[-12rem] top-[-8rem] h-[32rem] w-[32rem] rounded-full bg-[#e8f1ec] blur-3xl opacity-70"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 60% at 15% 0%, rgba(30,111,88,0.08) 0%, transparent 58%), radial-gradient(ellipse 55% 45% at 85% 12%, rgba(15,22,19,0.06) 0%, transparent 52%), linear-gradient(180deg, rgba(255,255,255,0.82) 0%, rgba(248,246,242,0) 100%)",
+        }}
       />
-      <div
-        aria-hidden
-        className="absolute right-[-10rem] top-[6rem] h-[28rem] w-[28rem] rounded-full bg-[#f4f6f4] blur-3xl opacity-80"
-      />
 
-      <div className="mx-auto grid max-w-7xl gap-12 px-5 pb-18 pt-14 sm:px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,1.05fr)] lg:px-8 lg:pb-24 lg:pt-20">
-        <Reveal className="relative z-10 flex flex-col justify-center">
-          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(15_22_19/10%)] bg-white px-4 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-[#5c6762] shadow-[0_1px_2px_rgb(15_22_19/4%)]">
-            No needles, nasal-first, lot-linked proof
-          </div>
-
-          <h1 className="mt-7 max-w-4xl font-serif text-[clamp(3.4rem,7vw,6.8rem)] font-normal leading-[0.92] tracking-[-0.05em] text-[#0f1613]">
-            Premium nasal sprays,
-            <br />
-            built to be <em className="text-[#2d7b62] not-italic">trusted</em> at first glance.
-          </h1>
-
-          <p className="mt-7 max-w-2xl text-[1.05rem] leading-8 text-[#5c6762] sm:text-[1.125rem]">
-            Titan should feel like the cleanest way into the category. Start with nasal sprays, get the easiest format to trust, and see lot-matched proof, cleaner checkout, and sharper product presentation before you ever think about injectables.
-          </p>
-
-          <div className="mt-8 flex flex-wrap gap-3 text-sm text-[#2a3530]">
-            <div className="rounded-full border border-[rgb(15_22_19/9%)] bg-white px-4 py-2 shadow-[0_1px_2px_rgb(15_22_19/4%)]">
-              6 flagship spray SKUs
-            </div>
-            <div className="rounded-full border border-[rgb(15_22_19/9%)] bg-white px-4 py-2 shadow-[0_1px_2px_rgb(15_22_19/4%)]">
-              Selank + Semax stack ready
-            </div>
-            <div className="rounded-full border border-[rgb(15_22_19/9%)] bg-white px-4 py-2 shadow-[0_1px_2px_rgb(15_22_19/4%)]">
-              10% off — subscribers only
-            </div>
-          </div>
-
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <Button
-              asChild
-              className="h-12 rounded-full bg-[#1e6f58] px-6 text-white hover:bg-[#175946]"
-            >
-              <Link href="#products">
-                Shop Nasal Sprays
-                <ArrowRight className="size-4" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="h-12 rounded-full border-[rgb(15_22_19/12%)] bg-white px-6 text-[#0f1613] hover:border-[#1e6f58]/50 hover:bg-[#f7faf8]"
-            >
-              <Link href="/research/bpc-157-nasal-spray">Read Research</Link>
-            </Button>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.08} className="relative z-10">
-          <div className="relative overflow-hidden rounded-[2rem] border border-[rgb(15_22_19/8%)] bg-white p-6 shadow-[0_40px_100px_-45px_rgb(15_22_19/18%),_0_4px_12px_-4px_rgb(15_22_19/6%)] sm:p-8">
-            <div
-              aria-hidden
-              className="absolute inset-x-10 top-0 h-40 rounded-full bg-[#e8f1ec] blur-3xl opacity-60"
-            />
-            <div className="relative flex items-start justify-between gap-4">
-              <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6b7a73]">
-                  Signature nasal lineup
-                </p>
-                <h2 className="mt-3 max-w-sm font-serif text-3xl leading-[1] tracking-[-0.04em] text-[#0f1613] sm:text-[2.35rem]">
-                  The nasal-first shelf, cleaned up to feel premium and direct.
-                </h2>
+      <div className="relative mx-auto max-w-7xl px-5 pb-18 pt-10 sm:px-6 lg:px-8 lg:pb-24 lg:pt-14">
+        <div className="grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
+          <div>
+            <Reveal>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="rounded-full border border-[rgb(15_22_19/10%)] bg-white/80 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1e6f58]">
+                  The Titan Peptide Company
+                </span>
+                <span className="text-[11px] uppercase tracking-[0.18em] text-[#7b8781]">
+                  Batch-traceable research compounds
+                </span>
               </div>
-              <div className="rounded-full border border-[rgb(15_22_19/10%)] bg-white px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[#5c6762] shadow-[0_1px_2px_rgb(15_22_19/4%)]">
-                Lot-linked COAs
-              </div>
-            </div>
+            </Reveal>
 
-            <div className="relative mt-8 grid min-h-[340px] items-end gap-4 sm:min-h-[430px] sm:grid-cols-[0.9fr_1.2fr_0.9fr]">
-              {HERO_PRODUCTS.map((product, index) => {
-                const elevated = index === 1;
-                return (
+            <Reveal delay={0.04}>
+              <h1 className="mt-8 max-w-5xl font-serif text-[clamp(1.7rem,8.6vw,6.4rem)] font-normal leading-[0.96] tracking-[-0.035em] text-[#0f1613]">
+                Clinical-grade presentation.
+                <br />
+                <span className="text-[#1e6f58]">Research-first proof.</span>
+              </h1>
+            </Reveal>
+
+            <Reveal delay={0.08}>
+              <p className="mt-7 max-w-2xl text-[1.05rem] leading-[1.85] text-[#55625c] sm:text-[1.08rem]">
+                Titan turns peptide buying into a branded quality system.
+                Every release clears a {"\u2265"}99% HPLC threshold, carries a
+                lot-matched certificate, and ships with cold-chain handling
+                built in from the start.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <Button
+                  asChild
+                  className="h-12 rounded-full bg-[#0f1613] px-7 text-[14px] font-medium text-white shadow-[0_20px_50px_-28px_rgba(15,22,19,0.8)] hover:bg-[#18201d]"
+                >
+                  <Link href="/products">
+                    View catalog
+                    <ArrowRight className="ml-2 size-4" />
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="h-12 rounded-full border-[rgb(15_22_19/12%)] bg-white/80 px-7 text-[14px] font-medium text-[#0f1613] hover:border-[rgb(15_22_19/20%)] hover:bg-white"
+                >
+                  <Link href="/lab-testing">Review lab system</Link>
+                </Button>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.12}>
+              <div className="mt-12 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                {[
+                  ["\u226599%", "HPLC release threshold"],
+                  ["1:1", "Lot-to-COA match"],
+                  ["ISO 17025", "Accredited partner lab"],
+                  ["24h", "Cold-chain dispatch"],
+                ].map(([stat, label]) => (
                   <div
+                    key={label}
+                    className="rounded-[1.4rem] border border-[rgb(15_22_19/8%)] bg-white/86 px-5 py-4 shadow-[0_18px_50px_-34px_rgba(15,22,19,0.28)]"
+                  >
+                    <p className="font-serif text-[1.8rem] leading-none tracking-[-0.04em] text-[#0f1613]">
+                      {stat}
+                    </p>
+                    <p className="mt-2 text-[11px] uppercase tracking-[0.14em] text-[#7b8781]">
+                      {label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+
+          <Reveal delay={0.08}>
+            <div className="grid gap-4">
+              <div className="overflow-hidden rounded-[2rem] border border-[rgb(15_22_19/8%)] bg-white p-3 shadow-[0_30px_80px_-40px_rgba(15,22,19,0.25)]">
+                <CompoundPoster
+                  product={PRIMARY_PRODUCT}
+                  variant="hero"
+                  className="min-h-[420px] rounded-[1.6rem] border-0 shadow-none"
+                />
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-[0.9fr_1.1fr]">
+                {SECONDARY_PRODUCTS.map((product) => (
+                  <Link
                     key={product.id}
-                    className={`${elevated ? "sm:-translate-y-6" : ""}`}
+                    href={`/products/${product.slug}`}
+                    className="group overflow-hidden rounded-[1.6rem] border border-[rgb(15_22_19/8%)] bg-white p-2.5 outline-none transition-transform hover:-translate-y-0.5 focus-visible:-translate-y-0.5"
                   >
                     <CompoundPoster
                       product={product}
-                      variant="hero"
-                      className={`h-full min-h-[260px] ${elevated ? "ring-1 ring-[#1e6f58]/10" : ""}`}
+                      variant="card"
+                      className="min-h-[240px] rounded-[1.2rem] border-0 shadow-none transition-all duration-300 group-hover:shadow-[0_24px_60px_-28px_rgb(15_22_19/24%)]"
                     />
+                  </Link>
+                ))}
+                <div className="flex flex-col justify-between rounded-[1.6rem] bg-[#0f1613] p-6 text-white shadow-[0_30px_80px_-40px_rgba(15,22,19,0.75)] md:row-span-1">
+                  <div>
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-white/55">
+                      Release standard
+                    </p>
+                    <p className="mt-4 font-serif text-[2rem] leading-[0.95] tracking-[-0.04em]">
+                      Documentation that survives scrutiny.
+                    </p>
                   </div>
-                );
-              })}
-            </div>
-
-            <div className="relative mt-6 grid gap-3 sm:grid-cols-3">
-              {PROOF_ITEMS.map(({ icon: Icon, label, value }) => (
-                <div
-                  key={label}
-                  className="rounded-[1.25rem] border border-[rgb(15_22_19/8%)] bg-white px-4 py-4 shadow-[0_1px_2px_rgb(15_22_19/4%)]"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="grid size-10 place-items-center rounded-full bg-[#f0f5f2] text-[#1e6f58]">
-                      <Icon className="size-4" />
-                    </span>
-                    <div>
-                      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#6b7a73]">
-                        {label}
-                      </p>
-                      <p className="mt-1 text-sm font-medium text-[#0f1613]">
-                        {value}
-                      </p>
-                    </div>
+                  <div className="mt-8 space-y-4 text-[13px] leading-[1.7] text-white/70">
+                    <p>Every lot stays tied to its certificate, shipping flow, and order record.</p>
+                    <p>Built to look premium because the underlying system is premium.</p>
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

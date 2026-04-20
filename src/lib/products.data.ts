@@ -4,10 +4,10 @@
 import type { Product } from "./products";
 
 export const BRAND_DATA = {
-  "name": "Titan Peptide Lab",
+  "name": "Titan Peptide",
   "domain": "www.titanpeptidelab.com",
-  "tagline": "Nasal-first peptide research catalog.",
-  "description": "A nasal-first peptide catalog built around low-friction spray formats, HPLC-verified purity, batch-matched COAs, and cold-chain shipping."
+  "tagline": "Research-grade peptides. Batch-verified purity.",
+  "description": "Research-grade peptide formulations with HPLC-verified purity, batch-matched certificates of analysis, and cold-chain fulfillment. Built for laboratories and researchers who require traceable quality."
 } as const;
 
 export const WALLETS_DATA = {

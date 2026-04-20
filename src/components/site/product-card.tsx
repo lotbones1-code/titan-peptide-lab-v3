@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/lib/products";
 import { CompoundPoster } from "./compound-poster";
@@ -28,72 +28,66 @@ export function ProductCard({
   return (
     <article
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-[1.6rem] border border-[rgb(15_22_19/8%)] bg-white text-[#0f1613] shadow-[0_1px_2px_rgb(15_22_19/4%),_0_12px_32px_-20px_rgb(15_22_19/15%)] transition duration-300 hover:-translate-y-0.5 hover:border-[#1e6f58]/30 hover:shadow-[0_4px_12px_-2px_rgb(15_22_19/8%),_0_24px_48px_-20px_rgb(15_22_19/20%)]",
+        "group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-[rgb(15_22_19/8%)] bg-white text-[#0f1613] transition duration-300 hover:-translate-y-1 hover:border-[rgb(15_22_19/14%)] hover:shadow-[0_24px_70px_-34px_rgb(15_22_19/25%)]",
         variant === "stack" && "md:grid md:grid-cols-[280px_1fr]"
       )}
     >
       <Link
         href={`/products/${product.slug}`}
-        className="relative flex min-h-72 overflow-hidden border-b border-[rgb(15_22_19/6%)] bg-[#fafbfa] outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58] md:border-b-0 md:border-r"
+        className="relative flex min-h-64 overflow-hidden border-b border-[rgb(15_22_19/6%)] bg-[#f5f1ea] outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58] md:border-b-0 md:border-r"
       >
-        <CompoundPoster product={product} variant="card" className="min-h-72 w-full rounded-none border-0 shadow-none" />
+        <CompoundPoster
+          product={product}
+          variant="card"
+          className="min-h-64 w-full rounded-none border-0 shadow-none"
+        />
       </Link>
 
       <div className="flex flex-1 flex-col p-6">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full border border-[rgb(15_22_19/10%)] bg-[#f7faf8] px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#1e6f58]">
-                {product.category === "nasal-spray"
-                  ? "Nasal spray"
-                  : product.category === "injectable"
-                    ? "Injectable"
-                    : "Stack"}
-              </span>
-              <span className="rounded-full border border-[rgb(15_22_19/10%)] bg-[#f0f5f2] px-3 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#1e6f58]">
-                COA ready
-              </span>
-            </div>
-            <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#6b7a73]">
-              {product.size}
-            </p>
-            <h3 className="mt-3 font-serif text-[2rem] leading-[1.02] tracking-[-0.03em] text-[#0f1613]">
-              {product.name}
-            </h3>
+        <div>
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="rounded-full bg-[#edf4f0] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#1e6f58]">
+              {product.category === "nasal-spray"
+                ? "Nasal spray"
+                : product.category === "injectable"
+                  ? "Injectable"
+                  : "Stack"}
+            </span>
+            <span className="rounded-full bg-[#f3f0ea] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#8a9690]">
+              COA included
+            </span>
           </div>
+          <h3 className="mt-4 font-serif text-[1.65rem] leading-[1.05] tracking-[-0.03em] text-[#0f1613]">
+            {product.name}
+          </h3>
+          <p className="mt-1 text-[12px] text-[#8a9690]">{product.size}</p>
         </div>
 
-        <p className="mt-4 text-sm leading-7 text-[#5c6762]">{product.tagline}</p>
+        <p className="mt-4 text-[13px] leading-[1.75] text-[#55625c]">
+          {product.tagline}
+        </p>
 
-        <ul className="mt-5 grid gap-2.5 text-sm leading-6 text-[#2a3530]">
-          {product.benefits.slice(0, 3).map((benefit) => (
-            <li key={benefit} className="flex gap-3">
-              <span className="mt-2 size-1.5 rounded-full bg-[#1e6f58]" />
-              <span>{benefit}</span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-auto pt-7">
-          <div className="flex items-baseline gap-3">
-            <p className="text-3xl font-semibold text-[#0f1613]">
-              {formatPrice(product.price)}
-            </p>
-            {product.compareAtPrice ? (
-              <p className="text-sm text-[#9aa6a0] line-through">
-                {formatPrice(product.compareAtPrice)}
+        <div className="mt-auto pt-5">
+          <div className="flex items-center justify-between border-t border-[rgb(15_22_19/6%)] pt-5">
+            <div className="flex items-baseline gap-2">
+              <p className="text-xl font-semibold text-[#0f1613]">
+                {formatPrice(product.price)}
               </p>
-            ) : null}
-          </div>
+              {product.compareAtPrice ? (
+                <p className="text-[13px] text-[#b0b8b4] line-through">
+                  {formatPrice(product.compareAtPrice)}
+                </p>
+              ) : null}
+            </div>
 
-          <Button
-            asChild
-            className="mt-5 h-11 w-full rounded-full bg-[#1e6f58] text-white hover:bg-[#175946]"
-          >
-            <Link href={`/products/${product.slug}`}>
-              {product.category === "nasal-spray" ? "Shop Spray" : "View Product"}
+            <Link
+              href={`/products/${product.slug}`}
+              className="flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-[0.08em] text-[#0f1613] transition-colors group-hover:text-[#1e6f58]"
+            >
+              View
+              <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
             </Link>
-          </Button>
+          </div>
         </div>
       </div>
     </article>

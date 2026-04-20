@@ -1,8 +1,9 @@
 {
-  "name": "Titan Peptide Lab",
+  "name": "Titan Peptide",
+  "legalName": "The Titan Peptide Company",
   "domain": "www.titanpeptidelab.com",
-  "tagline": "Nasal-first peptide research catalog.",
-  "description": "A nasal-first peptide catalog built around low-friction spray formats, HPLC-verified purity, batch-matched COAs, and cold-chain shipping.",
+  "tagline": "Research-grade peptides. Batch-verified purity.",
+  "description": "Research-grade peptide formulations with HPLC-verified purity, batch-matched certificates of analysis, and cold-chain fulfillment. Built for laboratories and researchers who require traceable quality.",
   "wallets": {
     "btc": "bc1qkshtp26f3qjkcgfdr2275wed2e8wkw25tr7vsd",
     "eth": "0x24c5Fe40f83ae20De82ae3637b66DE8B0e5Cd362",

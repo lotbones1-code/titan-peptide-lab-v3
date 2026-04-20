@@ -53,9 +53,6 @@
   --radius-4xl: 8px;
   --animate-marquee: marquee var(--duration) infinite linear;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
-  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
-  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
-  --animate-aurora: aurora 8s ease-in-out infinite alternate;
   @keyframes marquee {
   from {
     transform: translateX(0);
@@ -72,67 +69,14 @@
     transform: translateY(calc(-100% - var(--gap)));
     }
   }
-  @keyframes shimmer-slide {
-  to {
-    transform: translate(calc(100cqw - 100%), 0);
-    }
-  }
-  @keyframes spin-around {
-  0% {
-    transform: translateZ(0) rotate(0);
-    }
-  15%, 35% {
-    transform: translateZ(0) rotate(90deg);
-    }
-  65%, 85% {
-    transform: translateZ(0) rotate(270deg);
-    }
-  100% {
-    transform: translateZ(0) rotate(360deg);
-    }
-  }
-  @keyframes aurora {
-  0% {
-    background-position: 0% 50%;
-    transform: rotate(-5deg) scale(0.9);
-    }
-  25% {
-    background-position: 50% 100%;
-    transform: rotate(5deg) scale(1.1);
-    }
-  50% {
-    background-position: 100% 50%;
-    transform: rotate(-3deg) scale(0.95);
-    }
-  75% {
-    background-position: 50% 0%;
-    transform: rotate(3deg) scale(1.05);
-    }
-  100% {
-    background-position: 0% 50%;
-    transform: rotate(-5deg) scale(0.9);
-    }
-  }
 }
 
 :root {
   color-scheme: light;
-  /* next/font overrides these via layout.tsx className on <html>; kept as fallbacks */
   --font-geist-sans: "Inter", "Segoe UI", Arial, sans-serif;
   --font-geist-mono: "SFMono-Regular", Consolas, monospace;
   --font-serif: "Instrument Serif", Georgia, serif;
-  --text-12: 0.75rem;
-  --text-14: 0.875rem;
-  --text-16: 1rem;
-  --text-17: 1.0625rem;
-  --text-18: 1.125rem;
-  --text-24: 1.5rem;
-  --text-32: 2rem;
-  --text-48: 3rem;
-  --text-64: 4rem;
-  --text-80: 5rem;
-  --text-96: 6rem;
-  --background: #ffffff;
+  --background: #f8f6f2;
   --foreground: #0f1613;
   --signature: #1e6f58;
   --signature-foreground: #ffffff;
@@ -142,24 +86,24 @@
   --card-foreground: #0f1613;
   --popover: #ffffff;
   --popover-foreground: #0f1613;
-  --primary: #1e6f58;
+  --primary: #0f1613;
   --primary-foreground: #ffffff;
-  --secondary: #f5f6f5;
+  --secondary: #efebe4;
   --secondary-foreground: #0f1613;
-  --muted: #f7f7f6;
-  --muted-foreground: #5c6762;
-  --accent: #f0f5f2;
+  --muted: #f2eee8;
+  --muted-foreground: #66736d;
+  --accent: #f2eee8;
   --accent-foreground: #0f1613;
   --destructive: #c44b45;
   --border: rgb(15 22 19 / 9%);
-  --input: rgb(15 22 19 / 8%);
-  --ring: #2d7b62;
+  --input: rgb(15 22 19 / 9%);
+  --ring: #1e6f58;
   --chart-1: #1e6f58;
   --chart-2: #e3ecdf;
   --chart-3: #9aa6a0;
   --chart-4: #eef0ec;
   --chart-5: #d0d7d1;
-  --radius: 0.5rem;
+  --radius: 1rem;
   --sidebar: #ffffff;
   --sidebar-foreground: #0f1613;
   --sidebar-primary: #1e6f58;
@@ -181,18 +125,18 @@
   --card-foreground: #0f1613;
   --popover: #ffffff;
   --popover-foreground: #0f1613;
-  --primary: #1e6f58;
+  --primary: #0f1613;
   --primary-foreground: #ffffff;
   --secondary: #f5f6f5;
   --secondary-foreground: #0f1613;
   --muted: #f7f7f6;
   --muted-foreground: #5c6762;
-  --accent: #f0f5f2;
+  --accent: #f5f7f6;
   --accent-foreground: #0f1613;
   --destructive: #c44b45;
-  --border: rgb(15 22 19 / 9%);
+  --border: rgb(15 22 19 / 8%);
   --input: rgb(15 22 19 / 8%);
-  --ring: #2d7b62;
+  --ring: #1e6f58;
   --chart-1: #1e6f58;
   --chart-2: #e3ecdf;
   --chart-3: #9aa6a0;
@@ -215,16 +159,20 @@
   body {
     @apply bg-background text-foreground;
     min-width: 320px;
-    font-size: var(--text-17);
-    line-height: 1.6;
+    font-size: 1rem;
+    line-height: 1.65;
     text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image: linear-gradient(to bottom, #fcfbf8 0%, #f8f6f2 38%, #f8f6f2 100%);
   }
   html {
     @apply font-sans;
-    background: #ffffff;
+    background: #f8f6f2;
     scroll-behavior: smooth;
   }
 
+  /* Research article typography */
   .prose-research section:first-child p:first-of-type::first-letter {
     float: left;
     padding-right: 0.18em;
@@ -243,5 +191,27 @@
 
   .prose-research strong {
     color: #13211c;
+  }
+
+  /* Selection */
+  ::selection {
+    background: rgba(30, 111, 88, 0.12);
+    color: #0f1613;
+  }
+}
+
+@layer utilities {
+  .titan-surface {
+    background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.9) 100%);
+    backdrop-filter: blur(24px);
+  }
+
+  .titan-shadow {
+    box-shadow: 0 20px 70px -32px rgba(15, 22, 19, 0.18);
+  }
+
+  .titan-ring {
+    border: 1px solid rgba(15, 22, 19, 0.08);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
   }
 }
