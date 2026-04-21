@@ -115,7 +115,7 @@ export default function ShippingFAQPage() {
                 <p className="mt-5 max-w-xs text-[14px] leading-[1.7] text-[#5c6762]">
                   For anything not covered here, email
                   support@titanpeptidelab.com. Replies usually arrive inside
-                  24\u201348 hours.
+                  24–48 hours.
                 </p>
               </div>
 

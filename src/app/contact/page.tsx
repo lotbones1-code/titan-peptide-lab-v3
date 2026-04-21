@@ -32,7 +32,7 @@ export default function ContactPage() {
                 </h1>
 
                 <p className="mt-8 max-w-md text-[15px] leading-[1.8] text-[#5c6762]">
-                  Replies inside 24\u201348 hours, usually same day from the QA
+                  Replies inside 24–48 hours, usually same day from the QA
                   bench. For common questions, the fastest answer is on the{" "}
                   <Link
                     href="/shipping-faq"
@@ -113,7 +113,7 @@ export default function ContactPage() {
                         className="mt-2 w-full border-0 border-b border-[rgb(15_22_19/12%)] bg-transparent py-2 text-[14px] text-[#0f1613] focus:border-[#0f1613] focus:outline-none focus:ring-0"
                       >
                         <option value="" disabled>
-                          Select\u2026
+                          Select…
                         </option>
                         <option>General question</option>
                         <option>Order status</option>
@@ -142,7 +142,7 @@ export default function ContactPage() {
 
                     <div className="flex items-center justify-between pt-4">
                       <p className="max-w-xs text-[11px] text-[#8a9690]">
-                        Reply within 24\u201348h from the QA bench
+                        Reply within 24–48h from the QA bench
                       </p>
                       <button
                         type="submit"

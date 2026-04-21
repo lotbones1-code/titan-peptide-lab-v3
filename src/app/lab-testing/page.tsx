@@ -80,7 +80,7 @@ export default function LabTestingPage() {
                   Every batch is characterized in-house first, then checked
                   against an independent ISO 17025 workflow. If the reads
                   disagree beyond method tolerance, the batch is held. The point
-                  is not to print an impressive certificate \u2014 it is to make
+                  is not to print an impressive certificate — it is to make
                   the certificate believable.
                 </p>
 
@@ -148,7 +148,7 @@ export default function LabTestingPage() {
                       Semax
                       <br />
                       <span className="text-[#8a9690]">
-                        Lyophilized \u00b7 30 mg
+                        Lyophilized · 30 mg
                       </span>
                     </h3>
 
