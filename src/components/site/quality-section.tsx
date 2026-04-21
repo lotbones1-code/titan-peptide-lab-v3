@@ -42,16 +42,15 @@ export function QualitySection() {
             <div className="flex items-center gap-3">
               <div className="h-px w-8 bg-[#8eb8aa]" />
               <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8eb8aa]">
-                Quality system
+                Release workflow
               </span>
             </div>
             <h2 className="mt-6 max-w-lg font-serif text-[clamp(2.5rem,4.8vw,4rem)] leading-[0.92] tracking-[-0.04em] text-white">
-              The lot record stays intact from intake to doorstep.
+              A batch gets coded, screened, matched, and packed.
             </h2>
             <p className="mt-5 max-w-md text-[15px] leading-[1.85] text-white/68">
-              Compound, certificate, QR lookup, reviewer notes, and shipping
-              flow all resolve to the same release record. That is the system
-              the brand sits on top of.
+              This is the part that makes the storefront believable: one lot
+              record, one certificate trail, one fulfillment handoff.
             </p>
 
             <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-[1.4rem] border border-white/10 bg-white/10">

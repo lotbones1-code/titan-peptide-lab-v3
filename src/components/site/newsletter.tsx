@@ -17,12 +17,11 @@ export function Newsletter() {
                   </span>
                 </div>
                 <h3 className="mt-5 max-w-md font-serif text-[clamp(2.2rem,3.8vw,3.2rem)] leading-[0.95] tracking-[-0.04em] text-white">
-                  Get first access to new compounds and release notes.
+                  Get release notices and restock emails.
                 </h3>
                 <p className="mt-4 max-w-md text-[14px] leading-[1.8] text-white/68">
-                  Join the Titan list for first-order pricing, launch alerts,
-                  and batch-system updates that make the brand feel bigger than
-                  a storefront.
+                  Join the Titan list for first-order pricing, new compound
+                  drops, batch updates, and restock alerts.
                 </p>
                 <p className="mt-2 text-[12px] text-white/42">
                   Laboratory research purposes only. Not for human consumption.

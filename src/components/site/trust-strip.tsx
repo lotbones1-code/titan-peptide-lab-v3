@@ -2,24 +2,24 @@ import { Reveal } from "./reveal";
 
 const ITEMS = [
   {
-    stat: "\u226599%",
-    label: "HPLC purity",
-    note: "Third-party verified on every batch before release",
+    stat: "6",
+    label: "Release checks",
+    note: "Identity, purity, sterility, endotoxin, metals, solvents",
   },
   {
     stat: "1:1",
     label: "Lot-matched COA",
-    note: "Certificate tied to the exact bottle in your order",
-  },
-  {
-    stat: "6-point",
-    label: "Release panel",
-    note: "Identity, purity, sterility, endotoxin, metals, solvents",
+    note: "The same lot code appears on the bottle, certificate, and order",
   },
   {
     stat: "24h",
-    label: "Cold-chain dispatch",
-    note: "Temperature-controlled packaging, not optional",
+    label: "Manual packout target",
+    note: "Tracking and paperwork follow after payment review",
+  },
+  {
+    stat: "5",
+    label: "Checkout rails",
+    note: "BTC, ETH, USDC ERC-20, SOL, and USDC SPL",
   },
 ];
 
@@ -31,10 +31,10 @@ export function TrustStrip() {
           <div className="grid gap-px overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-[1.15fr_repeat(4,1fr)]">
             <div className="flex flex-col justify-between bg-[#121b18] p-6 lg:p-7">
               <p className="text-[11px] uppercase tracking-[0.18em] text-white/45">
-                Titan operating standard
+                Operating standard
               </p>
               <p className="mt-10 max-w-xs font-serif text-[2rem] leading-[0.95] tracking-[-0.04em] text-white lg:text-[2.3rem]">
-                Premium packaging means nothing without proof behind it.
+                Before a lot goes out, the record has to line up.
               </p>
             </div>
             {ITEMS.map(({ stat, label, note }) => (

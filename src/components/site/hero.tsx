@@ -30,25 +30,24 @@ export function Hero() {
                   The Titan Peptide Company
                 </span>
                 <span className="text-[11px] uppercase tracking-[0.18em] text-[#7b8781]">
-                  Batch-traceable research compounds
+                  Lot-matched COAs • cold-chain handling
                 </span>
               </div>
             </Reveal>
 
             <Reveal delay={0.04}>
               <h1 className="mt-8 max-w-5xl font-serif text-[clamp(1.7rem,8.6vw,6.4rem)] font-normal leading-[0.96] tracking-[-0.035em] text-[#0f1613]">
-                Clinical-grade presentation.
+                Peptide supply,
                 <br />
-                <span className="text-[#1e6f58]">Research-first proof.</span>
+                <span className="text-[#1e6f58]">run like an operating company.</span>
               </h1>
             </Reveal>
 
             <Reveal delay={0.08}>
               <p className="mt-7 max-w-2xl text-[1.05rem] leading-[1.85] text-[#55625c] sm:text-[1.08rem]">
-                Titan turns peptide buying into a branded quality system.
-                Every release clears a {"\u2265"}99% HPLC threshold, carries a
-                lot-matched certificate, and ships with cold-chain handling
-                built in from the start.
+                Small catalog. Tight release workflow. Each order ties payment,
+                lot code, certificate, and shipment together so buyers are not
+                guessing what shows up after checkout.
               </p>
             </Reveal>
 
@@ -68,7 +67,7 @@ export function Hero() {
                   variant="outline"
                   className="h-12 rounded-full border-[rgb(15_22_19/12%)] bg-white/80 px-7 text-[14px] font-medium text-[#0f1613] hover:border-[rgb(15_22_19/20%)] hover:bg-white"
                 >
-                  <Link href="/lab-testing">Review lab system</Link>
+                  <Link href="/lab-testing">See release workflow</Link>
                 </Button>
               </div>
             </Reveal>
@@ -76,10 +75,10 @@ export function Hero() {
             <Reveal delay={0.12}>
               <div className="mt-12 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 {[
-                  ["\u226599%", "HPLC release threshold"],
-                  ["1:1", "Lot-to-COA match"],
-                  ["ISO 17025", "Accredited partner lab"],
-                  ["24h", "Cold-chain dispatch"],
+                  ["6", "Release checks listed publicly"],
+                  ["1", "Lot code across bottle, COA, order"],
+                  ["24h", "Manual fulfillment target"],
+                  ["5", "Accepted checkout rails"],
                 ].map(([stat, label]) => (
                   <div
                     key={label}
@@ -124,15 +123,17 @@ export function Hero() {
                 <div className="flex flex-col justify-between rounded-[1.6rem] bg-[#0f1613] p-6 text-white shadow-[0_30px_80px_-40px_rgba(15,22,19,0.75)] md:row-span-1">
                   <div>
                     <p className="text-[11px] uppercase tracking-[0.18em] text-white/55">
-                      Release standard
+                      Order record
                     </p>
                     <p className="mt-4 font-serif text-[2rem] leading-[0.95] tracking-[-0.04em]">
-                      Documentation that survives scrutiny.
+                      Same lot.
+                      <br />
+                      Same paperwork.
                     </p>
                   </div>
                   <div className="mt-8 space-y-4 text-[13px] leading-[1.7] text-white/70">
-                    <p>Every lot stays tied to its certificate, shipping flow, and order record.</p>
-                    <p>Built to look premium because the underlying system is premium.</p>
+                    <p>Each completed order resolves into a lot code, matching certificate, and tracked shipment.</p>
+                    <p>No inflated metrics. No fake authority. Just the documents buyers actually ask for.</p>
                   </div>
                 </div>
               </div>

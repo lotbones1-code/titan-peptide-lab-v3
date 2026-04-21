@@ -4,40 +4,28 @@ import { Reveal } from "./reveal";
 
 const POINTS = [
   {
-    label: "Purity verification",
-    stat: "\u226599% HPLC",
+    label: "Lot-matched certificate",
+    stat: "Same code, same batch",
     detail:
-      "Every batch is HPLC-verified to \u226599%. Anything below our internal threshold is rejected outright \u2014 not softened, not relabeled.",
+      "The lot number on the bottle matches the certificate and the internal order record. That is the first thing serious buyers check.",
   },
   {
-    label: "Lot-matched certificates",
-    stat: "1:1 batch link",
+    label: "Cold-chain packout",
+    stat: "Handled as fulfillment, not décor",
     detail:
-      "Your certificate belongs to your specific batch. No generic library PDFs. No recycled test data from a different production run.",
+      "Liquid orders are packed for temperature control because transit matters more than whatever the homepage says.",
   },
   {
-    label: "Cold-chain logistics",
-    stat: "Every liquid order",
+    label: "Payment review",
+    stat: "Manual before release",
     detail:
-      "Temperature-controlled packaging on every liquid order. The bottle arrives intact because we treat cold-chain as standard, not optional.",
+      "Payment, chain, amount, and shipping details are checked before fulfillment so the order packet stays clean.",
   },
   {
-    label: "Same-day dispatch",
-    stat: "Cut-off 2 PM PT",
+    label: "Document resend",
+    stat: "Support by lot number",
     detail:
-      "Orders confirmed before 2 PM Pacific ship the same day, with tracking and batch documentation following within hours.",
-  },
-  {
-    label: "6-point release panel",
-    stat: "All six must clear",
-    detail:
-      "Identity, purity, sterility, endotoxin, heavy metals, residual solvents. Every gate must pass before a lot is released to fill.",
-  },
-  {
-    label: "ISO 17025 partner lab",
-    stat: "Accredited retest",
-    detail:
-      "Independent retesting through an accredited laboratory so the proof reads as a system, not a single data point.",
+      "If a buyer needs the certificate again, support can pull it from the lot record instead of sending a random template PDF.",
   },
 ];
 
@@ -51,16 +39,16 @@ export function WhyTitan() {
               <div className="flex items-center gap-3">
                 <div className="h-px w-8 bg-[#1e6f58]" />
                 <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">
-                  Why Titan
+                  What Buyers Check First
                 </span>
               </div>
               <h2 className="mt-6 max-w-lg font-serif text-[clamp(2.6rem,5vw,4.25rem)] leading-[0.92] tracking-[-0.04em] text-[#0f1613]">
-                Built like a category leader, not a reseller.
+                What makes the order feel real.
               </h2>
               <p className="mt-6 max-w-md text-[15px] leading-[1.85] text-[#55625c]">
-                The goal is not just to sell peptides. It is to make each lot
-                feel governed by a visible operating system, with stricter proof,
-                cleaner packaging language, and less ambiguity at every step.
+                The homepage should read like an actual operating company:
+                documents tied to batches, fulfillment tied to orders, and less
+                brand theater pretending to be proof.
               </p>
             </div>
           </Reveal>

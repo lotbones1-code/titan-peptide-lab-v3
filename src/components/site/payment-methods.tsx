@@ -72,13 +72,13 @@ export function PaymentMethods() {
                 </span>
               </div>
               <h2 className="mt-6 max-w-xl font-serif text-[clamp(2.2rem,4.2vw,3.4rem)] leading-[0.96] tracking-[-0.03em] text-[#0f1613]">
-                A payment flow that feels orderly, not improvised.
+                Wallet checkout, clearly laid out.
               </h2>
             </div>
             <p className="max-w-2xl text-[15px] leading-[1.8] text-[#5c6762]">
-              Crypto-only checkout. The presentation is designed to be clear and
-              calm \u2014 reducing hesitation before you ever see a wallet
-              address.
+              Crypto-only checkout with the addresses shown openly. Buyers
+              should be able to verify the rail, send payment, and know what
+              happens next without guessing.
             </p>
           </div>
         </Reveal>

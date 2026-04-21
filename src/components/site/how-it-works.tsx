@@ -37,12 +37,12 @@ export function HowItWorks() {
                 </span>
               </div>
               <h2 className="mt-6 max-w-2xl font-serif text-[clamp(2.5rem,4.8vw,4rem)] leading-[0.92] tracking-[-0.04em] text-[#0f1613]">
-                Clear enough for first-time buyers, tight enough for repeat researchers.
+                How an order moves through the company.
               </h2>
             </div>
             <p className="max-w-md text-[14px] leading-[1.8] text-[#55625c]">
-              The site should feel as controlled as the fulfillment process,
-              with clean decisions, visible proof, and no sketchy handoffs.
+              Buyers do not need a story here. They need to know what happens
+              after they send payment and when the paperwork arrives.
             </p>
           </div>
         </Reveal>

@@ -32,16 +32,17 @@ export function Products() {
               <div className="flex items-center gap-3">
                 <div className="h-px w-8 bg-[#1e6f58]" />
                 <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">
-                  Catalog
+                  Current catalog
                 </span>
               </div>
               <h2 className="mt-6 font-serif text-[clamp(2.7rem,5vw,4.25rem)] leading-[0.92] tracking-[-0.04em] text-[#0f1613]">
-                Nasal sprays that look premium because the workflow is premium.
+                The compounds currently in rotation.
               </h2>
             </div>
             <p className="max-w-xl text-[15px] leading-[1.85] text-[#55625c]">
-              Titan leads with nasal delivery because the experience is cleaner,
-              faster to understand, and easier to trust for first-time buyers.
+              Start with the live catalog first. The proof, shipping flow, and
+              wallet instructions sit underneath it for anyone who needs to
+              check the operation before ordering.
             </p>
           </div>
         </Reveal>
@@ -120,7 +121,7 @@ function FeaturedProduct({ product }: { product: Product }) {
             Flagship spray
           </span>
           <span className="rounded-full border border-white/14 bg-white/8 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/60">
-            Best entry point
+            Most requested
           </span>
         </div>
         <h3 className="mt-5 max-w-xl font-serif text-[clamp(2.4rem,4.8vw,4rem)] leading-[0.92] tracking-[-0.04em] text-white">

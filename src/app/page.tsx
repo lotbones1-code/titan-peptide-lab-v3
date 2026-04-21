@@ -28,8 +28,8 @@ export default function HomePage() {
       <main className="bg-[#f8f6f2] text-[#0f1613]">
         <Hero />
         <TrustStrip />
-        <WhyTitan />
         <Products />
+        <WhyTitan />
         <QualitySection />
         <HowItWorks />
         <SocialProof />
