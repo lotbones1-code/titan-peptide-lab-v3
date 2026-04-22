@@ -35,6 +35,24 @@ const START_POINTS = [
   },
 ];
 
+const PROOF_CARDS = [
+  {
+    icon: ShieldCheck,
+    label: "Lot-matched proof",
+    note: "The order batch ties directly to the paperwork you review.",
+  },
+  {
+    icon: FlaskConical,
+    label: "Release threshold",
+    note: "HPLC ≥99% is treated like a release gate, not soft marketing copy.",
+  },
+  {
+    icon: Snowflake,
+    label: "Cold-chain handling",
+    note: "Temperature-sensitive orders are packed and dispatched fast.",
+  },
+];
+
 function shortName(name: string) {
   return name.replace(" Nasal Spray", "");
 }
@@ -53,46 +71,45 @@ export function Hero() {
   return (
     <section className="border-b border-[rgba(10,10,10,0.07)] bg-[#f5f3ee]">
       <div className="border-b border-[rgba(10,10,10,0.06)] bg-[#111614] text-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.2em] lg:px-10">
-          <span>Titan Peptide Lab</span>
-          <span className="hidden text-white/70 sm:block">Cold-chain dispatch within 24h · Lot-matched COA</span>
+        <div className="mx-auto flex max-w-7xl items-center justify-center px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.2em] lg:justify-between lg:px-10">
+          <span className="hidden lg:block">Titan Peptide Lab</span>
+          <span className="text-white/85">Cold-chain dispatch within 24h · Lot-matched COA</span>
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-6 py-10 lg:px-10 lg:py-14">
+      <div className="mx-auto max-w-7xl px-6 py-6 lg:px-10 lg:py-10">
         <Reveal>
-          <div className="rounded-[2rem] border border-[rgba(10,10,10,0.08)] bg-white p-6 shadow-[0_22px_70px_rgba(10,10,10,0.05)] lg:p-10">
-            <div className="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_450px] lg:items-start">
+          <div className="rounded-[2rem] border border-[rgba(10,10,10,0.08)] bg-white p-5 shadow-[0_22px_70px_rgba(10,10,10,0.05)] lg:p-10">
+            <div className="grid gap-6 lg:grid-cols-[minmax(0,1.02fr)_430px] lg:items-start lg:gap-8">
               <div>
                 <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(10,10,10,0.08)] bg-[#f7f6f1] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#1a5c48]">
                   6 nasal sprays, merchandised by outcome
                 </div>
 
-                <h1 className="mt-6 max-w-[12ch] font-serif text-[clamp(3.1rem,8vw,7rem)] font-normal leading-[0.9] tracking-[-0.055em] text-[#0f1110]">
+                <h1 className="mt-5 max-w-[11ch] font-serif text-[clamp(2.7rem,7vw,6.35rem)] font-normal leading-[0.88] tracking-[-0.055em] text-[#0f1110]">
                   Recovery, cognition, intimacy, sleep.
                 </h1>
 
-                <p className="mt-6 max-w-[60ch] text-[15px] leading-[1.9] text-[#565b56]">
+                <p className="mt-5 max-w-[56ch] text-[15px] leading-[1.85] text-[#565b56]">
                   Titan is a tighter peptide catalog, six research-grade nasal sprays priced, packaged, and presented like real products, with assay standards and batch paperwork visible before payment.
                 </p>
 
-                <div className="mt-7 flex flex-wrap gap-2.5 text-[11px] text-[#40463f]">
-                  {[
-                    `From ${featured ? formatPrice(featured.price) : "$59.99"}`,
-                    "15mL measured atomizers",
-                    "No reconstitution",
-                    "Certificate path shown pre-checkout",
-                  ].map((item) => (
-                    <span
-                      key={item}
-                      className="inline-flex items-center rounded-full border border-[rgba(10,10,10,0.08)] bg-white px-3 py-1.5"
-                    >
-                      {item}
-                    </span>
-                  ))}
+                <div className="mt-6 flex flex-wrap gap-2.5 text-[11px] text-[#40463f]">
+                  <span className="inline-flex items-center rounded-full border border-[rgba(10,10,10,0.08)] bg-white px-3 py-1.5">
+                    From {featured ? formatPrice(featured.price) : "$59.99"}
+                  </span>
+                  <span className="inline-flex items-center rounded-full border border-[rgba(10,10,10,0.08)] bg-white px-3 py-1.5">
+                    15mL measured atomizers
+                  </span>
+                  <span className="hidden items-center rounded-full border border-[rgba(10,10,10,0.08)] bg-white px-3 py-1.5 sm:inline-flex">
+                    No reconstitution
+                  </span>
+                  <span className="hidden items-center rounded-full border border-[rgba(10,10,10,0.08)] bg-white px-3 py-1.5 sm:inline-flex">
+                    Certificate path shown pre-checkout
+                  </span>
                 </div>
 
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Link
                     href="/products"
                     className="inline-flex h-11 items-center justify-center gap-2.5 rounded-full bg-[#0f1110] px-7 text-[12px] font-semibold uppercase tracking-[0.07em] text-white transition-colors hover:bg-[#1a5c48]"
@@ -107,34 +124,6 @@ export function Hero() {
                     Review lab standard
                   </Link>
                 </div>
-
-                <div className="mt-8 grid gap-3 sm:grid-cols-3">
-                  {[
-                    {
-                      icon: ShieldCheck,
-                      label: "Lot-matched proof",
-                      note: "The order batch ties to the paperwork you review.",
-                    },
-                    {
-                      icon: FlaskConical,
-                      label: "Release threshold",
-                      note: "HPLC ≥99% is treated like a release gate, not fluff.",
-                    },
-                    {
-                      icon: Snowflake,
-                      label: "Cold-chain handling",
-                      note: "Temperature-sensitive orders are packed and dispatched fast.",
-                    },
-                  ].map(({ icon: Icon, label, note }) => (
-                    <div key={label} className="rounded-[1.25rem] border border-[rgba(10,10,10,0.07)] bg-[#faf9f5] p-4">
-                      <Icon className="size-4 text-[#1a5c48]" />
-                      <p className="mt-3 text-[12px] font-semibold uppercase tracking-[0.1em] text-[#0f1110]">
-                        {label}
-                      </p>
-                      <p className="mt-1.5 text-[12px] leading-[1.7] text-[#6a6f6a]">{note}</p>
-                    </div>
-                  ))}
-                </div>
               </div>
 
               <div className="space-y-4">
@@ -143,7 +132,7 @@ export function Hero() {
                     <CompoundPoster
                       product={featured}
                       variant="hero"
-                      className="min-h-[380px] rounded-[1.3rem] border-0 shadow-none"
+                      className="min-h-[350px] rounded-[1.3rem] border-0 shadow-none lg:min-h-[380px]"
                     />
                   </div>
                 ) : null}
@@ -201,7 +190,19 @@ export function Hero() {
               </div>
             </div>
 
-            <div className="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              {PROOF_CARDS.map(({ icon: Icon, label, note }) => (
+                <div key={label} className="rounded-[1.25rem] border border-[rgba(10,10,10,0.07)] bg-[#faf9f5] p-4">
+                  <Icon className="size-4 text-[#1a5c48]" />
+                  <p className="mt-3 text-[12px] font-semibold uppercase tracking-[0.1em] text-[#0f1110]">
+                    {label}
+                  </p>
+                  <p className="mt-1.5 text-[12px] leading-[1.7] text-[#6a6f6a]">{note}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
               {startPoints.map(({ eyebrow, title, note, product, tone }) => (
                 <Link
                   key={product.id}

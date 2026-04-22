@@ -46,11 +46,11 @@ export function Products() {
                 className="mt-4 max-w-[10ch] font-serif text-[clamp(2.2rem,4vw,3.8rem)] font-bold leading-[1.02] tracking-[-0.03em] text-neutral-900"
                 style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
               >
-                Choose by outcome, then drill into proof.
+                Full nasal spray lineup.
               </h2>
             </div>
             <p className="max-w-md text-[14px] leading-[1.8] text-neutral-500">
-              The catalog is structured like a product floor, not a lab spreadsheet. Start by use case, then review the specific certificate path, format, and dispatch standard for the compound you want.
+              After the opening category pass, this section is the detailed shelf: flagship first, then the rest of the lineup, then the stack for buyers who already know what pair they want.
             </p>
           </div>
         </Reveal>
