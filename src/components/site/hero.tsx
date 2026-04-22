@@ -25,15 +25,32 @@ const TAPE_ITEMS = [
   { text: "\u226524h dispatch", dim: false },
 ];
 
-// Molecular formulas matched to product IDs
-const FORMULAS: Record<string, string> = {
-  "bpc157-spray": "C\u2083\u2085H\u2086\u2080N\u2081\u2082O\u2086S\u2082",
-  "selank-spray": "C\u2083\u2083H\u2085\u2087N\u2081\u2081O\u2089",
-  "oxytocin-spray": "C\u2084\u2083H\u2086\u2086N\u2081\u2082O\u2081\u2082S\u2082",
-  "pt141-spray": "C\u2085\u2080H\u2086\u2088N\u2081\u2084O\u2081\u2080",
-  "semax-spray": "C\u2083\u2087H\u2085\u2081N\u2089O\u2081\u2080S",
-  "dsip-spray": "C\u2083\u2085H\u2084\u2088N\u2081\u2080O\u2081\u2085",
-};
+const START_POINTS = [
+  {
+    id: "bpc157-spray",
+    eyebrow: "Recovery",
+    title: "Start with BPC-157",
+    note: "The flagship repair-oriented spray in the catalog.",
+  },
+  {
+    id: "selank-spray",
+    eyebrow: "Calm + clarity",
+    title: "Selank for steadier focus",
+    note: "A clearer entry point for anxiolytic nootropic protocols.",
+  },
+  {
+    id: "pt141-spray",
+    eyebrow: "Arousal research",
+    title: "PT-141 for faster intent",
+    note: "A simpler way into the intimacy-focused side of the catalog.",
+  },
+  {
+    id: "dsip-spray",
+    eyebrow: "Sleep architecture",
+    title: "DSIP for recovery-state work",
+    note: "Built for labs prioritizing nighttime and downshift categories.",
+  },
+];
 
 function shortName(name: string) {
   return name.replace(" Nasal Spray", "");
@@ -45,6 +62,10 @@ function formatPrice(cents: number) {
 
 export function Hero() {
   const featured = NASAL_SPRAYS[0];
+  const startPoints = START_POINTS.map((entry) => {
+    const product = NASAL_SPRAYS.find((item) => item.id === entry.id);
+    return product ? { ...entry, product } : null;
+  }).filter(Boolean) as Array<(typeof START_POINTS)[number] & { product: (typeof NASAL_SPRAYS)[number] }>;
 
   return (
     <section className="relative bg-white">
@@ -79,33 +100,48 @@ export function Hero() {
 
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <Reveal>
-          <div className="grid gap-10 border-b border-[rgba(10,10,10,0.07)] py-16 lg:grid-cols-[minmax(0,1.05fr)_420px] lg:items-start lg:py-20">
+          <div className="grid gap-10 border-b border-[rgba(10,10,10,0.07)] py-16 lg:grid-cols-[minmax(0,1.02fr)_460px] lg:items-start lg:py-20">
             <div>
               <div className="inline-flex items-center gap-2 border border-[rgba(10,10,10,0.08)] bg-[#f7f7f5] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#1a5c48]">
-                Batch-specific COA with every order
+                Titan Peptide Lab · 6 nasal sprays in stock
               </div>
               <h1 className="mt-6 font-serif text-[clamp(3.25rem,8vw,7.5rem)] font-normal leading-[0.88] tracking-[-0.05em] text-[#0a0a0a]">
-                Peptide supply,
+                Recovery, calm,
                 <br />
-                <em className="not-italic text-[#1a5c48]">built on proof, not hype.</em>
+                cognition, libido, sleep.
               </h1>
               <p className="mt-7 max-w-xl text-[15px] leading-[1.9] text-[#525252]">
-                Six nasal sprays, each released against assay standards, logged for cold-chain dispatch, and paired with batch paperwork that matches the order in your hands.
+                Titan leads with the formats people actually want to order, then backs each spray with assay standards, lot-matched paperwork, and cold-chain dispatch before checkout.
               </p>
+
+              <div className="mt-7 flex flex-wrap gap-2.5">
+                {[
+                  `From ${featured ? formatPrice(featured.price) : "$59.99"}`,
+                  "15mL measured atomizers",
+                  "No reconstitution",
+                ].map((item) => (
+                  <span
+                    key={item}
+                    className="inline-flex items-center rounded-full border border-[rgba(10,10,10,0.08)] px-3 py-1.5 text-[11px] font-medium text-[#3f4a45]"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <Link
                   href="/products"
                   className="inline-flex h-11 items-center justify-center gap-2.5 bg-[#0a0a0a] px-7 text-[12px] font-semibold uppercase tracking-[0.07em] text-white transition-colors hover:bg-[#1a5c48]"
                 >
-                  Shop nasal sprays
+                  Shop 6 nasal sprays
                   <ArrowRight className="size-3.5" />
                 </Link>
                 <Link
                   href="/lab-testing"
                   className="inline-flex h-11 items-center justify-center border border-[rgba(10,10,10,0.1)] px-6 text-[12px] font-semibold uppercase tracking-[0.07em] text-[#0a0a0a] transition-colors hover:border-[#0a0a0a] hover:bg-[#f7f7f5]"
                 >
-                  View lab results
+                  Review release standard
                 </Link>
               </div>
 
@@ -136,6 +172,31 @@ export function Hero() {
                   </div>
                 ))}
               </div>
+
+              <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                {startPoints.map(({ eyebrow, title, note, product }) => (
+                  <Link
+                    key={product.id}
+                    href={`/products/${product.slug}`}
+                    className="group rounded-[1.25rem] border border-[rgba(10,10,10,0.08)] bg-[#fafaf9] p-4 transition-colors hover:border-[#1a5c48]/30 hover:bg-white"
+                  >
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
+                      {eyebrow}
+                    </p>
+                    <div className="mt-3 flex items-start justify-between gap-3">
+                      <div>
+                        <h2 className="text-[1.1rem] font-semibold leading-[1.1] tracking-[-0.03em] text-[#0a0a0a]">
+                          {title}
+                        </h2>
+                        <p className="mt-2 text-[12px] leading-[1.7] text-[#666]">{note}</p>
+                      </div>
+                      <span className="shrink-0 text-[11px] font-semibold tabular-nums text-[#0a0a0a]">
+                        {formatPrice(product.price)}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
 
             <div className="space-y-4">
@@ -152,23 +213,24 @@ export function Hero() {
                 <div className="flex items-start justify-between gap-4 border-b border-[rgba(10,10,10,0.08)] pb-4">
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#1a5c48]">
-                      COA packet
+                      Flagship spray
                     </p>
                     <h2 className="mt-2 font-serif text-[1.6rem] leading-[1.02] tracking-[-0.04em] text-[#0a0a0a]">
-                      What ships with every order
+                      {featured ? shortName(featured.name) : "BPC-157"}
                     </h2>
+                    <p className="mt-2 text-[13px] leading-[1.7] text-[#5a5a5a]">
+                      {featured?.tagline ?? "Measured nasal format with high-demand merchandising priority."}
+                    </p>
                   </div>
                   <span className="border border-[rgba(10,10,10,0.08)] bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#0a0a0a]">
-                    Included
+                    {featured ? formatPrice(featured.price) : "$64.99"}
                   </span>
                 </div>
                 <dl className="mt-4 space-y-4 text-[12px] text-[#525252]">
                   {[
-                    ["Lot number", "Matched to the batch on your order"],
-                    ["Purity result", "Recorded against release threshold"],
-                    ["Method date", "Attached to the assay record"],
-                    ["Analyst initials", "Visible on the QA document"],
-                    ["QR lookup", "Fast access to reference paperwork"],
+                    ["Format", featured?.size ?? "15mL nasal spray"],
+                    ["Why it leads", "Fastest path into the catalog for recovery-focused buyers"],
+                    ["Proof path", "Lot-matched COA, assay threshold, and cold-chain release notes"],
                   ].map(([label, value]) => (
                     <div key={label} className="grid grid-cols-[92px_1fr] gap-3 border-b border-[rgba(10,10,10,0.06)] pb-4 last:border-0 last:pb-0">
                       <dt className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#a3a3a3]">
@@ -178,65 +240,23 @@ export function Hero() {
                     </div>
                   ))}
                 </dl>
-              </div>
-            </div>
-          </div>
-        </Reveal>
-
-        <div className="border-b border-[rgba(10,10,10,0.07)]">
-          {NASAL_SPRAYS.map((product, i) => (
-            <Reveal key={product.id} delay={i * 0.05}>
-              <Link
-                href={`/products/${product.slug}`}
-                className="group flex flex-col gap-2 border-b border-[rgba(10,10,10,0.06)] py-4 transition-colors last:border-0 hover:bg-[#fafaf9] sm:grid sm:grid-cols-[1fr_auto_auto_auto] sm:items-center sm:gap-8 sm:py-5"
-              >
-                <div className="flex items-baseline gap-4 sm:gap-6">
-                  <span className="w-6 shrink-0 text-[10px] font-semibold tabular-nums text-[#d0d0d0]">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <span className="text-[1.25rem] font-semibold leading-none tracking-[-0.03em] text-[#0a0a0a] transition-colors group-hover:text-[#1a5c48] sm:text-[1.5rem]">
-                      {shortName(product.name)}
-                    </span>
-                    <span className="mt-1 block font-mono text-[11px] text-[#8f8f8f] tracking-[0.08em]">
-                      {FORMULAS[product.id] ?? ""}
-                    </span>
+                {featured ? (
+                  <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                    <Link
+                      href={`/products/${featured.slug}`}
+                      className="inline-flex h-10 items-center justify-center bg-[#0a0a0a] px-5 text-[11px] font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-[#1a5c48]"
+                    >
+                      Shop flagship spray
+                    </Link>
+                    <Link
+                      href="/research/bpc-157-nasal-spray"
+                      className="inline-flex h-10 items-center justify-center border border-[rgba(10,10,10,0.1)] px-5 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#0a0a0a] transition-colors hover:border-[#0a0a0a] hover:bg-white"
+                    >
+                      Read research
+                    </Link>
                   </div>
-                </div>
-
-                <span className="hidden text-[12px] text-[#a3a3a3] sm:block">{product.size}</span>
-
-                <span className="self-end text-[15px] font-semibold tabular-nums text-[#0a0a0a] sm:self-auto">
-                  {formatPrice(product.price)}
-                </span>
-
-                <span className="inline-flex h-9 items-center justify-center self-start bg-[#0a0a0a] px-4 text-[11px] font-semibold uppercase tracking-[0.08em] text-white transition-all group-hover:bg-[#1a5c48] sm:self-auto">
-                  View spray
-                </span>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
-
-        <Reveal delay={0.32}>
-          <div className="flex flex-col gap-6 py-10 sm:flex-row sm:items-center sm:justify-between">
-            <Link
-              href="/products"
-              className="inline-flex h-11 items-center gap-2.5 bg-[#0a0a0a] px-7 text-[12px] font-semibold uppercase tracking-[0.07em] text-white transition-colors hover:bg-[#1a5c48]"
-            >
-              View full catalog
-              <ArrowRight className="size-3.5" />
-            </Link>
-            <div className="flex flex-wrap gap-x-8 gap-y-2">
-              {[
-                "HPLC \u2265 99% purity",
-                "24h cold-chain dispatch",
-                "Lot-matched COA every order",
-              ].map((item) => (
-                <span key={item} className="text-[11px] font-medium text-[#6f6f6f]">
-                  {item}
-                </span>
-              ))}
+                ) : null}
+              </div>
             </div>
           </div>
         </Reveal>

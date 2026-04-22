@@ -25,10 +25,12 @@ export function ProductCard({
   product: ProductCardProduct;
   variant?: "default" | "stack";
 }) {
+  const topBenefits = product.benefits.slice(0, 2);
+
   return (
     <article
       className={cn(
-        "group relative flex h-full flex-col bg-white transition-colors duration-200 hover:bg-[#fafafa]",
+        "group relative flex h-full flex-col overflow-hidden rounded-[1.25rem] border border-[rgba(10,10,10,0.08)] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_45px_rgba(10,10,10,0.06)]",
         variant === "stack" && "md:grid md:grid-cols-[280px_1fr]"
       )}
     >
@@ -45,16 +47,15 @@ export function ProductCard({
 
       <div className="flex flex-1 flex-col p-7">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full bg-[#eef4f0] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
               {product.category === "nasal-spray"
                 ? "Nasal spray"
                 : product.category === "injectable"
                   ? "Injectable"
                   : "Stack"}
             </span>
-            <span className="h-3 w-px bg-[rgba(10,10,10,0.1)]" aria-hidden />
-            <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#a3a3a3]">
+            <span className="rounded-full border border-[rgba(10,10,10,0.08)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#7a7a7a]">
               COA included
             </span>
           </div>
@@ -70,12 +71,23 @@ export function ProductCard({
           {product.tagline}
         </p>
 
-        <div className="mt-5 border border-[rgba(10,10,10,0.06)] bg-[#f7f7f5] px-4 py-3">
+        {topBenefits.length ? (
+          <ul className="mt-5 space-y-2.5">
+            {topBenefits.map((benefit) => (
+              <li key={benefit} className="flex items-start gap-2.5 text-[12.5px] leading-[1.6] text-[#525252]">
+                <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#1a5c48]" />
+                <span>{benefit}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
+        <div className="mt-5 rounded-2xl border border-[rgba(10,10,10,0.06)] bg-[#f7f7f5] px-4 py-3">
           <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#1a5c48]">
-            Pre-checkout proof
+            Proof before payment
           </p>
           <p className="mt-1.5 text-[12px] leading-[1.7] text-[#525252]">
-            Assay standard, certificate path, and cold-chain dispatch language are visible before payment.
+            Certificate path, assay threshold, and cold-chain handling are visible before checkout.
           </p>
         </div>
 
@@ -94,9 +106,9 @@ export function ProductCard({
 
             <Link
               href={`/products/${product.slug}`}
-              className="inline-flex h-10 items-center justify-center gap-1.5 bg-[#0a0a0a] px-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#1a5c48]"
+              className="inline-flex h-10 items-center justify-center gap-1.5 rounded-full bg-[#0a0a0a] px-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#1a5c48]"
             >
-              Review compound
+              Shop compound
               <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </div>
