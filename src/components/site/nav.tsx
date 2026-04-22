@@ -12,34 +12,34 @@ const LINKS = [
 
 export function Nav() {
   return (
-    <header className="sticky top-0 z-50 border-b border-[rgba(10,10,10,0.07)] bg-white/95 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
+    <header className="sticky top-0 z-50 border-b border-[rgba(10,10,10,0.07)] bg-[rgba(255,255,255,0.94)] backdrop-blur-xl">
+      <div className="mx-auto flex h-[4.25rem] max-w-7xl items-center justify-between px-6 lg:px-10">
         <Link
           href="/"
           aria-label="Titan Peptide home"
           className="outline-none group"
         >
-          <div className="flex items-center gap-2.5">
-            <div className="flex size-7 items-center justify-center bg-[#0a0a0a]">
+          <div className="flex items-center gap-3">
+            <div className="flex size-8 items-center justify-center rounded-md bg-[#0f1110] shadow-[0_8px_24px_rgba(15,17,16,0.12)]">
               <span className="font-serif text-[0.8rem] leading-none text-white">T</span>
             </div>
             <div className="leading-none">
-              <span className="block text-[0.9rem] font-semibold tracking-[-0.02em] text-[#0a0a0a] transition-opacity group-hover:opacity-60">
+              <span className="block text-[0.95rem] font-semibold tracking-[-0.02em] text-[#0a0a0a] transition-opacity group-hover:opacity-70">
                 Titan Peptide
               </span>
-              <span className="mt-1 block text-[9px] font-semibold uppercase tracking-[0.18em] text-[#b0b0b0]">
-                The Titan Peptide Company
+              <span className="mt-1 block text-[9px] font-semibold uppercase tracking-[0.2em] text-[#9ea29e]">
+                Research-grade nasal sprays
               </span>
             </div>
           </div>
         </Link>
 
-        <nav aria-label="Primary" className="hidden items-center gap-8 md:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-7 md:flex">
           {LINKS.map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className="text-[13px] font-medium text-[#737373] outline-none transition-colors hover:text-[#0a0a0a]"
+              className="text-[12px] font-medium uppercase tracking-[0.08em] text-[#6d716d] outline-none transition-colors hover:text-[#0a0a0a]"
             >
               {link.label}
             </Link>
@@ -47,17 +47,11 @@ export function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link
-            href="/shipping-faq"
-            className="hidden text-[12px] font-medium text-[#737373] transition-colors hover:text-[#0a0a0a] sm:block"
-          >
-            Track order
-          </Link>
           <Button
             asChild
-            className="hidden h-9 rounded-none bg-[#0a0a0a] px-5 text-[12px] font-semibold tracking-[0.08em] uppercase text-white hover:bg-[#1a5c48] sm:inline-flex"
+            className="hidden h-10 rounded-full bg-[#0a0a0a] px-5 text-[11px] font-semibold tracking-[0.1em] uppercase text-white hover:bg-[#1a5c48] sm:inline-flex"
           >
-            <Link href="/products">Shop catalog</Link>
+            <Link href="/products">Shop sprays</Link>
           </Button>
           <MobileNav />
         </div>

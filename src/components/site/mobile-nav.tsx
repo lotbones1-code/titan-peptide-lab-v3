@@ -20,22 +20,22 @@ export function MobileNav() {
     <div className="md:hidden">
       <button
         onClick={() => setOpen(!open)}
-        className="flex size-9 items-center justify-center rounded-lg text-[#0f1613] transition-colors hover:bg-[#f5f7f6]"
+        className="flex size-10 items-center justify-center rounded-full border border-[rgba(10,10,10,0.08)] text-[#0f1613] transition-colors hover:bg-[#f5f7f6]"
         aria-label={open ? "Close menu" : "Open menu"}
       >
         {open ? <X className="size-5" /> : <Menu className="size-5" />}
       </button>
 
       {open && (
-        <div className="absolute left-0 right-0 top-full z-40 border-b border-[rgb(15_22_19/8%)] bg-white shadow-[0_8px_24px_-8px_rgb(15_22_19/12%)]">
-          <nav className="mx-auto max-w-7xl px-5 py-4">
+        <div className="absolute left-3 right-3 top-[calc(100%+0.5rem)] z-40 overflow-hidden rounded-[1.5rem] border border-[rgb(15_22_19/8%)] bg-white shadow-[0_18px_45px_-16px_rgb(15_22_19/18%)]">
+          <nav className="mx-auto max-w-7xl px-4 py-4">
             <ul className="space-y-0.5">
               {LINKS.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="flex items-center rounded-lg px-3 py-2.5 text-[14px] font-medium text-[#3a4a43] transition-colors hover:bg-[#f5f7f6] hover:text-[#0f1613]"
+                    className="flex items-center rounded-xl px-3 py-3 text-[13px] font-medium uppercase tracking-[0.08em] text-[#3a4a43] transition-colors hover:bg-[#f5f7f6] hover:text-[#0f1613]"
                   >
                     {link.label}
                   </Link>
@@ -46,9 +46,9 @@ export function MobileNav() {
               <Link
                 href="/products"
                 onClick={() => setOpen(false)}
-                className="flex h-10 w-full items-center justify-center rounded-lg bg-[#0f1613] text-[13px] font-medium text-white hover:bg-[#1a2420]"
+                className="flex h-11 w-full items-center justify-center rounded-full bg-[#0f1613] text-[12px] font-semibold uppercase tracking-[0.08em] text-white hover:bg-[#1a2420]"
               >
-                Shop Products
+                Shop Sprays
               </Link>
             </div>
           </nav>

@@ -70,13 +70,6 @@ export function Hero() {
 
   return (
     <section className="border-b border-[rgba(10,10,10,0.07)] bg-[#f5f3ee]">
-      <div className="border-b border-[rgba(10,10,10,0.06)] bg-[#111614] text-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-center px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.2em] lg:justify-between lg:px-10">
-          <span className="hidden lg:block">Titan Peptide Lab</span>
-          <span className="text-white/85">Cold-chain dispatch within 24h · Lot-matched COA</span>
-        </div>
-      </div>
-
       <div className="mx-auto max-w-7xl px-6 py-6 lg:px-10 lg:py-10">
         <Reveal>
           <div className="rounded-[2rem] border border-[rgba(10,10,10,0.08)] bg-white p-5 shadow-[0_22px_70px_rgba(10,10,10,0.05)] lg:p-10">
@@ -101,10 +94,10 @@ export function Hero() {
                   <span className="inline-flex items-center rounded-full border border-[rgba(10,10,10,0.08)] bg-white px-3 py-1.5">
                     15mL measured atomizers
                   </span>
-                  <span className="hidden items-center rounded-full border border-[rgba(10,10,10,0.08)] bg-white px-3 py-1.5 sm:inline-flex">
+                  <span className="hidden items-center rounded-full border border-[rgba(10,10,10,0.08)] bg-white px-3 py-1.5 lg:inline-flex">
                     No reconstitution
                   </span>
-                  <span className="hidden items-center rounded-full border border-[rgba(10,10,10,0.08)] bg-white px-3 py-1.5 sm:inline-flex">
+                  <span className="hidden items-center rounded-full border border-[rgba(10,10,10,0.08)] bg-white px-3 py-1.5 lg:inline-flex">
                     Certificate path shown pre-checkout
                   </span>
                 </div>
