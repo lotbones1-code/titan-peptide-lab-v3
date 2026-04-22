@@ -40,108 +40,92 @@ const CHAINS: Chain[] = [
   },
 ];
 
-const STEPS = [
-  {
-    n: "01",
-    title: "Choose product",
-    body: "Select the compound and confirm the order total.",
-  },
-  {
-    n: "02",
-    title: "Send crypto",
-    body: "Use BTC, ETH, USDC ERC-20, SOL, or USDC SPL on the selected chain.",
-  },
-  {
-    n: "03",
-    title: "Receive confirmation",
-    body: "Manual review, batch COA, and tracking sent after payment clears.",
-  },
-];
-
 export function PaymentMethods() {
   return (
     <section className="border-b border-[rgb(15_22_19/6%)] bg-white py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <Reveal>
-          <div className="grid gap-8 lg:grid-cols-[0.42fr_0.58fr] lg:items-end">
+          <div className="grid gap-8 border-b border-[rgba(10,10,10,0.07)] pb-14 lg:grid-cols-[0.42fr_0.58fr] lg:items-end">
             <div>
               <div className="flex items-center gap-3">
                 <div className="h-px w-8 bg-[#1e6f58]" />
                 <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">
-                  Payment
+                  Payment rails
                 </span>
               </div>
               <h2 className="mt-6 max-w-xl font-serif text-[clamp(2.2rem,4.2vw,3.4rem)] leading-[0.96] tracking-[-0.03em] text-[#0f1613]">
-                Wallet checkout, clearly laid out.
+                Wallet checkout without hidden steps.
               </h2>
             </div>
             <p className="max-w-2xl text-[15px] leading-[1.8] text-[#5c6762]">
-              Crypto-only checkout with the addresses shown openly. Buyers
-              should be able to verify the rail, send payment, and know what
-              happens next without guessing.
+              Crypto-only. Verify the rail, send on the correct network, and get manual order confirmation before the lot moves into dispatch.
             </p>
           </div>
         </Reveal>
 
-        {/* Steps */}
-        <div className="mt-14 grid gap-5 lg:grid-cols-3">
-          {STEPS.map(({ n, title, body }, index) => (
-            <Reveal key={title} delay={index * 0.04}>
-              <div className="flex h-full flex-col rounded-xl border border-[rgb(15_22_19/8%)] bg-[#fafbfa] p-6">
-                <span className="text-[12px] font-semibold text-[#1e6f58]">
-                  {n}
-                </span>
-                <h3 className="mt-6 font-serif text-[1.4rem] leading-[1.1] tracking-[-0.02em] text-[#0f1613]">
-                  {title}
-                </h3>
-                <p className="mt-3 text-[13.5px] leading-[1.7] text-[#5c6762]">
-                  {body}
-                </p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
-        {/* Wallet cards */}
-        <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {CHAINS.map((chain, index) => (
-            <Reveal key={chain.key} delay={index * 0.03}>
-              <div className="flex h-full flex-col rounded-xl border border-[rgb(15_22_19/8%)] bg-white p-5">
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <ChainLogo chain={chain.key} />
+        <div className="mt-10 grid gap-8 lg:grid-cols-[0.38fr_0.62fr]">
+          <Reveal>
+            <div className="border border-[rgba(10,10,10,0.07)] bg-[#f7f7f5] p-6 lg:p-7">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1e6f58]">
+                What happens after payment
+              </p>
+              <div className="mt-5 space-y-5">
+                {[
+                  ["01", "Rail verified", "Titan confirms the wallet route and order total before release."],
+                  ["02", "Payment clears", "Manual review checks the transfer and ties it to the order record."],
+                  ["03", "Paperwork prepared", "COA and dispatch notes are queued against the same lot reference."],
+                ].map(([step, title, body]) => (
+                  <div key={step} className="grid grid-cols-[44px_1fr] gap-4 border-t border-[rgba(10,10,10,0.07)] pt-5 first:border-0 first:pt-0">
+                    <span className="font-serif text-[1.1rem] text-[#b4bdb8]">{step}</span>
                     <div>
-                      <h3 className="text-[14px] font-medium text-[#0f1613]">
-                        {chain.label}
-                      </h3>
-                      <p className="text-[12px] text-[#8a9690]">
-                        {chain.asset}
-                      </p>
+                      <p className="text-[12px] font-semibold uppercase tracking-[0.1em] text-[#0f1613]">{title}</p>
+                      <p className="mt-1.5 text-[12px] leading-[1.75] text-[#5c6762]">{body}</p>
                     </div>
                   </div>
-                  <img
-                    src={qrUrl(chain.qrData)}
-                    alt={`${chain.label} wallet QR code`}
-                    width={72}
-                    height={72}
-                    loading="lazy"
-                    className="rounded-lg border border-[rgb(15_22_19/8%)] bg-white p-1"
-                  />
-                </div>
-                <p className="mt-4 break-all font-mono text-[10px] leading-5 text-[#8a9690]">
-                  {chain.address}
-                </p>
+                ))}
               </div>
-            </Reveal>
-          ))}
-        </div>
+              <p className="mt-6 border-t border-[rgba(10,10,10,0.07)] pt-5 text-[12px] leading-[1.75] text-[#5c6762]">
+                Manual review within 24 hours. Batch-matched COA included. Tracking sent after payment confirmation and packing.
+              </p>
+            </div>
+          </Reveal>
 
-        <Reveal delay={0.08}>
-          <p className="mt-8 rounded-xl border border-[rgb(15_22_19/8%)] bg-[#fafbfa] p-5 text-[13px] leading-[1.7] text-[#5c6762]">
-            Manual review within 24 hours. Batch-matched COA included. Tracking
-            sent after payment confirmation and packing.
-          </p>
-        </Reveal>
+          <div className="grid gap-px bg-[rgba(10,10,10,0.07)] md:grid-cols-2">
+            {CHAINS.map((chain, index) => (
+              <Reveal key={chain.key} delay={index * 0.03}>
+                <div className="flex h-full flex-col bg-white p-6">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <ChainLogo chain={chain.key} />
+                      <div>
+                        <h3 className="text-[13px] font-semibold text-[#0f1613]">
+                          {chain.label}
+                        </h3>
+                        <p className="text-[11px] font-mono text-[#8a9690]">
+                          {chain.asset}
+                        </p>
+                      </div>
+                    </div>
+                    <img
+                      src={qrUrl(chain.qrData)}
+                      alt={`${chain.label} wallet QR code`}
+                      width={64}
+                      height={64}
+                      loading="lazy"
+                      className="border border-[rgba(10,10,10,0.08)] bg-white p-1"
+                    />
+                  </div>
+                  <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#a3a3a3]">
+                    Network address
+                  </p>
+                  <p className="mt-2 break-all font-mono text-[10.5px] leading-5 text-[#5c6762]">
+                    {chain.address}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -153,7 +137,7 @@ function qrUrl(value: string) {
 
 function ChainLogo({ chain }: { chain: string }) {
   const base =
-    "grid size-10 place-items-center rounded-lg text-sm font-semibold";
+    "grid size-10 place-items-center text-sm font-semibold";
 
   if (chain === "btc") {
     return (

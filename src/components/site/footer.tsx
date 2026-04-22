@@ -21,9 +21,9 @@ const SUPPORT_LINKS = [
 ];
 
 const LEGAL_LINKS = [
-  ["Research disclaimer", "/#faq"],
-  ["Terms of service", "/#faq"],
-  ["Privacy policy", "/#faq"],
+  ["Research disclaimer", "/legal/research-disclaimer"],
+  ["Terms of service", "/legal/terms"],
+  ["Privacy policy", "/legal/privacy"],
 ];
 
 export function Footer() {
@@ -46,7 +46,7 @@ export function Footer() {
               className="inline-block outline-none transition-opacity hover:opacity-80 focus-visible:opacity-80"
             >
               <div className="flex items-center gap-3">
-                <div className="flex size-9 items-center justify-center rounded-xl bg-white shadow-[0_12px_30px_-18px_rgba(255,255,255,0.45)]">
+                <div className="flex size-9 items-center justify-center bg-white shadow-[0_8px_24px_-12px_rgba(255,255,255,0.35)]">
                   <span className="font-serif text-[1rem] leading-none text-[#0f1613]">
                     T
                   </span>
@@ -73,16 +73,16 @@ export function Footer() {
               >
                 Research notes
               </label>
-              <div className="mt-3 flex gap-2">
+              <div className="mt-3 flex gap-0 border border-white/10">
                 <input
                   id="footer-email"
                   type="email"
                   placeholder="email@lab.org"
-                  className="h-10 min-w-0 flex-1 rounded-full border border-white/10 bg-white/5 px-4 text-[13px] text-white outline-none placeholder:text-white/28 focus:border-white/20"
+                  className="h-10 min-w-0 flex-1 bg-white/5 px-4 text-[13px] text-white outline-none placeholder:text-white/28 focus:bg-white/8"
                 />
                 <button
                   type="submit"
-                  className="h-10 rounded-full bg-white px-4 text-[13px] font-medium text-[#0f1613] transition-colors hover:bg-[#f2eee8]"
+                  className="h-10 border-l border-white/10 bg-white/8 px-5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/70 transition-colors hover:bg-white hover:text-[#0f1613]"
                 >
                   Join
                 </button>

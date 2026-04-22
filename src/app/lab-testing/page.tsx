@@ -1,8 +1,10 @@
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
+import { PageHero } from "@/components/site/page-hero";
+import { NextRead } from "@/components/site/next-read";
 
 export const metadata = {
-  title: "Lab Testing \u2014 The Titan Peptide Company",
+  title: "Lab Testing — The Titan Peptide Company",
   description:
     "HPLC purity verification, ISO 17025 third-party retesting, endotoxin, heavy metals, and sterility. What every batch is tested for, and how the certificate is produced.",
 };
@@ -12,14 +14,14 @@ const TESTS = [
     n: "01",
     name: "Identity",
     method: "ESI-MS (positive mode)",
-    spec: "Observed mass within \u00b10.5 m/z of theoretical [M+H]",
+    spec: "Observed mass within ±0.5 m/z of theoretical [M+H]",
     body: "Confirms the compound in the bottle is the compound on the label. Purity of the wrong molecule is still a failed batch.",
   },
   {
     n: "02",
     name: "Purity",
     method: "HPLC-UV, 220 nm (C18, 0.1% TFA gradient)",
-    spec: "\u2265 98.0% area, internal release threshold 99.0%",
+    spec: "≥ 98.0% area, internal release threshold 99.0%",
     body: "The number most buyers look for first. Titan publishes the exact run tied to the lot instead of a generic certificate library file.",
   },
   {
@@ -57,130 +59,139 @@ export default function LabTestingPage() {
     <>
       <Nav />
       <main className="bg-white text-[#0f1613]">
-        <section className="border-b border-[rgb(15_22_19/6%)] py-24 lg:py-32">
-          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-3">
-              <div className="h-px w-8 bg-[#1e6f58]" />
-              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">
-                Lab testing
-              </span>
-            </div>
+        <PageHero
+          eyebrow="Lab testing"
+          title={
+            <>
+              Six tests, two laboratories,{" "}
+              <em className="not-italic text-[#1e6f58]">
+                one release standard
+              </em>
+              .
+            </>
+          }
+          supporting={
+            <>
+              Every batch is characterized in-house first, then checked against
+              an independent ISO 17025 workflow. If the reads disagree beyond
+              method tolerance, the batch is held. The point is not to print an
+              impressive certificate — it is to make the certificate believable.
+            </>
+          }
+          aside={
+            <div className="lg:sticky lg:top-24">
+              <figure className="rounded-[1.75rem] border border-[rgb(15_22_19/8%)] bg-[#fafbfa] p-8 text-[#0f1613]">
+                <div className="flex items-baseline justify-between border-b border-[rgb(15_22_19/6%)] pb-4">
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
+                    Certificate of Analysis
+                  </span>
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
+                    TPL-2604-C
+                  </span>
+                </div>
 
-            <div className="mt-12 grid gap-x-14 gap-y-16 lg:grid-cols-12">
-              <div className="lg:col-span-7">
-                <h1 className="font-serif text-[clamp(2.4rem,4.8vw,3.8rem)] leading-[0.96] tracking-[-0.03em] text-[#0f1613] text-pretty">
-                  Six tests, two laboratories,{" "}
-                  <em className="not-italic text-[#1e6f58]">
-                    one release standard
-                  </em>
-                  .
-                </h1>
+                <h3 className="mt-6 font-serif text-[1.75rem] leading-[1.1] text-[#0f1613]">
+                  Semax
+                  <br />
+                  <span className="text-[#8a9690]">
+                    Lyophilized · 30 mg
+                  </span>
+                </h3>
 
-                <p className="mt-8 max-w-xl text-[15px] leading-[1.8] text-[#5c6762]">
-                  Every batch is characterized in-house first, then checked
-                  against an independent ISO 17025 workflow. If the reads
-                  disagree beyond method tolerance, the batch is held. The point
-                  is not to print an impressive certificate — it is to make
-                  the certificate believable.
-                </p>
+                <dl className="mt-8 space-y-3.5">
+                  <Row k="Identity (MS)" v="813.4 m/z [M+H] ✓" />
+                  <Row k="Purity (area %)" v="99.61" highlight />
+                  <Row k="Sterility" v="No growth, 14 d" />
+                  <Row k="Endotoxin (LAL)" v="< 5 EU/mg" />
+                  <Row k="Heavy metals" v="Within ICH Q3D" />
+                  <Row k="Residual solvents" v="< report threshold" />
+                  <Row k="Synthesized" v="2026-04-02" />
+                  <Row k="Tested" v="2026-04-06 · 2026-04-08" />
+                </dl>
 
-                <ol className="mt-12 space-y-8">
-                  {TESTS.map((t) => (
-                    <li
-                      key={t.n}
-                      className="grid grid-cols-[auto_1fr] gap-x-5 border-t border-[rgb(15_22_19/6%)] pt-6"
-                    >
-                      <span className="text-[12px] font-semibold text-[#1e6f58] tabular-nums">
-                        {t.n}
-                      </span>
-                      <div>
-                        <h3 className="font-serif text-[1.35rem] leading-[1.1] tracking-[-0.02em] text-[#0f1613]">
-                          {t.name}
-                        </h3>
-                        <dl className="mt-3 grid grid-cols-[72px_1fr] gap-x-4 gap-y-1 text-[12px]">
-                          <dt className="font-semibold uppercase tracking-[0.08em] text-[#8a9690]">
-                            Method
-                          </dt>
-                          <dd className="text-[#5c6762]">{t.method}</dd>
-                          <dt className="font-semibold uppercase tracking-[0.08em] text-[#8a9690]">
-                            Spec
-                          </dt>
-                          <dd className="text-[#5c6762]">{t.spec}</dd>
-                        </dl>
-                        <p className="mt-3 max-w-md text-[13.5px] leading-[1.7] text-[#5c6762]">
-                          {t.body}
-                        </p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-
-                <div className="mt-14 border-t border-[rgb(15_22_19/8%)] pt-8">
-                  <h2 className="font-serif text-[1.5rem] leading-[1.1] tracking-[-0.02em] text-[#0f1613]">
-                    Batch tracking.
-                  </h2>
-                  <p className="mt-4 max-w-xl text-[14px] leading-[1.8] text-[#5c6762]">
-                    Every bottle leaves with a lot number of the form{" "}
-                    <span className="font-mono text-[13px] text-[#0f1613]">
-                      TPL-YYMM-[A-Z]
-                    </span>
-                    . That same lot appears on the bottle, the order record, and
-                    the certificate. If you lost the printed copy, email
-                    qa@titanpeptidelab.com with the lot number and a signed PDF
-                    can be reissued.
+                <div className="mt-8 border-t border-[rgb(15_22_19/6%)] pt-4">
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
+                    Released by
+                  </span>
+                  <p className="mt-2 font-serif text-lg text-[#0f1613]">
+                    Dr. M. Voss, QA Lead
                   </p>
                 </div>
-              </div>
 
-              <aside className="lg:col-span-5">
-                <div className="lg:sticky lg:top-24">
-                  <figure className="rounded-xl border border-[rgb(15_22_19/8%)] bg-[#fafbfa] p-8 text-[#0f1613]">
-                    <div className="flex items-baseline justify-between border-b border-[rgb(15_22_19/6%)] pb-4">
-                      <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
-                        Certificate of Analysis
-                      </span>
-                      <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
-                        TPL-2604-C
-                      </span>
-                    </div>
+                <div className="mt-8 border-t border-[rgb(15_22_19/6%)] pt-4">
+                  <a
+                    href="/specimen-coa.pdf"
+                    className="inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.1em] text-[#1e6f58] hover:text-[#0f1613]"
+                  >
+                    <span>Download specimen COA (PDF)</span>
+                    <span aria-hidden="true">↓</span>
+                  </a>
+                </div>
+              </figure>
 
-                    <h3 className="mt-6 font-serif text-[1.75rem] leading-[1.1] text-[#0f1613]">
-                      Semax
-                      <br />
-                      <span className="text-[#8a9690]">
-                        Lyophilized · 30 mg
-                      </span>
-                    </h3>
-
-                    <dl className="mt-8 space-y-3.5">
-                      <Row k="Identity (MS)" v="813.4 m/z [M+H] \u2713" />
-                      <Row k="Purity (area %)" v="99.61" highlight />
-                      <Row k="Sterility" v="No growth, 14 d" />
-                      <Row k="Endotoxin (LAL)" v="< 5 EU/mg" />
-                      <Row k="Heavy metals" v="Within ICH Q3D" />
-                      <Row k="Residual solvents" v="< report threshold" />
-                      <Row k="Synthesized" v="2026-04-02" />
-                      <Row k="Tested" v="2026-04-06 \u00b7 2026-04-08" />
-                    </dl>
-
-                    <div className="mt-8 border-t border-[rgb(15_22_19/6%)] pt-4">
-                      <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
-                        Released by
-                      </span>
-                      <p className="mt-2 font-serif text-lg text-[#0f1613]">
-                        Dr. M. Voss, QA Lead
+              <p className="mt-4 text-[11px] text-[#b0b8b4]">
+                Specimen COA, batch TPL-2604-C. For reference only.
+              </p>
+            </div>
+          }
+          below={
+            <>
+              <ol className="mt-12 space-y-8">
+                {TESTS.map((t) => (
+                  <li
+                    key={t.n}
+                    className="grid grid-cols-[auto_1fr] gap-x-5 border-t border-[rgb(15_22_19/6%)] pt-6"
+                  >
+                    <span className="text-[12px] font-semibold text-[#1e6f58] tabular-nums">
+                      {t.n}
+                    </span>
+                    <div>
+                      <h3 className="font-serif text-[1.35rem] leading-[1.1] tracking-[-0.02em] text-[#0f1613]">
+                        {t.name}
+                      </h3>
+                      <dl className="mt-3 grid grid-cols-[72px_1fr] gap-x-4 gap-y-1 text-[12px]">
+                        <dt className="font-semibold uppercase tracking-[0.08em] text-[#8a9690]">
+                          Method
+                        </dt>
+                        <dd className="text-[#5c6762]">{t.method}</dd>
+                        <dt className="font-semibold uppercase tracking-[0.08em] text-[#8a9690]">
+                          Spec
+                        </dt>
+                        <dd className="text-[#5c6762]">{t.spec}</dd>
+                      </dl>
+                      <p className="mt-3 max-w-md text-[13.5px] leading-[1.7] text-[#5c6762]">
+                        {t.body}
                       </p>
                     </div>
-                  </figure>
+                  </li>
+                ))}
+              </ol>
 
-                  <p className="mt-4 text-[11px] text-[#b0b8b4]">
-                    Specimen COA, batch TPL-2604-C. For reference only.
-                  </p>
-                </div>
-              </aside>
-            </div>
-          </div>
-        </section>
+              <div className="mt-14 border-t border-[rgb(15_22_19/8%)] pt-8">
+                <h2 className="font-serif text-[1.5rem] leading-[1.1] tracking-[-0.02em] text-[#0f1613]">
+                  Batch tracking.
+                </h2>
+                <p className="mt-4 max-w-xl text-[14px] leading-[1.8] text-[#5c6762]">
+                  Every bottle leaves with a lot number of the form{" "}
+                  <span className="font-mono text-[13px] text-[#0f1613]">
+                    TPL-YYMM-[A-Z]
+                  </span>
+                  . That same lot appears on the bottle, the order record, and
+                  the certificate. If you lost the printed copy, email
+                  qa@titanpeptidelab.com with the lot number and a signed PDF
+                  can be reissued.
+                </p>
+              </div>
+            </>
+          }
+        />
+
+        <NextRead
+          eyebrow="About the company"
+          title="Read the discipline behind the certificate."
+          href="/about"
+          blurb="The origin, the philosophy, and the supply-chain rules that decide what actually leaves the bench at The Titan Peptide Company."
+        />
       </main>
       <Footer />
     </>

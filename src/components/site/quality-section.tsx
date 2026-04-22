@@ -24,7 +24,7 @@ const STEPS = [
 ];
 
 const METRICS = [
-  ["\u226599%", "HPLC release threshold"],
+  ["≥99%", "HPLC release threshold"],
   ["1:1", "Bottle-to-COA match"],
   ["24h", "Fulfillment window"],
   ["QR", "Certificate lookup"],
@@ -34,59 +34,58 @@ export function QualitySection() {
   return (
     <section
       id="quality"
-      className="border-b border-[rgb(15_22_19/7%)] bg-[#f3efe8] py-24 lg:py-32"
+      className="border-b border-[rgba(10,10,10,0.07)] bg-[#0a0a0a] py-28 text-white lg:py-36"
     >
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-6 lg:grid-cols-[0.46fr_0.54fr] lg:px-8">
-        <div className="lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-[2rem] bg-[#0f1613] p-8 text-white shadow-[0_30px_90px_-44px_rgba(15,22,19,0.8)] lg:p-10">
-            <div className="flex items-center gap-3">
-              <div className="h-px w-8 bg-[#8eb8aa]" />
-              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8eb8aa]">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        {/* Header */}
+        <Reveal>
+          <div className="grid gap-10 border-b border-white/10 pb-16 lg:grid-cols-[1fr_360px] lg:items-end">
+            <div>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[rgba(255,255,255,0.35)]">
                 Release workflow
               </span>
+              <h2 className="mt-5 font-serif text-[clamp(2.8rem,5.5vw,5rem)] leading-[0.9] tracking-[-0.045em] text-white">
+                A batch gets coded,
+                <br />
+                screened, matched,
+                <br />
+                <em className="not-italic text-[#6bbea0]">and packed.</em>
+              </h2>
             </div>
-            <h2 className="mt-6 max-w-lg font-serif text-[clamp(2.5rem,4.8vw,4rem)] leading-[0.92] tracking-[-0.04em] text-white">
-              A batch gets coded, screened, matched, and packed.
-            </h2>
-            <p className="mt-5 max-w-md text-[15px] leading-[1.85] text-white/68">
-              This is the part that makes the storefront believable: one lot
-              record, one certificate trail, one fulfillment handoff.
-            </p>
-
-            <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-[1.4rem] border border-white/10 bg-white/10">
+            {/* Metrics 2×2 grid */}
+            <div className="grid grid-cols-2 gap-px bg-white/10 border border-white/10 lg:self-end">
               {METRICS.map(([value, label]) => (
-                <div key={label} className="bg-white/6 p-5 backdrop-blur-sm">
-                  <p className="font-serif text-[2rem] leading-none tracking-[-0.03em] text-white">
+                <div key={label} className="bg-[#0a0a0a] p-6">
+                  <p className="font-serif text-[2.2rem] leading-none tracking-[-0.04em] text-white">
                     {value}
                   </p>
-                  <p className="mt-2 text-[12px] leading-relaxed text-white/50">
-                    {label}
-                  </p>
+                  <p className="mt-2 text-[11px] text-white/45">{label}</p>
                 </div>
               ))}
             </div>
           </div>
-        </div>
+        </Reveal>
 
-        <ol className="grid gap-4">
+        {/* Steps — horizontal table layout */}
+        <div className="mt-16 grid gap-px bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((step, i) => (
-            <Reveal key={step.n} delay={i * 0.04}>
-              <li className="grid gap-5 rounded-[1.75rem] border border-[rgb(15_22_19/8%)] bg-white p-7 shadow-[0_20px_60px_-38px_rgba(15,22,19,0.18)] sm:grid-cols-[88px_1fr]">
-                <span className="font-serif text-[1.6rem] leading-none tracking-[-0.03em] text-[#1e6f58]">
+            <Reveal key={step.n} delay={i * 0.05}>
+              <div className="flex flex-col bg-[#0a0a0a] p-8 gap-6">
+                <span className="font-serif text-[1rem] leading-none tracking-[-0.02em] text-[rgba(255,255,255,0.25)]">
                   {step.n}
                 </span>
                 <div>
-                  <h3 className="font-serif text-[1.65rem] leading-[1.05] tracking-[-0.03em] text-[#0f1613]">
+                  <h3 className="font-serif text-[1.5rem] leading-[1.05] tracking-[-0.035em] text-white">
                     {step.title}
                   </h3>
-                  <p className="mt-3 max-w-2xl text-[14px] leading-[1.8] text-[#55625c]">
+                  <p className="mt-3 text-[13.5px] leading-[1.8] text-white/55">
                     {step.body}
                   </p>
                 </div>
-              </li>
+              </div>
             </Reveal>
           ))}
-        </ol>
+        </div>
       </div>
     </section>
   );

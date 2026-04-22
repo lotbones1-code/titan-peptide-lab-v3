@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { NASAL_SPRAYS, PRODUCTS, type Product } from "@/lib/products";
 import { ProductCard, formatPrice } from "./product-card";
 import { Reveal } from "./reveal";
@@ -8,7 +7,7 @@ import { CompoundPoster } from "./compound-poster";
 
 const SPEC_ROWS = [
   ["Format", "Precision nasal atomizer"],
-  ["Purity", "HPLC \u226599%"],
+  ["Purity", "HPLC ≥99%"],
   ["COA", "Lot-matched certificate"],
   ["Dispatch", "Cold-chain handling"],
 ];
@@ -23,78 +22,73 @@ export function Products() {
   return (
     <section
       id="products"
-      className="border-b border-[rgb(15_22_19/7%)] bg-white py-24 lg:py-32"
+      className="border-b border-[rgba(10,10,10,0.07)] bg-white py-28 lg:py-36"
     >
-      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <Reveal>
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-3xl">
-              <div className="flex items-center gap-3">
-                <div className="h-px w-8 bg-[#1e6f58]" />
-                <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">
-                  Current catalog
-                </span>
-              </div>
-              <h2 className="mt-6 font-serif text-[clamp(2.7rem,5vw,4.25rem)] leading-[0.92] tracking-[-0.04em] text-[#0f1613]">
-                The compounds currently in rotation.
+          <div className="mb-12 flex flex-col gap-5 border-b border-[rgba(10,10,10,0.07)] pb-10 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#a3a3a3]">
+                Nasal spray catalog
+              </span>
+              <h2 className="mt-4 font-serif text-[clamp(2.4rem,4.7vw,4.25rem)] leading-[0.92] tracking-[-0.045em] text-[#0a0a0a]">
+                Nasal sprays with the proof attached.
               </h2>
             </div>
-            <p className="max-w-xl text-[15px] leading-[1.85] text-[#55625c]">
-              Start with the live catalog first. The proof, shipping flow, and
-              wallet instructions sit underneath it for anyone who needs to
-              check the operation before ordering.
+            <p className="max-w-md text-[14px] leading-[1.8] text-[#525252]">
+              Every product page leads with the compound, dose format, assay standard, and the paperwork path before checkout.
             </p>
           </div>
         </Reveal>
 
-        <Reveal delay={0.05}>
+        <Reveal>
           <FeaturedProduct product={featured} />
         </Reveal>
 
-        <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-3">
+        {/* Rest of catalog — tighter grid */}
+        <div className="mt-px grid grid-cols-1 gap-px bg-[rgba(10,10,10,0.07)] sm:grid-cols-2 lg:grid-cols-3">
           {rest.map((product, index) => (
             <Reveal key={product.id} delay={index * 0.04}>
-              <ProductCard product={product} />
+              <div className="bg-white">
+                <ProductCard product={product} />
+              </div>
             </Reveal>
           ))}
         </div>
 
+        {/* Stack upsell — horizontal rule style */}
         {stack ? (
           <Reveal delay={0.08}>
-            <div className="mt-8 grid gap-6 rounded-[1.75rem] border border-[rgb(15_22_19/8%)] bg-[#f5f1ea] p-7 shadow-[0_20px_60px_-38px_rgba(15,22,19,0.18)] md:grid-cols-[1fr_auto] md:items-center">
+            <div className="mt-px border border-[rgba(10,10,10,0.07)] bg-[#f5f5f5] p-8 md:flex md:items-center md:justify-between md:gap-10">
               <div>
-                <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1e6f58]">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#1a5c48]">
                   Stack option
                 </span>
-                <h3 className="mt-3 font-serif text-[1.8rem] leading-[1.05] tracking-[-0.03em] text-[#0f1613]">
+                <h3 className="mt-3 font-serif text-[1.9rem] leading-[1.0] tracking-[-0.04em] text-[#0a0a0a]">
                   {stack.name}
                 </h3>
-                <p className="mt-3 max-w-xl text-[14px] leading-[1.8] text-[#55625c]">
-                  {stack.tagline}. {stack.size}. Built for buyers who want the
-                  calm and focus pairing without piecing together two separate
-                  orders.
+                <p className="mt-3 max-w-xl text-[14px] leading-[1.8] text-[#525252]">
+                  {stack.tagline}. {stack.size}.
                 </p>
               </div>
-              <div className="flex flex-wrap items-center gap-4">
-                <div className="text-right">
-                  <p className="text-2xl font-semibold text-[#0f1613]">
+              <div className="mt-6 flex shrink-0 items-center gap-6 md:mt-0">
+                <div>
+                  <p className="text-2xl font-semibold text-[#0a0a0a]">
                     {formatPrice(stack.price)}
                   </p>
                   {stack.compareAtPrice ? (
-                    <p className="text-[13px] text-[#b0b8b4] line-through">
+                    <p className="mt-0.5 text-[13px] text-[#a3a3a3] line-through">
                       {formatPrice(stack.compareAtPrice)}
                     </p>
                   ) : null}
                 </div>
-                <Button
-                  asChild
-                  className="h-10 rounded-full bg-[#0f1613] px-5 text-[13px] font-medium text-white hover:bg-[#1a2420]"
+                <Link
+                  href={`/products/${stack.slug}`}
+                  className="inline-flex h-10 items-center gap-2 border border-[#0a0a0a] px-5 text-[12px] font-semibold uppercase tracking-[0.06em] text-[#0a0a0a] transition-colors hover:bg-[#0a0a0a] hover:text-white"
                 >
-                  <Link href={`/products/${stack.slug}`}>
-                    View stack
-                    <ArrowRight className="ml-1.5 size-3.5" />
-                  </Link>
-                </Button>
+                  View stack
+                  <ArrowRight className="size-3.5" />
+                </Link>
               </div>
             </div>
           </Reveal>
@@ -106,88 +100,90 @@ export function Products() {
 
 function FeaturedProduct({ product }: { product: Product }) {
   return (
-    <article className="mt-14 grid overflow-hidden rounded-[2rem] border border-[rgb(15_22_19/8%)] bg-[#0f1613] text-white shadow-[0_35px_90px_-50px_rgba(15,22,19,0.7)] lg:grid-cols-[0.9fr_1.1fr]">
-      <div className="border-b border-white/10 bg-[#f5f1ea] lg:border-b-0 lg:border-r lg:border-r-white/10">
+    <article className="mt-16 grid overflow-hidden border border-[rgba(10,10,10,0.07)] bg-[#0a0a0a] text-white lg:grid-cols-[0.85fr_1.15fr]">
+      {/* Poster */}
+      <div className="border-b border-white/10 lg:border-b-0 lg:border-r lg:border-r-white/10">
         <CompoundPoster
           product={product}
           variant="feature"
-          className="min-h-[400px] rounded-none border-0 shadow-none lg:min-h-[620px]"
+          className="min-h-[380px] rounded-none border-0 shadow-none lg:min-h-[580px]"
         />
       </div>
 
-      <div className="p-6 sm:p-8 lg:p-10">
+      {/* Details */}
+      <div className="p-8 lg:p-12">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="rounded-full border border-white/14 bg-white/8 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#9fd0c0]">
-            Flagship spray
+          <span className="border border-white/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#6bbea0]">
+            Flagship
           </span>
-          <span className="rounded-full border border-white/14 bg-white/8 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/60">
-            Most requested
+          <span className="border border-white/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/50">
+            HPLC ≥99%
           </span>
         </div>
-        <h3 className="mt-5 max-w-xl font-serif text-[clamp(2.4rem,4.8vw,4rem)] leading-[0.92] tracking-[-0.04em] text-white">
+
+        <h3 className="mt-6 font-serif text-[clamp(2.6rem,5vw,4.2rem)] leading-[0.9] tracking-[-0.045em] text-white">
           {product.name}
         </h3>
-        <p className="mt-2 text-[13px] text-white/45">{product.size}</p>
-        <p className="mt-6 max-w-xl text-[15px] leading-[1.85] text-white/72">
+        <p className="mt-2 text-[12px] tracking-[0.04em] text-white/40">{product.size}</p>
+
+        <p className="mt-6 max-w-xl text-[15px] leading-[1.85] text-white/78">
           {product.description}
         </p>
 
-        <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_240px]">
-          <ul className="grid gap-3">
-            {product.benefits.map((benefit) => (
-              <li
-                key={benefit}
-                className="flex gap-3 text-[13.5px] leading-[1.7] text-white/72"
-              >
-                <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[#1e6f58]" />
-                <span>{benefit}</span>
-              </li>
-            ))}
-          </ul>
+        {/* Spec grid */}
+        <dl className="mt-8 border border-white/10">
+          {SPEC_ROWS.map(([label, value], i) => (
+            <div
+              key={label}
+              className={`flex items-baseline gap-4 px-5 py-3 text-[12px] ${i > 0 ? "border-t border-white/10" : ""}`}
+            >
+              <dt className="w-16 shrink-0 font-semibold uppercase tracking-[0.1em] text-white/35">
+                {label}
+              </dt>
+              <dd className="text-white/85">{value}</dd>
+            </div>
+          ))}
+        </dl>
 
-          <dl className="divide-y divide-white/10 rounded-[1.4rem] border border-white/10 bg-white/6 px-4 text-[12px]">
-            {SPEC_ROWS.map(([label, value]) => (
-              <div
-                key={label}
-                className="grid grid-cols-[72px_1fr] gap-3 py-3"
-              >
-                <dt className="font-semibold uppercase tracking-[0.08em] text-white/45">
-                  {label}
-                </dt>
-                <dd className="text-white/90">{value}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
+        {/* Benefits */}
+        <ul className="mt-6 space-y-2">
+          {product.benefits.slice(0, 3).map((benefit) => (
+            <li
+              key={benefit}
+              className="flex gap-3 text-[13.5px] leading-[1.7] text-white/74"
+            >
+              <span className="mt-2 size-1 shrink-0 rounded-full bg-[#1a5c48]" />
+              <span>{benefit}</span>
+            </li>
+          ))}
+        </ul>
 
+        {/* Price + CTA */}
         <div className="mt-8 flex flex-col gap-4 border-t border-white/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-baseline gap-3">
             <p className="text-3xl font-semibold text-white">
               {formatPrice(product.price)}
             </p>
             {product.compareAtPrice ? (
-              <p className="text-[15px] text-white/35 line-through">
+              <p className="text-[15px] text-white/30 line-through">
                 {formatPrice(product.compareAtPrice)}
               </p>
             ) : null}
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Button
-              asChild
-              className="h-10 rounded-full bg-white px-5 text-[13px] font-medium text-[#0f1613] hover:bg-[#f5f1ea]"
+            <Link
+              href={`/products/${product.slug}`}
+              className="inline-flex h-10 items-center bg-white px-6 text-[12px] font-semibold uppercase tracking-[0.06em] text-[#0a0a0a] transition-colors hover:bg-[#f0f0f0]"
             >
-              <Link href={`/products/${product.slug}`}>Shop spray</Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="h-10 rounded-full border-white/16 bg-transparent px-5 text-[13px] font-medium text-white hover:bg-white/8 hover:text-white"
+              Shop spray
+            </Link>
+            <Link
+              href="/research/bpc-157-nasal-spray"
+              className="inline-flex h-10 items-center gap-1.5 border border-white/15 px-6 text-[12px] font-semibold uppercase tracking-[0.06em] text-white transition-colors hover:bg-white/8"
             >
-              <Link href="/research/bpc-157-nasal-spray">
-                Read research
-                <ArrowRight className="ml-1.5 size-3.5" />
-              </Link>
-            </Button>
+              Read research
+              <ArrowRight className="size-3" />
+            </Link>
           </div>
         </div>
       </div>

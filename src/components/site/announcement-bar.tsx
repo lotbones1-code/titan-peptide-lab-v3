@@ -11,15 +11,12 @@ export function AnnouncementBar() {
   return (
     <div className="relative border-b border-[rgb(15_22_19/6%)] bg-[#0f1613] text-white">
       <div className="mx-auto flex max-w-7xl items-center justify-center px-6 py-2.5">
-        <p className="text-center text-[11px] font-medium tracking-[0.04em] text-white/90">
-          <span className="hidden sm:inline">
-            Cold-chain shipping on every order
-          </span>
-          <span className="sm:hidden">Cold-chain shipping standard</span>
+        <p className="text-center text-[11px] font-medium tracking-[0.08em] text-white/90 uppercase">
+          <span className="hidden sm:inline">Cold-chain dispatch within 24h</span>
+          <span className="sm:hidden">24h cold-chain</span>
           <span className="mx-2.5 text-white/20">|</span>
-          Use code{" "}
-          <span className="font-semibold text-white">FIRST10</span> for 10%
-          off
+          <span className="hidden sm:inline">Lot-matched COA included with every order</span>
+          <span className="sm:hidden">COA included</span>
         </p>
         <button
           onClick={() => setDismissed(true)}

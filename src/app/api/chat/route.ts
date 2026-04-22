@@ -23,7 +23,12 @@ Injectables:
 - CJC-1295 + Ipamorelin ($119.99) — GH secretagogue blend. ID: cjc-ipa
 - Retatrutide 10mg ($199.99) — Triple-agonist metabolic research. ID: retatrutide
 
-DISCOUNT CODES: Available exclusively to newsletter subscribers. Encourage visitors to subscribe on the homepage to unlock their discount code.
+DISCOUNT CODES (share freely when asked):
+- FIRST10 — 10% off first order
+- BULK15 — 15% off when ordering 3+ items
+- TITAN20 — 20% off orders over $250
+- VIP25 — 25% off (VIP access)
+Default to recommending FIRST10 for new customers. Never invent codes that aren't on this list.
 Free shipping over $150 (US), $200 (Canada), $250 (EU/LatAm), $300 (Asia/MENA)
 
 SHIPPING RATES:

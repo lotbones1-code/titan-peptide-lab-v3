@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
+import nodemailer from "nodemailer";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const ORDER_NOTIFY_EMAIL = process.env.ORDER_NOTIFY_EMAIL || "orders@titanpeptidelab.com";
-const FROM_EMAIL = process.env.FROM_EMAIL || "Titan Peptide Lab <orders@titanpeptidelab.com>";
+const GMAIL_USER = process.env.GMAIL_SENDER;
+const GMAIL_PASS = process.env.GMAIL_APP_PASSWORD;
+const ORDER_NOTIFY_EMAIL = process.env.ORDER_NOTIFY_EMAIL || "ssj4shamil@gmail.com";
+const FROM_EMAIL = process.env.FROM_EMAIL || "Titan Peptide Lab <ssj4shamil@gmail.com>";
 const ORDERS_FILE = path.join(process.cwd(), "data", "orders.json");
 
 interface OrderItem {
@@ -131,24 +134,37 @@ function internalNotificationHtml(order: OrderPayload): string {
 }
 
 async function sendEmail(to: string, subject: string, html: string) {
-  if (!RESEND_API_KEY) {
-    console.log(`[ORDER] Would send email to ${to}: ${subject}`);
+  // Prefer Resend if key is set
+  if (RESEND_API_KEY) {
+    await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ from: FROM_EMAIL, to, subject, html }),
+    });
     return;
   }
 
-  await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${RESEND_API_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: FROM_EMAIL,
+  // Fallback: Gmail SMTP via nodemailer
+  if (GMAIL_USER && GMAIL_PASS) {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: { user: GMAIL_USER, pass: GMAIL_PASS },
+    });
+    await transporter.sendMail({
+      from: `Titan Peptide Lab <${GMAIL_USER}>`,
       to,
       subject,
       html,
-    }),
-  });
+    });
+    console.log(`[ORDER] Email sent via Gmail to ${to}: ${subject}`);
+    return;
+  }
+
+  // No email provider configured
+  console.log(`[ORDER] No email provider — would send to ${to}: ${subject}`);
 }
 
 async function saveOrder(order: OrderPayload) {

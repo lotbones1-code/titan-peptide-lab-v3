@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { ProductCard } from "@/components/site/product-card";
+import { PageHero } from "@/components/site/page-hero";
+import { NextRead } from "@/components/site/next-read";
 import { PRODUCTS, type ProductCategory } from "@/lib/products";
 import { cn } from "@/lib/utils";
 
@@ -17,10 +19,28 @@ const FILTERS: { value: Filter; label: string }[] = [
 ];
 
 const TRUST = [
-  "HPLC \u226599% purity on every batch",
+  "HPLC ≥99% purity on every batch",
   "Lot-matched COA with every order",
   "Cold-chain dispatch within 24h",
   "Mass-spec identity confirmed",
+];
+
+const FORMAT_GUIDE = [
+  {
+    label: "Nasal spray",
+    title: "Start here.",
+    text: "Measured nasal sprays are the shortest path into a peptide protocol. No reconstitution, no needles, no dosing math — the bottle is the dose. Built for researchers who want compliance and consistency without handling lyophilized powder.",
+  },
+  {
+    label: "Injectable",
+    title: "Go deeper when the protocol calls for it.",
+    text: "Lyophilized vials for researchers who already run their own reconstitution. Same lot-matched COA, same release discipline, higher on-hand concentration per mg. Use when the spray form cannot deliver the range the study requires.",
+  },
+  {
+    label: "Stack",
+    title: "Curated, not bundled.",
+    text: "Stacks combine compounds that are typically run in parallel (Selank + Semax). Same purity spec per component, priced to remove the small penalty of two separate bottles. Not a discount pack — a deliberate pairing.",
+  },
 ];
 
 export default function ProductsPage() {
@@ -35,28 +55,23 @@ export default function ProductsPage() {
     <>
       <Nav />
       <main className="bg-white text-[#0f1613]">
-        {/* Page header */}
-        <section className="border-b border-[rgb(15_22_19/6%)] pb-14 pt-16 lg:pb-16 lg:pt-20">
-          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-3">
-              <div className="h-px w-8 bg-[#1e6f58]" />
-              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">
-                Research catalog
-              </span>
-            </div>
-            <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
-              <h1 className="font-serif text-[clamp(2.4rem,4.8vw,3.8rem)] leading-[0.96] tracking-[-0.03em] text-[#0f1613]">
-                Start with sprays,
-                <br />
-                then go deeper.
-              </h1>
-              <p className="max-w-md text-[14px] leading-[1.7] text-[#5c6762] lg:text-right">
-                The catalog is built nasal-first. Sprays lead because they are
-                the easiest format to trust, while injectables and stacks stay
-                available for researchers who want them.
-              </p>
-            </div>
-
+        <PageHero
+          eyebrow="Research catalog"
+          title={
+            <>
+              Start with sprays,
+              <br />
+              <em className="not-italic text-[#1e6f58]">then go deeper</em>.
+            </>
+          }
+          supporting={
+            <>
+              The catalog is built nasal-first. Sprays lead because they are
+              the easiest format to trust, while injectables and stacks stay
+              available for researchers who want them.
+            </>
+          }
+          below={
             <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3">
               {TRUST.map((item) => (
                 <li
@@ -68,27 +83,37 @@ export default function ProductsPage() {
                 </li>
               ))}
             </ul>
-          </div>
-        </section>
+          }
+        />
 
         {/* Filter + grid */}
         <section className="bg-[#fafbfa] py-14 lg:py-20">
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-            <div className="mb-10 flex flex-wrap items-center gap-2">
-              {FILTERS.map((f) => (
-                <button
-                  key={f.value}
-                  onClick={() => setActive(f.value)}
-                  className={cn(
-                    "h-9 rounded-lg border px-4 text-[12px] font-semibold uppercase tracking-[0.06em] transition-colors",
-                    active === f.value
-                      ? "border-[#0f1613] bg-[#0f1613] text-white"
-                      : "border-[rgb(15_22_19/10%)] bg-white text-[#5c6762] hover:border-[rgb(15_22_19/18%)] hover:text-[#0f1613]"
-                  )}
-                >
-                  {f.label}
-                </button>
-              ))}
+            <div className="sticky top-16 z-10 -mx-5 mb-10 flex flex-wrap items-center gap-2 bg-[#fafbfa]/85 px-5 py-4 backdrop-blur sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+              {FILTERS.map((f) => {
+                const isActive = active === f.value;
+                return (
+                  <button
+                    key={f.value}
+                    onClick={() => setActive(f.value)}
+                    className={cn(
+                      "relative px-2 pb-2 pt-1 text-[12px] font-semibold uppercase tracking-[0.08em] transition-colors",
+                      isActive
+                        ? "text-[#0f1613]"
+                        : "text-[#8a9690] hover:text-[#0f1613]",
+                    )}
+                  >
+                    {f.label}
+                    <span
+                      className={cn(
+                        "absolute inset-x-2 -bottom-px h-px transition-colors",
+                        isActive ? "bg-[#1e6f58]" : "bg-transparent",
+                      )}
+                      aria-hidden="true"
+                    />
+                  </button>
+                );
+              })}
               <span className="ml-auto text-[12px] text-[#8a9690]">
                 {filtered.length}{" "}
                 {filtered.length === 1 ? "product" : "products"}
@@ -109,42 +134,67 @@ export default function ProductsPage() {
           </div>
         </section>
 
-        {/* Bottom trust block */}
-        <section className="border-t border-[rgb(15_22_19/6%)] bg-white py-16">
+        {/* How to read the catalog — editorial */}
+        <section className="border-t border-[rgb(15_22_19/6%)] bg-white py-20 lg:py-28">
           <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-            <div className="grid gap-10 md:grid-cols-3">
-              {[
-                {
-                  label: "Purity",
-                  title: "HPLC and mass-spec on every lot.",
-                  text: "We don\u2019t ship without a certificate. Every batch is independently analyzed \u2014 not by us, by the lab.",
-                },
-                {
-                  label: "Dispatch",
-                  title: "Cold-chain, same-day if ordered before 2 PM.",
-                  text: "Temperature-controlled packaging as standard. Tracking emailed within hours of dispatch.",
-                },
-                {
-                  label: "Compliance",
-                  title: "Research use only. No prescription implied.",
-                  text: "All compounds are sold strictly for in-vitro and laboratory research purposes. Not for human consumption.",
-                },
-              ].map((item) => (
-                <div key={item.label}>
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">
-                    {item.label}
-                  </span>
-                  <h3 className="mt-3 font-serif text-[1.25rem] leading-[1.2] tracking-[-0.02em] text-[#0f1613]">
-                    {item.title}
-                  </h3>
-                  <p className="mt-3 text-[13.5px] leading-[1.7] text-[#5c6762]">
-                    {item.text}
-                  </p>
-                </div>
-              ))}
+            <div className="flex items-center gap-3">
+              <div className="h-px w-8 bg-[#1e6f58]" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">
+                How to read the catalog
+              </span>
+            </div>
+
+            <div className="mt-10 grid gap-x-14 gap-y-12 lg:grid-cols-12">
+              <div className="lg:col-span-5">
+                <h2 className="font-serif text-[clamp(1.75rem,3.2vw,2.6rem)] leading-[1.05] tracking-[-0.02em] text-[#0f1613] text-pretty">
+                  Spray, inject, stack —
+                  <br />
+                  <em className="not-italic text-[#1e6f58]">pick by protocol</em>,
+                  <br />
+                  not by shelf appeal.
+                </h2>
+                <p className="mt-6 max-w-md text-[14px] leading-[1.8] text-[#5c6762]">
+                  Every format below carries the same release rule: batch-matched
+                  COA, ≥ 99.0% internal purity threshold, retained lot record.
+                  The only thing that changes is how the compound gets delivered.
+                </p>
+              </div>
+
+              <div className="lg:col-span-7">
+                <ol className="space-y-8">
+                  {FORMAT_GUIDE.map((item, i) => (
+                    <li
+                      key={item.label}
+                      className="grid grid-cols-[auto_1fr] gap-x-5 border-t border-[rgb(15_22_19/6%)] pt-6"
+                    >
+                      <span className="text-[12px] font-semibold tabular-nums text-[#1e6f58]">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <div>
+                        <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
+                          {item.label}
+                        </span>
+                        <h3 className="mt-1 font-serif text-[1.35rem] leading-[1.15] tracking-[-0.02em] text-[#0f1613]">
+                          {item.title}
+                        </h3>
+                        <p className="mt-3 max-w-xl text-[13.5px] leading-[1.75] text-[#5c6762]">
+                          {item.text}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             </div>
           </div>
         </section>
+
+        <NextRead
+          eyebrow="Lab testing"
+          title="What each bottle is tested for before it ships."
+          href="/lab-testing"
+          blurb="Identity, purity, sterility, endotoxin, heavy metals, residual solvents — with specs, methods, and the independent ISO 17025 crosscheck that decides whether a batch leaves the building."
+        />
       </main>
       <Footer />
     </>

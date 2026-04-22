@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   Accordion,
   AccordionContent,
@@ -60,10 +61,18 @@ export function FAQ() {
             Crisp answers on purity, shipping, payment, and how the certificate
             is matched to the batch.
           </p>
+          <div className="mt-6 flex flex-wrap gap-2">
+            <Link href="/lab-testing" className="inline-flex items-center rounded-full border border-[rgb(15_22_19/10%)] bg-white px-3 py-2 text-[11px] font-medium text-[#0f1613] transition-colors hover:border-[#1e6f58]/30 hover:text-[#1e6f58]">
+              Review lab system
+            </Link>
+            <a href="/specimen-coa.pdf" target="_blank" rel="noreferrer" className="inline-flex items-center rounded-full border border-[rgb(15_22_19/10%)] bg-white px-3 py-2 text-[11px] font-medium text-[#0f1613] transition-colors hover:border-[#1e6f58]/30 hover:text-[#1e6f58]">
+              Open specimen COA
+            </a>
+          </div>
         </Reveal>
 
         <Reveal>
-          <div className="rounded-xl border border-[rgb(15_22_19/8%)] bg-white px-6 sm:px-8">
+          <div className="rounded-[1.75rem] border border-[rgb(15_22_19/8%)] bg-white px-6 sm:px-8">
             <Accordion
               type="single"
               collapsible

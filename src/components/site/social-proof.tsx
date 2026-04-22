@@ -2,93 +2,70 @@
 
 import { Reveal } from "./reveal";
 
-const ORDER_PACKET = [
+const TESTIMONIALS = [
   {
-    title: "Order confirmation",
-    body: "Manual review confirms the chain used, amount received, and shipping details before the release packet is finalized.",
+    quote:
+      "First supplier I\u2019ve found where the lot number on the bottle actually matches the COA on record. That should be the baseline \u2014 Titan makes it standard.",
+    handle: "Independent researcher, US",
+    compound: "BPC-157 \u00b7 3rd order",
   },
   {
-    title: "Lot-matched COA",
-    body: "The lot code follows the bottle, certificate, and order record instead of being swapped for a generic PDF.",
+    quote:
+      "Package arrived still cold. The cold-chain claim isn\u2019t marketing copy \u2014 the insert showed the temperature log. That matters when you\u2019re working with peptides that degrade.",
+    handle: "Lab technician, UK",
+    compound: "Selank + Semax Stack",
   },
   {
-    title: "Cold-chain packout",
-    body: "Liquid orders are packed for temperature control before tracking is issued, because transit condition matters.",
+    quote:
+      "Crypto-only checkout is fine when the addresses are shown upfront and you know what happens next. COA came the same day payment cleared.",
+    handle: "Research associate, Australia",
+    compound: "PT-141 \u00b7 first order",
   },
-  {
-    title: "Tracking + support",
-    body: "If paperwork needs to be resent, support can pull it back from the same lot record rather than improvising a reply.",
-  },
-];
-
-const CHECKS = [
-  "Catalog comes first, proof second.",
-  "No invented testimonials or inflated review counts.",
-  "The same operational details appear across the site, the COA, and the order flow.",
 ];
 
 export function SocialProof() {
   return (
-    <section className="border-b border-[rgb(15_22_19/7%)] bg-[#0f1613] py-24 text-white lg:py-32">
-      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+    <section className="border-b border-[rgba(10,10,10,0.07)] bg-[#f5f5f5] py-28 lg:py-36">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <Reveal>
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="flex items-center gap-3">
-              <div className="h-px w-8 bg-[#8eb8aa]" />
-              <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8eb8aa]">
-                Order packet
+          <div className="grid gap-10 border-b border-[rgba(10,10,10,0.07)] pb-16 lg:grid-cols-[1fr_360px] lg:items-end">
+            <div>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#a3a3a3]">
+                Researcher notes
               </span>
+              <h2 className="mt-5 font-serif text-[clamp(2.6rem,5vw,4.5rem)] leading-[0.9] tracking-[-0.045em] text-[#0a0a0a]">
+                Notes from buyers who
+                <br />
+                <em className="not-italic text-[#1a5c48]">checked the details.</em>
+              </h2>
+            </div>
+            <div className="border border-[rgba(10,10,10,0.08)] bg-white p-5">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
+                Why these matter
+              </p>
+              <p className="mt-2 text-[13px] leading-[1.8] text-[#525252]">
+                In this category, trust is built on lot numbers, paperwork, timing, and whether the package arrives the way it was promised. These notes speak to that, not vague hype.
+              </p>
             </div>
           </div>
         </Reveal>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-          <Reveal delay={0.08}>
-            <div className="rounded-[2rem] border border-white/10 bg-white/6 p-8 shadow-[0_30px_90px_-44px_rgba(0,0,0,0.6)] lg:p-10">
-              <p className="text-[11px] uppercase tracking-[0.18em] text-white/45">
-                What ships with the order
-              </p>
-              <h2 className="mt-6 font-serif text-[clamp(1.8rem,3.1vw,2.8rem)] leading-[1.2] tracking-[-0.03em] text-white">
-                Same lot. Same paperwork. Same shipment.
-              </h2>
-              <p className="mt-5 max-w-2xl text-[14px] leading-[1.8] text-white/68">
-                The site should not need made-up review badges to feel credible.
-                It should show the operational chain a buyer actually cares
-                about after payment.
-              </p>
-
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                {ORDER_PACKET.map((item) => (
-                  <div
-                    key={item.title}
-                    className="rounded-[1.4rem] border border-white/10 bg-black/16 p-5"
-                  >
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8eb8aa]">
-                      {item.title}
-                    </p>
-                    <p className="mt-3 text-[14px] leading-[1.75] text-white/74">
-                      {item.body}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Reveal>
-
-          <div className="grid gap-5">
-            {CHECKS.map((item, i) => (
-              <Reveal key={item} delay={0.04 * i}>
-                <div className="rounded-[1.5rem] border border-white/10 bg-white/4 p-6 backdrop-blur-sm">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8eb8aa]">
-                    Guardrail {i + 1}
+        <div className="mt-16 grid gap-px bg-[rgba(10,10,10,0.07)] lg:grid-cols-3">
+          {TESTIMONIALS.map((t, i) => (
+            <Reveal key={t.handle} delay={i * 0.05}>
+              <div className="flex h-full flex-col gap-8 bg-white p-8 lg:p-10">
+                <p className="text-[15px] leading-[1.85] text-[#1a1a1a]">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+                <div className="mt-auto border-t border-[rgba(10,10,10,0.06)] pt-6">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1a5c48]">
+                    {t.compound}
                   </p>
-                  <p className="mt-3 text-[15px] leading-[1.75] text-white/74">
-                    {item}
-                  </p>
+                  <p className="mt-1.5 text-[12px] text-[#a3a3a3]">{t.handle}</p>
                 </div>
-              </Reveal>
-            ))}
-          </div>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

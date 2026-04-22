@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "node:path";
 
 // Static export — produces an `out/` directory that any static host can serve
 // (GitHub Pages, Vercel, CDN). We use this so the GH Pages repo that owns the
@@ -9,6 +10,9 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  // Pin tracing root to this project so Next.js stops inferring the parent
+  // workspace from a stray sibling lockfile.
+  outputFileTracingRoot: path.join(__dirname),
 };
 
 export default nextConfig;

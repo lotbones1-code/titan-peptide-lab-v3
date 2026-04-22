@@ -3,61 +3,64 @@ import { Reveal } from "./reveal";
 const STEPS = [
   {
     n: "01",
-    title: "Select compound",
-    text: "Choose the nasal spray, injectable, or stack that fits your research protocol.",
+    title: "Build the cart",
+    text: "Choose the compounds, set quantity, and open checkout with the exact items already listed.",
   },
   {
     n: "02",
-    title: "Confirm payment",
-    text: "Checkout supports BTC, ETH, USDC (ERC-20), SOL, and USDC (SPL).",
+    title: "Confirm route + shipping",
+    text: "Titan confirms the payment rail, discount code, and delivery details before a batch is released against the order.",
   },
   {
     n: "03",
-    title: "Packed within 24h",
-    text: "Liquid orders are prepared for cold-chain handling before dispatch.",
+    title: "Send payment",
+    text: "BTC, ETH, USDC, and SOL rails are shown openly. Once funds clear, the order is queued for cold-chain handling and manual review.",
   },
   {
     n: "04",
-    title: "Receive proof",
-    text: "Tracking and batch-matched COA stay tied to the order record.",
+    title: "Receive paperwork + tracking",
+    text: "Shipment confirmation and batch-matched COA are sent back against the same order record, not from a generic document library.",
   },
 ];
 
 export function HowItWorks() {
   return (
-    <section className="border-b border-[rgb(15_22_19/7%)] bg-white py-24 lg:py-32">
-      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+    <section className="border-b border-[rgba(10,10,10,0.07)] bg-white py-28 lg:py-36">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <Reveal>
-          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          <div className="grid gap-10 border-b border-[rgba(10,10,10,0.07)] pb-16 lg:grid-cols-[1fr_360px] lg:items-end">
             <div>
-              <div className="flex items-center gap-3">
-                <div className="h-px w-8 bg-[#1e6f58]" />
-                <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">
-                  Order flow
-                </span>
-              </div>
-              <h2 className="mt-6 max-w-2xl font-serif text-[clamp(2.5rem,4.8vw,4rem)] leading-[0.92] tracking-[-0.04em] text-[#0f1613]">
-                How an order moves through the company.
+              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#a3a3a3]">
+                Order flow
+              </span>
+              <h2 className="mt-5 font-serif text-[clamp(2.6rem,5vw,4.5rem)] leading-[0.9] tracking-[-0.045em] text-[#0a0a0a]">
+                What actually happens
+                <br />
+                after a buyer clicks checkout.
               </h2>
             </div>
-            <p className="max-w-md text-[14px] leading-[1.8] text-[#55625c]">
-              Buyers do not need a story here. They need to know what happens
-              after they send payment and when the paperwork arrives.
-            </p>
+            <div className="border border-[rgba(10,10,10,0.08)] bg-[#f7f7f5] p-5">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
+                No blind handoff
+              </p>
+              <p className="mt-2 text-[13px] leading-[1.8] text-[#525252]">
+                The brand does not dump buyers onto an opaque wallet page. Titan confirms payment route, shipping info, and dispatch timing before release.
+              </p>
+            </div>
           </div>
         </Reveal>
 
-        <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-0 divide-y divide-[rgba(10,10,10,0.07)]">
           {STEPS.map(({ n, title, text }, index) => (
             <Reveal key={title} delay={index * 0.04}>
-              <div className="flex h-full flex-col rounded-[1.75rem] border border-[rgb(15_22_19/8%)] bg-[#faf8f4] p-6 shadow-[0_18px_50px_-36px_rgba(15,22,19,0.18)] transition-transform duration-300 hover:-translate-y-1">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1e6f58]">
+              <div className="grid gap-4 py-10 sm:grid-cols-[80px_240px_1fr] sm:items-start sm:gap-8 lg:grid-cols-[80px_300px_1fr]">
+                <span className="font-serif text-[1.1rem] leading-none tracking-[-0.02em] text-[#d4d4d4]">
                   {n}
                 </span>
-                <h3 className="mt-6 font-serif text-[1.55rem] leading-[1.05] tracking-[-0.03em] text-[#0f1613]">
+                <h3 className="font-serif text-[1.5rem] leading-[1.05] tracking-[-0.035em] text-[#0a0a0a]">
                   {title}
                 </h3>
-                <p className="mt-3 text-[13.5px] leading-[1.8] text-[#55625c]">
+                <p className="text-[14px] leading-[1.85] text-[#525252]">
                   {text}
                 </p>
               </div>

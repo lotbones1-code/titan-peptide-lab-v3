@@ -1,57 +1,45 @@
-import { Reveal } from "./reveal";
+import { FlaskConical, QrCode, ShieldCheck, Snowflake } from "lucide-react";
 
 const ITEMS = [
   {
-    stat: "6",
-    label: "Release checks",
-    note: "Identity, purity, sterility, endotoxin, metals, solvents",
+    icon: FlaskConical,
+    value: "≥99% HPLC",
+    label: "Purity threshold used for release decisions",
   },
   {
-    stat: "1:1",
-    label: "Lot-matched COA",
-    note: "The same lot code appears on the bottle, certificate, and order",
+    icon: ShieldCheck,
+    value: "Lot-matched COA",
+    label: "Document belongs to the batch on your order",
   },
   {
-    stat: "24h",
-    label: "Manual packout target",
-    note: "Tracking and paperwork follow after payment review",
+    icon: Snowflake,
+    value: "Cold-chain 24h",
+    label: "Temperature-sensitive orders move fast",
   },
   {
-    stat: "5",
-    label: "Checkout rails",
-    note: "BTC, ETH, USDC ERC-20, SOL, and USDC SPL",
+    icon: QrCode,
+    value: "QR lookup",
+    label: "Reference paperwork accessible without email back-and-forth",
   },
 ];
 
 export function TrustStrip() {
   return (
-    <section className="border-b border-[rgb(15_22_19/8%)] bg-[#0f1613] text-white">
-      <div className="mx-auto max-w-7xl px-5 py-10 sm:px-6 lg:px-8 lg:py-12">
-        <Reveal>
-          <div className="grid gap-px overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-[1.15fr_repeat(4,1fr)]">
-            <div className="flex flex-col justify-between bg-[#121b18] p-6 lg:p-7">
-              <p className="text-[11px] uppercase tracking-[0.18em] text-white/45">
-                Operating standard
-              </p>
-              <p className="mt-10 max-w-xs font-serif text-[2rem] leading-[0.95] tracking-[-0.04em] text-white lg:text-[2.3rem]">
-                Before a lot goes out, the record has to line up.
-              </p>
+    <section className="border-b border-[rgba(10,10,10,0.07)] bg-[#0a0a0a]">
+      <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="grid gap-px bg-[rgba(255,255,255,0.08)] md:grid-cols-2 lg:grid-cols-4">
+          {ITEMS.map(({ icon: Icon, value, label }) => (
+            <div key={value} className="bg-[#0a0a0a] px-5 py-6">
+              <Icon className="size-4 text-[#6bbea0]" />
+              <dt className="mt-4 text-[12px] font-semibold uppercase tracking-[0.08em] text-white tabular-nums">
+                {value}
+              </dt>
+              <dd className="mt-2 text-[12px] leading-[1.7] text-[rgba(255,255,255,0.5)]">
+                {label}
+              </dd>
             </div>
-            {ITEMS.map(({ stat, label, note }) => (
-              <div key={label} className="flex flex-col bg-[#0f1613] p-6">
-                <span className="font-serif text-[2rem] tracking-[-0.04em] text-white">
-                  {stat}
-                </span>
-                <span className="mt-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8eb8aa]">
-                  {label}
-                </span>
-                <p className="mt-3 text-[13px] leading-relaxed text-white/58">
-                  {note}
-                </p>
-              </div>
-            ))}
-          </div>
-        </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -1,21 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Barlow, Barlow_Condensed, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { Grain } from "@/components/site/grain";
 import { AnnouncementBar } from "@/components/site/announcement-bar";
 import { AIAdvisor } from "@/components/site/ai-advisor";
 import { EmailCapture } from "@/components/site/email-capture";
 import { OrganizationJsonLd, WebsiteJsonLd, FAQJsonLd } from "@/components/site/json-ld";
+import { CartProvider } from "@/lib/cart-context";
 import { BRAND } from "@/lib/products";
 
-const geistSans = Geist({
+const barlow = Barlow({
   variable: "--font-geist-sans",
+  weight: ["300", "400", "500", "600"],
   subsets: ["latin"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
+const barlowCondensed = Barlow_Condensed({
   variable: "--font-geist-mono",
+  weight: ["400", "500", "600"],
   subsets: ["latin"],
   display: "swap",
 });
@@ -48,7 +51,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`h-full antialiased ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
+      className={`h-full antialiased ${barlow.variable} ${barlowCondensed.variable} ${instrumentSerif.variable}`}
       style={{ colorScheme: "light" }}
     >
       <body className="min-h-full bg-background text-foreground font-sans">
@@ -56,10 +59,12 @@ export default function RootLayout({
         <WebsiteJsonLd />
         <FAQJsonLd />
         <Grain />
-        <AnnouncementBar />
-        {children}
-        <AIAdvisor />
-        <EmailCapture />
+        <CartProvider>
+          <AnnouncementBar />
+          {children}
+          <AIAdvisor />
+          <EmailCapture />
+        </CartProvider>
       </body>
     </html>
   );

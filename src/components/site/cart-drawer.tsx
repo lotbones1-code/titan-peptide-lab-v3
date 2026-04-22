@@ -1,20 +1,53 @@
 "use client";
 
 import { useCart } from "@/lib/cart-context";
+import { DISCOUNT_CODES } from "@/lib/products";
 import Link from "next/link";
-import { X, Plus, Minus, ShoppingBag, Trash2, MessageCircle } from "lucide-react";
+import { useState } from "react";
+import { X, Plus, Minus, ShoppingBag, Trash2, MessageCircle, Tag, CheckCircle, ShieldCheck, Truck, FileText } from "lucide-react";
+
+type DiscountEntry = {
+  percent: number;
+  label: string;
+};
+
+function validateCode(code: string): DiscountEntry | null {
+  const upper = code.trim().toUpperCase();
+  const entry = (DISCOUNT_CODES as Record<string, DiscountEntry>)[upper];
+  return entry ?? null;
+}
 
 export function CartDrawer() {
   const { items, removeItem, updateQuantity, clearCart, itemCount, subtotal, isOpen, setIsOpen } = useCart();
+  const [promoInput, setPromoInput] = useState("");
+  const [appliedCode, setAppliedCode] = useState<{ code: string; discount: DiscountEntry } | null>(null);
+  const [promoError, setPromoError] = useState("");
+
+  const handleApplyPromo = () => {
+    const entry = validateCode(promoInput);
+    if (entry) {
+      setAppliedCode({ code: promoInput.trim().toUpperCase(), discount: entry });
+      setPromoError("");
+      setPromoInput("");
+    } else {
+      setPromoError("Invalid code. Try FIRST10, BULK15, TITAN20, or VIP25.");
+    }
+  };
+
+  const discountAmount = appliedCode
+    ? (subtotal * appliedCode.discount.percent) / 100
+    : 0;
+  const discountedTotal = subtotal - discountAmount;
 
   const handleCheckout = () => {
-    // Build a message describing the cart contents for the chatbot
     const itemList = items
       .map((item) => `${item.product.name} x${item.quantity}`)
       .join(", ");
-    const msg = `I want to order: ${itemList}`;
+    const discountNote = appliedCode
+      ? ` (discount code: ${appliedCode.code} — ${appliedCode.discount.percent}% off)`
+      : "";
+    const msg = `I want to order: ${itemList}${discountNote}. Cart total: $${discountedTotal.toFixed(2)} before shipping.`;
 
-    // Close cart, open chatbot with the order message
     setIsOpen(false);
     window.dispatchEvent(new CustomEvent("titan-chat-order", { detail: { message: msg } }));
   };
@@ -115,21 +148,118 @@ export function CartDrawer() {
         {/* Footer */}
         {items.length > 0 && (
           <div className="border-t border-[#e5e5e5] px-6 py-4 space-y-3">
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-[#999]">Subtotal</span>
-              <span className="text-lg font-semibold text-[#0f1613]">
-                ${subtotal.toFixed(2)}
-              </span>
+            {/* Promo code */}
+            {appliedCode ? (
+              <div className="flex items-center justify-between rounded-xl bg-[#f0f5f2] px-4 py-2.5">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-[#1e6f58]" />
+                  <span className="text-sm font-medium text-[#1e6f58]">
+                    {appliedCode.code} — {appliedCode.discount.label}
+                  </span>
+                </div>
+                <button
+                  onClick={() => setAppliedCode(null)}
+                  className="text-xs text-[#999] hover:text-[#666] transition-colors"
+                >
+                  Remove
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-1.5">
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <Tag className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[#bbb]" />
+                    <input
+                      type="text"
+                      value={promoInput}
+                      onChange={(e) => { setPromoInput(e.target.value); setPromoError(""); }}
+                      onKeyDown={(e) => e.key === "Enter" && handleApplyPromo()}
+                      placeholder="Promo code"
+                      className="h-9 w-full rounded-full border border-[#e5e5e5] bg-white pl-8 pr-3 text-sm text-[#0f1613] placeholder:text-[#bbb] focus:border-[#1e6f58] focus:outline-none transition-colors"
+                    />
+                  </div>
+                  <button
+                    onClick={handleApplyPromo}
+                    className="h-9 rounded-full border border-[#1e6f58] px-4 text-sm font-medium text-[#1e6f58] transition-colors hover:bg-[#1e6f58] hover:text-white"
+                  >
+                    Apply
+                  </button>
+                </div>
+                {promoError && (
+                  <p className="text-xs text-red-500 pl-1">{promoError}</p>
+                )}
+              </div>
+            )}
+
+            <div className="rounded-xl border border-[#e7ece9] bg-[#fafbfa] p-4">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8a9690]">
+                Before checkout
+              </p>
+              <div className="mt-3 space-y-2.5 text-[12px] text-[#44514b]">
+                <div className="flex items-start gap-2.5">
+                  <FileText className="mt-0.5 h-3.5 w-3.5 text-[#1e6f58]" />
+                  <span>Every order is paired with a lot-matched COA, not a generic certificate.</span>
+                </div>
+                <div className="flex items-start gap-2.5">
+                  <Truck className="mt-0.5 h-3.5 w-3.5 text-[#1e6f58]" />
+                  <span>Flat $12 US shipping under $150, free tracked shipping above that threshold.</span>
+                </div>
+                <div className="flex items-start gap-2.5">
+                  <ShieldCheck className="mt-0.5 h-3.5 w-3.5 text-[#1e6f58]" />
+                  <span>Checkout opens an order chat so Titan can confirm payment route and dispatch timing before release.</span>
+                </div>
+              </div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                <Link
+                  href="/lab-testing"
+                  onClick={() => setIsOpen(false)}
+                  className="inline-flex items-center rounded-full border border-[#dfe6e2] bg-white px-3 py-1.5 text-[11px] font-medium text-[#0f1613] transition-colors hover:border-[#1e6f58]/30 hover:text-[#1e6f58]"
+                >
+                  Lab testing
+                </Link>
+                <a
+                  href="/specimen-coa.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center rounded-full border border-[#dfe6e2] bg-white px-3 py-1.5 text-[11px] font-medium text-[#0f1613] transition-colors hover:border-[#1e6f58]/30 hover:text-[#1e6f58]"
+                >
+                  Specimen COA
+                </a>
+              </div>
             </div>
+
+            {/* Totals */}
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-[#999]">Subtotal</span>
+                <span className={appliedCode ? "text-[#999] line-through" : "font-semibold text-[#0f1613]"}>
+                  ${subtotal.toFixed(2)}
+                </span>
+              </div>
+              {appliedCode && (
+                <>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-[#1e6f58]">Discount ({appliedCode.discount.percent}%)</span>
+                    <span className="font-medium text-[#1e6f58]">−${discountAmount.toFixed(2)}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="font-semibold text-[#0f1613]">Total</span>
+                    <span className="text-lg font-bold text-[#0f1613]">${discountedTotal.toFixed(2)}</span>
+                  </div>
+                </>
+              )}
+            </div>
+
             <p className="text-xs text-[#bbb]">
               Shipping calculated at checkout. Free over $150 (US).
             </p>
+
             <button
               onClick={handleCheckout}
               className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#1e6f58] text-sm font-semibold text-white transition-colors hover:bg-[#175946]"
             >
               <MessageCircle className="h-4 w-4" />
-              Checkout — ${subtotal.toFixed(2)}
+              Checkout — ${discountedTotal.toFixed(2)}
             </button>
             <button
               onClick={clearCart}

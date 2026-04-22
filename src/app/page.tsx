@@ -9,7 +9,6 @@ import { Products } from "@/components/site/products";
 import { QualitySection } from "@/components/site/quality-section";
 import { TrustStrip } from "@/components/site/trust-strip";
 import { SocialProof } from "@/components/site/social-proof";
-import { WhyTitan } from "@/components/site/why-titan";
 import { ProductListJsonLd } from "@/components/site/json-ld";
 
 /* DESIGN SPEC
@@ -29,7 +28,6 @@ export default function HomePage() {
         <Hero />
         <TrustStrip />
         <Products />
-        <WhyTitan />
         <QualitySection />
         <HowItWorks />
         <SocialProof />

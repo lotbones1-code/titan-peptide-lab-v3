@@ -1,0 +1,426 @@
+# Google Ads Campaign Plan — Titan Peptide Lab
+
+## Campaign Architecture
+
+```
+Titan Peptide Lab (Account)
+│
+├── SEARCH: Brand Defense
+│   └── Ad Group: Brand Terms
+│
+├── SEARCH: Nasal Sprays — Core
+│   ├── Ad Group: BPC-157 Spray
+│   ├── Ad Group: Selank Spray
+│   ├── Ad Group: Semax Spray
+│   ├── Ad Group: PT-141 Spray
+│   ├── Ad Group: Oxytocin Spray
+│   └── Ad Group: DSIP Spray
+│
+├── SEARCH: Nasal Sprays — Category
+│   ├── Ad Group: Generic Nasal Peptides
+│   └── Ad Group: Research Peptide Sprays
+│
+├── SEARCH: Competitors
+│   └── Ad Group: Competitor Alternatives
+│
+└── PERFORMANCE MAX: Catalog (Phase 2)
+    └── All products with feed
+```
+
+---
+
+## Campaign 1: Brand Defense
+
+**Objective:** Protect brand searches, cheap conversions
+**Budget:** $200/month (low CPC, high conversion)
+**Bid strategy:** Manual CPC, $0.50 cap
+
+### Keywords (Exact + Phrase)
+
+```
+[titan peptide]
+[titan peptide lab]
+[titanpeptidelab]
+[titan peptide company]
+"titan peptide"
+"titan peptide lab"
+"titan peptide spray"
+```
+
+### Ad Copy — Brand
+
+**RSA 1:**
+- H1: Titan Peptide Lab | Official Site
+- H2: HPLC ≥99% Purity — Nasal Spray Peptides
+- H3: Lot-Matched COA With Every Order
+- H4: Cold-Chain Shipped Within 24h
+- D1: Research-grade nasal peptide sprays with batch-specific certificates of analysis. BPC-157, Selank, Semax, PT-141 & more. Free tracked shipping.
+- D2: Six HPLC-verified nasal sprays. Every batch lot-coded, purity-screened, and shipped cold-chain. Shop the full catalog.
+
+### Extensions
+- **Sitelinks:** Shop Sprays | Lab Results | About Our Process | View COA Library
+- **Callouts:** HPLC ≥99% | Lot-Matched COA | Cold-Chain Dispatch | Crypto Accepted
+- **Structured snippets:** Products: BPC-157, Selank, Semax, PT-141, Oxytocin, DSIP
+
+---
+
+## Campaign 2: Nasal Sprays — Core (Compound-Specific)
+
+**Objective:** Capture high-intent compound searches
+**Budget:** $1,000/month
+**Bid strategy:** Maximize conversions with $35 target CPA (switch to tCPA after 30 conversions)
+
+### Ad Group: BPC-157 Spray
+
+**Keywords:**
+```
+[bpc-157 nasal spray]
+[bpc 157 nasal spray]
+[buy bpc-157 nasal spray]
+[bpc-157 spray]
+"bpc-157 nasal spray"
+"bpc 157 spray"
+"buy bpc-157 spray"
+"bpc-157 nasal"
+bpc-157 nasal spray buy
+bpc-157 nasal spray research
+bpc 157 spray for sale
+bpc-157 intranasal
+```
+
+**RSA 1:**
+- H1: BPC-157 Nasal Spray — $64.99
+- H2: 500mcg/Spray · HPLC ≥99% Purity
+- H3: Lot-Matched COA Included Free
+- H4: Ships Cold-Chain Within 24 Hours
+- D1: Research-grade BPC-157 nasal spray. 15mL precision atomizer, 500mcg per spray. Every bottle ships with a batch-specific certificate of analysis.
+- D2: Body Protection Compound 157 in a measured nasal format. HPLC-verified ≥99% purity. No reconstitution needed — the bottle is the dose.
+
+**RSA 2:**
+- H1: BPC-157 Nasal Spray | Titan Lab
+- H2: Research-Grade · No Reconstitution
+- H3: 15mL / 500mcg Per Spray
+- H4: Batch-Verified Purity — Every Bottle
+- D1: Skip the vials and syringes. BPC-157 in a precision nasal format. HPLC purity ≥99%, cold-chain dispatch, lot-matched certificate of analysis with every order.
+- D2: Researchers report rapid tissue recovery and systemic anti-inflammatory action. Verified purity, tracked shipment, batch-matched COA. Shop now.
+
+### Ad Group: Selank Spray
+
+**Keywords:**
+```
+[selank nasal spray]
+[buy selank nasal spray]
+[selank spray]
+[selank peptide spray]
+"selank nasal spray"
+"buy selank spray"
+"selank nasal"
+"selank research peptide"
+selank nasal spray buy
+selank spray for sale
+selank anxiolytic spray
+selank nootropic spray
+```
+
+**RSA 1:**
+- H1: Selank Nasal Spray — $59.99
+- H2: 750mcg/Spray · Calm Focus
+- H3: HPLC ≥99% · Lot-Matched COA
+- H4: Non-Sedating Anxiolytic Peptide
+- D1: Selank nasal spray — 750mcg per dose, 15mL precision atomizer. Modulates GABA and serotonin pathways for calm, alert cognition. HPLC-verified research grade.
+- D2: Russian-developed anxiolytic nootropic peptide. Non-sedating calm focus for research protocols. Batch-verified, cold-chain shipped with COA.
+
+### Ad Group: Semax Spray
+
+**Keywords:**
+```
+[semax nasal spray]
+[buy semax nasal spray]
+[semax spray]
+[semax nootropic spray]
+"semax nasal spray"
+"buy semax spray"
+"semax peptide"
+"semax nootropic"
+semax nasal spray buy
+semax spray for sale
+semax bdnf spray
+semax cognitive spray
+```
+
+**RSA 1:**
+- H1: Semax Nasal Spray — $59.99
+- H2: 1mg/Spray · BDNF Upregulation
+- H3: HPLC ≥99% · Neuroprotective
+- H4: Ships Cold-Chain With COA
+- D1: Semax heptapeptide in measured nasal format. 1mg per spray, 15mL. Upregulates BDNF, supports memory and neural recovery. Verified ≥99% purity.
+- D2: Cognitive performance and neuroprotection research peptide. Stacks cleanly with Selank. HPLC-verified, lot-matched COA included with every order.
+
+### Ad Group: PT-141 Spray
+
+**Keywords:**
+```
+[pt-141 nasal spray]
+[pt 141 nasal spray]
+[buy pt-141 nasal spray]
+[bremelanotide nasal spray]
+[pt-141 spray]
+"pt-141 nasal spray"
+"pt 141 spray"
+"buy pt-141 spray"
+"bremelanotide spray"
+pt-141 nasal spray research
+pt-141 spray for sale
+pt-141 intranasal
+```
+
+**RSA 1:**
+- H1: PT-141 Nasal Spray — $69.99
+- H2: 1mg/Spray · Fast Onset (~45 min)
+- H3: Non-Hormonal · HPLC ≥99%
+- H4: Melanocortin Receptor Research
+- D1: Bremelanotide (PT-141) nasal spray. Melanocortin receptor agonist acting on central nervous system pathways. 10mL, 1mg/spray. Cold-chain shipped.
+- D2: PT-141 research peptide in precision nasal format. Fast-onset, non-hormonal compound. HPLC-verified purity with batch-matched certificate of analysis.
+
+### Ad Group: Oxytocin Spray
+
+**Keywords:**
+```
+[oxytocin nasal spray]
+[buy oxytocin nasal spray]
+[oxytocin spray research]
+[intranasal oxytocin]
+"oxytocin nasal spray"
+"buy oxytocin spray"
+"oxytocin peptide spray"
+"intranasal oxytocin research"
+oxytocin nasal spray for sale
+oxytocin spray buy
+oxytocin research peptide
+```
+
+**RSA 1:**
+- H1: Oxytocin Nasal Spray — $74.99
+- H2: 400mcg/Spray · 15mL
+- H3: Social Cognition Research Grade
+- H4: Lot-Matched COA Included
+- D1: Intranasal oxytocin peptide for social bonding, stress response, and calm-state research. 400mcg per spray, HPLC-verified ≥99% purity.
+- D2: Built for labs studying trust, social cognition, and autonomic regulation. Familiar spray format, lot-matched COA, cold-chain dispatch within 24h.
+
+### Ad Group: DSIP Spray
+
+**Keywords:**
+```
+[dsip nasal spray]
+[delta sleep inducing peptide spray]
+[buy dsip nasal spray]
+[dsip spray]
+"dsip nasal spray"
+"buy dsip spray"
+"delta sleep inducing peptide"
+"dsip peptide spray"
+dsip nasal spray for sale
+dsip spray buy
+dsip sleep peptide
+```
+
+**RSA 1:**
+- H1: DSIP Nasal Spray — $62.99
+- H2: 500mcg/Spray · Sleep Research
+- H3: HPLC ≥99% · Cold-Chain Shipped
+- H4: Recovery-State Peptide Format
+- D1: Delta Sleep-Inducing Peptide in precision nasal format. 15mL, 500mcg per spray. Suited to sleep architecture and recovery-state research.
+- D2: Non-invasive DSIP delivery for downshift-state research. HPLC-verified purity, lot-matched certificate of analysis. Ships cold-chain within 24h.
+
+---
+
+## Campaign 3: Nasal Sprays — Category (Generic Terms)
+
+**Objective:** Capture category-level searches
+**Budget:** $400/month
+**Bid strategy:** Maximize clicks initially, switch to tCPA after data
+
+### Ad Group: Generic Nasal Peptides
+
+**Keywords:**
+```
+[peptide nasal spray]
+[nasal peptide spray]
+[buy peptide nasal spray]
+[research peptide nasal spray]
+"peptide nasal spray"
+"nasal spray peptides"
+"buy peptide sprays"
+"research peptide spray"
+peptide nasal spray for sale
+nasal spray peptide research
+peptide sprays buy online
+nasal delivery peptides
+intranasal peptide research
+```
+
+**RSA 1:**
+- H1: Nasal Peptide Sprays — 6 Compounds
+- H2: HPLC ≥99% · From $59.99
+- H3: No Reconstitution · No Needles
+- H4: Lot-Matched COA Every Order
+- D1: Six research-grade nasal peptide sprays: BPC-157, Selank, Semax, PT-141, Oxytocin, DSIP. Every batch HPLC-verified ≥99% with cold-chain fulfillment.
+- D2: The bottle is the dose. Precision atomizer format — no reconstitution, no dosing math. Batch-matched certificate of analysis ships with every order.
+
+### Ad Group: Research Peptide Sprays
+
+**Keywords:**
+```
+[buy research peptides]
+[research peptides for sale]
+[peptide research chemicals]
+[buy peptides online]
+"buy research peptides"
+"research peptides"
+"peptide supplier"
+"research chemical peptides"
+research peptides nasal
+peptide sprays research grade
+hplc verified peptides
+research grade peptides
+```
+
+**RSA 1:**
+- H1: Research-Grade Peptides | Titan Lab
+- H2: Nasal Sprays · Injectables · Stacks
+- H3: HPLC ≥99% Purity Verified
+- H4: 11 Compounds — From $54.99
+- D1: Research peptides with HPLC-verified purity, batch-matched COA, and cold-chain dispatch. Nasal sprays, injectable vials, and curated stacks.
+- D2: Built for laboratories and researchers who require traceable quality. Every lot coded, screened, matched, and packed. Shop the full catalog.
+
+---
+
+## Campaign 4: Competitors
+
+**Objective:** Capture competitor-search traffic
+**Budget:** $200/month
+**Bid strategy:** Manual CPC, $1.50 cap (competitive CPCs)
+
+### Keywords
+```
+"peptide sciences nasal spray"
+"swiss chems peptide spray"
+"paradigm peptides nasal"
+"core peptides spray"
+"amino asylum nasal"
+"science bio peptides"
+"purerawz nasal spray"
+peptide sciences alternative
+swiss chems alternative
+best peptide nasal spray
+```
+
+**RSA 1:**
+- H1: Titan Peptide Lab — Nasal Sprays
+- H2: HPLC ≥99% · Lot-Matched COA
+- H3: Six Compounds — From $59.99
+- H4: Cold-Chain Shipped With COA
+- D1: Looking for verified nasal peptide sprays? Titan ships every order with a batch-specific COA, HPLC purity ≥99%, and cold-chain handling. Compare the standard.
+- D2: Six measured nasal sprays. Every batch lot-coded and purity-screened. No representative COAs — your certificate matches your bottle. From $59.99.
+
+---
+
+## Negative Keywords (Account-Level)
+
+```
+-free
+-cheap
+-coupon
+-reddit
+-forum
+-side effects
+-dangers
+-illegal
+-prescription
+-pharmacy
+-doctor
+-clinic
+-human consumption
+-bodybuilding (monitor — could be relevant but low quality)
+-steroids
+-sarms
+-how to make
+-homemade
+-diy
+-wikipedia
+-what is (monitor — informational, low intent)
+-review (add as negative if CPA too high, keep if converting)
+```
+
+---
+
+## Ad Extensions (Account-Level)
+
+### Sitelink Extensions
+| Sitelink | URL | Description |
+|----------|-----|-------------|
+| Shop All Sprays | /products | Browse all 6 nasal spray compounds |
+| View Lab Results | /lab-testing | See HPLC reports and COA library |
+| Selank + Semax Stack | /products/selank-semax-stack | Save $15 on the cognitive pair |
+| How We Test | /lab-testing | Lot coding, HPLC screening, COA matching |
+
+### Callout Extensions
+- HPLC ≥99% Purity
+- Lot-Matched COA
+- Cold-Chain Dispatch
+- Ships Within 24h
+- Crypto Payments Accepted
+- No Reconstitution Needed
+- Free Tracked Shipping
+
+### Structured Snippets
+- **Products:** BPC-157, Selank, Semax, PT-141, Oxytocin, DSIP
+- **Types:** Nasal Sprays, Injectable Vials, Peptide Stacks
+
+### Price Extensions
+| Product | Price |
+|---------|-------|
+| BPC-157 Spray | $64.99 |
+| Selank Spray | $59.99 |
+| Semax Spray | $59.99 |
+| PT-141 Spray | $69.99 |
+| Oxytocin Spray | $74.99 |
+| DSIP Spray | $62.99 |
+
+---
+
+## Keyword Volume & CPC Estimates
+
+These are directional estimates based on peptide research niche data:
+
+| Keyword Cluster | Est. Monthly Volume | Est. CPC | Competition |
+|----------------|---------------------|----------|-------------|
+| bpc-157 nasal spray | 2,400–5,000 | $1.80–$3.50 | Medium |
+| selank nasal spray | 1,200–2,800 | $1.20–$2.50 | Low-Medium |
+| semax nasal spray | 1,500–3,200 | $1.30–$2.80 | Low-Medium |
+| pt-141 nasal spray | 1,800–4,000 | $2.00–$4.00 | Medium-High |
+| oxytocin nasal spray | 3,000–6,500 | $1.50–$3.00 | Medium |
+| dsip nasal spray | 400–900 | $0.80–$1.50 | Low |
+| peptide nasal spray | 800–1,800 | $2.00–$3.50 | Medium |
+| buy research peptides | 2,000–5,000 | $2.50–$5.00 | High |
+
+**Total addressable search volume:** ~13,000–29,000/month across all clusters
+
+---
+
+## Geo Targeting
+
+**Primary:** United States (all states where legal to ship)
+**Secondary:** Canada, United Kingdom, Australia
+**Exclude:** States/regions with peptide shipping restrictions (verify current list)
+
+## Schedule
+
+**Run 24/7** — research chemical buyers search at all hours. No dayparting initially. Review after 30 days and cut low-performing hours if needed.
+
+## Device Targeting
+
+**All devices, bid adjustments:**
+- Desktop: +0% (baseline)
+- Mobile: +0% (monitor — likely 60%+ of traffic)
+- Tablet: -20% (typically lower conversion)
