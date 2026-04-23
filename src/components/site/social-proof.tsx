@@ -2,67 +2,62 @@
 
 import { Reveal } from "./reveal";
 
-const TESTIMONIALS = [
+const STANDARDS = [
   {
-    quote:
-      "First supplier I\u2019ve found where the lot number on the bottle actually matches the COA on record. That should be the baseline \u2014 Titan makes it standard.",
-    handle: "Independent researcher, US",
-    compound: "BPC-157 \u00b7 3rd order",
+    title: "Paperwork before support tickets",
+    body: "Certificate path, payment rail, and dispatch expectations should be visible before the order is placed, not discovered later over email.",
+    label: "Pre-checkout clarity",
   },
   {
-    quote:
-      "Package arrived still cold. The cold-chain claim isn\u2019t marketing copy \u2014 the insert showed the temperature log. That matters when you\u2019re working with peptides that degrade.",
-    handle: "Lab technician, UK",
-    compound: "Selank + Semax Stack",
+    title: "Cold-chain is an operating promise",
+    body: "For liquid peptide formats, timing and handling matter. The goal is not to sound premium, it is to ship in a way that matches what the page claimed.",
+    label: "Handling discipline",
   },
   {
-    quote:
-      "Crypto-only checkout is fine when the addresses are shown upfront and you know what happens next. COA came the same day payment cleared.",
-    handle: "Research associate, Australia",
-    compound: "PT-141 \u00b7 first order",
+    title: "A narrower lineup reads more credible",
+    body: "Titan feels stronger when the catalog is tightly merchandised, the products are easy to compare, and each spray has a visible reason to exist.",
+    label: "Catalog discipline",
   },
 ];
 
 export function SocialProof() {
   return (
-    <section className="border-b border-[rgba(10,10,10,0.07)] bg-[#f5f5f5] py-28 lg:py-36">
+    <section className="border-b border-[rgba(10,10,10,0.07)] bg-[#f3f1eb] py-28 lg:py-36">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <Reveal>
           <div className="grid gap-10 border-b border-[rgba(10,10,10,0.07)] pb-16 lg:grid-cols-[1fr_360px] lg:items-end">
             <div>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#a3a3a3]">
-                Researcher notes
+              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#9aa09a]">
+                Trust structure
               </span>
-              <h2 className="mt-5 font-serif text-[clamp(2.6rem,5vw,4.5rem)] leading-[0.9] tracking-[-0.045em] text-[#0a0a0a]">
-                Notes from buyers who
+              <h2 className="mt-5 font-serif text-[clamp(2.6rem,5vw,4.5rem)] leading-[0.9] tracking-[-0.045em] text-[#0f1110]">
+                Trust should come from
                 <br />
-                <em className="not-italic text-[#1a5c48]">checked the details.</em>
+                operations, not made-up praise.
               </h2>
             </div>
-            <div className="border border-[rgba(10,10,10,0.08)] bg-white p-5">
+            <div className="rounded-[1.5rem] border border-[rgba(10,10,10,0.08)] bg-white p-5">
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
-                Why these matter
+                Why this section changed
               </p>
               <p className="mt-2 text-[13px] leading-[1.8] text-[#525252]">
-                In this category, trust is built on lot numbers, paperwork, timing, and whether the package arrives the way it was promised. These notes speak to that, not vague hype.
+                A premium peptide company should not lean on generic testimonial theater. It should lean on what the buyer can verify in the catalog, the paperwork, and the fulfillment flow.
               </p>
             </div>
           </div>
         </Reveal>
 
-        <div className="mt-16 grid gap-px bg-[rgba(10,10,10,0.07)] lg:grid-cols-3">
-          {TESTIMONIALS.map((t, i) => (
-            <Reveal key={t.handle} delay={i * 0.05}>
-              <div className="flex h-full flex-col gap-8 bg-white p-8 lg:p-10">
-                <p className="text-[15px] leading-[1.85] text-[#1a1a1a]">
-                  &ldquo;{t.quote}&rdquo;
+        <div className="mt-16 grid gap-4 lg:grid-cols-3">
+          {STANDARDS.map((item, i) => (
+            <Reveal key={item.title} delay={i * 0.05}>
+              <div className="flex h-full flex-col rounded-[1.75rem] border border-[rgba(10,10,10,0.07)] bg-white p-8 lg:p-10">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
+                  {item.label}
                 </p>
-                <div className="mt-auto border-t border-[rgba(10,10,10,0.06)] pt-6">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1a5c48]">
-                    {t.compound}
-                  </p>
-                  <p className="mt-1.5 text-[12px] text-[#a3a3a3]">{t.handle}</p>
-                </div>
+                <h3 className="mt-5 font-serif text-[1.9rem] leading-[1.02] tracking-[-0.035em] text-[#0f1110]">
+                  {item.title}
+                </h3>
+                <p className="mt-4 text-[14px] leading-[1.85] text-[#555b55]">{item.body}</p>
               </div>
             </Reveal>
           ))}

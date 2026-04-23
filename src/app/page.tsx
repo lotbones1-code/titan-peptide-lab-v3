@@ -7,7 +7,6 @@ import { Newsletter } from "@/components/site/newsletter";
 import { PaymentMethods } from "@/components/site/payment-methods";
 import { Products } from "@/components/site/products";
 import { QualitySection } from "@/components/site/quality-section";
-import { TrustStrip } from "@/components/site/trust-strip";
 import { SocialProof } from "@/components/site/social-proof";
 import { ProductListJsonLd } from "@/components/site/json-ld";
 
@@ -26,7 +25,6 @@ export default function HomePage() {
       <Nav />
       <main className="bg-[#f8f6f2] text-[#0f1613]">
         <Hero />
-        <TrustStrip />
         <Products />
         <QualitySection />
         <HowItWorks />
