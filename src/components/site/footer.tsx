@@ -39,8 +39,8 @@ export function Footer() {
   return (
     <footer className="border-t border-[rgb(15_22_19/8%)] bg-[#0b100e] text-white">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        <div className="grid gap-6 border-b border-white/8 py-16 lg:grid-cols-[1.05fr_1.95fr] lg:items-start">
-          <div className="rounded-[1.75rem] border border-white/10 bg-[#101614] p-7 lg:p-8">
+        <div className="grid gap-10 border-b border-white/8 py-16 lg:grid-cols-[1.02fr_1.98fr] lg:items-start">
+          <div>
             <Link
               href="/"
               className="inline-block outline-none transition-opacity hover:opacity-80 focus-visible:opacity-80"
@@ -62,32 +62,34 @@ export function Footer() {
               </div>
             </Link>
 
+            <h3 className="mt-6 max-w-[12ch] font-serif text-[clamp(2rem,3vw,2.9rem)] leading-[0.95] tracking-[-0.04em] text-white">
+              Batch-verified sprays, tightly merchandised.
+            </h3>
             <p className="mt-5 max-w-sm text-[14px] leading-[1.85] text-white/56">
-              Research-grade peptide formulations with batch-verified purity,
-              lot-matched certificates of analysis, and cold-chain fulfillment.
+              Research-grade peptide formulations with batch-verified purity, lot-matched certificates of analysis, and cold-chain fulfillment that stays tied to the order record.
             </p>
 
-            <div className="mt-8 grid gap-px overflow-hidden rounded-[1.15rem] border border-white/10 bg-white/10 sm:grid-cols-3">
+            <div className="mt-8 flex flex-wrap gap-2.5">
               {[
-                ["COA", "Lot-matched with each order"],
-                ["24h", "Manual dispatch target"],
-                ["Cold-chain", "Handling built into the flow"],
-              ].map(([value, label]) => (
-                <div key={value} className="bg-[#101614] px-4 py-4">
-                  <p className="font-serif text-[1.6rem] leading-none tracking-[-0.04em] text-white">
-                    {value}
-                  </p>
-                  <p className="mt-2 text-[11px] leading-[1.6] text-white/42">{label}</p>
-                </div>
+                "Lot-matched COA",
+                "24h dispatch target",
+                "Cold-chain handling",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-white/10 px-3 py-1.5 text-[11px] leading-none text-white/58"
+                >
+                  {item}
+                </span>
               ))}
             </div>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <FooterColumn title="Products" links={productLinks} />
             <FooterColumn title="Research" links={RESEARCH_LINKS} />
             <FooterColumn title="Company" links={COMPANY_LINKS} />
-            <div className="grid gap-6">
+            <div className="grid gap-8">
               <FooterColumn title="Support" links={SUPPORT_LINKS} />
               <FooterColumn title="Legal" links={LEGAL_LINKS} />
             </div>
@@ -97,9 +99,7 @@ export function Footer() {
         <div className="flex flex-col gap-4 py-7 text-[12px] leading-relaxed text-white/35 lg:flex-row lg:items-start lg:justify-between">
           <p>&copy; 2026 The Titan Peptide Company. {BRAND.domain}</p>
           <p className="max-w-2xl lg:text-right">
-            Products are sold for laboratory research purposes only. Not for
-            human consumption. Statements on this site have not been evaluated
-            by the FDA.
+            Products are sold for laboratory research purposes only. Not for human consumption. Statements on this site have not been evaluated by the FDA.
           </p>
         </div>
       </div>
@@ -115,7 +115,7 @@ function FooterColumn({
   links: string[][];
 }) {
   return (
-    <div className="rounded-[1.5rem] border border-white/8 bg-[#0f1412] p-6">
+    <div>
       <h3 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/40">
         {title}
       </h3>
