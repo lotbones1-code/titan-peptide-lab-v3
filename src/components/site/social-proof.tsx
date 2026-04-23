@@ -2,18 +2,33 @@
 
 import { Reveal } from "./reveal";
 
-const STANDARDS = [
+const VERIFICATION_POINTS = [
   {
-    title: "Pre-checkout clarity",
-    body: "Certificate path, payment rail, and dispatch expectations should be visible before the order is placed, not discovered later over email.",
+    title: "Third-party testing",
+    body: "Purity language should point back to real batch review, not vague premium claims.",
   },
   {
-    title: "Handling discipline",
-    body: "For liquid peptide formats, timing and handling matter. The goal is not to sound premium, it is to ship in a way that matches what the page claimed.",
+    title: "Paperwork visibility",
+    body: "Certificate path and lot matching should be visible before the order is placed.",
   },
   {
-    title: "Catalog discipline",
-    body: "Titan feels stronger when the catalog is tightly merchandised, easy to compare, and every spray has a visible reason to exist.",
+    title: "Fulfillment discipline",
+    body: "Cold-chain handling and dispatch timing should read like an operating promise, not a slogan.",
+  },
+  {
+    title: "Tight lineup",
+    body: "Each spray should have a clear role in the shelf instead of drowning inside catalog bloat.",
+  },
+];
+
+const PROOF_NOTES = [
+  {
+    title: "Before checkout",
+    body: "The buyer should know the rail, the paperwork path, and the dispatch expectation before funds move.",
+  },
+  {
+    title: "After checkout",
+    body: "Manual review, lot matching, and tracking should stay tied to the same order record instead of fragmenting into support email.",
   },
 ];
 
@@ -30,10 +45,10 @@ export function SocialProof() {
               <h2 className="mt-5 font-serif text-[clamp(2.6rem,5vw,4.5rem)] leading-[0.9] tracking-[-0.045em] text-[#0f1110]">
                 Trust should come from
                 <br />
-                operations, not made-up praise.
+                verification, not theater.
               </h2>
               <p className="mt-5 max-w-[52ch] text-[14px] leading-[1.9] text-[#555b55]">
-                A premium peptide company should not lean on generic testimonial theater. It should lean on what the buyer can verify in the catalog, the paperwork, and the fulfillment flow.
+                Competitors lean hard on testing claims, manufacturing claims, and fulfillment promises. Titan should condense that into a tighter buyer-facing proof structure that reads like an operating record, not a testimonials page.
               </p>
             </div>
 
@@ -43,10 +58,10 @@ export function SocialProof() {
               </p>
               <div className="mt-6 space-y-5">
                 {[
-                  "Which rail to pay on before funds move",
-                  "How the lot code and COA are supposed to match",
-                  "What cold-chain handling means in dispatch timing",
-                  "Why each spray exists in the lineup instead of getting buried in catalog bloat",
+                  "Exact network rail before payment",
+                  "Lot code to COA match before dispatch",
+                  "Third-party purity language tied to release",
+                  "Cold-chain handling framed as timing, not hype",
                 ].map((item) => (
                   <div key={item} className="flex items-start gap-3 border-t border-white/10 pt-5 first:border-0 first:pt-0">
                     <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#8fd0b5]" />
@@ -58,17 +73,55 @@ export function SocialProof() {
           </div>
         </Reveal>
 
-        <div className="mt-6 grid gap-px overflow-hidden rounded-[1.5rem] border border-[rgba(10,10,10,0.07)] bg-[rgba(10,10,10,0.07)] lg:grid-cols-3">
-          {STANDARDS.map((item, i) => (
-            <Reveal key={item.title} delay={i * 0.05}>
-              <div className="h-full bg-[#fbfaf7] p-7 lg:p-8">
+        <div className="mt-6 grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
+          <Reveal>
+            <div className="overflow-hidden rounded-[1.8rem] border border-[rgba(10,10,10,0.08)] bg-white">
+              <div className="border-b border-[rgba(10,10,10,0.07)] px-7 py-6 lg:px-8">
                 <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
-                  {item.title}
+                  Verification ledger
                 </p>
-                <p className="mt-4 text-[13.5px] leading-[1.85] text-[#555b55]">{item.body}</p>
+                <p className="mt-3 max-w-[46ch] text-[13.5px] leading-[1.82] text-[#555b55]">
+                  The strongest trust signal is a short list of concrete things the buyer can check before and after ordering.
+                </p>
+              </div>
+
+              <div className="divide-y divide-[rgba(10,10,10,0.07)]">
+                {VERIFICATION_POINTS.map((item, i) => (
+                  <Reveal key={item.title} delay={i * 0.04}>
+                    <div className="grid gap-3 px-7 py-5 sm:grid-cols-[180px_1fr] lg:px-8">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
+                        {item.title}
+                      </p>
+                      <p className="text-[13.5px] leading-[1.82] text-[#555b55]">{item.body}</p>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          <div className="grid gap-4">
+            {PROOF_NOTES.map((item, i) => (
+              <Reveal key={item.title} delay={i * 0.05}>
+                <div className="rounded-[1.6rem] border border-[rgba(10,10,10,0.08)] bg-[#fbfaf7] p-7 lg:p-8">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
+                    {item.title}
+                  </p>
+                  <p className="mt-3 text-[13.5px] leading-[1.85] text-[#555b55]">{item.body}</p>
+                </div>
+              </Reveal>
+            ))}
+            <Reveal delay={0.12}>
+              <div className="rounded-[1.6rem] border border-[rgba(10,10,10,0.08)] bg-[#111614] p-7 text-white lg:p-8">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8fd0b5]">
+                  Why this matters
+                </p>
+                <p className="mt-3 text-[13.5px] leading-[1.85] text-white/66">
+                  Titan does not need fake praise if the catalog, paperwork path, and fulfillment language already read like the company knows exactly how orders move.
+                </p>
               </div>
             </Reveal>
-          ))}
+          </div>
         </div>
       </div>
     </section>
