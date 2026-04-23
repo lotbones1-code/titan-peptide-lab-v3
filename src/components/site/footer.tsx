@@ -39,8 +39,8 @@ export function Footer() {
   return (
     <footer className="border-t border-[rgb(15_22_19/8%)] bg-[#0b100e] text-white">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        <div className="grid gap-12 border-b border-white/8 py-18 lg:grid-cols-[1.25fr_2fr]">
-          <div>
+        <div className="grid gap-6 border-b border-white/8 py-16 lg:grid-cols-[1.05fr_1.95fr] lg:items-start">
+          <div className="rounded-[1.75rem] border border-white/10 bg-[#101614] p-7 lg:p-8">
             <Link
               href="/"
               className="inline-block outline-none transition-opacity hover:opacity-80 focus-visible:opacity-80"
@@ -56,50 +56,45 @@ export function Footer() {
                     Titan Peptide
                   </span>
                   <span className="mt-1 block text-[10px] uppercase tracking-[0.22em] text-white/35">
-                    The Titan Peptide Company
+                    Research-grade nasal sprays
                   </span>
                 </div>
               </div>
             </Link>
-            <p className="mt-5 max-w-sm text-[14px] leading-[1.8] text-white/54">
+
+            <p className="mt-5 max-w-sm text-[14px] leading-[1.85] text-white/56">
               Research-grade peptide formulations with batch-verified purity,
               lot-matched certificates of analysis, and cold-chain fulfillment.
             </p>
 
-            <form className="mt-8 max-w-sm">
-              <label
-                htmlFor="footer-email"
-                className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/38"
-              >
-                Research notes
-              </label>
-              <div className="mt-3 flex gap-0 border border-white/10">
-                <input
-                  id="footer-email"
-                  type="email"
-                  placeholder="email@lab.org"
-                  className="h-10 min-w-0 flex-1 bg-white/5 px-4 text-[13px] text-white outline-none placeholder:text-white/28 focus:bg-white/8"
-                />
-                <button
-                  type="submit"
-                  className="h-10 border-l border-white/10 bg-white/8 px-5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/70 transition-colors hover:bg-white hover:text-[#0f1613]"
-                >
-                  Join
-                </button>
-              </div>
-            </form>
+            <div className="mt-8 grid gap-px overflow-hidden rounded-[1.15rem] border border-white/10 bg-white/10 sm:grid-cols-3">
+              {[
+                ["COA", "Lot-matched with each order"],
+                ["24h", "Manual dispatch target"],
+                ["Cold-chain", "Handling built into the flow"],
+              ].map(([value, label]) => (
+                <div key={value} className="bg-[#101614] px-4 py-4">
+                  <p className="font-serif text-[1.6rem] leading-none tracking-[-0.04em] text-white">
+                    {value}
+                  </p>
+                  <p className="mt-2 text-[11px] leading-[1.6] text-white/42">{label}</p>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <FooterColumn title="Products" links={productLinks} />
             <FooterColumn title="Research" links={RESEARCH_LINKS} />
             <FooterColumn title="Company" links={COMPANY_LINKS} />
-            <FooterColumn title="Support" links={SUPPORT_LINKS} />
-            <FooterColumn title="Legal" links={LEGAL_LINKS} />
+            <div className="grid gap-6">
+              <FooterColumn title="Support" links={SUPPORT_LINKS} />
+              <FooterColumn title="Legal" links={LEGAL_LINKS} />
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 py-8 text-[12px] leading-relaxed text-white/35 lg:flex-row lg:items-start lg:justify-between">
+        <div className="flex flex-col gap-4 py-7 text-[12px] leading-relaxed text-white/35 lg:flex-row lg:items-start lg:justify-between">
           <p>&copy; 2026 The Titan Peptide Company. {BRAND.domain}</p>
           <p className="max-w-2xl lg:text-right">
             Products are sold for laboratory research purposes only. Not for
@@ -120,7 +115,7 @@ function FooterColumn({
   links: string[][];
 }) {
   return (
-    <div>
+    <div className="rounded-[1.5rem] border border-white/8 bg-[#0f1412] p-6">
       <h3 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/40">
         {title}
       </h3>
