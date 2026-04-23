@@ -25,12 +25,10 @@ export function ProductCard({
   product: ProductCardProduct;
   variant?: "default" | "stack";
 }) {
-  const topBenefits = product.benefits.slice(0, 2);
-
   return (
     <article
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-[1.25rem] border border-[rgba(10,10,10,0.08)] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_45px_rgba(10,10,10,0.06)]",
+        "group relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-[rgba(10,10,10,0.08)] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_45px_rgba(10,10,10,0.06)]",
         variant === "stack" && "md:grid md:grid-cols-[280px_1fr]"
       )}
     >
@@ -41,74 +39,76 @@ export function ProductCard({
         <CompoundPoster
           product={product}
           variant="card"
-          className="min-h-60 w-full rounded-none border-0 shadow-none transition-transform duration-500 group-hover:scale-[1.03]"
+          className="min-h-64 w-full rounded-none border-0 shadow-none transition-transform duration-500 group-hover:scale-[1.02]"
         />
       </Link>
 
       <div className="flex flex-1 flex-col p-7">
-        <div>
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-[#eef4f0] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
-              {product.category === "nasal-spray"
-                ? "Nasal spray"
-                : product.category === "injectable"
-                  ? "Injectable"
-                  : "Stack"}
-            </span>
-            <span className="rounded-full border border-[rgba(10,10,10,0.08)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#7a7a7a]">
-              COA included
-            </span>
-          </div>
-          <h3 className="mt-4 font-serif text-[1.65rem] leading-[1.02] tracking-[-0.035em] text-[#0a0a0a]">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded-full bg-[#eef4f0] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
+            {product.category === "nasal-spray"
+              ? "Nasal spray"
+              : product.category === "injectable"
+                ? "Injectable"
+                : "Stack"}
+          </span>
+          <span className="rounded-full border border-[rgba(10,10,10,0.08)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#7a7a7a]">
+            COA path shown
+          </span>
+        </div>
+
+        <div className="mt-5">
+          <h3 className="font-serif text-[1.85rem] leading-[1.02] tracking-[-0.04em] text-[#0a0a0a]">
             {product.name}
           </h3>
-          <p className="mt-1 text-[11px] tracking-[0.04em] text-[#a3a3a3]">
+          <p className="mt-2 text-[12px] uppercase tracking-[0.08em] text-[#9a9f9a]">
             {product.size}
           </p>
         </div>
 
-        <p className="mt-4 text-[13.5px] leading-[1.8] text-[#525252]">
+        <p className="mt-4 max-w-[34ch] text-[13.5px] leading-[1.8] text-[#525252]">
           {product.tagline}
         </p>
 
-        {topBenefits.length ? (
-          <ul className="mt-5 space-y-2.5">
-            {topBenefits.map((benefit) => (
-              <li key={benefit} className="flex items-start gap-2.5 text-[12.5px] leading-[1.6] text-[#525252]">
-                <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#1a5c48]" />
-                <span>{benefit}</span>
-              </li>
+        <div className="mt-5 flex flex-wrap gap-2">
+          {[
+            product.benefits[0],
+            "Cold-chain dispatch",
+          ]
+            .filter(Boolean)
+            .map((item) => (
+              <span
+                key={item}
+                className="rounded-full border border-[rgba(10,10,10,0.07)] bg-[#f7f6f1] px-3 py-1.5 text-[11px] leading-none text-[#5f655f]"
+              >
+                {item}
+              </span>
             ))}
-          </ul>
-        ) : null}
-
-        <div className="mt-5 rounded-2xl border border-[rgba(10,10,10,0.06)] bg-[#f7f7f5] px-4 py-3">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#1a5c48]">
-            Proof before payment
-          </p>
-          <p className="mt-1.5 text-[12px] leading-[1.7] text-[#525252]">
-            Certificate path, assay threshold, and cold-chain handling are visible before checkout.
-          </p>
         </div>
 
-        <div className="mt-auto pt-6">
-          <div className="flex flex-col gap-4 border-t border-[rgba(10,10,10,0.06)] pt-5">
-            <div className="flex items-baseline gap-2">
-              <p className="text-xl font-semibold text-[#0a0a0a]">
-                {formatPrice(product.price)}
+        <div className="mt-auto pt-7">
+          <div className="flex items-end justify-between gap-4 border-t border-[rgba(10,10,10,0.06)] pt-5">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#9a9f9a]">
+                Starting at
               </p>
-              {product.compareAtPrice ? (
-                <p className="text-[13px] text-[#c0c0c0] line-through">
-                  {formatPrice(product.compareAtPrice)}
+              <div className="mt-1 flex items-baseline gap-2">
+                <p className="text-[1.4rem] font-semibold tracking-[-0.03em] text-[#0a0a0a]">
+                  {formatPrice(product.price)}
                 </p>
-              ) : null}
+                {product.compareAtPrice ? (
+                  <p className="text-[13px] text-[#c0c0c0] line-through">
+                    {formatPrice(product.compareAtPrice)}
+                  </p>
+                ) : null}
+              </div>
             </div>
 
             <Link
               href={`/products/${product.slug}`}
               className="inline-flex h-10 items-center justify-center gap-1.5 rounded-full bg-[#0a0a0a] px-4 text-[11px] font-semibold uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#1a5c48]"
             >
-              Shop compound
+              View product
               <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </div>

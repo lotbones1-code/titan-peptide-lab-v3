@@ -10,21 +10,18 @@ const CATEGORIES = [
     description: "Repair-led compounds for recovery and tissue-support demand.",
     compound: "BPC-157",
     href: "/products/bpc-157-nasal-spray",
-    tone: "bg-[#eef3ef] border-[#d9e6dc]",
   },
   {
     title: "Cognition",
-    description: "Calmer focus and cognitive resilience across Selank and Semax.",
+    description: "Selank and Semax organized for calm focus and cognitive resilience.",
     compound: "Selank · Semax",
     href: "/products/selank-semax-stack",
-    tone: "bg-[#f3f3f0] border-[#e5e5de]",
   },
   {
     title: "Intimacy + Sleep",
-    description: "PT-141, Oxytocin, and DSIP organized around higher-intent use cases.",
+    description: "PT-141, Oxytocin, and DSIP grouped around higher-intent use cases.",
     compound: "3 compounds",
     href: "/products/pt-141-nasal-spray",
-    tone: "bg-[#f5f0eb] border-[#eadfd0]",
   },
 ];
 
@@ -37,7 +34,7 @@ export function Products() {
     <section id="products" className="bg-white py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
         <Reveal>
-          <div className="mb-14 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div className="grid gap-8 border-b border-[rgba(10,10,10,0.07)] pb-14 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
               <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-neutral-400">
                 Nasal spray catalog
@@ -49,44 +46,40 @@ export function Products() {
                 Full nasal spray lineup.
               </h2>
             </div>
-            <p className="max-w-md text-[14px] leading-[1.8] text-neutral-500">
-              After the opening category pass, this section is the detailed shelf: flagship first, then the rest of the lineup, then the stack for buyers who already know what pair they want.
+            <p className="max-w-2xl text-[14px] leading-[1.8] text-neutral-500">
+              The homepage opens with merchandising by outcome. This section is the shelf itself, one flagship, then the rest of the lineup, then the stack for buyers who already know the pair they want.
             </p>
           </div>
         </Reveal>
 
         <Reveal delay={0.04}>
-          <div className="mb-16 grid gap-4 md:grid-cols-3">
+          <div className="mt-10 grid gap-px overflow-hidden rounded-[1.5rem] border border-[rgba(10,10,10,0.07)] bg-[rgba(10,10,10,0.07)] md:grid-cols-3">
             {CATEGORIES.map((cat) => (
               <Link
                 key={cat.title}
                 href={cat.href}
-                className={`group rounded-[1.5rem] border p-6 transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_40px_rgba(10,10,10,0.05)] ${cat.tone}`}
+                className="group bg-[#fbfaf7] px-6 py-6 transition-colors hover:bg-[#f4f1ea]"
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-4">
                   <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-emerald-800">
                     {cat.compound}
                   </span>
                   <ArrowRight className="size-4 text-neutral-400 transition-all group-hover:translate-x-1 group-hover:text-neutral-900" />
                 </div>
-                <h3 className="mt-10 font-serif text-[2rem] leading-none tracking-[-0.04em] text-neutral-900">
+                <h3 className="mt-8 font-serif text-[1.95rem] leading-none tracking-[-0.04em] text-neutral-900">
                   {cat.title}
                 </h3>
-                <p className="mt-3 max-w-[28ch] text-[13px] leading-[1.75] text-neutral-600">
+                <p className="mt-3 max-w-[30ch] text-[13px] leading-[1.75] text-neutral-600">
                   {cat.description}
                 </p>
-                <div className="mt-6 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-neutral-900">
-                  Explore category
-                  <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
-                </div>
               </Link>
             ))}
           </div>
         </Reveal>
 
         <Reveal>
-          <div className="mb-6 overflow-hidden rounded-[2rem] border border-neutral-200 bg-[#111614] text-white">
-            <div className="grid lg:grid-cols-[0.95fr_1.15fr]">
+          <div className="mt-6 overflow-hidden rounded-[2rem] border border-neutral-200 bg-[#111614] text-white">
+            <div className="grid lg:grid-cols-[0.88fr_1.12fr]">
               <div className="border-b border-white/10 p-8 lg:border-b-0 lg:border-r lg:p-10">
                 <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#8fd0b5]">
                   Flagship compound
@@ -99,7 +92,7 @@ export function Products() {
                 </h3>
                 <p className="mt-3 text-[13px] text-white/45">{featured.size}</p>
                 <p className="mt-6 max-w-[34ch] text-[14px] leading-[1.8] text-white/72">
-                  {featured.tagline}. Titan uses this as the anchor product because it is the easiest high-intent entry into the catalog and makes the whole assortment feel immediately tangible.
+                  {featured.tagline}. Titan uses this as the anchor product because it is the clearest high-intent entry into the catalog and makes the assortment feel tangible fast.
                 </p>
                 <div className="mt-8 flex items-baseline gap-3">
                   <span className="text-3xl font-semibold tabular-nums text-white">
@@ -128,15 +121,6 @@ export function Products() {
                   ))}
                 </div>
 
-                <ul className="mt-8 space-y-3">
-                  {featured.benefits.slice(0, 3).map((benefit) => (
-                    <li key={benefit} className="flex items-start gap-3 text-[13px] leading-[1.65] text-white/75">
-                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#8fd0b5]" />
-                      {benefit}
-                    </li>
-                  ))}
-                </ul>
-
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Link
                     href={`/products/${featured.slug}`}
@@ -157,7 +141,7 @@ export function Products() {
           </div>
         </Reveal>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid gap-4 lg:grid-cols-2">
           {rest.map((product, index) => (
             <Reveal key={product.id} delay={index * 0.05}>
               <ProductCard product={product} />
