@@ -71,15 +71,15 @@ export function Hero() {
                   intimacy, sleep.
                 </h1>
 
-                <p className="mt-4 max-w-[48ch] text-[14px] leading-[1.82] text-[#565b56] lg:mt-5 lg:text-[15px] lg:leading-[1.9]">
-                  Titan is a tighter peptide catalog, six research-grade nasal sprays priced, packaged, and merchandised like real products, with the paperwork path visible before payment.
+                <p className="mt-4 max-w-[46ch] text-[13.5px] leading-[1.75] text-[#565b56] lg:mt-5 lg:max-w-[48ch] lg:text-[15px] lg:leading-[1.9]">
+                  Titan is a tighter peptide catalog, six research-grade nasal sprays with the paperwork path visible before payment.
                 </p>
 
                 <div className="mt-5 flex flex-wrap gap-2 text-[11px] text-[#40463f] lg:mt-6 lg:gap-2.5">
                   <span className="inline-flex items-center rounded-full border border-[rgba(10,10,10,0.08)] bg-white px-3 py-1.5">
                     From {featured ? formatPrice(featured.price) : "$59.99"}
                   </span>
-                  <span className="inline-flex items-center rounded-full border border-[rgba(10,10,10,0.08)] bg-white px-3 py-1.5">
+                  <span className="hidden items-center rounded-full border border-[rgba(10,10,10,0.08)] bg-white px-3 py-1.5 sm:inline-flex">
                     No reconstitution
                   </span>
                 </div>
@@ -94,7 +94,7 @@ export function Hero() {
                   </Link>
                   <Link
                     href="/lab-testing"
-                    className="inline-flex h-11 items-center justify-center rounded-full border border-[rgba(10,10,10,0.1)] px-6 text-[12px] font-semibold uppercase tracking-[0.07em] text-[#0f1110] transition-colors hover:border-[#0f1110] hover:bg-[#f7f6f1]"
+                    className="hidden h-11 items-center justify-center rounded-full border border-[rgba(10,10,10,0.1)] px-6 text-[12px] font-semibold uppercase tracking-[0.07em] text-[#0f1110] transition-colors hover:border-[#0f1110] hover:bg-[#f7f6f1] sm:inline-flex"
                   >
                     Review lab standard
                   </Link>
@@ -159,7 +159,7 @@ export function Hero() {
               </div>
             </div>
 
-            <div className="order-3 mt-4 grid gap-px overflow-hidden rounded-[1.35rem] border border-[rgba(10,10,10,0.07)] bg-[rgba(10,10,10,0.07)] lg:mt-6 lg:grid-cols-3 lg:rounded-[1.5rem]">
+            <div className="order-3 mt-3 grid gap-px overflow-hidden rounded-[1.35rem] border border-[rgba(10,10,10,0.07)] bg-[rgba(10,10,10,0.07)] lg:mt-6 lg:grid-cols-3 lg:rounded-[1.5rem]">
               {FACTS.map(([label, value]) => (
                 <div key={label} className="bg-[#faf9f5] px-4 py-4">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
