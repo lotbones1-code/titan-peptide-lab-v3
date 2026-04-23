@@ -78,28 +78,28 @@ export function Products() {
         </Reveal>
 
         <Reveal>
-          <div className="mt-6 overflow-hidden rounded-[2rem] border border-neutral-200 bg-[#111614] text-white">
+          <div className="mt-6 overflow-hidden rounded-[2rem] border border-neutral-200 bg-[#f7f5ef] text-[#0f1613]">
             <div className="grid lg:grid-cols-[0.88fr_1.12fr]">
-              <div className="border-b border-white/10 p-8 lg:border-b-0 lg:border-r lg:p-10">
-                <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#8fd0b5]">
+              <div className="border-b border-[rgba(10,10,10,0.07)] p-8 lg:border-b-0 lg:border-r lg:p-10">
+                <span className="inline-flex rounded-full border border-[rgba(10,10,10,0.08)] bg-white px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#1a5c48]">
                   Flagship compound
                 </span>
                 <h3
-                  className="mt-6 font-serif text-[clamp(2.2rem,3vw,3.25rem)] font-bold leading-[1.02] tracking-[-0.04em] text-white"
+                  className="mt-6 font-serif text-[clamp(2.2rem,3vw,3.25rem)] font-bold leading-[1.02] tracking-[-0.04em] text-[#0f1613]"
                   style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
                 >
                   {featured.name}
                 </h3>
-                <p className="mt-3 text-[13px] text-white/45">{featured.size}</p>
-                <p className="mt-6 max-w-[34ch] text-[14px] leading-[1.8] text-white/72">
+                <p className="mt-3 text-[13px] text-[#8b908c]">{featured.size}</p>
+                <p className="mt-6 max-w-[34ch] text-[14px] leading-[1.8] text-[#5f655f]">
                   {featured.tagline}. Titan uses this as the anchor product because it is the clearest high-intent entry into the catalog and makes the assortment feel tangible fast.
                 </p>
                 <div className="mt-8 flex items-baseline gap-3">
-                  <span className="text-3xl font-semibold tabular-nums text-white">
+                  <span className="text-3xl font-semibold tabular-nums text-[#0f1613]">
                     {formatPrice(featured.price)}
                   </span>
                   {featured.compareAtPrice ? (
-                    <span className="text-[15px] text-white/30 line-through">
+                    <span className="text-[15px] text-[#c7c7c2] line-through">
                       {formatPrice(featured.compareAtPrice)}
                     </span>
                   ) : null}
@@ -114,9 +114,9 @@ export function Products() {
                     ["Paperwork", "Batch-specific COA packet"],
                     ["Dispatch", "Cold-chain within 24h"],
                   ].map(([label, value]) => (
-                    <div key={label} className="rounded-[1.25rem] border border-white/10 bg-white/5 p-4">
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/45">{label}</p>
-                      <p className="mt-2 text-[13px] leading-[1.7] text-white">{value}</p>
+                    <div key={label} className="rounded-[1.25rem] border border-[rgba(10,10,10,0.07)] bg-white p-4">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8b908c]">{label}</p>
+                      <p className="mt-2 text-[13px] leading-[1.7] text-[#0f1613]">{value}</p>
                     </div>
                   ))}
                 </div>
@@ -124,14 +124,14 @@ export function Products() {
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Link
                     href={`/products/${featured.slug}`}
-                    className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-6 text-[12px] font-semibold uppercase tracking-[0.08em] text-[#111614] transition-all hover:bg-[#dce9e2]"
+                    className="inline-flex h-11 items-center gap-2 rounded-full bg-[#111614] px-6 text-[12px] font-semibold uppercase tracking-[0.08em] text-white transition-all hover:bg-[#1a5c48]"
                   >
                     Shop BPC-157
                     <ArrowRight className="size-3.5" />
                   </Link>
                   <Link
                     href="/research/bpc-157-nasal-spray"
-                    className="inline-flex h-11 items-center gap-2 rounded-full border border-white/10 px-6 text-[12px] font-semibold uppercase tracking-[0.08em] text-white transition-all hover:bg-white/6"
+                    className="inline-flex h-11 items-center gap-2 rounded-full border border-[rgba(10,10,10,0.1)] px-6 text-[12px] font-semibold uppercase tracking-[0.08em] text-[#0f1613] transition-all hover:bg-white"
                   >
                     Read research
                   </Link>

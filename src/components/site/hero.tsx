@@ -54,16 +54,16 @@ export function Hero() {
 
   return (
     <section className="border-b border-[rgba(10,10,10,0.07)] bg-[#f5f3ee]">
-      <div className="mx-auto max-w-7xl px-5 py-5 lg:px-10 lg:py-10">
+      <div className="mx-auto max-w-7xl px-5 pb-5 pt-2 lg:px-10 lg:py-10">
         <Reveal>
-          <div className="rounded-[2rem] border border-[rgba(10,10,10,0.08)] bg-white p-4 shadow-[0_22px_70px_rgba(10,10,10,0.05)] lg:p-8">
+          <div className="rounded-[2rem] border border-[rgba(10,10,10,0.08)] bg-white px-4 pb-4 pt-3 shadow-[0_22px_70px_rgba(10,10,10,0.05)] lg:p-8">
             <div className="grid gap-5 lg:grid-cols-[0.82fr_1.18fr] lg:items-end lg:gap-8">
               <div className="order-1">
                 <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(10,10,10,0.08)] bg-[#f7f6f1] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#1a5c48]">
                   Research-grade nasal sprays
                 </div>
 
-                <h1 className="mt-4 max-w-[9.5ch] font-serif text-[clamp(2.8rem,11vw,6.4rem)] font-normal leading-[0.84] tracking-[-0.065em] text-[#0f1110] lg:mt-5">
+                <h1 className="mt-3 max-w-[9.3ch] font-serif text-[clamp(2.45rem,10vw,6.4rem)] font-normal leading-[0.84] tracking-[-0.065em] text-[#0f1110] lg:mt-5">
                   Recovery,
                   <br />
                   cognition,
@@ -71,11 +71,11 @@ export function Hero() {
                   intimacy, sleep.
                 </h1>
 
-                <p className="mt-4 max-w-[46ch] text-[13.5px] leading-[1.75] text-[#565b56] lg:mt-5 lg:max-w-[48ch] lg:text-[15px] lg:leading-[1.9]">
+                <p className="mt-3 max-w-[44ch] text-[13px] leading-[1.72] text-[#565b56] lg:mt-5 lg:max-w-[48ch] lg:text-[15px] lg:leading-[1.9]">
                   Titan is a tighter peptide catalog, six research-grade nasal sprays with the paperwork path visible before payment.
                 </p>
 
-                <div className="mt-5 flex flex-wrap gap-2 text-[11px] text-[#40463f] lg:mt-6 lg:gap-2.5">
+                <div className="mt-4 flex flex-wrap gap-2 text-[11px] text-[#40463f] lg:mt-6 lg:gap-2.5">
                   <span className="inline-flex items-center rounded-full border border-[rgba(10,10,10,0.08)] bg-white px-3 py-1.5">
                     From {featured ? formatPrice(featured.price) : "$59.99"}
                   </span>
@@ -84,7 +84,7 @@ export function Hero() {
                   </span>
                 </div>
 
-                <div className="mt-5 flex flex-col gap-2.5 sm:flex-row sm:items-center lg:mt-7 lg:gap-3">
+                <div className="mt-4 flex flex-col gap-2.5 sm:flex-row sm:items-center lg:mt-7 lg:gap-3">
                   <Link
                     href="/products"
                     className="inline-flex h-11 items-center justify-center gap-2.5 rounded-full bg-[#0f1110] px-7 text-[12px] font-semibold uppercase tracking-[0.07em] text-white transition-colors hover:bg-[#1a5c48]"
