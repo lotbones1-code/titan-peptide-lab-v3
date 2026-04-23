@@ -21,29 +21,39 @@ export type ProductCardProduct = Pick<
 export function ProductCard({
   product,
   variant = "default",
+  className,
 }: {
   product: ProductCardProduct;
-  variant?: "default" | "stack";
+  variant?: "default" | "stack" | "editorial";
+  className?: string;
 }) {
   return (
     <article
       className={cn(
         "group relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-[rgba(10,10,10,0.08)] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_45px_rgba(10,10,10,0.06)]",
-        variant === "stack" && "md:grid md:grid-cols-[280px_1fr]"
+        variant === "stack" && "md:grid md:grid-cols-[280px_1fr]",
+        variant === "editorial" && "bg-[#f7f5ef] lg:grid lg:grid-cols-[minmax(0,1.02fr)_minmax(320px,0.98fr)]",
+        className
       )}
     >
       <Link
         href={`/products/${product.slug}`}
-        className="relative block overflow-hidden border-b border-[rgba(10,10,10,0.06)] outline-none focus-visible:ring-1 focus-visible:ring-[#1a5c48]"
+        className={cn(
+          "relative block overflow-hidden border-b border-[rgba(10,10,10,0.06)] outline-none focus-visible:ring-1 focus-visible:ring-[#1a5c48]",
+          variant === "editorial" && "lg:order-2 lg:border-b-0 lg:border-l"
+        )}
       >
         <CompoundPoster
           product={product}
           variant="card"
-          className="min-h-64 w-full rounded-none border-0 shadow-none transition-transform duration-500 group-hover:scale-[1.02]"
+          className={cn(
+            "min-h-64 w-full rounded-none border-0 shadow-none transition-transform duration-500 group-hover:scale-[1.02]",
+            variant === "editorial" && "lg:min-h-[420px]"
+          )}
         />
       </Link>
 
-      <div className="flex flex-1 flex-col p-7">
+      <div className={cn("flex flex-1 flex-col p-7", variant === "editorial" && "lg:p-9")}>
         <div className="flex flex-wrap items-center gap-2">
           <span className="rounded-full bg-[#eef4f0] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
             {product.category === "nasal-spray"
@@ -58,7 +68,7 @@ export function ProductCard({
         </div>
 
         <div className="mt-5">
-          <h3 className="font-serif text-[1.85rem] leading-[1.02] tracking-[-0.04em] text-[#0a0a0a]">
+          <h3 className={cn("font-serif text-[1.85rem] leading-[1.02] tracking-[-0.04em] text-[#0a0a0a]", variant === "editorial" && "text-[2.35rem] lg:text-[2.8rem]")}>
             {product.name}
           </h3>
           <p className="mt-2 text-[12px] uppercase tracking-[0.08em] text-[#9a9f9a]">
@@ -66,11 +76,11 @@ export function ProductCard({
           </p>
         </div>
 
-        <p className="mt-4 max-w-[34ch] text-[13.5px] leading-[1.8] text-[#525252]">
+        <p className={cn("mt-4 max-w-[34ch] text-[13.5px] leading-[1.8] text-[#525252]", variant === "editorial" && "max-w-[40ch] text-[14px] lg:text-[14.5px]")}>
           {product.tagline}
         </p>
 
-        <div className="mt-5 flex flex-wrap gap-2">
+        <div className={cn("mt-5 flex flex-wrap gap-2", variant === "editorial" && "mt-6 gap-2.5")}>
           {[
             product.benefits[0],
             "Cold-chain dispatch",
@@ -79,14 +89,17 @@ export function ProductCard({
             .map((item) => (
               <span
                 key={item}
-                className="rounded-full border border-[rgba(10,10,10,0.07)] bg-[#f7f6f1] px-3 py-1.5 text-[11px] leading-none text-[#5f655f]"
+                className={cn(
+                  "rounded-full border border-[rgba(10,10,10,0.07)] bg-[#f7f6f1] px-3 py-1.5 text-[11px] leading-none text-[#5f655f]",
+                  variant === "editorial" && "bg-white"
+                )}
               >
                 {item}
               </span>
             ))}
         </div>
 
-        <div className="mt-auto pt-7">
+        <div className={cn("mt-auto pt-7", variant === "editorial" && "pt-8")}>
           <div className="flex items-end justify-between gap-4 border-t border-[rgba(10,10,10,0.06)] pt-5">
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#9a9f9a]">

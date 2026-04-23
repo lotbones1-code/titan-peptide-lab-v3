@@ -144,7 +144,11 @@ export function Products() {
         <div className="mt-6 grid gap-4 lg:grid-cols-2">
           {rest.map((product, index) => (
             <Reveal key={product.id} delay={index * 0.05}>
-              <ProductCard product={product} />
+              <ProductCard
+                product={product}
+                variant={index === 0 ? "editorial" : "default"}
+                className={index === 0 ? "lg:col-span-2" : undefined}
+              />
             </Reveal>
           ))}
         </div>
