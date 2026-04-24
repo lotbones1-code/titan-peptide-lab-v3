@@ -10,7 +10,7 @@ const REASONS = [
   },
   {
     title: "No hidden fees or surprises",
-    body: "Pricing is on the product page. Wallet addresses are shown at checkout. What you see is what you pay.",
+    body: "Pricing is on the product page and payment rails are shown clearly before the order is placed. What you see is what you pay.",
   },
   {
     title: "Built for researchers, not hype buyers",

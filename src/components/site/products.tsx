@@ -23,10 +23,10 @@ export function Products() {
                 Full catalog
               </span>
               <h2 className="mt-3 font-serif text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] tracking-[-0.03em] text-[#0f1110]">
-                Six sprays, one stack, and a cleaner path to checkout.
+                Six sprays, one stack, and a clearer way to compare the lineup.
               </h2>
               <p className="mt-4 max-w-[44rem] text-[14px] leading-[1.8] text-[#59665f]">
-                The shelf now behaves like a real catalog, not a brochure. Add products to the cart here, review lot-backed detail pages, and move into Titan&apos;s order desk with fewer jumps.
+                The shelf reads like a real catalog, not a brochure. Compare the range, review lot-backed detail pages, and move into ordering without extra detours.
               </p>
             </div>
 
@@ -37,7 +37,7 @@ export function Products() {
               <div className="mt-4 space-y-3 text-[13px] leading-7 text-[#44514b]">
                 <p><span className="font-semibold text-[#0f1110]">01.</span> Add any spray or stack to the cart directly from the shelf.</p>
                 <p><span className="font-semibold text-[#0f1110]">02.</span> Review the order in the bag with shipping, promo, and COA context.</p>
-                <p><span className="font-semibold text-[#0f1110]">03.</span> Open checkout and Titan confirms payment rail plus dispatch timing.</p>
+                <p><span className="font-semibold text-[#0f1110]">03.</span> Confirm the payment rail and dispatch timing before the order moves forward.</p>
               </div>
             </div>
           </div>
@@ -70,7 +70,7 @@ export function Products() {
 
                 <div className="flex flex-col justify-between p-7 lg:p-9">
                   <div className="flex flex-wrap gap-2">
-                    {["Selank + Semax together", "COA for each compound", "One checkout"].map((item) => (
+                    {["Selank + Semax together", "COA for each compound", "One order path"].map((item) => (
                       <span
                         key={item}
                         className="rounded-full border border-[#e8e6e1] bg-[#faf8f4] px-3 py-1.5 text-[12px] text-[#555b55]"

@@ -20,7 +20,7 @@ const FAQS = [
   {
     question: "What payment methods do you accept?",
     answer:
-      "Crypto only — BTC, ETH, USDC (ERC-20), SOL, and USDC (SPL). Wallet addresses are shown at checkout.",
+      "Crypto only — BTC, ETH, USDC (ERC-20), SOL, and USDC (SPL). Payment rails are listed clearly before the order is placed.",
   },
   {
     question: "Are these for human use?",

@@ -50,10 +50,10 @@ export function PaymentMethods() {
               Payment
             </span>
             <h2 className="mt-3 font-serif text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] tracking-[-0.03em] text-[#0f1110]">
-              Crypto checkout. Four networks supported.
+              Crypto payment rails. Four networks supported.
             </h2>
             <p className="mt-4 text-[15px] leading-[1.8] text-[#555b55]">
-              Pick your network, send to the address shown, and we handle the rest. Every payment is manually verified before your order ships.
+              Pick the right network, send to the listed address, and wait for manual verification before dispatch. Clear rails, no guesswork.
             </p>
           </div>
         </Reveal>
