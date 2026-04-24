@@ -12,12 +12,7 @@ const COMPANY_LINKS = [
   ["About", "/about"],
   ["Lab testing", "/lab-testing"],
   ["Contact", "/contact"],
-];
-
-const SUPPORT_LINKS = [
   ["Shipping FAQ", "/shipping-faq"],
-  ["Track order", "/shipping-faq"],
-  ["COA library", "/lab-testing"],
 ];
 
 const LEGAL_LINKS = [
@@ -37,69 +32,35 @@ export function Footer() {
   ];
 
   return (
-    <footer className="border-t border-[rgb(15_22_19/8%)] bg-[#0b100e] text-white">
+    <footer className="border-t border-white/8 bg-[#0b100e] text-white">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
-        <div className="grid gap-10 border-b border-white/8 py-16 lg:grid-cols-[1.02fr_1.98fr] lg:items-start">
+        <div className="grid gap-10 py-14 lg:grid-cols-[1fr_2fr] lg:items-start">
           <div>
-            <Link
-              href="/"
-              className="inline-block outline-none transition-opacity hover:opacity-80 focus-visible:opacity-80"
-            >
-              <div className="flex items-center gap-3">
-                <div className="flex size-9 items-center justify-center bg-white shadow-[0_8px_24px_-12px_rgba(255,255,255,0.35)]">
-                  <span className="font-serif text-[1rem] leading-none text-[#0f1613]">
-                    T
-                  </span>
-                </div>
-                <div>
-                  <span className="block text-[0.98rem] font-semibold tracking-[-0.03em] text-white">
-                    Titan Peptide
-                  </span>
-                  <span className="mt-1 block text-[10px] uppercase tracking-[0.22em] text-white/35">
-                    Research-grade nasal sprays
-                  </span>
-                </div>
+            <Link href="/" className="inline-flex items-center gap-3">
+              <div className="flex size-8 items-center justify-center bg-white">
+                <span className="font-serif text-[0.9rem] leading-none text-[#0f1613]">T</span>
               </div>
+              <span className="text-[0.95rem] font-semibold tracking-[-0.02em] text-white">
+                Titan Peptide
+              </span>
             </Link>
-
-            <h3 className="mt-6 max-w-[12ch] font-serif text-[clamp(2rem,3vw,2.9rem)] leading-[0.95] tracking-[-0.04em] text-white">
-              Batch-verified sprays, tightly merchandised.
-            </h3>
-            <p className="mt-5 max-w-sm text-[14px] leading-[1.85] text-white/56">
-              Research-grade peptide formulations with batch-verified purity, lot-matched certificates of analysis, and cold-chain fulfillment that stays tied to the order record.
+            <p className="mt-4 max-w-xs text-[13px] leading-[1.7] text-white/45">
+              Research-grade peptide nasal sprays with batch-verified purity and cold-chain fulfillment.
             </p>
-
-            <div className="mt-8 flex flex-wrap gap-2.5">
-              {[
-                "Lot-matched COA",
-                "24h dispatch target",
-                "Cold-chain handling",
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-white/10 px-3 py-1.5 text-[11px] leading-none text-white/58"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
           </div>
 
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <FooterColumn title="Products" links={productLinks} />
             <FooterColumn title="Research" links={RESEARCH_LINKS} />
             <FooterColumn title="Company" links={COMPANY_LINKS} />
-            <div className="grid gap-8">
-              <FooterColumn title="Support" links={SUPPORT_LINKS} />
-              <FooterColumn title="Legal" links={LEGAL_LINKS} />
-            </div>
+            <FooterColumn title="Legal" links={LEGAL_LINKS} />
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 py-7 text-[12px] leading-relaxed text-white/35 lg:flex-row lg:items-start lg:justify-between">
-          <p>&copy; 2026 The Titan Peptide Company. {BRAND.domain}</p>
-          <p className="max-w-2xl lg:text-right">
-            Products are sold for laboratory research purposes only. Not for human consumption. Statements on this site have not been evaluated by the FDA.
+        <div className="flex flex-col gap-3 border-t border-white/8 py-6 text-[12px] text-white/30 lg:flex-row lg:justify-between">
+          <p>&copy; 2026 The Titan Peptide Company &middot; {BRAND.domain}</p>
+          <p className="max-w-xl lg:text-right">
+            Products are sold for laboratory research purposes only. Not for human consumption. Statements have not been evaluated by the FDA.
           </p>
         </div>
       </div>
@@ -107,24 +68,18 @@ export function Footer() {
   );
 }
 
-function FooterColumn({
-  title,
-  links,
-}: {
-  title: string;
-  links: string[][];
-}) {
+function FooterColumn({ title, links }: { title: string; links: string[][] }) {
   return (
     <div>
       <h3 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/40">
         {title}
       </h3>
-      <ul className="mt-4 space-y-2.5">
+      <ul className="mt-3 space-y-2">
         {links.map(([label, href]) => (
           <li key={`${title}-${label}`}>
             <Link
               href={href}
-              className="text-[13px] text-white/60 outline-none transition-colors hover:text-white focus-visible:text-white"
+              className="text-[13px] text-white/55 transition-colors hover:text-white"
             >
               {label}
             </Link>

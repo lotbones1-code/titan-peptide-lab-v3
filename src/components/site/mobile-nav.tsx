@@ -48,7 +48,7 @@ export function MobileNav() {
                 onClick={() => setOpen(false)}
                 className="flex h-10 w-full items-center justify-center rounded-full bg-[#0f1613] text-[11px] font-semibold uppercase tracking-[0.08em] text-white hover:bg-[#1a2420]"
               >
-                Shop Sprays
+                Shop nasal sprays
               </Link>
             </div>
           </nav>

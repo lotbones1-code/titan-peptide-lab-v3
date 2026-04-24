@@ -3,81 +3,47 @@ import { Reveal } from "./reveal";
 const STEPS = [
   {
     n: "01",
-    title: "Cart is locked",
-    text: "The buyer chooses compounds and quantity, then lands in a checkout flow where the same SKU mix and pricing stay visible instead of turning into an opaque invoice request.",
+    title: "Choose your compounds",
+    text: "Pick from six research-grade nasal sprays. Each product page shows pricing, purity data, and what ships in the box.",
   },
   {
     n: "02",
-    title: "Rail is confirmed",
-    text: "Titan confirms the payment route, shipping details, and discount logic before a batch is released against the order, so there is no blind handoff between product page and payment stage.",
+    title: "Pay with crypto",
+    text: "We accept BTC, ETH, USDC, and SOL. The exact wallet address and network are shown at checkout — no guessing.",
   },
   {
     n: "03",
-    title: "Payment clears",
-    text: "BTC, ETH, USDC, and SOL rails are shown openly. Once funds clear, the order is manually reviewed and matched to the correct lot workflow before dispatch starts.",
-  },
-  {
-    n: "04",
-    title: "Paperwork follows the lot",
-    text: "Shipment confirmation, COA, and dispatch notes come back against the same order record, not from a generic document dump that the buyer has to decipher later.",
-  },
-];
-
-const NOTES = [
-  {
-    title: "No blind wallet page",
-    body: "Payment route, order total, and next steps are meant to be explicit before the buyer sends funds.",
-  },
-  {
-    title: "Manual release logic",
-    body: "A human review step still matters here because the product, the payment rail, and the paperwork need to stay tied together.",
+    title: "We ship within 24 hours",
+    text: "After payment confirms, we match your order to the correct lot, pack it with cold-chain handling, and send tracking to your email.",
   },
 ];
 
 export function HowItWorks() {
   return (
-    <section className="border-b border-[rgba(10,10,10,0.07)] bg-white py-28 lg:py-36">
+    <section className="border-y border-[#e8e6e1] bg-white py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <Reveal>
-          <div className="grid gap-10 border-b border-[rgba(10,10,10,0.07)] pb-16 lg:grid-cols-[1fr_360px] lg:items-end">
-            <div>
-              <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#a3a3a3]">
-                Order flow
-              </span>
-              <h2 className="mt-5 font-serif text-[clamp(2.6rem,5vw,4.5rem)] leading-[0.9] tracking-[-0.045em] text-[#0a0a0a]">
-                Checkout should feel
-                <br />
-                like an operating flow,
-                <br />
-                not a handoff gamble.
-              </h2>
-            </div>
-            <div className="grid gap-4">
-              {NOTES.map((note) => (
-                <div key={note.title} className="rounded-[1.5rem] border border-[rgba(10,10,10,0.08)] bg-[#f7f6f1] p-5">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
-                    {note.title}
-                  </p>
-                  <p className="mt-2 text-[13px] leading-[1.8] text-[#525252]">{note.body}</p>
-                </div>
-              ))}
-            </div>
+          <div className="mb-12 max-w-xl">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#999]">
+              How it works
+            </span>
+            <h2 className="mt-3 font-serif text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] tracking-[-0.03em] text-[#0f1110]">
+              Three steps. No accounts, no middlemen.
+            </h2>
           </div>
         </Reveal>
 
-        <div className="mt-16 grid gap-px bg-[rgba(10,10,10,0.07)] lg:grid-cols-4">
+        <div className="grid gap-6 lg:grid-cols-3">
           {STEPS.map(({ n, title, text }, index) => (
-            <Reveal key={title} delay={index * 0.04}>
-              <div className="flex h-full flex-col gap-6 bg-white p-8">
-                <span className="font-serif text-[1rem] leading-none tracking-[-0.02em] text-[#d0d0d0]">
+            <Reveal key={title} delay={index * 0.06}>
+              <div className="flex h-full flex-col rounded-2xl border border-[#e8e6e1] bg-[#faf8f4] p-7">
+                <span className="text-[32px] font-semibold tabular-nums text-[#e0ded8]">
                   {n}
                 </span>
-                <div>
-                  <h3 className="font-serif text-[1.55rem] leading-[1.02] tracking-[-0.035em] text-[#0a0a0a]">
-                    {title}
-                  </h3>
-                  <p className="mt-3 text-[13.5px] leading-[1.85] text-[#525252]">{text}</p>
-                </div>
+                <h3 className="mt-4 font-serif text-[1.3rem] leading-[1.15] tracking-[-0.02em] text-[#0f1110]">
+                  {title}
+                </h3>
+                <p className="mt-3 text-[14px] leading-[1.75] text-[#555b55]">{text}</p>
               </div>
             </Reveal>
           ))}
