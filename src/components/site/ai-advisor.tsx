@@ -98,10 +98,23 @@ function matchProductsFallback(query: string): { text: string; products: Product
   }
 
   if (q.match(/order|buy|purchase|checkout|cart/)) {
+    // Check if they mentioned a specific product
+    const mentionedProducts = PRODUCTS.filter(p =>
+      q.includes(p.name.toLowerCase()) || q.includes(p.id.replace(/-/g, ' ')) ||
+      q.includes(p.id) || q.includes(p.slug.replace(/-/g, ' '))
+    );
+    if (mentionedProducts.length > 0) {
+      const names = mentionedProducts.map(p => p.name).join(' and ');
+      return {
+        text: `Great choice! Add ${names} to your cart from the catalog, then hit Checkout to complete your order. You'll enter your shipping details on the checkout page and get crypto payment instructions by email.`,
+        products: mentionedProducts,
+        followUps: ["Take me to checkout", "What discounts do you have?"],
+      };
+    }
     return {
-      text: "I can take your order right here! Just tell me which product(s) you'd like and I'll walk you through it. What are you interested in?",
+      text: "Ready to order? Add products to your cart from the catalog, then hit the Checkout button. You'll enter your details and get crypto payment instructions by email. Need help choosing? Tell me what you're researching.",
       products: [],
-      followUps: ["BPC-157 Nasal Spray", "Selank + Semax Stack", "Show me the catalog"],
+      followUps: ["I need recovery support", "Something for focus", "Show me bestsellers"],
     };
   }
 
@@ -124,11 +137,30 @@ function matchProductsFallback(query: string): { text: string; products: Product
     };
   }
 
-  if (q.match(/ship|deliver|tracking/)) {
+  if (q.match(/take me to checkout|go to checkout|checkout page/)) {
     return {
-      text: "Every order ships same-day if placed before 2 PM PT. Cold-chain packed, discreet packaging. USPS Priority 2-3 business days. Free shipping over $150.",
+      text: "Head to the checkout page — just click the cart icon in the nav and hit Checkout. Or add products first if your cart is empty.",
       products: [],
-      followUps: ["Do you ship internationally?", "I'm ready to order"],
+      followUps: ["Show me bestsellers", "What discounts do you have?"],
+    };
+  }
+
+  if (q.match(/compare|versus|vs|difference|which.*better/)) {
+    const bpc = PRODUCTS.find(p => p.id === "bpc157-spray")!;
+    const stack = PRODUCTS.find(p => p.id === "selank-semax-stack")!;
+    const semax = PRODUCTS.find(p => p.id === "semax-spray")!;
+    return {
+      text: "Quick comparison of our top sellers:\n\n- BPC-157 ($64.99) — Recovery and repair. Best if you have tissue or gut issues.\n- Semax ($59.99) — Pure cognitive boost, BDNF upregulation.\n- Selank + Semax Stack ($105, saves $15) — Best of both worlds: focus + calm.\n\nWhat's your primary goal?",
+      products: [bpc, semax, stack],
+      followUps: ["I need recovery", "I want cognitive boost", "I'll take the stack"],
+    };
+  }
+
+  if (q.match(/ship|deliver|tracking|international/)) {
+    return {
+      text: "We ship worldwide. US: $12 (free over $150). Canada: $18 (free over $200). EU/UK: $28 (free over $250). Asia-Pacific: $32 (free over $300). Cold-chain packed, dispatched within 24h of payment verification. Tracking emailed.",
+      products: [],
+      followUps: ["What payment do you accept?", "I'm ready to order"],
     };
   }
 

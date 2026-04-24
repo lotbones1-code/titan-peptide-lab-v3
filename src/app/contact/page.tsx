@@ -3,14 +3,13 @@ import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { PageHero } from "@/components/site/page-hero";
 import { NextRead } from "@/components/site/next-read";
+import { ContactForm } from "@/components/site/contact-form";
 
 export const metadata = {
   title: "Contact — The Titan Peptide Company",
   description:
     "Write the laboratory. Replies inside 24–48 hours from the QA bench.",
 };
-
-const FORM_ACTION = "mailto:support@titanpeptidelab.com";
 
 export default function ContactPage() {
   return (
@@ -53,77 +52,7 @@ export default function ContactPage() {
                 Send a message.
               </h2>
 
-              <form
-                action={FORM_ACTION}
-                method="POST"
-                encType="text/plain"
-                className="mt-8 space-y-5"
-              >
-                <div className="grid gap-5 sm:grid-cols-2">
-                  <Field label="Your name" name="name" required />
-                  <Field
-                    label="Email"
-                    name="email"
-                    type="email"
-                    required
-                  />
-                </div>
-
-                <Field label="Subject" name="subject" />
-
-                <div>
-                  <label
-                    htmlFor="topic"
-                    className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-[#8a9690]"
-                  >
-                    Topic
-                  </label>
-                  <select
-                    id="topic"
-                    name="topic"
-                    defaultValue=""
-                    className="mt-2 w-full border-0 border-b border-[rgb(15_22_19/12%)] bg-transparent py-2 text-[14px] text-[#0f1613] focus:border-[#0f1613] focus:outline-none focus:ring-0"
-                  >
-                    <option value="" disabled>
-                      Select…
-                    </option>
-                    <option>General question</option>
-                    <option>Order status</option>
-                    <option>COA request</option>
-                    <option>Volume / laboratory pricing</option>
-                    <option>Press / partnerships</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-[#8a9690]"
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={6}
-                    required
-                    className="mt-2 w-full border-0 border-b border-[rgb(15_22_19/12%)] bg-transparent py-2 text-[14px] leading-relaxed text-[#0f1613] placeholder:text-[#b0b8b4] focus:border-[#0f1613] focus:outline-none focus:ring-0"
-                    placeholder="Lot number, order ID, or what you need help with…"
-                  />
-                </div>
-
-                <div className="flex items-center justify-between pt-4">
-                  <p className="max-w-xs text-[11px] text-[#8a9690]">
-                    Reply within 24–48h from the QA bench
-                  </p>
-                  <button
-                    type="submit"
-                    className="inline-flex items-center gap-2 rounded-lg bg-[#0f1613] px-5 py-2.5 text-[13px] font-medium text-white transition-colors hover:bg-[#1a2420]"
-                  >
-                    Send message
-                  </button>
-                </div>
-              </form>
+              <ContactForm />
 
               <div className="mt-8 border-t border-[rgb(15_22_19/6%)] pt-4">
                 <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
@@ -183,36 +112,6 @@ function ContactRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-function Field({
-  label,
-  name,
-  type = "text",
-  required,
-}: {
-  label: string;
-  name: string;
-  type?: string;
-  required?: boolean;
-}) {
-  return (
-    <div>
-      <label
-        htmlFor={name}
-        className="block text-[11px] font-semibold uppercase tracking-[0.1em] text-[#8a9690]"
-      >
-        {label}
-        {required ? " *" : ""}
-      </label>
-      <input
-        id={name}
-        name={name}
-        type={type}
-        required={required}
-        className="mt-2 w-full border-0 border-b border-[rgb(15_22_19/12%)] bg-transparent py-2 text-[14px] text-[#0f1613] focus:border-[#0f1613] focus:outline-none focus:ring-0"
-      />
-    </div>
-  );
-}
 
 function ReadLink({
   href,

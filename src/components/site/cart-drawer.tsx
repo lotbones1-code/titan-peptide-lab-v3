@@ -3,8 +3,9 @@
 import { useCart } from "@/lib/cart-context";
 import { DISCOUNT_CODES } from "@/lib/products";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { X, Plus, Minus, ShoppingBag, Trash2, MessageCircle, Tag, CheckCircle, ShieldCheck, Truck, FileText } from "lucide-react";
+import { X, Plus, Minus, ShoppingBag, Trash2, Lock, Tag, CheckCircle, ShieldCheck, Truck, FileText } from "lucide-react";
 
 type DiscountEntry = {
   percent: number;
@@ -39,17 +40,11 @@ export function CartDrawer() {
     : 0;
   const discountedTotal = subtotal - discountAmount;
 
-  const handleCheckout = () => {
-    const itemList = items
-      .map((item) => `${item.product.name} x${item.quantity}`)
-      .join(", ");
-    const discountNote = appliedCode
-      ? ` (discount code: ${appliedCode.code} — ${appliedCode.discount.percent}% off)`
-      : "";
-    const msg = `I want to order: ${itemList}${discountNote}. Cart total: $${discountedTotal.toFixed(2)} before shipping.`;
+  const router = useRouter();
 
+  const handleCheckout = () => {
     setIsOpen(false);
-    window.dispatchEvent(new CustomEvent("titan-chat-order", { detail: { message: msg } }));
+    router.push("/checkout");
   };
 
   if (!isOpen) return null;
@@ -258,7 +253,7 @@ export function CartDrawer() {
               onClick={handleCheckout}
               className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#1e6f58] text-sm font-semibold text-white transition-colors hover:bg-[#175946]"
             >
-              <MessageCircle className="h-4 w-4" />
+              <Lock className="h-4 w-4" />
               Checkout — ${discountedTotal.toFixed(2)}
             </button>
             <button
