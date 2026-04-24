@@ -69,7 +69,7 @@ export function ProductCard({
           ))}
         </div>
 
-        <div className="mt-auto border-t border-[#e8e6e1] pt-5 mt-5">
+        <div className="mt-auto border-t border-[#e8e6e1] pt-5">
           <div className="flex items-end justify-between gap-4">
             <div>
               <div className="flex items-baseline gap-2">

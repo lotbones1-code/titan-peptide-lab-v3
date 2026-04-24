@@ -66,7 +66,7 @@ export function Hero() {
                 {[
                   ["≥99%", "purity target with lot-matched COA"],
                   ["24h", "dispatch target after payment confirmation"],
-                  ["5 coins", "BTC, ETH, SOL, USDC on two networks"],
+                  ["5 rails", "BTC · ETH · SOL · USDC on two networks"],
                   ["40+", "countries we ship to from one warehouse"],
                 ].map(([value, label]) => (
                   <div
