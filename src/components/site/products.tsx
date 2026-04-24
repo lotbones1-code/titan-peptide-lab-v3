@@ -23,10 +23,11 @@ export function Products() {
                 Full catalog
               </span>
               <h2 className="mt-3 font-serif text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] tracking-[-0.03em] text-[#0f1110]">
-                Six sprays, one stack, and a clearer way to compare the lineup.
+                Six sprays, one stack,{" "}
+                <span className="text-[#1a5c48]">every lot documented.</span>
               </h2>
               <p className="mt-4 max-w-[44rem] text-[14px] leading-[1.8] text-[#59665f]">
-                The shelf reads like a real catalog, not a brochure. Compare the range, review lot-backed detail pages, and move into ordering without extra detours.
+                Each spray ships with a lot-matched certificate of analysis. Pick the compound that fits your research, review the detail page, and order with crypto — we ship to 40+ countries.
               </p>
             </div>
 
@@ -35,9 +36,9 @@ export function Products() {
                 How ordering works
               </p>
               <div className="mt-4 space-y-3 text-[13px] leading-7 text-[#44514b]">
-                <p><span className="font-semibold text-[#0f1110]">01.</span> Add any spray or stack to the cart directly from the shelf.</p>
-                <p><span className="font-semibold text-[#0f1110]">02.</span> Review the order in the bag with shipping, promo, and COA context.</p>
-                <p><span className="font-semibold text-[#0f1110]">03.</span> Confirm the payment rail and dispatch timing before the order moves forward.</p>
+                <p><span className="font-semibold text-[#0f1110]">01.</span> Add any spray or stack to your cart.</p>
+                <p><span className="font-semibold text-[#0f1110]">02.</span> Enter your shipping address — we deliver to 40+ countries.</p>
+                <p><span className="font-semibold text-[#0f1110]">03.</span> Pay with BTC, ETH, SOL, or USDC. We verify on-chain and ship within 24h.</p>
               </div>
             </div>
           </div>

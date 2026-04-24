@@ -33,8 +33,8 @@ const CHAINS: Chain[] = [
   },
   {
     key: "usdcSol",
-    label: "SOL / USDC (SPL)",
-    asset: "SOL",
+    label: "USDC / SOL (Solana)",
+    asset: "USDC · SOL",
     address: WALLETS.usdcSol,
     qrData: WALLETS.usdcSol,
   },
@@ -50,11 +50,28 @@ export function PaymentMethods() {
               Payment
             </span>
             <h2 className="mt-3 font-serif text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] tracking-[-0.03em] text-[#0f1110]">
-              Crypto payment rails. Four networks supported.
+              Worldwide payment rails. Four crypto paths supported.
             </h2>
             <p className="mt-4 text-[15px] leading-[1.8] text-[#555b55]">
-              Pick the right network, send to the listed address, and wait for manual verification before dispatch. Clear rails, no guesswork.
+              Choose the network that fits your wallet, place the order once, and Titan confirms payment plus destination details before dispatch. International buyers use the same flow.
             </p>
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.04}>
+          <div className="mb-8 rounded-[1.5rem] border border-[#e8e6e1] bg-[#faf8f4] p-6 lg:p-7">
+            <div className="grid gap-4 lg:grid-cols-3">
+              {[
+                ["1", "Place the order with your shipping destination."],
+                ["2", "Use BTC, ETH, USDC, or SOL on the listed rail."],
+                ["3", "Titan verifies payment and sends dispatch confirmation."],
+              ].map(([step, copy]) => (
+                <div key={step} className="rounded-[1rem] border border-[#e5e1d7] bg-white px-4 py-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#1a5c48]">Step {step}</p>
+                  <p className="mt-2 text-[13px] leading-6 text-[#44514b]">{copy}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </Reveal>
 

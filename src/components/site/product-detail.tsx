@@ -190,7 +190,7 @@ export function ProductDetail({ product }: { product: Product }) {
 
             <div className="mt-4 rounded-[1.35rem] border border-[rgb(15_22_19/8%)] bg-[#fafbfa] p-5 shadow-[0_1px_2px_rgb(15_22_19/3%),_0_18px_40px_-34px_rgb(15_22_19/16%)]">
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8a9690]">
-                Checkout assurance
+                Order protection
               </p>
               <div className="mt-3 grid gap-3 sm:grid-cols-3">
                 <div className="rounded-[1rem] border border-[rgb(15_22_19/7%)] bg-white px-4 py-3">
@@ -205,8 +205,8 @@ export function ProductDetail({ product }: { product: Product }) {
                 </div>
                 <div className="rounded-[1rem] border border-[rgb(15_22_19/7%)] bg-white px-4 py-3">
                   <ShieldCheck className="h-4 w-4 text-[#1e6f58]" />
-                  <p className="mt-2 text-[12px] font-medium text-[#0f1613]">No blind checkout</p>
-                  <p className="mt-1 text-[11px] leading-5 text-[#6b7a73]">Titan confirms payment route, shipping details, and dispatch timing before release.</p>
+                  <p className="mt-2 text-[12px] font-medium text-[#0f1613]">Order reviewed before release</p>
+                  <p className="mt-1 text-[11px] leading-5 text-[#6b7a73]">Titan confirms payment route, shipping details, and dispatch timing before the order moves to fulfillment.</p>
                 </div>
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
@@ -261,9 +261,9 @@ export function ProductDetail({ product }: { product: Product }) {
             </div>
 
             <div className="mt-8 rounded-[1.6rem] border border-[rgb(15_22_19/8%)] bg-[#fafbfa] p-6 shadow-[0_1px_2px_rgb(15_22_19/4%),_0_24px_60px_-40px_rgb(15_22_19/15%)]">
-              <h3 className="font-serif text-[1.8rem] leading-[1.02] text-[#0f1613]">Pay with crypto</h3>
+              <h3 className="font-serif text-[1.8rem] leading-[1.02] text-[#0f1613]">Worldwide crypto payment</h3>
               <p className="mt-2 text-sm leading-7 text-[#5c6762]">
-                Send the exact total to the address below, then email orders@titanpeptidelab.com with your tx hash and shipping address.
+                Send the exact total to the address below, then email orders@titanpeptidelab.com with your tx hash and shipping address. International buyers use the same flow — Titan confirms the route before dispatch.
               </p>
 
               <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-5">
@@ -322,4 +322,3 @@ function Row({ label, value, positive }: { label: string; value: string; positiv
     </div>
   );
 }
-

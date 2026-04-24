@@ -20,7 +20,12 @@ const FAQS = [
   {
     question: "What payment methods do you accept?",
     answer:
-      "Crypto only — BTC, ETH, USDC (ERC-20), SOL, and USDC (SPL). Payment rails are listed clearly before the order is placed.",
+      "Crypto currently — BTC, ETH, USDC (ERC-20), SOL, and USDC (Solana). Place the order first, then Titan sends the exact payment instructions tied to your destination and total.",
+  },
+  {
+    question: "Do you ship internationally?",
+    answer:
+      "Yes. Titan supports international destinations. Choose your country at checkout, and if your destination needs a custom route, select Other and Titan confirms the final shipping path by email before dispatch.",
   },
   {
     question: "Are these for human use?",

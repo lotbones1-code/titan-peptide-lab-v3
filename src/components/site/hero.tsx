@@ -43,7 +43,7 @@ export function Hero() {
               </h1>
 
               <p className="mt-6 max-w-[46ch] text-[15px] leading-[1.85] text-[#555b55] lg:text-[16px]">
-                Six nasal sprays, lot-matched documentation, and a cart that rolls directly into Titan&apos;s order desk. No fake biotech theater, just a tighter buying flow.
+                Six nasal sprays backed by lot-matched certificates of analysis, shipped worldwide with on-chain payment verification. Research-grade purity, no compromises.
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -64,10 +64,10 @@ export function Hero() {
 
               <div className="mt-10 grid gap-3 sm:grid-cols-2">
                 {[
-                  ["6", "nasal spray SKUs live now"],
-                  ["24h", "dispatch target after payment confirmation"],
                   ["≥99%", "purity target with lot-matched COA"],
-                  ["1 cart", "one bag across catalog and stack offers"],
+                  ["24h", "dispatch target after payment confirmation"],
+                  ["5 coins", "BTC, ETH, SOL, USDC on two networks"],
+                  ["40+", "countries we ship to from one warehouse"],
                 ].map(([value, label]) => (
                   <div
                     key={label}
@@ -98,7 +98,7 @@ export function Hero() {
                       </p>
                     </div>
                     <p className="mt-3 max-w-[44ch] text-[13px] leading-[1.75] text-[#66736d]">
-                      {featured.tagline} Add it to the cart, then Titan opens the order flow with the right payment rail and dispatch timing.
+                      {featured.tagline} Start with the featured release, review shipping, then choose the payment rail that fits your order.
                     </p>
                   </div>
 
@@ -119,7 +119,7 @@ export function Hero() {
                         {[
                           "Lot-matched COA",
                           "24h dispatch target",
-                          "Bag opens instantly",
+                          "Ships worldwide",
                         ].map((item) => (
                           <span
                             key={item}

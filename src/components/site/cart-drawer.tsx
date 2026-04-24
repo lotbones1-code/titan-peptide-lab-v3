@@ -188,7 +188,7 @@ export function CartDrawer() {
 
             <div className="rounded-xl border border-[#e7ece9] bg-[#fafbfa] p-4">
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8a9690]">
-                Before checkout
+                Order notes
               </p>
               <div className="mt-3 space-y-2.5 text-[12px] text-[#44514b]">
                 <div className="flex items-start gap-2.5">
@@ -197,11 +197,11 @@ export function CartDrawer() {
                 </div>
                 <div className="flex items-start gap-2.5">
                   <Truck className="mt-0.5 h-3.5 w-3.5 text-[#1e6f58]" />
-                  <span>Flat $12 US shipping under $150, free tracked shipping above that threshold.</span>
+                  <span>Shipping is calculated by destination at the next step, with worldwide support and free-shipping thresholds where available.</span>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <ShieldCheck className="mt-0.5 h-3.5 w-3.5 text-[#1e6f58]" />
-                  <span>Checkout opens an order chat so Titan can confirm payment route and dispatch timing before release.</span>
+                  <span>Titan confirms payment route, destination details, and dispatch timing before the order moves to fulfillment.</span>
                 </div>
               </div>
               <div className="mt-3 flex flex-wrap gap-2">
@@ -232,21 +232,19 @@ export function CartDrawer() {
                 </span>
               </div>
               {appliedCode && (
-                <>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-[#1e6f58]">Discount ({appliedCode.discount.percent}%)</span>
-                    <span className="font-medium text-[#1e6f58]">−${discountAmount.toFixed(2)}</span>
-                  </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="font-semibold text-[#0f1613]">Total</span>
-                    <span className="text-lg font-bold text-[#0f1613]">${discountedTotal.toFixed(2)}</span>
-                  </div>
-                </>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-[#1e6f58]">Discount ({appliedCode.discount.percent}%)</span>
+                  <span className="font-medium text-[#1e6f58]">−${discountAmount.toFixed(2)}</span>
+                </div>
               )}
+              <div className="flex items-center justify-between text-sm">
+                <span className="font-semibold text-[#0f1613]">Estimated total</span>
+                <span className="text-lg font-bold text-[#0f1613]">${discountedTotal.toFixed(2)}</span>
+              </div>
             </div>
 
             <p className="text-xs text-[#bbb]">
-              Shipping calculated at checkout. Free over $150 (US).
+              Shipping and the final destination rate are confirmed on the next step.
             </p>
 
             <button
@@ -254,7 +252,7 @@ export function CartDrawer() {
               className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#1e6f58] text-sm font-semibold text-white transition-colors hover:bg-[#175946]"
             >
               <Lock className="h-4 w-4" />
-              Checkout — ${discountedTotal.toFixed(2)}
+              Continue to shipping & payment
             </button>
             <button
               onClick={clearCart}
