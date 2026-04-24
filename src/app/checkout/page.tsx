@@ -17,6 +17,10 @@ import {
   Loader2,
   Lock,
   ChevronDown,
+  HelpCircle,
+  ExternalLink,
+  Globe,
+  Smartphone,
 } from "lucide-react";
 
 type Coin = "BTC" | "ETH" | "USDC-ERC" | "SOL" | "USDC-SOL";
@@ -27,14 +31,16 @@ type WalletOption = {
   network: string;
   address: string;
   priceKey: "bitcoin" | "ethereum" | "solana" | "usd-coin";
+  icon: string;
+  deepLinkPrefix?: string;
 };
 
 const WALLET_OPTIONS: WalletOption[] = [
-  { coin: "BTC", label: "Bitcoin", network: "BTC network", address: WALLETS.btc, priceKey: "bitcoin" },
-  { coin: "ETH", label: "Ethereum", network: "ERC-20", address: WALLETS.eth, priceKey: "ethereum" },
-  { coin: "USDC-ERC", label: "USDC", network: "Ethereum (ERC-20)", address: WALLETS.usdcErc, priceKey: "usd-coin" },
-  { coin: "SOL", label: "Solana", network: "SOL network", address: WALLETS.sol, priceKey: "solana" },
-  { coin: "USDC-SOL", label: "USDC", network: "Solana (SPL)", address: WALLETS.usdcSol, priceKey: "usd-coin" },
+  { coin: "USDC-SOL", label: "USDC", network: "Solana", address: WALLETS.usdcSol, priceKey: "usd-coin", icon: "💲", deepLinkPrefix: "solana:" },
+  { coin: "SOL", label: "Solana", network: "SOL", address: WALLETS.sol, priceKey: "solana", icon: "◎", deepLinkPrefix: "solana:" },
+  { coin: "BTC", label: "Bitcoin", network: "BTC", address: WALLETS.btc, priceKey: "bitcoin", icon: "₿", deepLinkPrefix: "bitcoin:" },
+  { coin: "ETH", label: "Ethereum", network: "ERC-20", address: WALLETS.eth, priceKey: "ethereum", icon: "⟠" },
+  { coin: "USDC-ERC", label: "USDC", network: "ERC-20", address: WALLETS.usdcErc, priceKey: "usd-coin", icon: "💲" },
 ];
 
 const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/ssj4shamil@gmail.com";
@@ -45,9 +51,10 @@ export default function CheckoutPage() {
   const { items, subtotal, clearCart, hydrated } = useCart();
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState<null | { orderId: string; coin: Coin; total: number }>(null);
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState<"address" | "amount" | null>(null);
   const [prices, setPrices] = useState<PriceMap>({});
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
+  const [cryptoHelpOpen, setCryptoHelpOpen] = useState(false);
 
   const [selectedCoin, setSelectedCoin] = useState<Coin>("USDC-SOL");
   const [name, setName] = useState("");
@@ -60,7 +67,6 @@ export default function CheckoutPage() {
   const [country, setCountry] = useState("US");
   const [txHash, setTxHash] = useState("");
 
-  // Fetch live crypto prices once on mount (fails silently — amount hint is optional).
   useEffect(() => {
     const ctrl = new AbortController();
     fetch(
@@ -99,7 +105,13 @@ export default function CheckoutPage() {
     return amt.toFixed(4);
   }, [prices, wallet.priceKey, total]);
 
-  const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=320x320&margin=0&data=${encodeURIComponent(wallet.address)}`;
+  const walletDeepLink = useMemo(() => {
+    if (!wallet.deepLinkPrefix) return null;
+    return `${wallet.deepLinkPrefix}${wallet.address}`;
+  }, [wallet]);
+
+  const qrData = walletDeepLink ?? wallet.address;
+  const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&margin=0&data=${encodeURIComponent(qrData)}`;
 
   if (!hydrated) {
     return (
@@ -200,8 +212,15 @@ export default function CheckoutPage() {
 
   const copyAddress = () => {
     navigator.clipboard.writeText(wallet.address);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1800);
+    setCopied("address");
+    setTimeout(() => setCopied(null), 1800);
+  };
+
+  const copyAmount = () => {
+    if (!cryptoAmount) return;
+    navigator.clipboard.writeText(cryptoAmount);
+    setCopied("amount");
+    setTimeout(() => setCopied(null), 1800);
   };
 
   if (done) {
@@ -255,9 +274,9 @@ export default function CheckoutPage() {
             <h1 className="font-serif text-[2rem] leading-[1.05] tracking-[-0.02em] text-[#0f1613] sm:text-[2.5rem]">
               Checkout
             </h1>
-            <div className="hidden items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690] sm:inline-flex">
-              <Lock className="h-3.5 w-3.5 text-[#1e6f58]" />
-              Secure
+            <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
+              <Globe className="h-3.5 w-3.5 text-[#1e6f58]" />
+              Ships worldwide
             </div>
           </div>
 
@@ -291,40 +310,13 @@ export default function CheckoutPage() {
           )}
 
           <form onSubmit={handleSubmit} className="mt-8 grid gap-10 lg:grid-cols-[1fr_380px]">
-            <div className="space-y-10">
-              {/* Step 1 — Payment method */}
+            <div className="space-y-8">
+              {/* Shipping — first because it's what people expect */}
               <section>
-                <StepHeader n={1} title="Payment method" hint="Pick the coin you'll pay with" />
-                <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
-                  {WALLET_OPTIONS.map((w) => {
-                    const active = selectedCoin === w.coin;
-                    return (
-                      <button
-                        key={w.coin}
-                        type="button"
-                        onClick={() => setSelectedCoin(w.coin)}
-                        className={`rounded-xl border px-4 py-3 text-left transition-all ${
-                          active
-                            ? "border-[#1e6f58] bg-[#f3f9f6] shadow-[0_0_0_3px_rgba(30,111,88,0.08)]"
-                            : "border-[#e7ece9] bg-white hover:border-[#1e6f58]/40"
-                        }`}
-                      >
-                        <div className="flex items-center justify-between">
-                          <span className="text-[13px] font-bold text-[#0f1613]">{w.label}</span>
-                          {active && <Check className="h-3.5 w-3.5 text-[#1e6f58]" />}
-                        </div>
-                        <p className="mt-0.5 text-[10px] uppercase tracking-wide text-[#8a9690]">
-                          {w.network}
-                        </p>
-                      </button>
-                    );
-                  })}
-                </div>
-              </section>
-
-              {/* Step 2 — Contact & shipping */}
-              <section>
-                <StepHeader n={2} title="Shipping" hint="Where should we send it" />
+                <h2 className="flex items-center gap-2 text-[16px] font-semibold text-[#0f1613]">
+                  <Truck className="h-4 w-4 text-[#1e6f58]" />
+                  Shipping
+                </h2>
                 <div className="mt-4 space-y-4">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <Field
@@ -363,7 +355,6 @@ export default function CheckoutPage() {
                       autoComplete="address-line2"
                       value={apt}
                       onChange={setApt}
-                      placeholder="Suite 400"
                     />
                   </div>
                   <div className="grid gap-4 sm:grid-cols-3">
@@ -374,7 +365,6 @@ export default function CheckoutPage() {
                       autoComplete="address-level2"
                       value={city}
                       onChange={setCity}
-                      placeholder="Austin"
                     />
                     <Field
                       id="region"
@@ -382,7 +372,6 @@ export default function CheckoutPage() {
                       autoComplete="address-level1"
                       value={region}
                       onChange={setRegion}
-                      placeholder="TX"
                     />
                     <Field
                       id="postal"
@@ -391,7 +380,6 @@ export default function CheckoutPage() {
                       autoComplete="postal-code"
                       value={postal}
                       onChange={setPostal}
-                      placeholder="78701"
                     />
                   </div>
                   <div>
@@ -411,46 +399,130 @@ export default function CheckoutPage() {
                         </option>
                       ))}
                     </select>
+                    {shipping > 0 && (
+                      <p className="mt-1.5 text-[11px] text-[#1e6f58]">
+                        Shipping: ${shipping} · Free over ${zone.freeAbove}
+                      </p>
+                    )}
+                    {shipping === 0 && (
+                      <p className="mt-1.5 text-[11px] font-medium text-[#1e6f58]">
+                        Free shipping to {COUNTRIES.find((c) => c.code === country)?.name ?? country}
+                      </p>
+                    )}
                   </div>
                 </div>
               </section>
 
-              {/* Step 3 — Send payment */}
+              {/* Payment */}
               <section>
-                <StepHeader n={3} title="Send payment" hint={`${wallet.label} · ${wallet.network}`} />
-                <div className="mt-4 rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-5 sm:p-6">
-                  <div className="grid gap-5 sm:grid-cols-[160px_1fr] sm:items-start">
-                    <div className="mx-auto flex h-40 w-40 shrink-0 items-center justify-center rounded-xl border border-[#e7ece9] bg-white p-2 sm:mx-0">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        key={wallet.address}
-                        src={qrSrc}
-                        alt={`${wallet.label} wallet QR`}
-                        width={320}
-                        height={320}
-                        className="h-full w-full"
-                      />
+                <h2 className="flex items-center gap-2 text-[16px] font-semibold text-[#0f1613]">
+                  <Lock className="h-4 w-4 text-[#1e6f58]" />
+                  Pay with crypto
+                </h2>
+
+                {/* Coin selector */}
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {WALLET_OPTIONS.map((w) => {
+                    const active = selectedCoin === w.coin;
+                    return (
+                      <button
+                        key={w.coin}
+                        type="button"
+                        onClick={() => setSelectedCoin(w.coin)}
+                        className={`inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-[13px] font-medium transition-all ${
+                          active
+                            ? "border-[#1e6f58] bg-[#f3f9f6] text-[#1e6f58] shadow-[0_0_0_3px_rgba(30,111,88,0.08)]"
+                            : "border-[#e7ece9] bg-white text-[#44514b] hover:border-[#1e6f58]/40"
+                        }`}
+                      >
+                        <span className="text-[15px]">{w.icon}</span>
+                        <span>{w.label}</span>
+                        <span className="text-[10px] uppercase text-[#8a9690]">{w.network}</span>
+                        {active && <Check className="h-3.5 w-3.5 text-[#1e6f58]" />}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Payment card */}
+                <div className="mt-5 rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-5 sm:p-6">
+                  <div className="flex flex-col items-center gap-5 sm:flex-row sm:items-start">
+                    {/* QR Code — tappable on mobile to open wallet */}
+                    <div className="shrink-0">
+                      {walletDeepLink ? (
+                        <a
+                          href={walletDeepLink}
+                          className="group relative block"
+                          title="Tap to open in wallet app"
+                        >
+                          <div className="flex h-48 w-48 items-center justify-center rounded-xl border border-[#e7ece9] bg-white p-2.5 transition-shadow group-hover:shadow-md sm:h-44 sm:w-44">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              key={wallet.address}
+                              src={qrSrc}
+                              alt={`${wallet.label} wallet QR`}
+                              width={400}
+                              height={400}
+                              className="h-full w-full"
+                            />
+                          </div>
+                          <span className="mt-1.5 flex items-center justify-center gap-1 text-[10px] text-[#1e6f58] sm:hidden">
+                            <Smartphone className="h-3 w-3" />
+                            Tap to open wallet
+                          </span>
+                        </a>
+                      ) : (
+                        <div className="flex h-48 w-48 items-center justify-center rounded-xl border border-[#e7ece9] bg-white p-2.5 sm:h-44 sm:w-44">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            key={wallet.address}
+                            src={qrSrc}
+                            alt={`${wallet.label} wallet QR`}
+                            width={400}
+                            height={400}
+                            className="h-full w-full"
+                          />
+                        </div>
+                      )}
                     </div>
-                    <div className="min-w-0">
+
+                    {/* Amount + address */}
+                    <div className="min-w-0 flex-1 text-center sm:text-left">
                       <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
-                        Send
+                        Send exactly
                       </p>
-                      <p className="mt-1 font-serif text-[1.75rem] leading-none text-[#0f1613]">
-                        {cryptoAmount ? (
-                          <>
-                            {cryptoAmount}{" "}
-                            <span className="text-[1.25rem] text-[#44514b]">{wallet.coin.replace("-ERC", "").replace("-SOL", "")}</span>
-                          </>
-                        ) : (
-                          <>${total.toFixed(2)}</>
+                      <div className="mt-1 flex items-center justify-center gap-2 sm:justify-start">
+                        <p className="font-serif text-[1.75rem] leading-none text-[#0f1613]">
+                          {cryptoAmount ? (
+                            <>
+                              {cryptoAmount}{" "}
+                              <span className="text-[1.1rem] text-[#44514b]">{wallet.coin.replace("-ERC", "").replace("-SOL", "")}</span>
+                            </>
+                          ) : (
+                            <>${total.toFixed(2)}</>
+                          )}
+                        </p>
+                        {cryptoAmount && (
+                          <button
+                            type="button"
+                            onClick={copyAmount}
+                            className="rounded-md border border-[#e7ece9] bg-white px-2 py-1 text-[10px] font-medium text-[#8a9690] transition-colors hover:border-[#1e6f58]/40 hover:text-[#1e6f58]"
+                          >
+                            {copied === "amount" ? (
+                              <span className="flex items-center gap-1 text-[#1e6f58]"><Check className="h-3 w-3" /> Copied</span>
+                            ) : (
+                              <span className="flex items-center gap-1"><Copy className="h-3 w-3" /> Copy</span>
+                            )}
+                          </button>
                         )}
-                      </p>
+                      </div>
                       <p className="mt-1 text-[12px] text-[#8a9690]">
                         ≈ ${total.toFixed(2)} USD {cryptoAmount ? "· live rate" : ""}
                       </p>
+
                       <div className="mt-4">
                         <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
-                          To address
+                          To this {wallet.label} address
                         </p>
                         <button
                           type="button"
@@ -460,7 +532,7 @@ export default function CheckoutPage() {
                           <span className="flex-1 truncate font-mono text-[11px] text-[#44514b]">
                             {wallet.address}
                           </span>
-                          {copied ? (
+                          {copied === "address" ? (
                             <span className="flex shrink-0 items-center gap-1 text-[11px] font-medium text-[#1e6f58]">
                               <Check className="h-3.5 w-3.5" /> Copied
                             </span>
@@ -474,6 +546,7 @@ export default function CheckoutPage() {
                     </div>
                   </div>
 
+                  {/* TX hash */}
                   <div className="mt-5 border-t border-[#e7ece9] pt-5">
                     <label htmlFor="tx" className="block text-[12px] font-medium text-[#44514b]">
                       Transaction hash <span className="text-[#8a9690]">(optional — speeds up verification)</span>
@@ -484,10 +557,58 @@ export default function CheckoutPage() {
                       value={txHash}
                       onChange={(e) => setTxHash(e.target.value)}
                       className="mt-1.5 h-11 w-full rounded-lg border border-[#e5e5e5] bg-white px-4 font-mono text-[12px] text-[#0f1613] transition-colors focus:border-[#1e6f58] focus:outline-none"
-                      placeholder="Paste after sending — or leave blank and we'll email you"
+                      placeholder="Paste after sending — or skip, we'll find it"
                     />
                   </div>
                 </div>
+
+                {/* New to crypto? */}
+                <button
+                  type="button"
+                  onClick={() => setCryptoHelpOpen((v) => !v)}
+                  className="mt-3 flex w-full items-center gap-2 rounded-xl border border-[#e7ece9] bg-white px-4 py-3 text-left text-[13px] text-[#44514b] transition-colors hover:bg-[#fafbfa]"
+                >
+                  <HelpCircle className="h-4 w-4 shrink-0 text-[#1e6f58]" />
+                  <span className="flex-1 font-medium">New to crypto? Here&apos;s how to pay in 3 minutes</span>
+                  <ChevronDown className={`h-4 w-4 text-[#8a9690] transition-transform ${cryptoHelpOpen ? "rotate-180" : ""}`} />
+                </button>
+                {cryptoHelpOpen && (
+                  <div className="mt-2 rounded-xl border border-[#e7ece9] bg-[#fafbfa] p-5 text-[13px] leading-relaxed text-[#44514b]">
+                    <ol className="space-y-3">
+                      <li className="flex gap-3">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1e6f58] text-[11px] font-bold text-white">1</span>
+                        <div>
+                          <p className="font-medium text-[#0f1613]">Get a wallet app</p>
+                          <p className="mt-0.5 text-[12px] text-[#8a9690]">
+                            Download <a href="https://phantom.app" target="_blank" rel="noreferrer" className="text-[#1e6f58] underline">Phantom</a> (easiest, works on phone) or <a href="https://metamask.io" target="_blank" rel="noreferrer" className="text-[#1e6f58] underline">MetaMask</a>. Takes 60 seconds.
+                          </p>
+                        </div>
+                      </li>
+                      <li className="flex gap-3">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1e6f58] text-[11px] font-bold text-white">2</span>
+                        <div>
+                          <p className="font-medium text-[#0f1613]">Buy USDC</p>
+                          <p className="mt-0.5 text-[12px] text-[#8a9690]">
+                            Inside Phantom, tap &quot;Buy&quot; and purchase USDC with your card. USDC = 1 dollar, no price swings.
+                          </p>
+                        </div>
+                      </li>
+                      <li className="flex gap-3">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1e6f58] text-[11px] font-bold text-white">3</span>
+                        <div>
+                          <p className="font-medium text-[#0f1613]">Scan the QR or copy the address</p>
+                          <p className="mt-0.5 text-[12px] text-[#8a9690]">
+                            Send the exact amount shown above. On phone, just tap the QR code to open your wallet. That&apos;s it.
+                          </p>
+                        </div>
+                      </li>
+                    </ol>
+                    <p className="mt-4 flex items-start gap-2 rounded-lg bg-[#f3f9f6] px-3 py-2 text-[11px] text-[#1e6f58]">
+                      <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                      We recommend USDC on Solana — fastest, cheapest fees (under $0.01), and 1 USDC always = $1.
+                    </p>
+                  </div>
+                )}
               </section>
 
               {/* Trust row */}
@@ -563,20 +684,6 @@ export default function CheckoutPage() {
       </main>
       <Footer />
     </>
-  );
-}
-
-function StepHeader({ n, title, hint }: { n: number; title: string; hint: string }) {
-  return (
-    <div className="flex items-baseline gap-3">
-      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#1e6f58] text-[11px] font-bold text-white">
-        {n}
-      </span>
-      <div>
-        <h2 className="text-[16px] font-semibold text-[#0f1613]">{title}</h2>
-        <p className="text-[12px] text-[#8a9690]">{hint}</p>
-      </div>
-    </div>
   );
 }
 

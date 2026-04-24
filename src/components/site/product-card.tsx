@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Check, ShoppingBag } from "lucide-react";
+import { ArrowRight, Check, ShoppingBag, Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/lib/products";
 import { CompoundPoster } from "./compound-poster";
@@ -71,15 +71,21 @@ export function ProductCard({
 
         <div className="mt-auto border-t border-[#e8e6e1] pt-5 mt-5">
           <div className="flex items-end justify-between gap-4">
-            <div className="flex items-baseline gap-2">
-              <p className="text-[1.25rem] font-semibold tracking-[-0.02em] text-[#0f1110]">
-                {formatPrice(product.price)}
-              </p>
-              {product.compareAtPrice ? (
-                <p className="text-[13px] text-[#bbb] line-through">
-                  {formatPrice(product.compareAtPrice)}
+            <div>
+              <div className="flex items-baseline gap-2">
+                <p className="text-[1.25rem] font-semibold tracking-[-0.02em] text-[#0f1110]">
+                  {formatPrice(product.price)}
                 </p>
-              ) : null}
+                {product.compareAtPrice ? (
+                  <p className="text-[13px] text-[#bbb] line-through">
+                    {formatPrice(product.compareAtPrice)}
+                  </p>
+                ) : null}
+              </div>
+              <p className="mt-0.5 flex items-center gap-1 text-[10px] text-[#aab6b0]">
+                <Globe className="h-3 w-3" />
+                Ships worldwide · Pay with crypto
+              </p>
             </div>
           </div>
 
