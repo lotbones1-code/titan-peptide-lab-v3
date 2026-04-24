@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = "gemini-2.0-flash";
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const OPENAI_MODEL = "gpt-4o-mini";
 
 const SYSTEM_PROMPT = `You are the Research Advisor for Titan Peptide Lab, a premium peptide research supplier.
 
@@ -84,44 +86,84 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No messages provided" }, { status: 400 });
     }
 
-    if (!GEMINI_API_KEY) {
+    if (!GEMINI_API_KEY && !OPENAI_API_KEY) {
       return NextResponse.json(
         { error: "AI service not configured" },
         { status: 503 }
       );
     }
 
-    const geminiMessages = messages.map((m) => ({
-      role: m.role === "assistant" ? "model" : "user",
-      parts: [{ text: m.text }],
-    }));
+    let text: string | null = null;
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents: geminiMessages,
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 800,
-            topP: 0.9,
-          },
-        }),
+    // Primary: Gemini
+    if (GEMINI_API_KEY) {
+      const geminiMessages = messages.map((m) => ({
+        role: m.role === "assistant" ? "model" : "user",
+        parts: [{ text: m.text }],
+      }));
+
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+            contents: geminiMessages,
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 800,
+              topP: 0.9,
+            },
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        text = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? null;
+      } else {
+        const errText = await response.text();
+        console.error(`[CHAT] Gemini ${response.status}:`, errText.slice(0, 400));
       }
-    );
-
-    if (!response.ok) {
-      const errText = await response.text();
-      console.error("[CHAT] Gemini error:", errText);
-      return NextResponse.json({ error: "AI service error" }, { status: 502 });
     }
 
-    const data = await response.json();
-    const text =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text || "I couldn't generate a response. Try asking again.";
+    // Fallback: OpenAI (used when Gemini is missing, rate-limited, or errors out)
+    if (!text && OPENAI_API_KEY) {
+      const openaiMessages = [
+        { role: "system", content: SYSTEM_PROMPT },
+        ...messages.map((m) => ({
+          role: m.role === "assistant" ? "assistant" : "user",
+          content: m.text,
+        })),
+      ];
+
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: OPENAI_MODEL,
+          messages: openaiMessages,
+          temperature: 0.7,
+          max_tokens: 800,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        text = data?.choices?.[0]?.message?.content ?? null;
+      } else {
+        const errText = await response.text();
+        console.error(`[CHAT] OpenAI ${response.status}:`, errText.slice(0, 400));
+      }
+    }
+
+    if (!text) {
+      return NextResponse.json({ error: "AI service error" }, { status: 502 });
+    }
 
     // Extract product IDs from [PRODUCTS: ...]
     const productMatch = text.match(/\[PRODUCTS:\s*([^\]]+)\]/);

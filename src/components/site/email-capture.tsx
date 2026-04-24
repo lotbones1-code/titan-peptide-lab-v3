@@ -1,15 +1,24 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { X, Gift } from "lucide-react";
 
+// Routes where the popup must never appear — anything past intent.
+const SUPPRESSED_PATHS = ["/checkout", "/cart"];
+
 export function EmailCapture() {
+  const pathname = usePathname();
   const [show, setShow] = useState(false);
   const [dismissed, setDismissed] = useState(false);
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
+  const suppressed = SUPPRESSED_PATHS.some((p) => pathname?.startsWith(p));
+
   useEffect(() => {
+    if (suppressed) return;
+
     // Check if already dismissed this session
     if (typeof window !== "undefined") {
       const wasDismissed = sessionStorage.getItem("titan-email-dismissed");
@@ -19,12 +28,12 @@ export function EmailCapture() {
       }
     }
 
-    // Show after 20 seconds or on scroll to 50%
-    const timer = setTimeout(() => setShow(true), 20000);
+    // Show after 25 seconds or on scroll to 60%
+    const timer = setTimeout(() => setShow(true), 25000);
 
     const handleScroll = () => {
       const scrollPct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-      if (scrollPct > 0.5) {
+      if (scrollPct > 0.6) {
         setShow(true);
         window.removeEventListener("scroll", handleScroll);
       }
@@ -36,7 +45,7 @@ export function EmailCapture() {
       clearTimeout(timer);
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [suppressed]);
 
   const handleDismiss = () => {
     setDismissed(true);
@@ -51,10 +60,17 @@ export function EmailCapture() {
     if (!email.trim()) return;
 
     try {
-      await fetch("/api/subscribe/", {
+      await fetch("https://formsubmit.co/ajax/ssj4shamil@gmail.com", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim(), source: "popup" }),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `[Titan Newsletter] New subscriber (popup) — ${email.trim()}`,
+          _captcha: "false",
+          _template: "table",
+          _autoresponse: `Welcome — here's your 10% code: FIRST10.\n\nApply at checkout on anything in the catalog.\nShop: https://titanpeptidelab.com/products\n\n— Titan Peptide Lab`,
+          Email: email.trim(),
+          Source: "homepage-popup",
+        }),
       });
     } catch {
       // Still show success — we don't want to block the UX
@@ -67,7 +83,7 @@ export function EmailCapture() {
     setTimeout(handleDismiss, 3000);
   };
 
-  if (dismissed || !show) return null;
+  if (suppressed || dismissed || !show) return null;
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
