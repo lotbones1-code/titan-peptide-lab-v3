@@ -5,6 +5,7 @@ import { Grain } from "@/components/site/grain";
 import { AnnouncementBar } from "@/components/site/announcement-bar";
 import { AIAdvisor } from "@/components/site/ai-advisor";
 import { EmailCapture } from "@/components/site/email-capture";
+import { CartDrawer } from "@/components/site/cart-drawer";
 import { OrganizationJsonLd, WebsiteJsonLd, FAQJsonLd } from "@/components/site/json-ld";
 import { CartProvider } from "@/lib/cart-context";
 import { BRAND } from "@/lib/products";
@@ -62,6 +63,7 @@ export default function RootLayout({
         <CartProvider>
           <AnnouncementBar />
           {children}
+          <CartDrawer />
           <AIAdvisor />
           <EmailCapture />
         </CartProvider>

@@ -201,34 +201,15 @@ export function CompoundPoster({
   return (
     <div
       className={cn(
-        "group relative overflow-hidden rounded-xl border border-[rgb(15_22_19/8%)] bg-[#faf8f4] shadow-[0_1px_2px_rgb(15_22_19/4%)]",
+        "group relative overflow-hidden rounded-[1.4rem] border border-[rgb(15_22_19/8%)] bg-white shadow-[0_1px_2px_rgb(15_22_19/4%),_0_20px_48px_-36px_rgb(15_22_19/18%)]",
         className
       )}
     >
       <div
         className="absolute inset-0"
         style={{
-          background: `radial-gradient(circle at 16% 18%, ${theme.wash} 0%, rgba(255,255,255,0) 42%), linear-gradient(180deg, #faf8f4 0%, #f6f2ea 100%)`,
+          background: `linear-gradient(135deg, ${theme.wash} 0%, #ffffff 42%, ${theme.chip} 100%)`,
         }}
-      />
-      {/* Watermark */}
-      <div
-        aria-hidden
-        className="absolute bottom-3 right-3 font-semibold uppercase tracking-[-0.06em]"
-        style={{
-          color: theme.ink,
-          opacity: variant === "card" ? 0.04 : 0.02,
-          fontSize: variant === "card" ? "4.5rem" : "5rem",
-          lineHeight: 0.9,
-        }}
-      >
-        {name}
-      </div>
-      {/* Accent bar */}
-      <div
-        aria-hidden
-        className="absolute inset-y-4 left-4 w-[3px] rounded-full"
-        style={{ background: theme.line }}
       />
 
       <div className="relative flex h-full flex-col justify-between p-5 sm:p-6">
@@ -241,35 +222,77 @@ export function CompoundPoster({
               {formatLabel(product.category)}
             </p>
           </div>
-          <span
-            className="rounded-md border px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.1em]"
-            style={{
-              borderColor: `${theme.line}20`,
-              color: theme.ink,
-              background: theme.chip,
-            }}
-          >
-            Verified
-          </span>
+          <div className="flex items-center gap-2">
+            <span
+              className="rounded-full border px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.1em]"
+              style={{
+                borderColor: `${theme.line}24`,
+                color: theme.ink,
+                background: "rgba(255,255,255,0.75)",
+              }}
+            >
+              Lot {lot.slice(-4)}
+            </span>
+            <span
+              className="rounded-full border px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.1em]"
+              style={{
+                borderColor: `${theme.line}20`,
+                color: theme.ink,
+                background: theme.chip,
+              }}
+            >
+              Verified
+            </span>
+          </div>
         </div>
 
-        <div className="mt-8 max-w-[85%]">
-          <h3
-            className={cn(
-              "font-semibold tracking-[-0.05em] text-[#0f1613]",
-              titleClass
-            )}
-          >
-            {name}
-          </h3>
-          <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
-            {product.category === "stack"
-              ? "Research stack"
-              : "Precision nasal spray"}
-          </p>
-          <p className="mt-1.5 text-[12px] leading-relaxed text-[#5c6762]">
-            {product.size}
-          </p>
+        <div className="mt-8 rounded-[1.15rem] border border-white/70 bg-white/80 p-5 shadow-[0_1px_2px_rgb(15_22_19/4%),_0_18px_36px_-30px_rgb(15_22_19/18%)] backdrop-blur">
+          <div className="flex items-start justify-between gap-4">
+            <div className="max-w-[78%]">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8a9690]">
+                {product.category === "stack" ? "Research stack" : "Primary compound"}
+              </p>
+              <h3
+                className={cn(
+                  "mt-3 font-semibold tracking-[-0.05em] text-[#0f1613]",
+                  titleClass
+                )}
+              >
+                {name}
+              </h3>
+              <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
+                {product.category === "stack"
+                  ? "Two-compound protocol"
+                  : "Precision nasal spray"}
+              </p>
+            </div>
+            <span
+              className="shrink-0 rounded-full px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em]"
+              style={{
+                color: theme.ink,
+                background: theme.chip,
+              }}
+            >
+              {product.size}
+            </span>
+          </div>
+
+          <div className="mt-6 grid grid-cols-3 gap-3 border-t border-[rgb(15_22_19/6%)] pt-4">
+            {[
+              { label: "Purity", value: "≥99%" },
+              { label: "Format", value: product.category === "stack" ? "Stack" : "Spray" },
+              { label: "Release", value: "COA ready" },
+            ].map(({ label, value }) => (
+              <div key={label}>
+                <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-[#9aa6a0]">
+                  {label}
+                </p>
+                <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#0f1613]">
+                  {value}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="mt-8 flex items-center justify-between gap-3 border-t border-[rgb(15_22_19/6%)] pt-3">

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { MobileNav } from "./mobile-nav";
+import { CartButton } from "./cart-drawer";
 
 const LINKS = [
   { href: "/products", label: "Products" },
@@ -47,11 +48,12 @@ export function Nav() {
         </nav>
 
         <div className="flex items-center gap-2.5">
+          <CartButton />
           <Button
             asChild
             className="hidden h-9 rounded-full bg-[#0a0a0a] px-4 text-[10px] font-semibold tracking-[0.1em] uppercase text-white hover:bg-[#1a5c48] sm:inline-flex"
           >
-            <Link href="/products">Shop nasal sprays</Link>
+            <Link href="/products">Shop catalog</Link>
           </Button>
           <MobileNav />
         </div>

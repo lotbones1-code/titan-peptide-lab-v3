@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { NASAL_SPRAYS, PRODUCTS } from "@/lib/products";
-import { ProductCard, formatPrice } from "./product-card";
+import { ProductCard } from "./product-card";
+
+function formatPrice(price: number) {
+  return `$${price.toFixed(2)}`;
+}
 import { Reveal } from "./reveal";
 
 export function Products() {
@@ -13,20 +17,36 @@ export function Products() {
     <section id="products" className="border-t border-[#e8e6e1] bg-[#faf8f4] py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
         <Reveal>
-          <div className="mb-12">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#1a5c48]">
-              Full catalog
-            </span>
-            <h2 className="mt-3 font-serif text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] tracking-[-0.03em] text-[#0f1110]">
-              Six sprays. Each one tested, documented, and shipped cold.
-            </h2>
+          <div className="mb-12 grid gap-5 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+            <div>
+              <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#1a5c48]">
+                Full catalog
+              </span>
+              <h2 className="mt-3 font-serif text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] tracking-[-0.03em] text-[#0f1110]">
+                Six sprays, one stack, and a cleaner path to checkout.
+              </h2>
+              <p className="mt-4 max-w-[44rem] text-[14px] leading-[1.8] text-[#59665f]">
+                The shelf now behaves like a real catalog, not a brochure. Add products to the cart here, review lot-backed detail pages, and move into Titan&apos;s order desk with fewer jumps.
+              </p>
+            </div>
+
+            <div className="rounded-[1.35rem] border border-[#e5ebe7] bg-white p-6 shadow-[0_1px_2px_rgb(15_22_19/4%),_0_24px_48px_-42px_rgb(15_22_19/18%)]">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8a9690]">
+                How ordering works
+              </p>
+              <div className="mt-4 space-y-3 text-[13px] leading-7 text-[#44514b]">
+                <p><span className="font-semibold text-[#0f1110]">01.</span> Add any spray or stack to the cart directly from the shelf.</p>
+                <p><span className="font-semibold text-[#0f1110]">02.</span> Review the order in the bag with shipping, promo, and COA context.</p>
+                <p><span className="font-semibold text-[#0f1110]">03.</span> Open checkout and Titan confirms payment rail plus dispatch timing.</p>
+              </div>
+            </div>
           </div>
         </Reveal>
 
-        <div className="grid gap-5 lg:grid-cols-2">
+        <div className="grid gap-5 xl:grid-cols-3">
           {rest.map((product, index) => (
             <Reveal key={product.id} delay={index * 0.05}>
-              <ProductCard product={product} />
+              <ProductCard product={product} className={index === 0 ? "xl:col-span-2" : undefined} />
             </Reveal>
           ))}
         </div>
