@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -20,12 +22,12 @@ const FAQS = [
   {
     question: "What payment methods do you accept?",
     answer:
-      "Crypto currently — BTC, ETH, USDC (ERC-20), SOL, and USDC (Solana). Place the order first, then Titan sends the exact payment instructions tied to your destination and total.",
+      "Crypto currently — USDC on Solana (lowest fees), SOL, BTC, ETH, and USDC on ERC-20. The checkout page shows the wallet address, QR, and live-converted amount. We recommend USDC on Solana: under a cent in fees and always $1 = $1.",
   },
   {
     question: "Do you ship internationally?",
     answer:
-      "Yes. Titan supports international destinations. Choose your country at checkout, and if your destination needs a custom route, select Other and Titan confirms the final shipping path by email before dispatch.",
+      "Yes — 200+ countries from one warehouse. Pick your country at checkout and you'll see the exact rate (free over the threshold in your zone). If customs needs extra documentation, we'll email you before dispatch.",
   },
   {
     question: "Are these for human use?",
@@ -77,6 +79,21 @@ export function FAQ() {
                 </AccordionItem>
               ))}
             </Accordion>
+          </div>
+        </Reveal>
+
+        <Reveal>
+          <div className="mt-8 flex flex-col items-center gap-3 text-center">
+            <p className="text-[13px] text-[#555b55]">
+              Still have questions? Write the laboratory — we reply within 24–48h.
+            </p>
+            <Link
+              href="/contact"
+              className="inline-flex h-10 items-center gap-1.5 rounded-full border border-[#dde5df] bg-white px-5 text-[12px] font-semibold text-[#0f1110] transition-colors hover:border-[#1a5c48] hover:text-[#1a5c48]"
+            >
+              Contact support
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
           </div>
         </Reveal>
       </div>

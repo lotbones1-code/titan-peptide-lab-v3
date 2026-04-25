@@ -28,6 +28,10 @@ interface OrderPayload {
   country: string;
   shippingAddress: string;
   status: "awaiting_payment" | "payment_received" | "shipped";
+  source?: string;
+  paymentCoin?: string;
+  paymentAddress?: string;
+  cryptoAmount?: string;
   // Legacy single-product fields (kept for backwards compat)
   product?: string;
   productId?: string;
@@ -130,6 +134,11 @@ function internalNotificationHtml(order: OrderPayload): string {
   <tr><td style="padding:4px 12px 4px 0;color:#888;">Customer</td><td>${order.customerName} (${order.customerEmail})</td></tr>
   <tr><td style="padding:4px 12px 4px 0;color:#888;">Country</td><td>${order.country}</td></tr>
   <tr><td style="padding:4px 12px 4px 0;color:#888;">Address</td><td style="white-space:pre-line;">${order.shippingAddress}</td></tr>
+  ${order.source ? `<tr><td style="padding:4px 12px 4px 0;color:#888;">Source</td><td>${order.source}</td></tr>` : ""}
+  ${order.paymentCoin ? `<tr><td style="padding:4px 12px 4px 0;color:#888;">Payment coin</td><td>${order.paymentCoin}</td></tr>` : ""}
+  ${order.cryptoAmount ? `<tr><td style="padding:4px 12px 4px 0;color:#888;">Crypto amount</td><td>${order.cryptoAmount}</td></tr>` : ""}
+  ${order.paymentAddress ? `<tr><td style="padding:4px 12px 4px 0;color:#888;">Pay-to address</td><td style="font-family:monospace;font-size:11px;">${order.paymentAddress}</td></tr>` : ""}
+  ${order.txHash ? `<tr><td style="padding:4px 12px 4px 0;color:#888;">TX hash</td><td style="font-family:monospace;font-size:11px;">${order.txHash}</td></tr>` : ""}
 </table>`;
 }
 
@@ -203,13 +212,18 @@ export async function POST(req: NextRequest) {
         orderId,
         items,
         subtotal: subtotal.toFixed(2),
-        shipping: body.shipping?.toFixed(2) ?? "0.00",
-        total: body.total?.toFixed(2) ?? subtotal.toFixed(2),
+        shipping: typeof body.shipping === "number" ? body.shipping.toFixed(2) : (body.shipping ?? "0.00"),
+        total: typeof body.total === "number" ? body.total.toFixed(2) : (body.total ?? subtotal.toFixed(2)),
         customerEmail: body.email,
         customerName: body.name,
         country: body.country,
         shippingAddress: body.address,
-        status: "awaiting_payment",
+        status: body.txHash ? "payment_received" : "awaiting_payment",
+        source: body.source,
+        paymentCoin: body.paymentCoin,
+        paymentAddress: body.paymentAddress,
+        cryptoAmount: body.cryptoAmount,
+        txHash: body.txHash,
       };
 
       if (!order.customerEmail || !order.customerName || !order.shippingAddress || items.length === 0) {

@@ -39,7 +39,7 @@ export function Hero() {
                 <br />
                 peptide sprays.
                 <br />
-                <span className="text-[#1a5c48]">Built to order cleanly.</span>
+                <span className="text-[#1a5c48]">Built on batch discipline.</span>
               </h1>
 
               <p className="mt-6 max-w-[46ch] text-[15px] leading-[1.85] text-[#555b55] lg:text-[16px]">
@@ -64,10 +64,10 @@ export function Hero() {
 
               <div className="mt-10 grid gap-3 sm:grid-cols-2">
                 {[
-                  ["≥99%", "purity target with lot-matched COA"],
-                  ["24h", "dispatch target after payment confirmation"],
-                  ["5 rails", "BTC · ETH · SOL · USDC on two networks"],
-                  ["40+", "countries we ship to from one warehouse"],
+                  ["≥99%", "HPLC purity target with lot-matched COA"],
+                  ["24h", "dispatch after payment confirmation"],
+                  ["5 rails", "BTC · ETH · SOL · USDC on 3 networks"],
+                  ["200+", "countries we ship to from one warehouse"],
                 ].map(([value, label]) => (
                   <div
                     key={label}
@@ -90,7 +90,7 @@ export function Hero() {
                           Featured release
                         </p>
                         <h2 className="mt-2 font-serif text-[1.95rem] leading-[0.95] tracking-[-0.04em] text-[#0f1110]">
-                          {featured.name.replace(" Nasal Spray", "")}
+                          {featured.name.replace(" Nasal Spray", "").replace(/-/g, "\u2011")}
                         </h2>
                       </div>
                       <p className="text-[1.55rem] font-semibold tabular-nums text-[#0f1110]">

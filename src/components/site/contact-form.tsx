@@ -16,13 +16,24 @@ export function ContactForm() {
     setStatus("sending");
 
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch("https://formsubmit.co/ajax/ssj4shamil@gmail.com", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, subject, topic, message }),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `[Titan Contact] ${topic || "General"}: ${subject || "No subject"} — ${name}`,
+          _captcha: "false",
+          _template: "table",
+          _autoresponse: `Thanks for reaching out — we got your message and we'll reply within 24–48 hours from the QA bench, usually same day.\n\nIf it's urgent, reply to this email with your order ID or lot number and we'll prioritize.\n\n— The Titan Peptide Lab team`,
+          Name: name,
+          Email: email,
+          Topic: topic || "General",
+          Subject: subject || "—",
+          Message: message,
+        }),
       });
 
-      if (res.ok) {
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && (data.success === "true" || data.success === true)) {
         setStatus("sent");
         setName(""); setEmail(""); setSubject(""); setTopic(""); setMessage("");
       } else {

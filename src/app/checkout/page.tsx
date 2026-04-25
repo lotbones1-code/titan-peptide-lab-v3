@@ -43,7 +43,10 @@ const WALLET_OPTIONS: WalletOption[] = [
   { coin: "USDC-ERC", label: "USDC", network: "ERC-20", address: WALLETS.usdcErc, priceKey: "usd-coin", icon: "💲" },
 ];
 
-const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/ssj4shamil@gmail.com";
+// Orders go through our own /api/order route which persists to data/orders.json
+// and sends confirmation via Resend (if configured) or Gmail SMTP fallback.
+// Customer-facing support address remains support@titanpeptidelab.com.
+const ORDER_ENDPOINT = "/api/order";
 
 type PriceMap = Partial<Record<WalletOption["priceKey"], number>>;
 
@@ -165,40 +168,36 @@ export default function CheckoutPage() {
     if (!canSubmit || submitting) return;
     setSubmitting(true);
 
-    const generatedId = `TPL-${Date.now().toString(36).slice(-4).toUpperCase()}${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
-    const itemsSummary = items
-      .map((i) => `${i.product.name} × ${i.quantity} @ $${i.product.price}`)
-      .join("; ");
     const fullAddress = [street, apt, city, region, postal, country].filter(Boolean).join(", ");
 
     try {
-      const res = await fetch(FORMSUBMIT_ENDPOINT, {
+      const res = await fetch(ORDER_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          _subject: `New order ${generatedId} — $${total.toFixed(2)} — ${name}${txHash ? " [TX]" : ""}`,
-          _captcha: "false",
-          _template: "table",
-          "Order ID": generatedId,
-          "Customer name": name,
-          "Customer email": email,
-          "Shipping address": fullAddress,
-          Country: country,
-          Items: itemsSummary,
-          Subtotal: `$${subtotal.toFixed(2)}`,
-          Shipping: shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`,
-          Total: `$${total.toFixed(2)}`,
-          "Payment coin": `${wallet.label} (${wallet.network})`,
-          "Payment address": wallet.address,
-          "Crypto amount estimate": cryptoAmount ? `${cryptoAmount} ${wallet.coin}` : "n/a",
-          "TX hash": txHash || "not provided yet",
-          Status: txHash ? "PAID — VERIFY TX" : "AWAITING PAYMENT",
+          items: items.map((i) => ({
+            productId: i.product.id,
+            name: i.product.name,
+            quantity: i.quantity,
+            price: i.product.price,
+          })),
+          name,
+          email,
+          country,
+          address: fullAddress,
+          shipping,
+          total,
+          source: "checkout",
+          paymentCoin: `${wallet.label} (${wallet.network})`,
+          paymentAddress: wallet.address,
+          cryptoAmount: cryptoAmount ? `${cryptoAmount} ${wallet.coin}` : undefined,
+          txHash: txHash || undefined,
         }),
       });
 
       const data = await res.json();
-      if (data.success === "true" || data.success === true) {
-        setDone({ orderId: generatedId, coin: selectedCoin, total });
+      if (res.ok && data.success && data.orderId) {
+        setDone({ orderId: data.orderId, coin: selectedCoin, total });
         clearCart();
       } else {
         alert("Something went wrong. Please email support@titanpeptidelab.com to place your order.");
@@ -236,19 +235,33 @@ export default function CheckoutPage() {
               Order received.
             </h1>
             <p className="mt-3 text-[14px] text-[#44514b]">
-              Confirmation sent to your email.{" "}
+              Your order ID:{" "}
               <span className="font-mono text-[#1e6f58]">{done.orderId}</span>
             </p>
-            <p className="mt-6 text-[13px] leading-relaxed text-[#8a9690]">
-              We verify payment on-chain and ship within 24 hours. You&apos;ll get a tracking number once packed.
+            <p className="mt-2 text-[13px] text-[#8a9690]">
+              Confirmation sent to your email with payment details and next steps.
             </p>
-            <div className="mt-10">
+            <div className="mx-auto mt-8 max-w-sm rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-5 text-left text-[13px] leading-relaxed text-[#44514b]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">What happens next</p>
+              <ol className="mt-3 space-y-2.5">
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">1.</span><span>Send the exact crypto amount (already shown at checkout) if you haven&apos;t yet.</span></li>
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">2.</span><span>We verify on-chain — usually under 30 minutes.</span></li>
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">3.</span><span>Cold-chain dispatch within 24h, tracking emailed when packed.</span></li>
+              </ol>
+            </div>
+            <div className="mt-8 flex flex-col items-center gap-3">
               <Link
                 href="/products"
                 className="inline-flex h-11 items-center gap-2 rounded-full bg-[#1e6f58] px-6 text-[14px] font-medium text-white transition-colors hover:bg-[#175946]"
               >
                 Continue browsing
               </Link>
+              <a
+                href={`mailto:support@titanpeptidelab.com?subject=Order%20${done.orderId}`}
+                className="text-[12px] text-[#8a9690] underline decoration-[#8a9690]/30 underline-offset-4 hover:text-[#1e6f58]"
+              >
+                Questions about order {done.orderId}? Email support.
+              </a>
             </div>
           </div>
         </main>
@@ -617,6 +630,18 @@ export default function CheckoutPage() {
                 <TrustRow icon={ShieldCheck} text="On-chain payment verification" />
                 <TrustRow icon={Truck} text="Cold-chain ships within 24h" />
               </div>
+
+              {/* Support callout */}
+              <p className="text-center text-[12px] text-[#8a9690] sm:text-left">
+                Stuck on something? Email{" "}
+                <a
+                  href="mailto:support@titanpeptidelab.com"
+                  className="text-[#1e6f58] underline decoration-[#1e6f58]/30 underline-offset-4 hover:decoration-[#1e6f58]"
+                >
+                  support@titanpeptidelab.com
+                </a>
+                {" "}— we reply in 24–48h, usually same day.
+              </p>
 
               {/* Desktop CTA */}
               <button

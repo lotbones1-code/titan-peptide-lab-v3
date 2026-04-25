@@ -58,7 +58,7 @@ const SECTIONS = [
       },
       {
         q: "What discount codes are active right now?",
-        a: "Discount codes are sent exclusively to newsletter subscribers. Subscribe on the homepage to receive your code. Codes do not stack.",
+        a: "Active codes: FIRST10 (10% off first order), BULK15 (15% off 3+ items), TITAN20 (20% off orders over $250), VIP25 (25% VIP). FIRST10 is sent automatically when you subscribe on the homepage. Codes do not stack.",
       },
       {
         q: "Is there a volume contract for laboratories?",
@@ -176,10 +176,10 @@ export default function ShippingFAQPage() {
                     </span>
                   </div>
                   <dl className="mt-6 grid gap-5 sm:grid-cols-2">
-                    <Code code="10% off" v="First order \u2014 subscribe to unlock" />
-                    <Code code="15% off" v="3+ items \u2014 subscribers" />
-                    <Code code="20% off" v="Orders over $250 \u2014 subscribers" />
-                    <Code code="25% off" v="3rd repeat order \u2014 auto-applied" />
+                    <Code code="FIRST10" v="10% off — first order, newsletter subscribers" />
+                    <Code code="BULK15" v="15% off — 3+ items, newsletter subscribers" />
+                    <Code code="TITAN20" v="20% off — orders over $250" />
+                    <Code code="VIP25" v="25% off — VIP repeat access" />
                   </dl>
                 </div>
               </div>

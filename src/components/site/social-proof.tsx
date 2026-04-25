@@ -29,7 +29,7 @@ export function SocialProof() {
                 Why Titan
               </span>
               <h2 className="mt-3 font-serif text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] tracking-[-0.03em] text-[#0f1110]">
-                We sell six sprays.<br />We do them right.
+                We keep the catalog tight.<br />We do them right.
               </h2>
               <p className="mt-5 max-w-[44ch] text-[15px] leading-[1.8] text-[#555b55]">
                 Most peptide vendors carry hundreds of SKUs with recycled documentation. We keep the catalog tight so every compound gets real testing, real research, and real attention.

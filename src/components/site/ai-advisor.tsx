@@ -220,7 +220,7 @@ export function AIAdvisor() {
     try {
       const res = await fetch("/api/order", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           items: orderData.items,
           name: orderData.name,
@@ -229,12 +229,13 @@ export function AIAdvisor() {
           address: orderData.address,
           shipping,
           total,
+          source: "AI Advisor",
         }),
       });
 
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
 
-      if (data.success) {
+      if (res.ok && data.success && data.orderId) {
         // Update the message to show confirmed state
         setMessages((prev) =>
           prev.map((m, i) =>

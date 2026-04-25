@@ -4,7 +4,7 @@ const STEPS = [
   {
     n: "01",
     title: "Choose your compounds",
-    text: "Pick from six research-grade nasal sprays. Each product page shows pricing, purity data, and what ships in the box.",
+    text: "Pick from our catalog of research-grade nasal sprays, injectables, and stacks. Each product page shows pricing, purity data, and what ships in the box.",
   },
   {
     n: "02",
