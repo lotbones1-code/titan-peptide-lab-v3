@@ -220,7 +220,7 @@ export function ProductDetail({ product }: { product: Product }) {
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8a9690]">
                 Order protection
               </p>
-              <div className="mt-3 grid gap-3 sm:grid-cols-3">
+              <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 <div className="rounded-[1rem] border border-[rgb(15_22_19/7%)] bg-white px-4 py-3">
                   <FileText className="h-4 w-4 text-[#1e6f58]" />
                   <p className="mt-2 text-[12px] font-medium text-[#0f1613]">Lot-matched COA</p>
@@ -235,6 +235,11 @@ export function ProductDetail({ product }: { product: Product }) {
                   <ShieldCheck className="h-4 w-4 text-[#1e6f58]" />
                   <p className="mt-2 text-[12px] font-medium text-[#0f1613]">Order reviewed before release</p>
                   <p className="mt-1 text-[11px] leading-5 text-[#6b7a73]">Titan confirms payment route, shipping details, and dispatch timing before the order moves to fulfillment.</p>
+                </div>
+                <div className="rounded-[1rem] border border-[#1e6f58]/20 bg-[#f0f7f4] px-4 py-3">
+                  <ShieldCheck className="h-4 w-4 text-[#1e6f58]" />
+                  <p className="mt-2 text-[12px] font-medium text-[#0f1613]">14-day satisfaction guarantee</p>
+                  <p className="mt-1 text-[11px] leading-5 text-[#6b7a73]">Unopened products can be returned within 14 days for a full refund. No questions asked.</p>
                 </div>
               </div>
               <div className="mt-4 flex flex-wrap gap-2">

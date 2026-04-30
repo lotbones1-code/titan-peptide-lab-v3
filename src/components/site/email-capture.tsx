@@ -60,16 +60,14 @@ export function EmailCapture() {
     if (!email.trim()) return;
 
     try {
-      await fetch("https://formsubmit.co/ajax/ssj4shamil@gmail.com", {
+      await fetch("https://formsubmit.co/ajax/shamilbones1@gmail.com", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          _subject: `[Titan Newsletter] New subscriber (popup) — ${email.trim()}`,
-          _captcha: "false",
+          email: email.trim(),
+          _subject: "New Titan Subscriber (popup)",
+          source: "homepage-popup",
           _template: "table",
-          _autoresponse: `Welcome — here's your 10% code: FIRST10.\n\nApply at checkout on anything in the catalog.\nShop: https://titanpeptidelab.com/products\n\n— Titan Peptide Lab`,
-          Email: email.trim(),
-          Source: "homepage-popup",
         }),
       });
     } catch {

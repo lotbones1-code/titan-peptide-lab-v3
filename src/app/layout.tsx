@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Barlow, Barlow_Condensed, Instrument_Serif } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Grain } from "@/components/site/grain";
 import { AnnouncementBar } from "@/components/site/announcement-bar";
@@ -9,6 +10,8 @@ import { CartDrawer } from "@/components/site/cart-drawer";
 import { OrganizationJsonLd, WebsiteJsonLd, FAQJsonLd } from "@/components/site/json-ld";
 import { CartProvider } from "@/lib/cart-context";
 import { BRAND } from "@/lib/products";
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "";
 
 const barlow = Barlow({
   variable: "--font-geist-sans",
@@ -55,6 +58,20 @@ export default function RootLayout({
       className={`h-full antialiased ${barlow.variable} ${barlowCondensed.variable} ${instrumentSerif.variable}`}
       style={{ colorScheme: "light" }}
     >
+
+      <head>
+        {GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_ID}',{send_page_view:true});`}
+            </Script>
+          </>
+        )}
+      </head>
       <body className="min-h-full bg-background text-foreground font-sans">
         <OrganizationJsonLd />
         <WebsiteJsonLd />

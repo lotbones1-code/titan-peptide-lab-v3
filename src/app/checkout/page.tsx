@@ -1,7 +1,7 @@
 "use client";
 
 import { useCart } from "@/lib/cart-context";
-import { WALLETS } from "@/lib/products";
+import { WALLETS, DISCOUNT_CODES } from "@/lib/products";
 import { COUNTRIES, zoneForCountry } from "@/lib/countries";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
@@ -18,10 +18,13 @@ import {
   Lock,
   ChevronDown,
   HelpCircle,
-  ExternalLink,
   Globe,
   Smartphone,
+  Gift,
+  Wallet,
 } from "lucide-react";
+
+type PaymentMethod = "crypto";
 
 type Coin = "BTC" | "ETH" | "USDC-ERC" | "SOL" | "USDC-SOL";
 
@@ -43,10 +46,18 @@ const WALLET_OPTIONS: WalletOption[] = [
   { coin: "USDC-ERC", label: "USDC", network: "ERC-20", address: WALLETS.usdcErc, priceKey: "usd-coin", icon: "💲" },
 ];
 
-// Orders go through our own /api/order route which persists to data/orders.json
-// and sends confirmation via Resend (if configured) or Gmail SMTP fallback.
-// Customer-facing support address remains support@titanpeptidelab.com.
+// Orders go through our own /api/order route when running with a Node host.
+// On the static GitHub Pages build there is no server, so we fall back to a
+// mailto: submission that opens the customer's email client pre-filled with
+// the full order. Either way the customer ends up with a reference order ID.
 const ORDER_ENDPOINT = "/api/order";
+const ORDER_INBOX = "support@titanpeptidelab.com";
+
+function makeOrderId() {
+  const ts = Date.now().toString(36);
+  const rand = Math.random().toString(36).slice(2, 6).toUpperCase();
+  return `TPL-${ts.slice(-4)}${rand}`;
+}
 
 type PriceMap = Partial<Record<WalletOption["priceKey"], number>>;
 
@@ -57,8 +68,9 @@ export default function CheckoutPage() {
   const [copied, setCopied] = useState<"address" | "amount" | null>(null);
   const [prices, setPrices] = useState<PriceMap>({});
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
-  const [cryptoHelpOpen, setCryptoHelpOpen] = useState(false);
+  const [cryptoHelpOpen, setCryptoHelpOpen] = useState(true);
 
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("crypto");
   const [selectedCoin, setSelectedCoin] = useState<Coin>("USDC-SOL");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -69,6 +81,9 @@ export default function CheckoutPage() {
   const [postal, setPostal] = useState("");
   const [country, setCountry] = useState("US");
   const [txHash, setTxHash] = useState("");
+  const [discountCode, setDiscountCode] = useState("");
+  const [appliedDiscount, setAppliedDiscount] = useState<{ code: string; percent: number } | null>(null);
+  const [discountError, setDiscountError] = useState("");
 
   useEffect(() => {
     const ctrl = new AbortController();
@@ -92,7 +107,26 @@ export default function CheckoutPage() {
 
   const zone = zoneForCountry(country);
   const shipping = subtotal >= zone.freeAbove ? 0 : zone.rate;
-  const total = subtotal + shipping;
+  const discountAmount = appliedDiscount ? subtotal * (appliedDiscount.percent / 100) : 0;
+  const total = subtotal - discountAmount + shipping;
+
+  const applyDiscount = () => {
+    const upper = discountCode.trim().toUpperCase();
+    const match = DISCOUNT_CODES[upper as keyof typeof DISCOUNT_CODES];
+    if (match) {
+      setAppliedDiscount({ code: upper, percent: match.percent });
+      setDiscountError("");
+    } else {
+      setAppliedDiscount(null);
+      setDiscountError("Invalid code");
+    }
+  };
+
+  const removeDiscount = () => {
+    setAppliedDiscount(null);
+    setDiscountCode("");
+    setDiscountError("");
+  };
 
   const wallet = useMemo(
     () => WALLET_OPTIONS.find((w) => w.coin === selectedCoin)!,
@@ -169,41 +203,84 @@ export default function CheckoutPage() {
     setSubmitting(true);
 
     const fullAddress = [street, apt, city, region, postal, country].filter(Boolean).join(", ");
+    const fallbackOrderId = makeOrderId();
+
+    const payload = {
+      items: items.map((i) => ({
+        productId: i.product.id,
+        name: i.product.name,
+        quantity: i.quantity,
+        price: i.product.price,
+      })),
+      name,
+      email,
+      country,
+      address: fullAddress,
+      shipping,
+      total,
+      source: "checkout",
+      discountCode: appliedDiscount?.code || undefined,
+      discountPercent: appliedDiscount?.percent || undefined,
+      discountAmount: discountAmount || undefined,
+      paymentMethod,
+      paymentCoin: paymentMethod === "crypto" ? `${wallet.label} (${wallet.network})` : undefined,
+      paymentAddress: paymentMethod === "crypto" ? wallet.address : undefined,
+      cryptoAmount: paymentMethod === "crypto" && cryptoAmount ? `${cryptoAmount} ${wallet.coin}` : undefined,
+      txHash: paymentMethod === "crypto" && txHash ? txHash : undefined,
+    };
+
+    const submitViaMailto = () => {
+      const lines = [
+        `Order ID: ${fallbackOrderId}`,
+        ``,
+        `Customer: ${name}`,
+        `Email: ${email}`,
+        `Country: ${country}`,
+        `Ship to: ${fullAddress}`,
+        ``,
+        `Items:`,
+        ...items.map((i) => `  - ${i.product.name} (${i.product.size}) × ${i.quantity}  $${(i.product.price * i.quantity).toFixed(2)}`),
+        ``,
+        `Subtotal: $${subtotal.toFixed(2)}`,
+        ...(appliedDiscount ? [`Discount: ${appliedDiscount.code} (-${appliedDiscount.percent}%)  -$${discountAmount.toFixed(2)}`] : []),
+        `Shipping: ${shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}`,
+        `Total: $${total.toFixed(2)}`,
+        ``,
+        `Payment: ${wallet.label} (${wallet.network})`,
+        `${cryptoAmount ? `Send: ${cryptoAmount} ${wallet.coin}` : `Amount: $${total.toFixed(2)} USD`}`,
+        `To address: ${wallet.address}`,
+        ...(txHash ? [`TX hash: ${txHash}`] : [`TX hash: (will send after transfer)`]),
+        ``,
+        `— sent from titanpeptidelab.com checkout`,
+      ];
+      const subject = `Order ${fallbackOrderId} — $${total.toFixed(2)} via ${wallet.label}`;
+      const body = lines.join("\n");
+      const href = `mailto:${ORDER_INBOX}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = href;
+      setDone({ orderId: fallbackOrderId, coin: selectedCoin, total });
+      clearCart();
+    };
 
     try {
+      const ctrl = new AbortController();
+      const timeoutId = setTimeout(() => ctrl.abort(), 4000);
       const res = await fetch(ORDER_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          items: items.map((i) => ({
-            productId: i.product.id,
-            name: i.product.name,
-            quantity: i.quantity,
-            price: i.product.price,
-          })),
-          name,
-          email,
-          country,
-          address: fullAddress,
-          shipping,
-          total,
-          source: "checkout",
-          paymentCoin: `${wallet.label} (${wallet.network})`,
-          paymentAddress: wallet.address,
-          cryptoAmount: cryptoAmount ? `${cryptoAmount} ${wallet.coin}` : undefined,
-          txHash: txHash || undefined,
-        }),
+        body: JSON.stringify(payload),
+        signal: ctrl.signal,
       });
+      clearTimeout(timeoutId);
 
-      const data = await res.json();
-      if (res.ok && data.success && data.orderId) {
+      const data = await res.json().catch(() => null);
+      if (res.ok && data && data.success && data.orderId) {
         setDone({ orderId: data.orderId, coin: selectedCoin, total });
         clearCart();
       } else {
-        alert("Something went wrong. Please email support@titanpeptidelab.com to place your order.");
+        submitViaMailto();
       }
     } catch {
-      alert("Connection error. Please email support@titanpeptidelab.com with your order.");
+      submitViaMailto();
     } finally {
       setSubmitting(false);
     }
@@ -239,7 +316,7 @@ export default function CheckoutPage() {
               <span className="font-mono text-[#1e6f58]">{done.orderId}</span>
             </p>
             <p className="mt-2 text-[13px] text-[#8a9690]">
-              Confirmation sent to your email with payment details and next steps.
+              Save this order ID. If your email client just opened, send that email to confirm — we&apos;ll match it to your on-chain payment.
             </p>
             <div className="mx-auto mt-8 max-w-sm rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-5 text-left text-[13px] leading-relaxed text-[#44514b]">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">What happens next</p>
@@ -318,6 +395,8 @@ export default function CheckoutPage() {
                 total={total}
                 countryName={COUNTRIES.find((c) => c.code === country)?.name ?? country}
                 freeAbove={zone.freeAbove}
+                discount={appliedDiscount}
+                discountAmount={discountAmount}
               />
             </div>
           )}
@@ -426,201 +505,257 @@ export default function CheckoutPage() {
                 </div>
               </section>
 
-              {/* Payment */}
+              {/* Discount code */}
+              <section>
+                <h2 className="flex items-center gap-2 text-[16px] font-semibold text-[#0f1613]">
+                  <Gift className="h-4 w-4 text-[#1e6f58]" />
+                  Discount code
+                </h2>
+                <div className="mt-3">
+                  {appliedDiscount ? (
+                    <div className="flex items-center justify-between rounded-lg border border-[#1e6f58]/30 bg-[#f3f9f6] px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        <Check className="h-4 w-4 text-[#1e6f58]" />
+                        <span className="text-[14px] font-medium text-[#1e6f58]">
+                          {appliedDiscount.code} — {appliedDiscount.percent}% off
+                        </span>
+                        <span className="text-[13px] text-[#8a9690]">
+                          (-${discountAmount.toFixed(2)})
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={removeDiscount}
+                        className="text-[12px] text-[#8a9690] underline hover:text-[#c87]"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={discountCode}
+                        onChange={(e) => { setDiscountCode(e.target.value); setDiscountError(""); }}
+                        placeholder="Enter code"
+                        className="h-11 flex-1 rounded-lg border border-[#e5e5e5] bg-white px-4 text-[14px] text-[#0f1613] uppercase tracking-wide transition-colors focus:border-[#1e6f58] focus:outline-none"
+                      />
+                      <button
+                        type="button"
+                        onClick={applyDiscount}
+                        disabled={!discountCode.trim()}
+                        className="h-11 rounded-lg border border-[#1e6f58] px-5 text-[13px] font-medium text-[#1e6f58] transition-colors hover:bg-[#f3f9f6] disabled:cursor-not-allowed disabled:opacity-40"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  )}
+                  {discountError && (
+                    <p className="mt-1.5 text-[12px] text-[#c87]">{discountError}</p>
+                  )}
+                </div>
+              </section>
+
+              {/* Payment method toggle */}
               <section>
                 <h2 className="flex items-center gap-2 text-[16px] font-semibold text-[#0f1613]">
                   <Lock className="h-4 w-4 text-[#1e6f58]" />
-                  Pay with crypto
+                  Payment
                 </h2>
 
-                {/* Coin selector */}
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {WALLET_OPTIONS.map((w) => {
-                    const active = selectedCoin === w.coin;
-                    return (
-                      <button
-                        key={w.coin}
-                        type="button"
-                        onClick={() => setSelectedCoin(w.coin)}
-                        className={`inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-[13px] font-medium transition-all ${
-                          active
-                            ? "border-[#1e6f58] bg-[#f3f9f6] text-[#1e6f58] shadow-[0_0_0_3px_rgba(30,111,88,0.08)]"
-                            : "border-[#e7ece9] bg-white text-[#44514b] hover:border-[#1e6f58]/40"
-                        }`}
-                      >
-                        <span className="text-[15px]">{w.icon}</span>
-                        <span>{w.label}</span>
-                        <span className="text-[10px] uppercase text-[#8a9690]">{w.network}</span>
-                        {active && <Check className="h-3.5 w-3.5 text-[#1e6f58]" />}
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Payment card */}
-                <div className="mt-5 rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-5 sm:p-6">
-                  <div className="flex flex-col items-center gap-5 sm:flex-row sm:items-start">
-                    {/* QR Code — tappable on mobile to open wallet */}
-                    <div className="shrink-0">
-                      {walletDeepLink ? (
-                        <a
-                          href={walletDeepLink}
-                          className="group relative block"
-                          title="Tap to open in wallet app"
-                        >
-                          <div className="flex h-48 w-48 items-center justify-center rounded-xl border border-[#e7ece9] bg-white p-2.5 transition-shadow group-hover:shadow-md sm:h-44 sm:w-44">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              key={wallet.address}
-                              src={qrSrc}
-                              alt={`${wallet.label} wallet QR`}
-                              width={400}
-                              height={400}
-                              className="h-full w-full"
-                            />
-                          </div>
-                          <span className="mt-1.5 flex items-center justify-center gap-1 text-[10px] text-[#1e6f58] sm:hidden">
-                            <Smartphone className="h-3 w-3" />
-                            Tap to open wallet
-                          </span>
-                        </a>
-                      ) : (
-                        <div className="flex h-48 w-48 items-center justify-center rounded-xl border border-[#e7ece9] bg-white p-2.5 sm:h-44 sm:w-44">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            key={wallet.address}
-                            src={qrSrc}
-                            alt={`${wallet.label} wallet QR`}
-                            width={400}
-                            height={400}
-                            className="h-full w-full"
-                          />
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Amount + address */}
-                    <div className="min-w-0 flex-1 text-center sm:text-left">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
-                        Send exactly
-                      </p>
-                      <div className="mt-1 flex items-center justify-center gap-2 sm:justify-start">
-                        <p className="font-serif text-[1.75rem] leading-none text-[#0f1613]">
-                          {cryptoAmount ? (
-                            <>
-                              {cryptoAmount}{" "}
-                              <span className="text-[1.1rem] text-[#44514b]">{wallet.coin.replace("-ERC", "").replace("-SOL", "")}</span>
-                            </>
-                          ) : (
-                            <>${total.toFixed(2)}</>
-                          )}
-                        </p>
-                        {cryptoAmount && (
+                {/* ─── Crypto payment section ─── */}
+                {paymentMethod === "crypto" && (
+                  <>
+                    {/* Coin selector */}
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {WALLET_OPTIONS.map((w) => {
+                        const active = selectedCoin === w.coin;
+                        return (
                           <button
+                            key={w.coin}
                             type="button"
-                            onClick={copyAmount}
-                            className="rounded-md border border-[#e7ece9] bg-white px-2 py-1 text-[10px] font-medium text-[#8a9690] transition-colors hover:border-[#1e6f58]/40 hover:text-[#1e6f58]"
+                            onClick={() => setSelectedCoin(w.coin)}
+                            className={`inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-[13px] font-medium transition-all ${
+                              active
+                                ? "border-[#1e6f58] bg-[#f3f9f6] text-[#1e6f58] shadow-[0_0_0_3px_rgba(30,111,88,0.08)]"
+                                : "border-[#e7ece9] bg-white text-[#44514b] hover:border-[#1e6f58]/40"
+                            }`}
                           >
-                            {copied === "amount" ? (
-                              <span className="flex items-center gap-1 text-[#1e6f58]"><Check className="h-3 w-3" /> Copied</span>
-                            ) : (
-                              <span className="flex items-center gap-1"><Copy className="h-3 w-3" /> Copy</span>
-                            )}
+                            <span className="text-[15px]">{w.icon}</span>
+                            <span>{w.label}</span>
+                            <span className="text-[10px] uppercase text-[#8a9690]">{w.network}</span>
+                            {active && <Check className="h-3.5 w-3.5 text-[#1e6f58]" />}
                           </button>
-                        )}
-                      </div>
-                      <p className="mt-1 text-[12px] text-[#8a9690]">
-                        ≈ ${total.toFixed(2)} USD {cryptoAmount ? "· live rate" : ""}
-                      </p>
+                        );
+                      })}
+                    </div>
 
-                      <div className="mt-4">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
-                          To this {wallet.label} address
-                        </p>
-                        <button
-                          type="button"
-                          onClick={copyAddress}
-                          className="mt-1.5 flex w-full items-center gap-2 rounded-lg border border-[#e7ece9] bg-white px-3 py-2.5 text-left transition-colors hover:border-[#1e6f58]/40"
-                        >
-                          <span className="flex-1 truncate font-mono text-[11px] text-[#44514b]">
-                            {wallet.address}
-                          </span>
-                          {copied === "address" ? (
-                            <span className="flex shrink-0 items-center gap-1 text-[11px] font-medium text-[#1e6f58]">
-                              <Check className="h-3.5 w-3.5" /> Copied
-                            </span>
+                    {/* Payment card */}
+                    <div className="mt-5 rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-5 sm:p-6">
+                      <div className="flex flex-col items-center gap-5 sm:flex-row sm:items-start">
+                        {/* QR Code — tappable on mobile to open wallet */}
+                        <div className="shrink-0">
+                          {walletDeepLink ? (
+                            <a
+                              href={walletDeepLink}
+                              className="group relative block"
+                              title="Tap to open in wallet app"
+                            >
+                              <div className="flex h-48 w-48 items-center justify-center rounded-xl border border-[#e7ece9] bg-white p-2.5 transition-shadow group-hover:shadow-md sm:h-44 sm:w-44">
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
+                                  key={wallet.address}
+                                  src={qrSrc}
+                                  alt={`${wallet.label} wallet QR`}
+                                  width={400}
+                                  height={400}
+                                  className="h-full w-full"
+                                />
+                              </div>
+                              <span className="mt-1.5 flex items-center justify-center gap-1 text-[10px] text-[#1e6f58] sm:hidden">
+                                <Smartphone className="h-3 w-3" />
+                                Tap to open wallet
+                              </span>
+                            </a>
                           ) : (
-                            <span className="flex shrink-0 items-center gap-1 text-[11px] font-medium text-[#8a9690]">
-                              <Copy className="h-3.5 w-3.5" /> Copy
-                            </span>
+                            <div className="flex h-48 w-48 items-center justify-center rounded-xl border border-[#e7ece9] bg-white p-2.5 sm:h-44 sm:w-44">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                key={wallet.address}
+                                src={qrSrc}
+                                alt={`${wallet.label} wallet QR`}
+                                width={400}
+                                height={400}
+                                className="h-full w-full"
+                              />
+                            </div>
                           )}
-                        </button>
+                        </div>
+
+                        {/* Amount + address */}
+                        <div className="min-w-0 flex-1 text-center sm:text-left">
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
+                            Send exactly
+                          </p>
+                          <div className="mt-1 flex items-center justify-center gap-2 sm:justify-start">
+                            <p className="font-serif text-[1.75rem] leading-none text-[#0f1613]">
+                              {cryptoAmount ? (
+                                <>
+                                  {cryptoAmount}{" "}
+                                  <span className="text-[1.1rem] text-[#44514b]">{wallet.coin.replace("-ERC", "").replace("-SOL", "")}</span>
+                                </>
+                              ) : (
+                                <>${total.toFixed(2)}</>
+                              )}
+                            </p>
+                            {cryptoAmount && (
+                              <button
+                                type="button"
+                                onClick={copyAmount}
+                                className="rounded-md border border-[#e7ece9] bg-white px-2 py-1 text-[10px] font-medium text-[#8a9690] transition-colors hover:border-[#1e6f58]/40 hover:text-[#1e6f58]"
+                              >
+                                {copied === "amount" ? (
+                                  <span className="flex items-center gap-1 text-[#1e6f58]"><Check className="h-3 w-3" /> Copied</span>
+                                ) : (
+                                  <span className="flex items-center gap-1"><Copy className="h-3 w-3" /> Copy</span>
+                                )}
+                              </button>
+                            )}
+                          </div>
+                          <p className="mt-1 text-[12px] text-[#8a9690]">
+                            ≈ ${total.toFixed(2)} USD {cryptoAmount ? "· live rate" : ""}
+                          </p>
+
+                          <div className="mt-4">
+                            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
+                              To this {wallet.label} address
+                            </p>
+                            <button
+                              type="button"
+                              onClick={copyAddress}
+                              className="mt-1.5 flex w-full items-center gap-2 rounded-lg border border-[#e7ece9] bg-white px-3 py-2.5 text-left transition-colors hover:border-[#1e6f58]/40"
+                            >
+                              <span className="flex-1 truncate font-mono text-[11px] text-[#44514b]">
+                                {wallet.address}
+                              </span>
+                              {copied === "address" ? (
+                                <span className="flex shrink-0 items-center gap-1 text-[11px] font-medium text-[#1e6f58]">
+                                  <Check className="h-3.5 w-3.5" /> Copied
+                                </span>
+                              ) : (
+                                <span className="flex shrink-0 items-center gap-1 text-[11px] font-medium text-[#8a9690]">
+                                  <Copy className="h-3.5 w-3.5" /> Copy
+                                </span>
+                              )}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* TX hash */}
+                      <div className="mt-5 border-t border-[#e7ece9] pt-5">
+                        <label htmlFor="tx" className="block text-[12px] font-medium text-[#44514b]">
+                          Transaction hash <span className="text-[#8a9690]">(optional — speeds up verification)</span>
+                        </label>
+                        <input
+                          id="tx"
+                          type="text"
+                          value={txHash}
+                          onChange={(e) => setTxHash(e.target.value)}
+                          className="mt-1.5 h-11 w-full rounded-lg border border-[#e5e5e5] bg-white px-4 font-mono text-[12px] text-[#0f1613] transition-colors focus:border-[#1e6f58] focus:outline-none"
+                          placeholder="Paste after sending — or skip, we'll find it"
+                        />
                       </div>
                     </div>
-                  </div>
 
-                  {/* TX hash */}
-                  <div className="mt-5 border-t border-[#e7ece9] pt-5">
-                    <label htmlFor="tx" className="block text-[12px] font-medium text-[#44514b]">
-                      Transaction hash <span className="text-[#8a9690]">(optional — speeds up verification)</span>
-                    </label>
-                    <input
-                      id="tx"
-                      type="text"
-                      value={txHash}
-                      onChange={(e) => setTxHash(e.target.value)}
-                      className="mt-1.5 h-11 w-full rounded-lg border border-[#e5e5e5] bg-white px-4 font-mono text-[12px] text-[#0f1613] transition-colors focus:border-[#1e6f58] focus:outline-none"
-                      placeholder="Paste after sending — or skip, we'll find it"
-                    />
-                  </div>
-                </div>
-
-                {/* New to crypto? */}
-                <button
-                  type="button"
-                  onClick={() => setCryptoHelpOpen((v) => !v)}
-                  className="mt-3 flex w-full items-center gap-2 rounded-xl border border-[#e7ece9] bg-white px-4 py-3 text-left text-[13px] text-[#44514b] transition-colors hover:bg-[#fafbfa]"
-                >
-                  <HelpCircle className="h-4 w-4 shrink-0 text-[#1e6f58]" />
-                  <span className="flex-1 font-medium">New to crypto? Here&apos;s how to pay in 3 minutes</span>
-                  <ChevronDown className={`h-4 w-4 text-[#8a9690] transition-transform ${cryptoHelpOpen ? "rotate-180" : ""}`} />
-                </button>
-                {cryptoHelpOpen && (
-                  <div className="mt-2 rounded-xl border border-[#e7ece9] bg-[#fafbfa] p-5 text-[13px] leading-relaxed text-[#44514b]">
-                    <ol className="space-y-3">
-                      <li className="flex gap-3">
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1e6f58] text-[11px] font-bold text-white">1</span>
-                        <div>
-                          <p className="font-medium text-[#0f1613]">Get a wallet app</p>
-                          <p className="mt-0.5 text-[12px] text-[#8a9690]">
-                            Download <a href="https://phantom.app" target="_blank" rel="noreferrer" className="text-[#1e6f58] underline">Phantom</a> (easiest, works on phone) or <a href="https://metamask.io" target="_blank" rel="noreferrer" className="text-[#1e6f58] underline">MetaMask</a>. Takes 60 seconds.
-                          </p>
-                        </div>
-                      </li>
-                      <li className="flex gap-3">
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1e6f58] text-[11px] font-bold text-white">2</span>
-                        <div>
-                          <p className="font-medium text-[#0f1613]">Buy USDC</p>
-                          <p className="mt-0.5 text-[12px] text-[#8a9690]">
-                            Inside Phantom, tap &quot;Buy&quot; and purchase USDC with your card. USDC = 1 dollar, no price swings.
-                          </p>
-                        </div>
-                      </li>
-                      <li className="flex gap-3">
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1e6f58] text-[11px] font-bold text-white">3</span>
-                        <div>
-                          <p className="font-medium text-[#0f1613]">Scan the QR or copy the address</p>
-                          <p className="mt-0.5 text-[12px] text-[#8a9690]">
-                            Send the exact amount shown above. On phone, just tap the QR code to open your wallet. That&apos;s it.
-                          </p>
-                        </div>
-                      </li>
-                    </ol>
-                    <p className="mt-4 flex items-start gap-2 rounded-lg bg-[#f3f9f6] px-3 py-2 text-[11px] text-[#1e6f58]">
-                      <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-                      We recommend USDC on Solana — fastest, cheapest fees (under $0.01), and 1 USDC always = $1.
-                    </p>
-                  </div>
+                    {/* New to crypto? */}
+                    <button
+                      type="button"
+                      onClick={() => setCryptoHelpOpen((v) => !v)}
+                      className="mt-3 flex w-full items-center gap-2 rounded-xl border border-[#e7ece9] bg-white px-4 py-3 text-left text-[13px] text-[#44514b] transition-colors hover:bg-[#fafbfa]"
+                    >
+                      <HelpCircle className="h-4 w-4 shrink-0 text-[#1e6f58]" />
+                      <span className="flex-1 font-medium">New to crypto? Here&apos;s how to pay in 3 minutes</span>
+                      <ChevronDown className={`h-4 w-4 text-[#8a9690] transition-transform ${cryptoHelpOpen ? "rotate-180" : ""}`} />
+                    </button>
+                    {cryptoHelpOpen && (
+                      <div className="mt-2 rounded-xl border border-[#e7ece9] bg-[#fafbfa] p-5 text-[13px] leading-relaxed text-[#44514b]">
+                        <ol className="space-y-3">
+                          <li className="flex gap-3">
+                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1e6f58] text-[11px] font-bold text-white">1</span>
+                            <div>
+                              <p className="font-medium text-[#0f1613]">Get a wallet app</p>
+                              <p className="mt-0.5 text-[12px] text-[#8a9690]">
+                                Download <a href="https://phantom.app" target="_blank" rel="noreferrer" className="text-[#1e6f58] underline">Phantom</a> (easiest, works on phone) or <a href="https://metamask.io" target="_blank" rel="noreferrer" className="text-[#1e6f58] underline">MetaMask</a>. Takes 60 seconds.
+                              </p>
+                            </div>
+                          </li>
+                          <li className="flex gap-3">
+                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1e6f58] text-[11px] font-bold text-white">2</span>
+                            <div>
+                              <p className="font-medium text-[#0f1613]">Buy USDC</p>
+                              <p className="mt-0.5 text-[12px] text-[#8a9690]">
+                                Inside Phantom, tap &quot;Buy&quot; and purchase USDC with your card. USDC = 1 dollar, no price swings.
+                              </p>
+                            </div>
+                          </li>
+                          <li className="flex gap-3">
+                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1e6f58] text-[11px] font-bold text-white">3</span>
+                            <div>
+                              <p className="font-medium text-[#0f1613]">Scan the QR or copy the address</p>
+                              <p className="mt-0.5 text-[12px] text-[#8a9690]">
+                                Send the exact amount shown above. On phone, just tap the QR code to open your wallet. That&apos;s it.
+                              </p>
+                            </div>
+                          </li>
+                        </ol>
+                        <p className="mt-4 flex items-start gap-2 rounded-lg bg-[#f3f9f6] px-3 py-2 text-[11px] text-[#1e6f58]">
+                          <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                          We recommend USDC on Solana — fastest, cheapest fees (under $0.01), and 1 USDC always = $1.
+                        </p>
+                      </div>
+                    )}
+                  </>
                 )}
               </section>
 
@@ -679,6 +814,8 @@ export default function CheckoutPage() {
                     total={total}
                     countryName={COUNTRIES.find((c) => c.code === country)?.name ?? country}
                     freeAbove={zone.freeAbove}
+                    discount={appliedDiscount}
+                    discountAmount={discountAmount}
                   />
                 </div>
               </div>
@@ -778,12 +915,16 @@ function Totals({
   total,
   countryName,
   freeAbove,
+  discount,
+  discountAmount,
 }: {
   subtotal: number;
   shipping: number;
   total: number;
   countryName: string;
   freeAbove: number;
+  discount?: { code: string; percent: number } | null;
+  discountAmount?: number;
 }) {
   return (
     <div className="space-y-2">
@@ -791,6 +932,12 @@ function Totals({
         <span className="text-[#8a9690]">Subtotal</span>
         <span className="text-[#0f1613]">${subtotal.toFixed(2)}</span>
       </div>
+      {discount && discountAmount ? (
+        <div className="flex justify-between text-[13px]">
+          <span className="text-[#1e6f58]">{discount.code} ({discount.percent}% off)</span>
+          <span className="font-medium text-[#1e6f58]">-${discountAmount.toFixed(2)}</span>
+        </div>
+      ) : null}
       <div className="flex justify-between text-[13px]">
         <span className="text-[#8a9690]">Shipping · {countryName}</span>
         <span className="text-[#0f1613]">

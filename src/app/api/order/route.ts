@@ -32,6 +32,7 @@ interface OrderPayload {
   paymentCoin?: string;
   paymentAddress?: string;
   cryptoAmount?: string;
+  paymentMethod?: "card" | "crypto";
   // Legacy single-product fields (kept for backwards compat)
   product?: string;
   productId?: string;
@@ -135,6 +136,7 @@ function internalNotificationHtml(order: OrderPayload): string {
   <tr><td style="padding:4px 12px 4px 0;color:#888;">Country</td><td>${order.country}</td></tr>
   <tr><td style="padding:4px 12px 4px 0;color:#888;">Address</td><td style="white-space:pre-line;">${order.shippingAddress}</td></tr>
   ${order.source ? `<tr><td style="padding:4px 12px 4px 0;color:#888;">Source</td><td>${order.source}</td></tr>` : ""}
+  ${order.paymentMethod ? `<tr><td style="padding:4px 12px 4px 0;color:#888;">Payment method</td><td>🪙 Crypto</td></tr>` : ""}
   ${order.paymentCoin ? `<tr><td style="padding:4px 12px 4px 0;color:#888;">Payment coin</td><td>${order.paymentCoin}</td></tr>` : ""}
   ${order.cryptoAmount ? `<tr><td style="padding:4px 12px 4px 0;color:#888;">Crypto amount</td><td>${order.cryptoAmount}</td></tr>` : ""}
   ${order.paymentAddress ? `<tr><td style="padding:4px 12px 4px 0;color:#888;">Pay-to address</td><td style="font-family:monospace;font-size:11px;">${order.paymentAddress}</td></tr>` : ""}
@@ -219,6 +221,7 @@ export async function POST(req: NextRequest) {
         country: body.country,
         shippingAddress: body.address,
         status: body.txHash ? "payment_received" : "awaiting_payment",
+        paymentMethod: body.paymentMethod || "crypto",
         source: body.source,
         paymentCoin: body.paymentCoin,
         paymentAddress: body.paymentAddress,

@@ -8,6 +8,19 @@ const RESEARCH_LINKS = [
   ["PT-141 research", "/research/pt-141-research"],
 ];
 
+const BLOG_LINKS = [
+  ["BPC-157 nasal spray guide", "/blog/bpc-157-nasal-spray-complete-guide"],
+  ["Where to buy peptide sprays", "/blog/where-to-buy-peptide-nasal-sprays"],
+  ["Semax vs Selank", "/blog/semax-vs-selank-neuropeptide-comparison"],
+  ["How to read a COA", "/blog/how-to-read-peptide-coa"],
+  ["Sprays vs injections", "/blog/peptide-nasal-sprays-vs-injections"],
+  ["PT-141 research guide", "/blog/pt-141-nasal-spray-research-guide"],
+  ["DSIP sleep peptide", "/blog/dsip-nasal-spray-delta-sleep-peptide"],
+  ["Oxytocin research", "/blog/oxytocin-nasal-spray-research"],
+  ["Peptide stacking guide", "/blog/best-peptide-stacks-research-guide"],
+  ["Peptide storage guide", "/blog/peptide-storage-guide"],
+];
+
 const COMPANY_LINKS = [
   ["About", "/about"],
   ["Lab testing", "/lab-testing"],
@@ -49,9 +62,10 @@ export function Footer() {
             </p>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
             <FooterColumn title="Products" links={productLinks} />
             <FooterColumn title="Research" links={RESEARCH_LINKS} />
+            <FooterColumn title="Blog" links={BLOG_LINKS} />
             <FooterColumn title="Company" links={COMPANY_LINKS} />
             <FooterColumn title="Legal" links={LEGAL_LINKS} />
           </div>

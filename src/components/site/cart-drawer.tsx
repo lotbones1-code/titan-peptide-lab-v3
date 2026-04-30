@@ -31,7 +31,7 @@ export function CartDrawer() {
       setPromoError("");
       setPromoInput("");
     } else {
-      setPromoError("Invalid code. Try FIRST10, BULK15, TITAN20, or VIP25.");
+      setPromoError("Invalid code. Please check your code and try again.");
     }
   };
 

@@ -8,6 +8,7 @@ const LINKS = [
   { href: "/products", label: "Products" },
   { href: "/lab-testing", label: "Lab Testing" },
   { href: "/research", label: "Research" },
+  { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },
   { href: "/shipping-faq", label: "Shipping & FAQ" },
   { href: "/contact", label: "Contact" },
