@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import type { Product } from "@/lib/products";
+import { LOT_CODES as SHARED_LOT_CODES } from "@/lib/lots";
 
 const THEMES: Record<
   string,
@@ -56,19 +57,13 @@ const THEMES: Record<
   },
 };
 
-// Deterministic but plausible lot codes per product
-const LOT_CODES: Record<string, string> = {
-  "bpc157-spray": "TL-2024-0319",
-  "selank-spray": "TL-2024-0287",
-  "semax-spray": "TL-2024-0301",
-  "pt141-spray": "TL-2024-0344",
-  "oxytocin-spray": "TL-2024-0268",
-  "dsip-spray": "TL-2024-0312",
-  "selank-semax-stack": "TL-2024-0329",
-};
+const LOT_CODES = SHARED_LOT_CODES;
 
 function shortName(name: string) {
-  return name.replace(" Nasal Spray", "").replace(" + ", " \u00d7 ");
+  return name
+    .replace(" Nasal Spray", "")
+    .replace(" + ", " \u00d7 ")
+    .replace(/-/g, "\u2011");
 }
 
 function formatLabel(category: Product["category"]) {
@@ -89,7 +84,7 @@ export function CompoundPoster({
 }) {
   const theme = THEMES[product.id] ?? THEMES["bpc157-spray"];
   const name = shortName(product.name);
-  const lot = LOT_CODES[product.id] ?? "TL-2024-0300";
+  const lot = LOT_CODES[product.id] ?? "TPL-2604-A";
 
   // ── Detail variant: full specimen label ──────────────────────────────────
   if (variant === "detail") {
