@@ -9,7 +9,9 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import {
   ArrowLeft,
+  ArrowRight,
   ShieldCheck,
+  ShoppingBag,
   Truck,
   FileText,
   Check,
@@ -57,6 +59,37 @@ function makeOrderId() {
   const ts = Date.now().toString(36);
   const rand = Math.random().toString(36).slice(2, 6).toUpperCase();
   return `TPL-${ts.slice(-4)}${rand}`;
+}
+
+function explorerForCoin(coin: Coin, address: string): string | null {
+  if (!address) return null;
+  switch (coin) {
+    case "BTC":
+      return `https://mempool.space/address/${address}`;
+    case "ETH":
+    case "USDC-ERC":
+      return `https://etherscan.io/address/${address}`;
+    case "SOL":
+    case "USDC-SOL":
+      return `https://solscan.io/account/${address}`;
+    default:
+      return null;
+  }
+}
+
+function explorerHostFor(coin: Coin): string {
+  switch (coin) {
+    case "BTC":
+      return "mempool.space";
+    case "ETH":
+    case "USDC-ERC":
+      return "etherscan.io";
+    case "SOL":
+    case "USDC-SOL":
+      return "solscan.io";
+    default:
+      return "explorer";
+  }
 }
 
 type PriceMap = Partial<Record<WalletOption["priceKey"], number>>;
@@ -150,37 +183,27 @@ export default function CheckoutPage() {
   const qrData = walletDeepLink ?? wallet.address;
   const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&margin=0&data=${encodeURIComponent(qrData)}`;
 
-  if (!hydrated) {
-    return (
-      <>
-        <Nav />
-        <main className="min-h-screen bg-white">
-          <div className="mx-auto max-w-5xl px-6 py-24">
-            <div className="h-6 w-40 animate-pulse rounded bg-[#f2f5f3]" />
-            <div className="mt-6 h-12 w-72 animate-pulse rounded bg-[#f2f5f3]" />
-            <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_400px]">
-              <div className="h-96 animate-pulse rounded-2xl bg-[#fafbfa]" />
-              <div className="h-96 animate-pulse rounded-2xl bg-[#fafbfa]" />
-            </div>
-          </div>
-        </main>
-        <Footer />
-      </>
-    );
-  }
-
-  if (items.length === 0 && !done) {
+  if (hydrated && items.length === 0 && !done) {
     return (
       <>
         <Nav />
         <main className="min-h-screen bg-white">
           <div className="mx-auto max-w-lg px-6 py-32 text-center">
-            <p className="text-[15px] text-[#999]">Your cart is empty.</p>
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-[#e7ece9] bg-[#fafbfa]">
+              <ShoppingBag className="h-6 w-6 text-[#1e6f58]" />
+            </div>
+            <h1 className="mt-6 font-serif text-[1.75rem] leading-[1.1] tracking-[-0.02em] text-[#0f1613]">
+              Your cart is empty
+            </h1>
+            <p className="mt-3 text-[14px] leading-[1.7] text-[#44514b]">
+              Browse the catalog to add lot-tested peptides before checkout.
+            </p>
             <Link
               href="/products"
-              className="mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-[#1e6f58] px-6 text-[14px] font-medium text-white transition-colors hover:bg-[#175946]"
+              className="mt-7 inline-flex h-11 items-center gap-2 rounded-full bg-[#1e6f58] px-6 text-[14px] font-medium text-white transition-colors hover:bg-[#175946]"
             >
-              Browse products
+              Browse the catalog
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </main>
@@ -300,6 +323,8 @@ export default function CheckoutPage() {
   };
 
   if (done) {
+    const doneWallet = WALLET_OPTIONS.find((w) => w.coin === done.coin);
+    const explorerUrl = doneWallet ? explorerForCoin(doneWallet.coin, doneWallet.address) : null;
     return (
       <>
         <Nav />
@@ -318,6 +343,24 @@ export default function CheckoutPage() {
             <p className="mt-2 text-[13px] text-[#8a9690]">
               Save this order ID. If your email client just opened, send that email to confirm — we&apos;ll match it to your on-chain payment.
             </p>
+            {doneWallet && explorerUrl ? (
+              <div className="mx-auto mt-6 max-w-sm rounded-xl border border-[#e7ece9] bg-white p-4 text-left">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
+                  Verify on-chain
+                </p>
+                <p className="mt-2 text-[12px] leading-[1.6] text-[#44514b]">
+                  Wallet addresses are public. Confirm your transfer landed before we do.
+                </p>
+                <a
+                  href={explorerUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-medium text-[#1e6f58] underline decoration-[#1e6f58]/30 underline-offset-4 hover:decoration-[#1e6f58]"
+                >
+                  Open {doneWallet.label} ({doneWallet.network}) on {explorerHostFor(doneWallet.coin)} →
+                </a>
+              </div>
+            ) : null}
             <div className="mx-auto mt-8 max-w-sm rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-5 text-left text-[13px] leading-relaxed text-[#44514b]">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">What happens next</p>
               <ol className="mt-3 space-y-2.5">
@@ -371,22 +414,24 @@ export default function CheckoutPage() {
           </div>
 
           {/* Mobile: collapsible order summary */}
-          <button
-            type="button"
-            onClick={() => setOrderSummaryOpen((v) => !v)}
-            className="mt-6 flex w-full items-center justify-between rounded-xl border border-[#e7ece9] bg-[#fafbfa] px-4 py-3 lg:hidden"
-          >
-            <span className="text-[13px] font-medium text-[#0f1613]">
-              {orderSummaryOpen ? "Hide" : "Show"} order · {items.length} item{items.length !== 1 ? "s" : ""}
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="text-[14px] font-bold text-[#0f1613]">${total.toFixed(2)}</span>
-              <ChevronDown
-                className={`h-4 w-4 text-[#8a9690] transition-transform ${orderSummaryOpen ? "rotate-180" : ""}`}
-              />
-            </span>
-          </button>
-          {orderSummaryOpen && (
+          {hydrated && (
+            <button
+              type="button"
+              onClick={() => setOrderSummaryOpen((v) => !v)}
+              className="mt-6 flex w-full items-center justify-between rounded-xl border border-[#e7ece9] bg-[#fafbfa] px-4 py-3 lg:hidden"
+            >
+              <span className="text-[13px] font-medium text-[#0f1613]">
+                {orderSummaryOpen ? "Hide" : "Show"} order · {items.length} item{items.length !== 1 ? "s" : ""}
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="text-[14px] font-bold text-[#0f1613]">${total.toFixed(2)}</span>
+                <ChevronDown
+                  className={`h-4 w-4 text-[#8a9690] transition-transform ${orderSummaryOpen ? "rotate-180" : ""}`}
+                />
+              </span>
+            </button>
+          )}
+          {hydrated && orderSummaryOpen && (
             <div className="mt-3 rounded-xl border border-[#e7ece9] bg-[#fafbfa] p-5 lg:hidden">
               <OrderLines items={items} />
               <Totals
@@ -401,8 +446,8 @@ export default function CheckoutPage() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="mt-8 grid gap-10 lg:grid-cols-[1fr_380px]">
-            <div className="space-y-8">
+          <form onSubmit={handleSubmit} className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_380px]">
+            <div className="min-w-0 space-y-8">
               {/* Shipping — first because it's what people expect */}
               <section>
                 <h2 className="flex items-center gap-2 text-[16px] font-semibold text-[#0f1613]">
@@ -688,6 +733,9 @@ export default function CheckoutPage() {
                                 </span>
                               )}
                             </button>
+                            <p className="mt-2 text-[11px] leading-[1.55] text-[#8a9690]">
+                              Wallet addresses are public — verify on-chain after every order.
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -781,13 +829,18 @@ export default function CheckoutPage() {
               {/* Desktop CTA */}
               <button
                 type="submit"
-                disabled={!canSubmit || submitting}
+                disabled={!canSubmit || submitting || !hydrated}
                 className="hidden h-14 w-full items-center justify-center gap-2.5 rounded-xl bg-[#1e6f58] text-[15px] font-semibold text-white transition-colors hover:bg-[#175946] disabled:cursor-not-allowed disabled:opacity-50 lg:flex"
               >
                 {submitting ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
                     Placing order…
+                  </>
+                ) : !hydrated ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Loading checkout…
                   </>
                 ) : (
                   <>
@@ -804,20 +857,33 @@ export default function CheckoutPage() {
                 <h2 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
                   Order summary
                 </h2>
-                <div className="mt-5">
-                  <OrderLines items={items} />
-                </div>
-                <div className="mt-5 border-t border-[#e7ece9] pt-4">
-                  <Totals
-                    subtotal={subtotal}
-                    shipping={shipping}
-                    total={total}
-                    countryName={COUNTRIES.find((c) => c.code === country)?.name ?? country}
-                    freeAbove={zone.freeAbove}
-                    discount={appliedDiscount}
-                    discountAmount={discountAmount}
-                  />
-                </div>
+                {hydrated ? (
+                  <>
+                    <div className="mt-5">
+                      <OrderLines items={items} />
+                    </div>
+                    <div className="mt-5 border-t border-[#e7ece9] pt-4">
+                      <Totals
+                        subtotal={subtotal}
+                        shipping={shipping}
+                        total={total}
+                        countryName={COUNTRIES.find((c) => c.code === country)?.name ?? country}
+                        freeAbove={zone.freeAbove}
+                        discount={appliedDiscount}
+                        discountAmount={discountAmount}
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <div className="mt-5 space-y-3">
+                    <p className="text-[13px] text-[#8a9690]">Loading your cart…</p>
+                    <div className="h-3 w-3/4 animate-pulse rounded bg-[#e7ece9]" />
+                    <div className="h-3 w-1/2 animate-pulse rounded bg-[#e7ece9]" />
+                    <div className="mt-5 border-t border-[#e7ece9] pt-4">
+                      <div className="h-3 w-2/3 animate-pulse rounded bg-[#e7ece9]" />
+                    </div>
+                  </div>
+                )}
               </div>
             </aside>
 
@@ -825,13 +891,18 @@ export default function CheckoutPage() {
             <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#e7ece9] bg-white/95 px-4 py-3 backdrop-blur lg:hidden">
               <button
                 type="submit"
-                disabled={!canSubmit || submitting}
+                disabled={!canSubmit || submitting || !hydrated}
                 className="flex h-13 w-full items-center justify-center gap-2 rounded-xl bg-[#1e6f58] text-[15px] font-semibold text-white transition-colors hover:bg-[#175946] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {submitting ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
                     Placing…
+                  </>
+                ) : !hydrated ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Loading…
                   </>
                 ) : (
                   <>

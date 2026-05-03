@@ -14,6 +14,9 @@ import {
   Truck,
   Globe,
   FlaskConical,
+  Bitcoin,
+  Snowflake,
+  ScanSearch,
 } from "lucide-react";
 import { type Product, DISCOUNT_CODES } from "@/lib/products";
 import { zoneForCountry } from "@/lib/countries";
@@ -314,6 +317,51 @@ export function ProductDetail({ product }: { product: Product }) {
             mgPerVial={parseMgPerVial(product.size)}
           />
         ) : null}
+
+        {/* What Happens Next — 3-step ordering trust block. Sits between buy
+            section and reviews per Round 3 CRO brief. */}
+        <div className="mt-20 border-t border-[#e8e6e1] pt-12">
+          <div className="max-w-2xl">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#1e6f58]">
+              What happens next
+            </span>
+            <h2 className="mt-3 font-serif text-[clamp(1.6rem,2.4vw,2rem)] leading-[1.1] tracking-[-0.02em] text-[#0f1613]">
+              Order, ship, verify — three steps.
+            </h2>
+          </div>
+          <ol className="mt-8 grid gap-4 sm:grid-cols-3">
+            <li className="rounded-2xl border border-[#e8e6e1] bg-[#fafbfa] p-5">
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#1e6f58] text-[12px] font-bold text-white">1</span>
+                <Bitcoin className="h-4 w-4 text-[#1e6f58]" />
+                <p className="text-[13.5px] font-semibold text-[#0f1613]">Order with crypto</p>
+              </div>
+              <p className="mt-3 text-[12.5px] leading-[1.7] text-[#5c6762]">
+                BTC, ETH, SOL, or USDC at checkout. No card data stored, ever.
+              </p>
+            </li>
+            <li className="rounded-2xl border border-[#e8e6e1] bg-[#fafbfa] p-5">
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#1e6f58] text-[12px] font-bold text-white">2</span>
+                <Snowflake className="h-4 w-4 text-[#1e6f58]" />
+                <p className="text-[13.5px] font-semibold text-[#0f1613]">Cold-chain ship</p>
+              </div>
+              <p className="mt-3 text-[12.5px] leading-[1.7] text-[#5c6762]">
+                Insulated overnight worldwide. Tracking emailed within 24h of payment.
+              </p>
+            </li>
+            <li className="rounded-2xl border border-[#e8e6e1] bg-[#fafbfa] p-5">
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#1e6f58] text-[12px] font-bold text-white">3</span>
+                <ScanSearch className="h-4 w-4 text-[#1e6f58]" />
+                <p className="text-[13.5px] font-semibold text-[#0f1613]">Verify your lot</p>
+              </div>
+              <p className="mt-3 text-[12.5px] leading-[1.7] text-[#5c6762]">
+                Each shipment includes the lot&apos;s HPLC COA. Match the lot code on your label to the PDF.
+              </p>
+            </li>
+          </ol>
+        </div>
 
         <div className="mt-20 border-t border-[#e8e6e1] pt-12">
           <div className="grid gap-10 lg:grid-cols-[280px_1fr] lg:items-start">
