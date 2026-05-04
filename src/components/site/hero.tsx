@@ -28,22 +28,22 @@ export function Hero() {
     <section className="border-b border-[#ece9e2] bg-white">
       <div className="mx-auto max-w-7xl px-5 py-12 lg:px-10 lg:py-20">
         <Reveal>
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.04fr_0.96fr] lg:items-start lg:gap-14">
-            <div className="min-w-0">
-              <span className="inline-flex max-w-full rounded-full border border-[#dde5df] bg-[#f7faf8] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
-                Intranasal-first · Lot-matched · ≥99% HPLC
+          <div className="grid gap-10 lg:grid-cols-[1.04fr_0.96fr] lg:items-start lg:gap-14">
+            <div>
+              <span className="inline-flex rounded-full border border-[#dde5df] bg-[#f7faf8] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#1a5c48]">
+                Nasal peptide catalog
               </span>
 
-              <h1 className="mt-5 font-serif text-[clamp(2.25rem,6vw,5.3rem)] font-normal leading-[0.95] tracking-[-0.04em] text-balance text-[#0f1110]">
-                The exact HPLC run
+              <h1 className="mt-5 font-serif text-[clamp(2.9rem,6vw,5.3rem)] font-normal leading-[0.9] tracking-[-0.05em] text-[#0f1110]">
+                Research-grade
                 <br />
-                on <em className="italic">your bottle.</em>
+                peptide sprays.
                 <br />
-                Not a library PDF.
+                <span className="text-[#1a5c48]">Built on batch discipline.</span>
               </h1>
 
               <p className="mt-6 max-w-[46ch] text-[15px] leading-[1.85] text-[#555b55] lg:text-[16px]">
-                Six of eleven compounds ship as precision intranasal sprays — no reconstitution, no syringes, no bacteriostatic-water math. Vials available where a compound doesn&apos;t formulate intranasally. Spray or vial, every order ships with a certificate of analysis tied to the lot on your label — chromatogram, mass spec, purity %, run date.
+                Six nasal sprays backed by lot-matched certificates of analysis, shipped worldwide with on-chain payment verification. Research-grade purity, no compromises.
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -51,48 +51,33 @@ export function Hero() {
                   href="/products"
                   className="inline-flex h-12 items-center justify-center gap-2.5 rounded-full bg-[#0f1110] px-8 text-[13px] font-semibold text-white transition-colors hover:bg-[#1a5c48]"
                 >
-                  Browse Lot-Tested Peptides
+                  Shop catalog
                   <ArrowRight className="size-4" />
                 </Link>
                 <Link
                   href="/lab-testing"
-                  className="group inline-flex h-12 items-center gap-1.5 px-2 text-[13px] font-medium text-[#52605a] underline-offset-[6px] transition-colors hover:text-[#0f1110] hover:underline"
+                  className="inline-flex h-12 items-center justify-center rounded-full border border-[#d4d4d4] px-7 text-[13px] font-semibold text-[#0f1110] transition-colors hover:border-[#0f1110]"
                 >
-                  View 3rd-Party COAs
-                  <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+                  Review lab testing
                 </Link>
               </div>
 
-              <p className="mt-3 text-[12px] leading-[1.6] text-[#66736d]">
-                Crypto only — BTC · ETH · SOL · USDC.{" "}
-                <Link href="/guide" className="font-medium text-[#1a5c48] underline-offset-2 hover:underline">
-                  New to crypto? 5-minute walkthrough →
-                </Link>
-              </p>
-
-              {/* Editorial spec strip — replaces the template "stats grid" tell.
-                  Numbers are claims the next paragraph explains, not decoration. */}
-              <dl className="mt-10 divide-y divide-[#e7ece9] border-y border-[#e7ece9]">
+              <div className="mt-10 grid gap-3 sm:grid-cols-2">
                 {[
-                  ["6 / 11", "compounds ship intranasal", "no syringes, no bac-water math"],
-                  ["≥ 99 %", "HPLC purity target", "lot-matched chromatogram on every order"],
-                  ["24 h", "dispatch after payment", "cold-chain pack, tracking emailed"],
-                  ["216", "shipping destinations", "exact rate by country at checkout"],
-                ].map(([value, label, sub]) => (
+                  ["≥99%", "HPLC purity target with lot-matched COA"],
+                  ["24h", "dispatch after payment confirmation"],
+                  ["5 rails", "BTC · ETH · SOL · USDC on 3 networks"],
+                  ["200+", "countries we ship to from one warehouse"],
+                ].map(([value, label]) => (
                   <div
                     key={label}
-                    className="grid grid-cols-[5.5rem_1fr] items-baseline gap-5 py-3.5 sm:grid-cols-[6.5rem_1fr]"
+                    className="rounded-[1.2rem] border border-[#e7ece9] bg-[#fafbfa] px-5 py-4"
                   >
-                    <dt className="font-mono text-[13px] tabular-nums text-[#1a5c48]">
-                      {value}
-                    </dt>
-                    <dd>
-                      <p className="text-[13.5px] font-medium text-[#0f1110]">{label}</p>
-                      <p className="mt-0.5 text-[12px] leading-5 text-[#66736d]">{sub}</p>
-                    </dd>
+                    <p className="text-[1.6rem] font-semibold tracking-[-0.04em] text-[#0f1110]">{value}</p>
+                    <p className="mt-1 text-[12px] leading-6 text-[#66736d]">{label}</p>
                   </div>
                 ))}
-              </dl>
+              </div>
             </div>
 
             <div>
@@ -113,7 +98,7 @@ export function Hero() {
                       </p>
                     </div>
                     <p className="mt-3 max-w-[44ch] text-[13px] leading-[1.75] text-[#66736d]">
-                      {featured.tagline}. Start with the featured release, review shipping, then choose the payment rail that fits your order.
+                      {featured.tagline} Start with the featured release, review shipping, then choose the payment rail that fits your order.
                     </p>
                   </div>
 
