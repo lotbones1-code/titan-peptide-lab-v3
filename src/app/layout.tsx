@@ -4,7 +4,6 @@ import Script from "next/script";
 import "./globals.css";
 import { Grain } from "@/components/site/grain";
 import { AnnouncementBar } from "@/components/site/announcement-bar";
-import { AIAdvisor } from "@/components/site/ai-advisor";
 import { EmailCapture } from "@/components/site/email-capture";
 import { CartDrawer } from "@/components/site/cart-drawer";
 import { OrganizationJsonLd, WebsiteJsonLd, FAQJsonLd } from "@/components/site/json-ld";
@@ -39,12 +38,34 @@ export const metadata: Metadata = {
   title: `${BRAND.name} — ${BRAND.tagline}`,
   description: BRAND.description,
   metadataBase: new URL(`https://${BRAND.domain}`),
+  // Default canonical for the home page; sub-pages override via their own
+  // alternates.canonical export. Prevents Google from picking duplicate
+  // variants like /index.html or query-string forms (seo-audit §Canonicals).
+  alternates: { canonical: "/" },
   openGraph: {
     title: BRAND.name,
     description: BRAND.description,
     url: `https://${BRAND.domain}`,
     siteName: BRAND.name,
     type: "website",
+    // 1500x803 brand banner used as default OG/social-share image. PDPs
+    // override with product imagery via their own metadata. Without this
+    // default, pages without explicit OG images render with no preview
+    // card on Slack/iMessage/Twitter, which kills B2B email click-through.
+    images: [
+      {
+        url: "/titan-banner.png",
+        width: 1500,
+        height: 803,
+        alt: `${BRAND.name} — ${BRAND.tagline}`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: BRAND.name,
+    description: BRAND.description,
+    images: ["/titan-banner.png"],
   },
   robots: { index: true, follow: true },
 };
@@ -81,7 +102,6 @@ export default function RootLayout({
           <AnnouncementBar />
           {children}
           <CartDrawer />
-          <AIAdvisor />
           <EmailCapture />
         </CartProvider>
       </body>
