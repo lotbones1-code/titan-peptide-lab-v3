@@ -48,15 +48,15 @@ export const metadata: Metadata = {
     url: `https://${BRAND.domain}`,
     siteName: BRAND.name,
     type: "website",
-    // 1500x803 brand banner used as default OG/social-share image. PDPs
-    // override with product imagery via their own metadata. Without this
-    // default, pages without explicit OG images render with no preview
-    // card on Slack/iMessage/Twitter, which kills B2B email click-through.
+    // 1200x630 brand OG card (standard 1.91:1 ratio for Telegram/iMessage/Slack/X).
+    // PDPs override with product imagery via their own metadata. Without this
+    // default, pages without explicit OG images render with no preview card,
+    // which kills B2B email and chat-share click-through.
     images: [
       {
         url: "/titan-banner.png",
-        width: 1500,
-        height: 803,
+        width: 1200,
+        height: 630,
         alt: `${BRAND.name} — ${BRAND.tagline}`,
       },
     ],
