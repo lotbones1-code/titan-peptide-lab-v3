@@ -276,7 +276,7 @@ export function CompoundPoster({
             {[
               { label: "Purity", value: "≥99%" },
               { label: "Format", value: product.category === "stack" ? "Stack" : "Spray" },
-              { label: "Release", value: "COA ready" },
+              { label: "Release", value: "Lot sheet" },
             ].map(({ label, value }) => (
               <div key={label}>
                 <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-[#9aa6a0]">
@@ -292,7 +292,7 @@ export function CompoundPoster({
 
         <div className="mt-8 flex items-center justify-between gap-3 border-t border-[rgb(15_22_19/6%)] pt-3">
           <span className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#636b67]">
-            Lot-matched COA
+            Lot release sheet
           </span>
           <span className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[#636b67]">
             Crypto checkout

@@ -26,10 +26,14 @@ const MILESTONES = [
   },
 ];
 
+const ABOUT_TITLE = "About — Titan Peptide Lab";
+const ABOUT_DESCRIPTION =
+  "Reno-based peptide lab. The certificate must resolve to the lot in the bottle. ISO 17025 third-party retest on every batch since 2021. Nasal-first since 2023.";
+
 export const metadata = {
-  title: "About — The Titan Peptide Company",
-  description:
-    "Founded in research, built for integrity. The origin, philosophy, and sourcing commitments behind The Titan Peptide Company.",
+  title: ABOUT_TITLE,
+  description: ABOUT_DESCRIPTION,
+  openGraph: { title: ABOUT_TITLE, description: ABOUT_DESCRIPTION },
 };
 
 export default function AboutPage() {
@@ -177,13 +181,13 @@ export default function AboutPage() {
 
               <div className="mt-14 border-t border-[rgb(15_22_19/8%)] pt-8">
                 <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
-                  Signed
+                  Issued by
                 </span>
-                <div className="mt-3 font-serif text-[1.75rem] italic text-[#0f1613]">
-                  Dr. M. Voss
+                <div className="mt-3 font-serif text-[1.75rem] text-[#0f1613]">
+                  The Titan Peptide Lab team
                 </div>
                 <div className="mt-1 text-[13px] text-[#8a9690]">
-                  QA Lead, The Titan Peptide Company &middot; Reno, NV
+                  Reno, NV
                 </div>
               </div>
 

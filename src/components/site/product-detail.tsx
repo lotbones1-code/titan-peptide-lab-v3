@@ -88,7 +88,7 @@ export function ProductDetail({ product }: { product: Product }) {
             <dl className="mt-5 grid grid-cols-3 divide-x divide-[rgb(15_22_19/8%)] border-t border-[rgb(15_22_19/8%)] pt-5">
               {[
                 { dt: "Purity", dd: "HPLC ≥99%" },
-                { dt: "Certificate", dd: "Lot-matched COA" },
+                { dt: "Release", dd: "Lot sheet" },
                 { dt: "Dispatch", dd: "Within 24h" },
               ].map(({ dt, dd }) => (
                 <div key={dt} className="px-4 first:pl-0 last:pr-0">
@@ -124,7 +124,7 @@ export function ProductDetail({ product }: { product: Product }) {
             <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#e8e6e1] bg-[#faf8f4] px-3 py-1.5">
               <FlaskConical className="h-3.5 w-3.5 text-[#1e6f58]" />
               <span className="text-[12px] font-medium text-[#2a3530]">
-                Shipping from lot {lot} · COA matched per bottle
+                Shipping from lot {lot} · Release sheet matched per bottle
               </span>
             </div>
 
@@ -144,7 +144,7 @@ export function ProductDetail({ product }: { product: Product }) {
               ))}
             </ul>
 
-            {/* Price + lot-matched COA thumbnail (trust element at moment of doubt — Elite Design playbook §Conversion) */}
+            {/* Price + lot release-sheet thumbnail (trust element at moment of doubt — Elite Design playbook §Conversion) */}
             <div className="mt-8 grid gap-5 sm:grid-cols-[1fr_auto] sm:items-end">
               <div>
                 <div className="flex items-baseline gap-3">
@@ -161,8 +161,21 @@ export function ProductDetail({ product }: { product: Product }) {
                   <Globe className="h-3.5 w-3.5 text-[#1e6f58]" />
                   Ships worldwide · US from $12 · Free over $150 · Exact rate at checkout
                 </p>
+                {!appliedCode && (
+                  <p className="mt-1.5 text-[12px] font-medium text-[#1e6f58]">
+                    First order? Use <span className="font-semibold">FIRST10</span> for 10% off — saves ${(product.price * 0.1).toFixed(2)} on this bottle.
+                  </p>
+                )}
               </div>
               <CoaThumb lot={lot} productName={product.name.replace(/\s*\(Injectable Vial\)/i, "")} />
+            </div>
+
+            <div className="mt-5 flex flex-wrap items-center gap-3 rounded-[1rem] border border-[#1e6f58]/20 bg-[#f0f7f4] px-4 py-3 text-[12px] text-[#0f1613]">
+              <span className="inline-flex items-center gap-1.5 font-semibold text-[#1a5c48]">
+                <span className="size-1.5 rounded-full bg-[#1a5c48]"></span>
+                In stock — lot {lot}
+              </span>
+              <span className="text-[#5c6762]">Dispatch target within 24h after payment confirmation. Tracking emails when packed.</span>
             </div>
 
             {/* Quantity */}
@@ -248,13 +261,13 @@ export function ProductDetail({ product }: { product: Product }) {
                   block below (Elite Design playbook §Risk Reversal). */}
               <p className="flex items-center justify-center gap-1.5 text-[12px] text-[#5c6762]">
                 <ShieldCheck className="h-3.5 w-3.5 text-[#1e6f58]" />
-                Quality guarantee — replacement on lot-mismatch, sterility failure, or shipping damage.
+                Quality guarantee + 14-day unopened returns — replacement or refund on lot-mismatch, sterility failure, shipping damage, or unopened returns.
               </p>
 
               <div className="flex items-center justify-center gap-6 text-[11px] text-[#8a9690]">
                 <span className="flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" />HPLC ≥99%</span>
                 <span className="flex items-center gap-1.5"><Zap className="h-3.5 w-3.5" />24h dispatch</span>
-                <span className="flex items-center gap-1.5"><Check className="h-3.5 w-3.5" />Lot-matched COA</span>
+                <span className="flex items-center gap-1.5"><Check className="h-3.5 w-3.5" />Lot release sheet</span>
               </div>
             </div>
 
@@ -266,8 +279,8 @@ export function ProductDetail({ product }: { product: Product }) {
               <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 <div className="rounded-[1rem] border border-[rgb(15_22_19/7%)] bg-white px-4 py-3">
                   <FileText className="h-4 w-4 text-[#1e6f58]" />
-                  <p className="mt-2 text-[12px] font-medium text-[#0f1613]">Lot-matched COA</p>
-                  <p className="mt-1 text-[11px] leading-5 text-[#6b7a73]">Every order references a certificate tied to the batch you receive.</p>
+                  <p className="mt-2 text-[12px] font-medium text-[#0f1613]">Lot release sheet</p>
+                  <p className="mt-1 text-[11px] leading-5 text-[#6b7a73]">Every order references the in-house release sheet for the batch you receive.</p>
                 </div>
                 <div className="rounded-[1rem] border border-[rgb(15_22_19/7%)] bg-white px-4 py-3">
                   <Truck className="h-4 w-4 text-[#1e6f58]" />
@@ -302,7 +315,7 @@ export function ProductDetail({ product }: { product: Product }) {
                 </a>
               </div>
               <p className="mt-2 text-[10px] leading-4 text-[#8a9690]">
-                Your order&apos;s lot-matched COA (lot {lot}) is emailed within 24h of dispatch.
+                The in-house release sheet for lot {lot} ships with the order; the independent ISO 17025 retest PDF follows by email within 5 business days.
               </p>
             </div>
           </div>

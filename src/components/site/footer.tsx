@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BRAND, NASAL_SPRAYS, PRODUCTS } from "@/lib/products";
+import { BRAND, NASAL_SPRAYS, PRODUCTS, VIALS } from "@/lib/products";
 
 const RESEARCH_LINKS = [
   ["BPC-157 nasal spray", "/research/bpc-157-nasal-spray"],
@@ -39,6 +39,10 @@ export function Footer() {
   const productLinks = [
     ...NASAL_SPRAYS.map((product) => [
       product.name.replace(" Nasal Spray", ""),
+      `/products/${product.slug}`,
+    ]),
+    ...VIALS.map((product) => [
+      `${product.name.replace(" Vial", "")} (vial)`,
       `/products/${product.slug}`,
     ]),
     ...(stack ? [["Selank + Semax Stack", `/products/${stack.slug}`]] : []),

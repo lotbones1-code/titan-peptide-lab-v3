@@ -8,8 +8,8 @@ const ITEMS = [
   },
   {
     icon: ShieldCheck,
-    value: "Lot-matched COA",
-    label: "Document belongs to the batch on your order",
+    value: "Lot release sheet",
+    label: "Document references the batch on your order",
   },
   {
     icon: Snowflake,

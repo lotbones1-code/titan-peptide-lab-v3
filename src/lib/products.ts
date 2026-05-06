@@ -36,5 +36,7 @@ export const PRODUCTS: Product[] = PRODUCTS_DATA;
 export const PROMOS = PROMOS_DATA;
 
 export const NASAL_SPRAYS = PRODUCTS.filter((p) => p.category === "nasal-spray");
+export const VIALS = PRODUCTS.filter((p) => p.category === "injectable");
+export const STACKS = PRODUCTS.filter((p) => p.category === "stack");
 export const FEATURED = PRODUCTS.filter((p) => p.featured);
 export const BESTSELLERS = PRODUCTS.filter((p) => p.bestseller);

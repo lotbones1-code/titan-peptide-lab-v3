@@ -2,20 +2,28 @@ import { Reveal } from "./reveal";
 
 const STANDARDS = [
   {
-    title: "Third-party tested",
-    body: "Every batch undergoes independent HPLC testing. We release at ≥99% purity — the certificate is tied to the specific lot on your bottle, not a generic library PDF.",
+    n: "01",
+    title: "Independently retested",
+    body: "Every batch is HPLC tested in-house, then sent to an independent ISO 17025 lab for retest. Release target is ≥99% purity. Both reports carry the lot code etched on your bottle — same code, same batch, no rotating a single test result across SKUs.",
+    span: "lg:col-span-7",
   },
   {
-    title: "Batch-matched documentation",
-    body: "Your certificate of analysis matches the exact lot you receive. One bottle, one COA, one lot code — no rotating a single test result across batches.",
+    n: "02",
+    title: "Lot-matched documentation",
+    body: "The in-house release sheet for your lot ships in the box. The independent retest report follows by email within 5 business days — same lot code on both. If the third-party result disagrees with the in-house release beyond method tolerance, the batch is recalled and you are refunded.",
+    span: "lg:col-span-5",
   },
   {
+    n: "03",
     title: "Cold-chain shipping",
     body: "Temperature-sensitive orders are packed for cold-chain handling and dispatched within 24 hours. Tracking is sent as soon as the package leaves.",
+    span: "lg:col-span-5",
   },
   {
+    n: "04",
     title: "Tight catalog by design",
-    body: "Six sprays, each with dedicated research and full documentation. We keep the lineup small so every compound gets proper attention.",
+    body: "Eleven SKUs by design — six sprays, four vials, one paired stack. We keep the catalog small so every compound has dedicated research, dedicated documentation, and a dedicated handling protocol.",
+    span: "lg:col-span-7",
   },
 ];
 
@@ -26,30 +34,48 @@ export function QualitySection() {
       className="bg-[#0f1110] py-20 text-white lg:py-28"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        {/* Asymmetric editorial header — heading sits in left rail, lead text
+            sits offset down-and-right in a narrower column. Breaks the
+            centered-content pattern (per Elite Design playbook §Identity). */}
         <Reveal>
-          <div className="mb-14 max-w-2xl">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#8fd0b5]">
-              Quality standard
-            </span>
-            <h2 className="mt-4 font-serif text-[clamp(2.2rem,4.5vw,3.6rem)] leading-[1] tracking-[-0.03em] text-white">
-              Every bottle tested.<br />Every batch documented.
-            </h2>
-            <p className="mt-5 text-[15px] leading-[1.8] text-white/60">
-              We built Titan around one idea: you should be able to verify everything we claim before you buy. Here is exactly what we do.
+          <div className="mb-14 grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-x-12">
+            <div className="lg:col-span-7">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#8fd0b5]">
+                Quality standard / 04 commitments
+              </span>
+              <h2 className="mt-4 font-serif text-[clamp(2.2rem,4.5vw,3.6rem)] leading-[1] tracking-[-0.03em] text-white">
+                Every bottle tested.<br />Every batch documented.
+              </h2>
+            </div>
+            <p className="text-[15px] leading-[1.8] text-white/60 lg:col-span-4 lg:col-start-9">
+              You should be able to verify everything we claim before you buy.
+              Here is exactly what we do — numbered, in the order it happens to
+              your bottle.
             </p>
           </div>
         </Reveal>
 
-        <div className="grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2">
+        {/* Asymmetric staggered grid: 7/5 + 5/7 — each row breaks symmetry
+            without losing the editorial rhythm. Side-bound numerals replace
+            the centered-card aesthetic. */}
+        <div className="grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 lg:grid-cols-12">
           {STANDARDS.map((item, i) => (
-            <Reveal key={item.title} delay={i * 0.04}>
-              <div className="flex h-full flex-col bg-[#0f1110] p-7 lg:p-8">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8fd0b5]">
-                  {item.title}
-                </p>
-                <p className="mt-4 text-[14px] leading-[1.8] text-white/60">
-                  {item.body}
-                </p>
+            <Reveal key={item.title} delay={i * 0.04} className={item.span}>
+              <div className="flex h-full gap-6 bg-[#0f1110] p-7 lg:p-9">
+                <span
+                  aria-hidden
+                  className="font-mono text-[11px] tracking-[0.18em] text-[#8fd0b5]/70"
+                >
+                  {item.n}
+                </span>
+                <div className="flex-1">
+                  <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-[#8fd0b5]">
+                    {item.title}
+                  </p>
+                  <p className="mt-3 max-w-[44ch] text-[14px] leading-[1.8] text-white/60">
+                    {item.body}
+                  </p>
+                </div>
               </div>
             </Reveal>
           ))}

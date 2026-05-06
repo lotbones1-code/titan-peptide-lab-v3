@@ -39,64 +39,41 @@ export const DISCOUNT_CODES_DATA = {
 
 export const PRODUCTS_DATA: Product[] = [
   {
-    "id": "bpc157-spray",
-    "slug": "bpc-157-nasal-spray",
-    "name": "BPC-157 Nasal Spray",
-    "category": "nasal-spray",
-    "price": 64.99,
-    "compareAtPrice": 84.99,
-    "size": "15mL · 500mcg/spray",
-    "tagline": "Recovery, gut support, systemic repair",
-    "description": "Body Protection Compound 157 delivered via precision atomizer. Researchers report rapid tissue recovery and systemic anti-inflammatory action. HPLC-verified ≥99% purity.",
-    "benefits": [
-      "Tissue repair & recovery",
-      "Gut lining support",
-      "Non-invasive delivery",
-      "Sublingual-to-nasal bioavailability"
-    ],
-    "image": "/products/bpc157-spray.png",
-    "featured": true,
-    "bestseller": true
-  },
-  {
-    "id": "selank-spray",
-    "slug": "selank-nasal-spray",
-    "name": "Selank Nasal Spray",
-    "category": "nasal-spray",
-    "price": 59.99,
-    "compareAtPrice": 74.99,
-    "size": "15mL · 750mcg/spray",
-    "tagline": "Calm focus without sedation",
-    "description": "Russian-developed anxiolytic nootropic peptide. Modulates GABA and serotonin pathways for calm, alert cognition. Trusted by researchers for anxiety and attention studies.",
-    "benefits": [
-      "Reduces anxiety",
-      "Enhances focus",
-      "Non-sedating",
-      "Mood stabilizing"
-    ],
-    "image": "/products/selank-spray.png",
-    "featured": true,
-    "bestseller": true
-  },
-  {
     "id": "oxytocin-spray",
     "slug": "oxytocin-nasal-spray",
     "name": "Oxytocin Nasal Spray",
     "category": "nasal-spray",
     "price": 74.99,
-    "compareAtPrice": 94.99,
     "size": "15mL · 400mcg/spray",
-    "tagline": "Connection, calm, and social regulation research",
-    "description": "Intranasal oxytocin peptide for social bonding, stress response, and calm-state research. Built for labs studying trust, social cognition, and autonomic regulation in a familiar spray format.",
+    "tagline": "Subject of social-cognition and autonomic-pathway research",
+    "description": "Nine-residue neurohypophyseal peptide in a precision intranasal format. Cited in social-cognition, trust-paradigm, and HPA-axis research literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
     "benefits": [
-      "Social cognition research",
-      "Stress regulation studies",
-      "Intranasal peptide delivery",
-      "Lot-matched COA included"
+      "Cited in social-cognition paradigms",
+      "Investigated in HPA-axis research",
+      "Intranasal research format",
+      "HPLC ≥99% purity target, lot release sheet"
     ],
     "image": "/products/oxytocin-spray.png",
     "featured": true,
     "newArrival": true
+  },
+  {
+    "id": "bpc157-spray",
+    "slug": "bpc-157-nasal-spray",
+    "name": "BPC-157 Nasal Spray",
+    "category": "nasal-spray",
+    "price": 64.99,
+    "size": "15mL · 500mcg/spray",
+    "tagline": "Subject of angiogenesis and GI-mucosa research literature",
+    "description": "Body Protection Compound 157 in a precision intranasal format. Cited across angiogenesis, tendon-fibroblast, and GI-mucosa research literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
+    "benefits": [
+      "Cited in tendon-fibroblast research",
+      "Cited in GI-mucosa research literature",
+      "Intranasal research format",
+      "HPLC ≥99% purity target, lot release sheet"
+    ],
+    "image": "/products/bpc157-spray.png",
+    "featured": true
   },
   {
     "id": "pt141-spray",
@@ -104,17 +81,34 @@ export const PRODUCTS_DATA: Product[] = [
     "name": "PT-141 Nasal Spray",
     "category": "nasal-spray",
     "price": 69.99,
-    "compareAtPrice": 89.99,
     "size": "10mL · 1mg/spray",
-    "tagline": "Libido & arousal research",
-    "description": "Bremelanotide (PT-141) — melanocortin receptor agonist. Acts on central nervous system pathways. Fast-onset, non-hormonal research compound.",
+    "tagline": "Melanocortin-receptor (MC3R/MC4R) agonist research compound",
+    "description": "Bremelanotide — synthetic α-MSH analog and melanocortin-receptor (MC3R/MC4R) agonist. Appears in melanocortin-pathway and CNS-receptor research literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
     "benefits": [
-      "Central nervous system action",
-      "Non-hormonal",
-      "Fast onset (~45 min)",
-      "Unisex research use"
+      "Investigated in melanocortin-pathway research",
+      "Non-hormonal melanocortin agonist",
+      "CNS-receptor research interest",
+      "HPLC ≥99% purity target, lot release sheet"
     ],
     "image": "/products/pt141-spray.png",
+    "featured": true
+  },
+  {
+    "id": "selank-spray",
+    "slug": "selank-nasal-spray",
+    "name": "Selank Nasal Spray",
+    "category": "nasal-spray",
+    "price": 59.99,
+    "size": "15mL · 750mcg/spray",
+    "tagline": "Subject of anxiolytic-pathway and attention research",
+    "description": "Heptapeptide derivative of tuftsin originally synthesized in Soviet-era CNS research programs. Cited in academic literature on GABAergic and serotonergic-pathway modulation. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
+    "benefits": [
+      "Cited in anxiolytic-pathway research",
+      "Cited in attention/cognition research",
+      "GABAergic + serotonergic pathway research interest",
+      "HPLC ≥99% purity target, lot release sheet"
+    ],
+    "image": "/products/selank-spray.png",
     "featured": true
   },
   {
@@ -123,37 +117,17 @@ export const PRODUCTS_DATA: Product[] = [
     "name": "Semax Nasal Spray",
     "category": "nasal-spray",
     "price": 59.99,
-    "compareAtPrice": 74.99,
     "size": "15mL · 1mg/spray",
-    "tagline": "Cognitive performance & neuroprotection",
-    "description": "Heptapeptide nootropic. Upregulates BDNF, supports memory, focus, and neural recovery. Stacks cleanly with Selank for cognitive-emotional balance.",
+    "tagline": "Subject of BDNF and neurotrophic-pathway research",
+    "description": "Heptapeptide ACTH(4-10) analog originally developed in Russian CNS research programs. Cited for BDNF/NGF and neurotrophic-pathway research in academic literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
     "benefits": [
-      "Memory & learning",
-      "BDNF upregulation",
-      "Neural recovery",
-      "Stress resilience"
+      "Cited in memory/learning research literature",
+      "BDNF-pathway research interest",
+      "Neurotrophic-factor research focus",
+      "HPLC ≥99% purity target, lot release sheet"
     ],
     "image": "/products/semax-spray.png",
     "featured": true
-  },
-  {
-    "id": "selank-semax-stack",
-    "slug": "selank-semax-stack",
-    "name": "Selank + Semax Stack",
-    "category": "stack",
-    "price": 105,
-    "compareAtPrice": 120,
-    "size": "2 × 15mL",
-    "tagline": "The legendary cognitive-emotional pair",
-    "description": "The classic dual-spray protocol. Selank for calm, Semax for sharp. Run them in tandem for balanced cognitive performance under load.",
-    "benefits": [
-      "Save $15 vs separate",
-      "Balanced stack",
-      "Most popular combo",
-      "Researcher favorite"
-    ],
-    "image": "/products/selank-semax-stack.png",
-    "bestseller": true
   },
   {
     "id": "dsip-spray",
@@ -161,15 +135,14 @@ export const PRODUCTS_DATA: Product[] = [
     "name": "DSIP Nasal Spray",
     "category": "nasal-spray",
     "price": 62.99,
-    "compareAtPrice": 79.99,
     "size": "15mL · 500mcg/spray",
-    "tagline": "Sleep quality and recovery-state research",
-    "description": "Delta Sleep-Inducing Peptide delivered through a precision nasal atomizer. Suited to sleep architecture, recovery, and downshift-state research where a non-invasive format matters.",
+    "tagline": "Subject of EEG sleep-architecture and circadian-pathway research",
+    "description": "Delta Sleep-Inducing Peptide in a precision intranasal format. Appears in EEG sleep-architecture and circadian-pathway research literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
     "benefits": [
-      "Sleep architecture studies",
-      "Recovery-state support",
-      "Low-friction spray format",
-      "HPLC-verified purity"
+      "Cited in EEG sleep-architecture research",
+      "Circadian-pathway research interest",
+      "Intranasal research format",
+      "HPLC ≥99% purity target, lot release sheet"
     ],
     "image": "/products/dsip-spray.png",
     "newArrival": true
@@ -181,13 +154,13 @@ export const PRODUCTS_DATA: Product[] = [
     "category": "injectable",
     "price": 199.99,
     "size": "10mg lyophilized",
-    "tagline": "Next-gen metabolic research",
-    "description": "Triple-agonist (GLP-1/GIP/glucagon). Emerging compound for metabolic research. Limited availability.",
+    "tagline": "GLP-1 / GIP / glucagon triple-agonist research compound",
+    "description": "Synthetic triple-incretin agonist active at GLP-1, GIP, and glucagon receptors. Appears in published phase-II/III clinical literature on incretin-pathway pharmacology. For research use only. Not for human consumption.",
     "benefits": [
-      "Triple receptor agonist",
-      "Metabolic research",
-      "Limited stock",
-      "99%+ HPLC purity"
+      "GLP-1/GIP/glucagon triple-agonist",
+      "Investigated in incretin-pathway research",
+      "Lyophilized vial, reconstitute with bacteriostatic water",
+      "HPLC ≥99% purity target, lot release sheet"
     ],
     "image": "/products/retatrutide.png",
     "newArrival": true
@@ -199,13 +172,13 @@ export const PRODUCTS_DATA: Product[] = [
     "category": "injectable",
     "price": 54.99,
     "size": "5mg lyophilized",
-    "tagline": "Classic research format",
-    "description": "Lyophilized BPC-157 in 5mg vial. For researchers who prefer subcutaneous protocols. Reconstitute with bacteriostatic water.",
+    "tagline": "Lyophilized format for SC research protocols",
+    "description": "Lyophilized Body Protection Compound 157 in a 5mg vial. Standard format for subcutaneous research protocols. Cited in angiogenesis, tendon-fibroblast, and GI-mucosa research literature. Reconstitute with bacteriostatic water. For research use only. Not for human consumption.",
     "benefits": [
-      "Higher potency per dose",
-      "Lab-standard format",
-      "99%+ HPLC purity",
-      "Ships with COA"
+      "Lyophilized SC research format",
+      "Higher mg per vial than spray",
+      "HPLC ≥99% purity",
+      "Lot release sheet included"
     ],
     "image": "/products/bpc157-vial.png"
   },
@@ -216,15 +189,32 @@ export const PRODUCTS_DATA: Product[] = [
     "category": "injectable",
     "price": 119.99,
     "size": "5mg / 5mg blend",
-    "tagline": "GH axis research blend",
-    "description": "Pre-blended CJC-1295 (no DAC) with Ipamorelin. Most-studied GH secretagogue combo. Saves reconstitution steps.",
+    "tagline": "Pre-blended GH-secretagogue research format",
+    "description": "Pre-blended CJC-1295 (no DAC) with Ipamorelin in a single lyophilized vial. Both compounds appear in GH-secretagogue and GHRH-receptor research literature. Reconstitute with bacteriostatic water. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
     "benefits": [
-      "Pre-blended convenience",
-      "GH axis research",
-      "Two-peptide synergy",
-      "99%+ HPLC purity"
+      "Pre-blended single-vial format",
+      "GHRH/GHS-receptor research interest",
+      "Frequently-cited secretagogue pair",
+      "HPLC ≥99% purity target, lot release sheet"
     ],
     "image": "/products/cjc-ipa.png"
+  },
+  {
+    "id": "selank-semax-stack",
+    "slug": "selank-semax-stack",
+    "name": "Selank + Semax Stack",
+    "category": "stack",
+    "price": 105,
+    "size": "2 × 15mL",
+    "tagline": "Two-spray format for paired CNS-pathway research",
+    "description": "Selank and Semax in matched intranasal sprays. Frequently paired in academic literature on anxiolytic-pathway (Selank) and neurotrophic-pathway (Semax) mechanisms. HPLC-verified ≥99% purity on both. For research use only. Not for human consumption.",
+    "benefits": [
+      "Save $15 vs separate",
+      "Paired CNS-pathway research format",
+      "Frequently-ordered research stack",
+      "HPLC ≥99% purity target, lot release sheets"
+    ],
+    "image": "/products/selank-semax-stack.png"
   },
   {
     "id": "tb500-vial",
@@ -233,13 +223,13 @@ export const PRODUCTS_DATA: Product[] = [
     "category": "injectable",
     "price": 89.99,
     "size": "5mg lyophilized",
-    "tagline": "Systemic recovery research",
-    "description": "Thymosin Beta-4 fragment. Used in tissue repair and recovery studies. Pairs well with BPC-157 protocols.",
+    "tagline": "Subject of actin-binding and angiogenesis research",
+    "description": "Thymosin Beta-4 active fragment (TB-500). Cited in actin-sequestration and angiogenesis research literature. Frequently paired with BPC-157 in academic protocol literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
     "benefits": [
-      "Thymosin Beta-4 active fragment",
-      "Tissue regeneration research",
-      "99%+ HPLC purity",
-      "Ships with COA"
+      "Thymosin β-4 active fragment",
+      "Cited in actin-binding/angiogenesis research",
+      "Often paired with BPC-157 in literature",
+      "HPLC ≥99% purity target, lot release sheet"
     ],
     "image": "/products/tb500-vial.png"
   }

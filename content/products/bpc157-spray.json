@@ -4,17 +4,15 @@
   "name": "BPC-157 Nasal Spray",
   "category": "nasal-spray",
   "price": 64.99,
-  "compareAtPrice": 84.99,
   "size": "15mL · 500mcg/spray",
-  "tagline": "Recovery, gut support, systemic repair",
-  "description": "Body Protection Compound 157 delivered via precision atomizer. Researchers report rapid tissue recovery and systemic anti-inflammatory action. HPLC-verified ≥99% purity.",
+  "tagline": "Subject of angiogenesis and GI-mucosa research literature",
+  "description": "Body Protection Compound 157 in a precision intranasal format. Cited across angiogenesis, tendon-fibroblast, and GI-mucosa research literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
   "benefits": [
-    "Tissue repair & recovery",
-    "Gut lining support",
-    "Non-invasive delivery",
-    "Sublingual-to-nasal bioavailability"
+    "Cited in tendon-fibroblast research",
+    "Cited in GI-mucosa research literature",
+    "Intranasal research format",
+    "HPLC ≥99% purity target, lot release sheet"
   ],
   "image": "/products/bpc157-spray.png",
-  "featured": true,
-  "bestseller": true
+  "featured": true
 }

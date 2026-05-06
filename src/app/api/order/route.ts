@@ -6,8 +6,8 @@ import nodemailer from "nodemailer";
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const GMAIL_USER = process.env.GMAIL_SENDER;
 const GMAIL_PASS = process.env.GMAIL_APP_PASSWORD;
-const ORDER_NOTIFY_EMAIL = process.env.ORDER_NOTIFY_EMAIL || "ssj4shamil@gmail.com";
-const FROM_EMAIL = process.env.FROM_EMAIL || "Titan Peptide Lab <ssj4shamil@gmail.com>";
+const ORDER_NOTIFY_EMAIL = process.env.ORDER_NOTIFY_EMAIL || "support@titanpeptidelab.com";
+const FROM_EMAIL = process.env.FROM_EMAIL || "Titan Peptide Lab <support@titanpeptidelab.com>";
 const ORDERS_FILE = path.join(process.cwd(), "data", "orders.json");
 
 interface OrderItem {

@@ -4,15 +4,14 @@
   "name": "DSIP Nasal Spray",
   "category": "nasal-spray",
   "price": 62.99,
-  "compareAtPrice": 79.99,
   "size": "15mL · 500mcg/spray",
-  "tagline": "Sleep quality and recovery-state research",
-  "description": "Delta Sleep-Inducing Peptide delivered through a precision nasal atomizer. Suited to sleep architecture, recovery, and downshift-state research where a non-invasive format matters.",
+  "tagline": "Subject of EEG sleep-architecture and circadian-pathway research",
+  "description": "Delta Sleep-Inducing Peptide in a precision intranasal format. Appears in EEG sleep-architecture and circadian-pathway research literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
   "benefits": [
-    "Sleep architecture studies",
-    "Recovery-state support",
-    "Low-friction spray format",
-    "HPLC-verified purity"
+    "Cited in EEG sleep-architecture research",
+    "Circadian-pathway research interest",
+    "Intranasal research format",
+    "HPLC ≥99% purity target, lot release sheet"
   ],
   "image": "/products/dsip-spray.png",
   "newArrival": true

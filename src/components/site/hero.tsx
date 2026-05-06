@@ -29,21 +29,21 @@ export function Hero() {
       <div className="mx-auto max-w-7xl px-5 py-12 lg:px-10 lg:py-20">
         <Reveal>
           <div className="grid gap-10 lg:grid-cols-[1.04fr_0.96fr] lg:items-start lg:gap-14">
-            <div>
+            <div className="min-w-0">
               <span className="inline-flex rounded-full border border-[#dde5df] bg-[#f7faf8] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#1a5c48]">
                 Nasal peptide catalog
               </span>
 
-              <h1 className="mt-5 font-serif text-[clamp(2.9rem,6vw,5.3rem)] font-normal leading-[0.9] tracking-[-0.05em] text-[#0f1110]">
-                Research-grade
+              <h1 className="mt-5 break-words font-serif text-[clamp(2.9rem,6vw,5.3rem)] font-normal leading-[0.9] tracking-[-0.05em] text-[#0f1110]">
+                Research peptides
                 <br />
-                peptide sprays.
+                without the guesswork.
                 <br />
-                <span className="text-[#1a5c48]">Built on batch discipline.</span>
+                <span className="text-[#1a5c48]">Lot-matched. Crypto. Discreet.</span>
               </h1>
 
               <p className="mt-6 max-w-[46ch] text-[15px] leading-[1.85] text-[#555b55] lg:text-[16px]">
-                Six nasal sprays backed by lot-matched certificates of analysis, shipped worldwide with on-chain payment verification. Research-grade purity, no compromises.
+                Every order ships with the release sheet for your batch — not a stock document. Pay in BTC, ETH, USDC, or SOL. No bank, no KYC, no shipping label tied to your card. Dispatched within 24 hours, worldwide.
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -51,23 +51,27 @@ export function Hero() {
                   href="/products"
                   className="inline-flex h-12 items-center justify-center gap-2.5 rounded-full bg-[#0f1110] px-8 text-[13px] font-semibold text-white transition-colors hover:bg-[#1a5c48]"
                 >
-                  Shop catalog
+                  Shop sprays — from ${NASAL_SPRAYS[0]?.price.toFixed(0) ?? "75"}
                   <ArrowRight className="size-4" />
                 </Link>
                 <Link
                   href="/lab-testing"
                   className="inline-flex h-12 items-center justify-center rounded-full border border-[#d4d4d4] px-7 text-[13px] font-semibold text-[#0f1110] transition-colors hover:border-[#0f1110]"
                 >
-                  Review lab testing
+                  See the COA format
                 </Link>
               </div>
 
+              <p className="mt-4 text-[12px] text-[#66736d]">
+                <span className="font-semibold text-[#1a5c48]">FIRST10</span> — 10% off your first order at checkout.
+              </p>
+
               <div className="mt-10 grid gap-3 sm:grid-cols-2">
                 {[
-                  ["≥99%", "HPLC purity target with lot-matched COA"],
-                  ["24h", "dispatch after payment confirmation"],
-                  ["5 rails", "BTC · ETH · SOL · USDC on 3 networks"],
-                  ["200+", "countries we ship to from one warehouse"],
+                  ["≥99%", "HPLC purity, verified per lot"],
+                  ["24h", "dispatch from payment confirmation"],
+                  ["No KYC", "crypto-only — no bank, no card data"],
+                  ["Worldwide", "tracked shipping, lot release sheet"],
                 ].map(([value, label]) => (
                   <div
                     key={label}
@@ -80,7 +84,7 @@ export function Hero() {
               </div>
             </div>
 
-            <div>
+            <div className="min-w-0">
               {featured ? (
                 <div className="overflow-hidden rounded-[1.7rem] border border-[#e8e6e1] bg-[#fafaf8] shadow-[0_1px_2px_rgb(15_22_19/4%),_0_30px_70px_-50px_rgb(15_22_19/16%)]">
                   <div className="border-b border-[#e8e6e1] px-6 py-5 sm:px-7">
@@ -98,8 +102,12 @@ export function Hero() {
                       </p>
                     </div>
                     <p className="mt-3 max-w-[44ch] text-[13px] leading-[1.75] text-[#66736d]">
-                      {featured.tagline} Start with the featured release, review shipping, then choose the payment rail that fits your order.
+                      {featured.tagline} Lot ships with its own release sheet — independent retest follows by email.
                     </p>
+                    <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#f0f7f4] px-3 py-1 text-[11px] font-medium text-[#1a5c48]">
+                      <span className="size-1.5 rounded-full bg-[#1a5c48]"></span>
+                      Current lot in stock — dispatch target within 24h of payment
+                    </div>
                   </div>
 
                   <div className="p-4 sm:p-5">
@@ -117,7 +125,7 @@ export function Hero() {
                       </p>
                       <div className="mt-3 flex flex-wrap gap-2">
                         {[
-                          "Lot-matched COA",
+                          "Lot release sheet",
                           "24h dispatch target",
                           "Ships worldwide",
                         ].map((item) => (

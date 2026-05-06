@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 
 const GMAIL_USER = process.env.GMAIL_SENDER;
 const GMAIL_PASS = process.env.GMAIL_APP_PASSWORD;
-const SUPPORT_EMAIL = process.env.ORDER_NOTIFY_EMAIL || "ssj4shamil@gmail.com";
+const SUPPORT_EMAIL = process.env.ORDER_NOTIFY_EMAIL || "support@titanpeptidelab.com";
 
 export async function POST(req: NextRequest) {
   try {

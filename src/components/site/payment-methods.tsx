@@ -50,11 +50,17 @@ export function PaymentMethods() {
               Payment
             </span>
             <h2 className="mt-3 font-serif text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] tracking-[-0.03em] text-[#0f1110]">
-              Worldwide payment rails. Four crypto paths supported.
+              Crypto-only.<br />No bank, no KYC, no card data.
             </h2>
             <p className="mt-4 text-[15px] leading-[1.8] text-[#555b55]">
-              Choose the network that fits your wallet, place the order once, and Titan confirms payment plus destination details before dispatch. International buyers use the same flow.
+              Your card statement stays clean. The order desk sees a wallet, not a name. Pay in BTC, ETH, USDC, or SOL — the same flow whether you&apos;re in Denver or Dubai.
             </p>
+            <ul className="mt-5 grid gap-2 text-[13px] text-[#44514b] sm:grid-cols-2">
+              <li className="flex items-start gap-2"><span className="mt-1 size-1.5 shrink-0 rounded-full bg-[#1a5c48]"></span>No 3rd-party processor — funds confirm direct on-chain</li>
+              <li className="flex items-start gap-2"><span className="mt-1 size-1.5 shrink-0 rounded-full bg-[#1a5c48]"></span>No chargebacks, no holds, no merchant flags</li>
+              <li className="flex items-start gap-2"><span className="mt-1 size-1.5 shrink-0 rounded-full bg-[#1a5c48]"></span>Refunds returned to the same wallet on QA failure</li>
+              <li className="flex items-start gap-2"><span className="mt-1 size-1.5 shrink-0 rounded-full bg-[#1a5c48]"></span>Same flow worldwide — no regional banking gates</li>
+            </ul>
           </div>
         </Reveal>
 

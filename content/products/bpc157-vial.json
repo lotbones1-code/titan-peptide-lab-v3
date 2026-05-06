@@ -5,13 +5,13 @@
   "category": "injectable",
   "price": 54.99,
   "size": "5mg lyophilized",
-  "tagline": "Classic research format",
-  "description": "Lyophilized BPC-157 in 5mg vial. For researchers who prefer subcutaneous protocols. Reconstitute with bacteriostatic water.",
+  "tagline": "Lyophilized format for SC research protocols",
+  "description": "Lyophilized Body Protection Compound 157 in a 5mg vial. Standard format for subcutaneous research protocols. Cited in angiogenesis, tendon-fibroblast, and GI-mucosa research literature. Reconstitute with bacteriostatic water. For research use only. Not for human consumption.",
   "benefits": [
-    "Higher potency per dose",
-    "Lab-standard format",
-    "99%+ HPLC purity",
-    "Ships with COA"
+    "Lyophilized SC research format",
+    "Higher mg per vial than spray",
+    "HPLC ≥99% purity",
+    "Lot release sheet included"
   ],
   "image": "/products/bpc157-vial.png"
 }

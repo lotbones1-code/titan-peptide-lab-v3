@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { NASAL_SPRAYS, PRODUCTS } from "@/lib/products";
+import { NASAL_SPRAYS, VIALS, STACKS } from "@/lib/products";
 import { ProductCard } from "./product-card";
 
 function formatPrice(price: number) {
@@ -9,9 +9,9 @@ function formatPrice(price: number) {
 import { Reveal } from "./reveal";
 
 export function Products() {
-  const featured = NASAL_SPRAYS.find((p) => p.id === "bpc157-spray") ?? NASAL_SPRAYS[0];
-  const rest = NASAL_SPRAYS.filter((p) => p.id !== featured.id);
-  const stack = PRODUCTS.find((p) => p.id === "selank-semax-stack");
+  const sprays = NASAL_SPRAYS;
+  const vials = VIALS;
+  const stack = STACKS[0];
 
   return (
     <section id="products" className="border-t border-[#e8e6e1] bg-[#faf8f4] py-20 lg:py-28">
@@ -23,11 +23,11 @@ export function Products() {
                 Full catalog
               </span>
               <h2 className="mt-3 font-serif text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] tracking-[-0.03em] text-[#0f1110]">
-                Six sprays, one stack,{" "}
-                <span className="text-[#1a5c48]">every lot documented.</span>
+                Eleven research-grade compounds.{" "}
+                <span className="text-[#1a5c48]">Every lot documented.</span>
               </h2>
               <p className="mt-4 max-w-[44rem] text-[14px] leading-[1.8] text-[#59665f]">
-                Each spray ships with a lot-matched certificate of analysis. Pick the compound that fits your research, review the detail page, and order with crypto — we ship to 40+ countries.
+                Six ship as precision intranasal sprays, four as injectable vials, one as a paired nootropic stack. Each ships with the in-house release sheet for the lot on your bottle; the independent ISO 17025 retest report follows by email within 5 business days.
               </p>
             </div>
 
@@ -37,20 +37,42 @@ export function Products() {
               </p>
               <div className="mt-4 space-y-3 text-[13px] leading-7 text-[#44514b]">
                 <p><span className="font-semibold text-[#0f1110]">01.</span> Add any spray or stack to your cart.</p>
-                <p><span className="font-semibold text-[#0f1110]">02.</span> Enter your shipping address — we deliver to 40+ countries.</p>
+                <p><span className="font-semibold text-[#0f1110]">02.</span> Enter your shipping address — 218 destinations supported, exact rate at checkout.</p>
                 <p><span className="font-semibold text-[#0f1110]">03.</span> Pay with BTC, ETH, SOL, or USDC. We verify on-chain and ship within 24h.</p>
               </div>
             </div>
           </div>
         </Reveal>
 
+        <div className="mb-3">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8a9690]">
+            Nasal sprays · 6
+          </p>
+        </div>
         <div className="grid gap-5 xl:grid-cols-3">
-          {rest.map((product, index) => (
+          {sprays.map((product, index) => (
             <Reveal key={product.id} delay={index * 0.05}>
-              <ProductCard product={product} className={index === 0 ? "xl:col-span-2" : undefined} />
+              <ProductCard product={product} />
             </Reveal>
           ))}
         </div>
+
+        {vials.length > 0 && (
+          <>
+            <div className="mb-3 mt-12">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#8a9690]">
+                Vials &amp; injectables · {vials.length}
+              </p>
+            </div>
+            <div className="grid gap-5 xl:grid-cols-4">
+              {vials.map((product, index) => (
+                <Reveal key={product.id} delay={index * 0.05}>
+                  <ProductCard product={product} />
+                </Reveal>
+              ))}
+            </div>
+          </>
+        )}
 
         {stack && (
           <Reveal delay={0.08}>

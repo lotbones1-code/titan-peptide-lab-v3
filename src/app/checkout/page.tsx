@@ -52,6 +52,10 @@ const WALLET_OPTIONS: WalletOption[] = [
 // the full order. Either way the customer ends up with a reference order ID.
 const ORDER_ENDPOINT = "/api/order";
 const ORDER_INBOX = "support@titanpeptidelab.com";
+// Static-host fallback: Formsubmit forwards form payloads to the order inbox
+// without any server. Zero signup; first inbound triggers a one-click activation
+// email. Keeps the customer on-site instead of bouncing to mailto.
+const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/support@titanpeptidelab.com";
 
 function makeOrderId() {
   const ts = Date.now().toString(36);
@@ -64,7 +68,15 @@ type PriceMap = Partial<Record<WalletOption["priceKey"], number>>;
 export default function CheckoutPage() {
   const { items, subtotal, clearCart, hydrated } = useCart();
   const [submitting, setSubmitting] = useState(false);
-  const [done, setDone] = useState<null | { orderId: string; coin: Coin; total: number }>(null);
+  const [done, setDone] = useState<null | {
+    orderId: string;
+    coin: Coin;
+    total: number;
+    paymentLabel: string;
+    paymentNetwork: string;
+    paymentAddress: string;
+    cryptoAmount: string | null;
+  }>(null);
   const [copied, setCopied] = useState<"address" | "amount" | null>(null);
   const [prices, setPrices] = useState<PriceMap>({});
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
@@ -150,6 +162,19 @@ export default function CheckoutPage() {
   const qrData = walletDeepLink ?? wallet.address;
   const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&margin=0&data=${encodeURIComponent(qrData)}`;
 
+  const completeOrder = (orderId: string) => {
+    setDone({
+      orderId,
+      coin: selectedCoin,
+      total,
+      paymentLabel: wallet.label,
+      paymentNetwork: wallet.network,
+      paymentAddress: wallet.address,
+      cryptoAmount,
+    });
+    clearCart();
+  };
+
   if (!hydrated) {
     return (
       <>
@@ -229,6 +254,49 @@ export default function CheckoutPage() {
       txHash: paymentMethod === "crypto" && txHash ? txHash : undefined,
     };
 
+    const submitViaFormsubmit = async (): Promise<boolean> => {
+      const itemLines = items
+        .map((i) => `${i.product.name} (${i.product.size}) x ${i.quantity} = $${(i.product.price * i.quantity).toFixed(2)}`)
+        .join("\n");
+      const formPayload = {
+        _subject: `New order: ${fallbackOrderId} - $${total.toFixed(2)} via ${wallet.label}`,
+        _captcha: "false",
+        _template: "table",
+        orderId: fallbackOrderId,
+        customerName: name,
+        customerEmail: email,
+        country,
+        shippingAddress: fullAddress,
+        items: itemLines,
+        subtotal: `$${subtotal.toFixed(2)}`,
+        discount: appliedDiscount ? `${appliedDiscount.code} (-${appliedDiscount.percent}%) -$${discountAmount.toFixed(2)}` : "none",
+        shipping: shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`,
+        total: `$${total.toFixed(2)}`,
+        paymentCoin: `${wallet.label} (${wallet.network})`,
+        paymentAddress: wallet.address,
+        cryptoAmount: cryptoAmount ? `${cryptoAmount} ${wallet.coin}` : `$${total.toFixed(2)} USD`,
+        txHash: txHash || "(will send after transfer)",
+      };
+      try {
+        const fctrl = new AbortController();
+        const ftimeout = setTimeout(() => fctrl.abort(), 6000);
+        const fres = await fetch(FORMSUBMIT_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(formPayload),
+          signal: fctrl.signal,
+        });
+        clearTimeout(ftimeout);
+        if (fres.ok) {
+          completeOrder(fallbackOrderId);
+          return true;
+        }
+      } catch {
+        /* fall through to mailto */
+      }
+      return false;
+    };
+
     const submitViaMailto = () => {
       const lines = [
         `Order ID: ${fallbackOrderId}`,
@@ -257,8 +325,7 @@ export default function CheckoutPage() {
       const body = lines.join("\n");
       const href = `mailto:${ORDER_INBOX}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       window.location.href = href;
-      setDone({ orderId: fallbackOrderId, coin: selectedCoin, total });
-      clearCart();
+      completeOrder(fallbackOrderId);
     };
 
     try {
@@ -274,13 +341,14 @@ export default function CheckoutPage() {
 
       const data = await res.json().catch(() => null);
       if (res.ok && data && data.success && data.orderId) {
-        setDone({ orderId: data.orderId, coin: selectedCoin, total });
-        clearCart();
+        completeOrder(data.orderId);
       } else {
-        submitViaMailto();
+        const ok = await submitViaFormsubmit();
+        if (!ok) submitViaMailto();
       }
     } catch {
-      submitViaMailto();
+      const ok = await submitViaFormsubmit();
+      if (!ok) submitViaMailto();
     } finally {
       setSubmitting(false);
     }
@@ -318,10 +386,25 @@ export default function CheckoutPage() {
             <p className="mt-2 text-[13px] text-[#8a9690]">
               Save this order ID. If your email client just opened, send that email to confirm — we&apos;ll match it to your on-chain payment.
             </p>
+            <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#d9e7e0] bg-[#f3f9f6] p-5 text-left">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">Payment reference</p>
+              <p className="mt-2 font-serif text-[1.5rem] leading-none text-[#0f1613]">
+                {done.cryptoAmount ? `${done.cryptoAmount} ${done.coin.replace("-ERC", "").replace("-SOL", "")}` : `$${done.total.toFixed(2)} USD`}
+              </p>
+              <p className="mt-2 text-[12px] text-[#44514b]">
+                Send on <span className="font-medium text-[#0f1613]">{done.paymentLabel} · {done.paymentNetwork}</span> only.
+              </p>
+              <p className="mt-3 break-all rounded-lg border border-[#d9e7e0] bg-white px-3 py-2.5 font-mono text-[11px] leading-5 text-[#44514b]">
+                {done.paymentAddress}
+              </p>
+              <p className="mt-2 text-[11px] leading-5 text-[#6b7a73]">
+                Network must match the option selected at checkout. If you paid already, keep your transaction hash with this order ID.
+              </p>
+            </div>
             <div className="mx-auto mt-8 max-w-sm rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-5 text-left text-[13px] leading-relaxed text-[#44514b]">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">What happens next</p>
               <ol className="mt-3 space-y-2.5">
-                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">1.</span><span>Send the exact crypto amount (already shown at checkout) if you haven&apos;t yet.</span></li>
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">1.</span><span>Send the exact crypto amount above if you haven&apos;t yet.</span></li>
                 <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">2.</span><span>We verify on-chain — usually under 30 minutes.</span></li>
                 <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">3.</span><span>Cold-chain dispatch within 24h, tracking emailed when packed.</span></li>
               </ol>
@@ -665,6 +748,9 @@ export default function CheckoutPage() {
                           <p className="mt-1 text-[12px] text-[#8a9690]">
                             ≈ ${total.toFixed(2)} USD {cryptoAmount ? "· live rate" : ""}
                           </p>
+                          <p className="mt-2 rounded-lg bg-white px-3 py-2 text-[11px] leading-5 text-[#6b7a73] ring-1 ring-[#e7ece9]">
+                            Network matters: send only on {wallet.network}. A transfer on the wrong chain may not be recoverable.
+                          </p>
 
                           <div className="mt-4">
                             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
@@ -761,7 +847,7 @@ export default function CheckoutPage() {
 
               {/* Trust row */}
               <div className="grid gap-3 text-[12px] text-[#44514b] sm:grid-cols-3">
-                <TrustRow icon={FileText} text="Lot-matched COA with every order" />
+                <TrustRow icon={FileText} text="Lot release sheet with every order" />
                 <TrustRow icon={ShieldCheck} text="On-chain payment verification" />
                 <TrustRow icon={Truck} text="Cold-chain ships within 24h" />
               </div>

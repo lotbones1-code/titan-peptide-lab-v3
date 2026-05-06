@@ -20,7 +20,7 @@ const FILTERS: { value: Filter; label: string }[] = [
 
 const TRUST = [
   "HPLC ≥99% purity on every batch",
-  "Lot-matched COA with every order",
+  "Lot release sheet with every order",
   "Cold-chain dispatch within 24h",
   "Mass-spec identity confirmed",
 ];
@@ -34,7 +34,7 @@ const FORMAT_GUIDE = [
   {
     label: "Injectable",
     title: "Go deeper when the protocol calls for it.",
-    text: "Lyophilized vials for researchers who already run their own reconstitution. Same lot-matched COA, same release discipline, higher on-hand concentration per mg. Use when the spray form cannot deliver the range the study requires.",
+    text: "Lyophilized vials for researchers who already run their own reconstitution. Same release-sheet discipline, higher on-hand concentration per mg. Use when the spray form cannot deliver the range the study requires.",
   },
   {
     label: "Stack",

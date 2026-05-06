@@ -3,10 +3,15 @@ import { Footer } from "@/components/site/footer";
 import { PageHero } from "@/components/site/page-hero";
 import { NextRead } from "@/components/site/next-read";
 
+const LAB_TITLE = "Lab Testing — Titan Peptide Lab";
+const LAB_DESCRIPTION =
+  "HPLC purity verification, ISO 17025 third-party retesting, endotoxin, heavy metals, and sterility. What every batch is tested for, and how the certificate is produced.";
+
 export const metadata = {
-  title: "Lab Testing — The Titan Peptide Company",
-  description:
-    "HPLC purity verification, ISO 17025 third-party retesting, endotoxin, heavy metals, and sterility. What every batch is tested for, and how the certificate is produced.",
+  title: LAB_TITLE,
+  description: LAB_DESCRIPTION,
+  alternates: { canonical: "/lab-testing/" },
+  openGraph: { title: LAB_TITLE, description: LAB_DESCRIPTION, url: "/lab-testing/", type: "website" as const },
 };
 
 const TESTS = [
@@ -114,7 +119,7 @@ export default function LabTestingPage() {
                     Released by
                   </span>
                   <p className="mt-2 font-serif text-lg text-[#0f1613]">
-                    Dr. M. Voss, QA Lead
+                    Independent third-party analytical lab
                   </p>
                 </div>
 

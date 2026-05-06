@@ -42,7 +42,7 @@ export default function GuidePage() {
     // Always unlock the guide regardless of backend result — the lead magnet
     // should never be blocked by a transient third-party failure.
     try {
-      await fetch("https://formsubmit.co/ajax/shamilbones1@gmail.com", {
+      await fetch("https://formsubmit.co/ajax/support@titanpeptidelab.com", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({

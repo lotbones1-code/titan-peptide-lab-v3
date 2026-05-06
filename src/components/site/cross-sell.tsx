@@ -31,7 +31,7 @@ export function CrossSell({ currentProduct }: { currentProduct: Product }) {
           Pairs well with {currentProduct.name.replace(" Nasal Spray", "").replace(" (Injectable Vial)", "")}
         </h2>
         <p className="mt-2 text-[14px] text-[#888]">
-          Researchers often combine these compounds for synergistic protocols.
+          Adjacent compounds in the same research category — review independently before pairing.
         </p>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

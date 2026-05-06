@@ -4,17 +4,15 @@
   "name": "Selank Nasal Spray",
   "category": "nasal-spray",
   "price": 59.99,
-  "compareAtPrice": 74.99,
   "size": "15mL · 750mcg/spray",
-  "tagline": "Calm focus without sedation",
-  "description": "Russian-developed anxiolytic nootropic peptide. Modulates GABA and serotonin pathways for calm, alert cognition. Trusted by researchers for anxiety and attention studies.",
+  "tagline": "Subject of anxiolytic-pathway and attention research",
+  "description": "Heptapeptide derivative of tuftsin originally synthesized in Soviet-era CNS research programs. Cited in academic literature on GABAergic and serotonergic-pathway modulation. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
   "benefits": [
-    "Reduces anxiety",
-    "Enhances focus",
-    "Non-sedating",
-    "Mood stabilizing"
+    "Cited in anxiolytic-pathway research",
+    "Cited in attention/cognition research",
+    "GABAergic + serotonergic pathway research interest",
+    "HPLC ≥99% purity target, lot release sheet"
   ],
   "image": "/products/selank-spray.png",
-  "featured": true,
-  "bestseller": true
+  "featured": true
 }

@@ -5,17 +5,24 @@ import { Reveal } from "./reveal";
 
 const REASONS = [
   {
-    title: "Purity you can verify",
-    body: "Every product page links to the lab testing methodology. The COA references the exact lot on your bottle — check it yourself before ordering.",
+    title: "Verify the lot, not the brand",
+    body: "Most vendors ship a generic spec sheet. Titan ships a lot release sheet tied to the number on your bottle, then follows with the independent retest PDF by email. Check the paperwork before reconstitution.",
   },
   {
-    title: "No hidden fees or surprises",
-    body: "Pricing is on the product page and payment rails are shown clearly before the order is placed. What you see is what you pay.",
+    title: "Crypto-only, by design",
+    body: "Pay in BTC, ETH, USDC, or SOL. Your card never touches the order. No bank coding, no merchant flags, no shipping label cross-referenced to a Visa statement. The order desk sees a wallet, not a name.",
   },
   {
-    title: "Built for researchers, not hype buyers",
-    body: "We publish peer-reviewed research summaries for every compound. No miracle claims, no before-and-after photos — just the science.",
+    title: "A tight catalog beats a long one",
+    body: "Six nasal sprays. A handful of injectables. Every SKU gets its own testing pass and its own research summary. Vendors carrying 200 compounds are often recycling a single certificate template — we keep the catalog tight so documentation stays traceable.",
   },
+];
+
+const STATS = [
+  ["6", "active spray SKUs · traceable lots"],
+  ["≥99%", "HPLC purity threshold for release"],
+  ["24h", "dispatch target from payment confirmation"],
+  ["4", "crypto rails, no card data stored"],
 ];
 
 export function SocialProof() {
@@ -29,7 +36,7 @@ export function SocialProof() {
                 Why Titan
               </span>
               <h2 className="mt-3 font-serif text-[clamp(2rem,4vw,3.2rem)] leading-[1.05] tracking-[-0.03em] text-[#0f1110]">
-                We keep the catalog tight.<br />We do them right.
+                A tight catalog,<br />done right.
               </h2>
               <p className="mt-5 max-w-[44ch] text-[15px] leading-[1.8] text-[#555b55]">
                 Most peptide vendors carry hundreds of SKUs with recycled documentation. We keep the catalog tight so every compound gets real testing, real research, and real attention.
@@ -40,6 +47,19 @@ export function SocialProof() {
               >
                 About Titan
               </Link>
+
+              <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[#e8e6e1] bg-[#e8e6e1]">
+                {STATS.map(([value, label]) => (
+                  <div key={label} className="bg-white px-5 py-4">
+                    <dt className="font-serif text-[1.7rem] leading-none tracking-[-0.04em] text-[#0f1110]">
+                      {value}
+                    </dt>
+                    <dd className="mt-2 text-[12px] leading-[1.55] text-[#66736d]">
+                      {label}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
             </div>
 
             <div className="space-y-4">

@@ -16,7 +16,7 @@ export function Newsletter() {
     setStatus("sending");
 
     try {
-      const res = await fetch("https://formsubmit.co/ajax/shamilbones1@gmail.com", {
+      const res = await fetch("https://formsubmit.co/ajax/support@titanpeptidelab.com", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({

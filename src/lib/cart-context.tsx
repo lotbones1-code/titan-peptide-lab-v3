@@ -30,7 +30,22 @@ function loadCart(): CartItem[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    // Defensive: localStorage may have been written by an older shape, the
+    // wrong tab, or a buggy build. Reject anything that isn't a clean
+    // CartItem[] so we never crash with `items.reduce is not a function`.
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(
+      (i): i is CartItem =>
+        i &&
+        typeof i === "object" &&
+        i.product &&
+        typeof i.product === "object" &&
+        typeof i.product.id === "string" &&
+        typeof i.product.price === "number" &&
+        typeof i.quantity === "number" &&
+        i.quantity > 0,
+    );
   } catch {
     return [];
   }

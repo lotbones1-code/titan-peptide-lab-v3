@@ -5,13 +5,13 @@
   "category": "injectable",
   "price": 199.99,
   "size": "10mg lyophilized",
-  "tagline": "Next-gen metabolic research",
-  "description": "Triple-agonist (GLP-1/GIP/glucagon). Emerging compound for metabolic research. Limited availability.",
+  "tagline": "GLP-1 / GIP / glucagon triple-agonist research compound",
+  "description": "Synthetic triple-incretin agonist active at GLP-1, GIP, and glucagon receptors. Appears in published phase-II/III clinical literature on incretin-pathway pharmacology. For research use only. Not for human consumption.",
   "benefits": [
-    "Triple receptor agonist",
-    "Metabolic research",
-    "Limited stock",
-    "99%+ HPLC purity"
+    "GLP-1/GIP/glucagon triple-agonist",
+    "Investigated in incretin-pathway research",
+    "Lyophilized vial, reconstitute with bacteriostatic water",
+    "HPLC ≥99% purity target, lot release sheet"
   ],
   "image": "/products/retatrutide.png",
   "newArrival": true
