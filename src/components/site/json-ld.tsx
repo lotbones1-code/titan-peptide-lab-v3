@@ -7,13 +7,6 @@ export function OrganizationJsonLd() {
     name: BRAND.name,
     url: `https://${BRAND.domain}`,
     description: BRAND.description,
-    foundingDate: "2019",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Reno",
-      addressRegion: "NV",
-      addressCountry: "US",
-    },
     contactPoint: {
       "@type": "ContactPoint",
       email: "support@titanpeptidelab.com",
@@ -86,12 +79,16 @@ export function ProductListJsonLd() {
 
 export function FAQJsonLd() {
   const faqs = [
-    { q: "How is purity verified?", a: "Every batch is third-party HPLC tested to ≥99%. The certificate of analysis is tied to the specific lot on your bottle." },
-    { q: "How fast do orders ship?", a: "Manual fulfillment within 24 hours of payment confirmation. Same-day dispatch for orders before 2 PM PT." },
-    { q: "What payment methods do you accept?", a: "Crypto only — BTC, ETH, USDC (ERC-20), SOL, and USDC (SPL)." },
+    { q: "How is purity verified?", a: "Every batch is HPLC tested in-house, then sent to an independent ISO 17025 lab for retest. Release target is ≥99% purity. The in-house release sheet ships in the box; the independent retest report follows by email within 5 business days." },
+    { q: "How fast do orders ship?", a: "Orders ship within 24 hours after payment confirmation. Cold-chain pack, tracking emailed when the package leaves." },
+    { q: "What payment methods do you accept?", a: "Crypto only — USDC on Solana (recommended), SOL, BTC, ETH, and USDC on ERC-20. No cards, no ACH, no wires." },
     { q: "Are these products for human use?", a: "No. All products are sold for laboratory research purposes only." },
     { q: "What is your return policy?", a: "Unopened items within 14 days. Contact support for a return authorization." },
     { q: "How should nasal sprays be stored?", a: "Refrigerate at 2-8 degrees C. Storage guidance is included with every order." },
+    { q: "Is the COA tied to my specific lot, or a generic specimen?", a: "Tied to your specific lot. The in-house release sheet shipped in the box and the independent ISO 17025 retest report (emailed within 5 business days) both reference the same lot code printed on the bottle." },
+    { q: "Intranasal spray vs lyophilized vial — how do I choose?", a: "Seven of eleven compounds ship as precision intranasal sprays. Lyophilized vials are used where intranasal isn't viable (BPC-157 SC, CJC+Ipa, retatrutide, TB-500); each vial ships with a reconstitution guide for laboratory handling." },
+    { q: "Will my international order clear customs?", a: "We ship to 218 destinations from one warehouse, sanctioned jurisdictions excluded. Orders are declared as research articles for laboratory use only. If a destination requires extra documentation, we email before dispatch." },
+    { q: "Do you sell wholesale to clinics, pharmacies, or research labs?", a: "Tier pricing exists for repeat-volume buyers (5+ units per month). Email support@titanpeptidelab.com with the compound and approximate monthly volume — wholesale settles in stablecoin on the same crypto rail as retail." },
   ];
 
   const data = {

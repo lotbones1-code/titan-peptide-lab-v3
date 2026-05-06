@@ -12,7 +12,7 @@ const FAQS = [
   {
     question: "How do you verify purity?",
     answer:
-      "Every batch is third-party HPLC tested to ≥99%. The COA is tied to the lot on your specific bottle, not a generic certificate.",
+      "Every batch is HPLC tested in-house, then sent to an independent ISO 17025 lab for retest. Release target is ≥99% purity. The in-house release sheet for your lot ships in the box; the independent retest report follows by email within 5 business days of dispatch — same lot code on both.",
   },
   {
     question: "How fast do you ship?",
@@ -22,12 +22,12 @@ const FAQS = [
   {
     question: "What payment methods do you accept?",
     answer:
-      "Crypto currently — USDC on Solana (lowest fees), SOL, BTC, ETH, and USDC on ERC-20. The checkout page shows the wallet address, QR, and live-converted amount. We recommend USDC on Solana: under a cent in fees and always $1 = $1.",
+      "Crypto only — USDC on Solana (recommended; sub-cent fees, $1 = $1), plus SOL, BTC, ETH, and USDC on ERC-20. No cards, no ACH, no wires — privacy and chargeback-immunity by design. The checkout page shows the wallet address, QR, and live-converted amount.",
   },
   {
     question: "Do you ship internationally?",
     answer:
-      "Yes — 200+ countries from one warehouse. Pick your country at checkout and you'll see the exact rate (free over the threshold in your zone). If customs needs extra documentation, we'll email you before dispatch.",
+      "Yes — 218 destinations from one warehouse, sanctioned jurisdictions excluded. Pick your country at checkout and you'll see the exact rate (free over the threshold in your zone). If customs needs extra documentation, we'll email you before dispatch.",
   },
   {
     question: "Are these for human use?",
@@ -43,6 +43,26 @@ const FAQS = [
     question: "How should peptides be stored?",
     answer:
       "Refrigerate at 2-8°C (36-46°F). Storage guidance is included with your order.",
+  },
+  {
+    question: "Is the COA tied to my specific lot, or a generic specimen?",
+    answer:
+      "Tied to your specific lot. The release sheet that ships in the box references the same lot code printed on your bottle. The independent ISO 17025 retest report — which follows by email within 5 business days of dispatch — references that same lot code. A general specimen COA is available on request before you order, but the document with your bottle is always lot-matched.",
+  },
+  {
+    question: "Intranasal spray vs lyophilized vial — how do I choose?",
+    answer:
+      "Seven of eleven compounds ship as precision intranasal sprays (BPC-157, DSIP, Oxytocin, PT-141, Selank, Semax, Selank+Semax stack). Sprays are the default for protocols that prefer non-injection administration in research settings. Lyophilized vials are used where intranasal isn't viable (BPC-157 SC, CJC+Ipa, retatrutide, TB-500); each vial ships with a reconstitution guide for laboratory handling.",
+  },
+  {
+    question: "Will my international order clear customs?",
+    answer:
+      "We ship to 218 destinations from a single warehouse, sanctioned jurisdictions excluded. Orders are declared accurately as research articles for laboratory use only. If a destination requires extra documentation, we email before dispatch — we do not ship blind into a customs hold. Buyers are responsible for any local import duties or taxes.",
+  },
+  {
+    question: "Do you sell wholesale to clinics, pharmacies, or research labs?",
+    answer:
+      "Tier pricing exists for repeat-volume buyers (5+ units per month). Pricing tiers, lot-matched COA terms, and paid eval-kit details are sent on request. Email support@titanpeptidelab.com with the compound and approximate monthly volume — we reply within 24–48h. Wholesale settles in stablecoin (USDC or USDT) on the same crypto rail as retail.",
   },
 ];
 
