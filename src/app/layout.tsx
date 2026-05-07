@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     // which kills B2B email and chat-share click-through.
     images: [
       {
-        url: "/titan-banner.png",
+        url: "/titan-banner.png?v=20260506b",
         width: 1200,
         height: 630,
         alt: `${BRAND.name} — ${BRAND.tagline}`,
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: BRAND.name,
     description: BRAND.description,
-    images: ["/titan-banner.png"],
+    images: ["/titan-banner.png?v=20260506b"],
   },
   robots: { index: true, follow: true },
 };
