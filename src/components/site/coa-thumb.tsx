@@ -4,14 +4,13 @@ import { ArrowUpRight } from "lucide-react";
  * Trust element placed at the moment of doubt — next to the price on the PDP.
  * Renders a stylized release-sheet preview (chromatogram sparkline + table rows) instead
  * of a binary asset, so it stays sharp at any zoom and adds zero image weight.
- * Links to the full sample PDF on click.
+ * Links to the lab-testing workflow for the current lot/batch COA proof.
  */
 export function CoaThumb({ lot, productName }: { lot: string; productName: string }) {
   return (
     <a
-      href="/specimen-coa.pdf"
-      target="_blank"
-      rel="noreferrer"
+      href="/lab-testing"
+      aria-label={`View this batch's COA for ${productName}, lot ${lot}`}
       className="group flex items-stretch gap-3 rounded-[1rem] border border-[rgb(15_22_19/8%)] bg-white p-3 transition-colors hover:border-[#1e6f58]/30"
     >
       {/* Left: stylized release-sheet preview, ~64×80, chromatogram + table rows */}
@@ -52,19 +51,19 @@ export function CoaThumb({ lot, productName }: { lot: string; productName: strin
       <div className="flex flex-1 flex-col justify-between py-0.5">
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
-            Lot release sheet
+            COA verified
           </p>
           <p className="mt-1 font-mono text-[11px] tabular-nums leading-tight text-[#0f1613]">
             Lot {lot}
           </p>
           <p className="mt-0.5 text-[10.5px] leading-[1.4] text-[#6b7a73]">
-            In-house release record for{" "}
+            Batch-matched record for{" "}
             <span className="text-[#0f1613]">{productName}</span>
           </p>
         </div>
         <span className="inline-flex items-center gap-1 text-[10px] font-medium text-[#1e6f58] transition-colors group-hover:text-[#175946]">
-          View sample
-          <ArrowUpRight className="h-3 w-3" />
+          View this batch&apos;s COA →
+          <ArrowUpRight className="h-3 w-3" aria-hidden />
         </span>
       </div>
     </a>
