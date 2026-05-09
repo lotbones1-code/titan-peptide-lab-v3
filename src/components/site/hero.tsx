@@ -51,7 +51,7 @@ export function Hero() {
                   href="/products"
                   className="inline-flex h-12 items-center justify-center gap-2.5 rounded-full bg-[#0f1110] px-8 text-[13px] font-semibold text-white transition-colors hover:bg-[#1a5c48]"
                 >
-                  Shop sprays — from ${NASAL_SPRAYS[0]?.price.toFixed(0) ?? "75"}
+                  Shop sprays — from ${NASAL_SPRAYS.length ? Math.min(...NASAL_SPRAYS.map((p) => p.price)).toFixed(0) : "65"}
                   <ArrowRight className="size-4" />
                 </Link>
                 <Link

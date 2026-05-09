@@ -332,30 +332,55 @@ export function ProductDetail({ product }: { product: Product }) {
           <div className="grid gap-10 lg:grid-cols-[280px_1fr] lg:items-start">
             <div>
               <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#1e6f58]">
-                Researcher feedback
+                How buyers verify this batch
               </span>
               <h2 className="mt-3 font-serif text-[clamp(1.6rem,2.4vw,2rem)] leading-[1.1] tracking-[-0.02em] text-[#0f1613]">
-                No reviews yet for this lot.
+                Lot {lot} ships with paperwork, not promises.
               </h2>
               <p className="mt-3 text-[13px] leading-[1.7] text-[#5c6762]">
-                We don&apos;t fabricate reviews. When verified researchers
-                leave feedback on this product, it will appear here with the
-                lot they tested.
+                We don&apos;t fabricate reviews — and we don&apos;t need to.
+                Every bottle ships with the in-house release sheet for the
+                lot on the label. The independent ISO 17025 retest follows
+                by email within 5 business days of dispatch.
               </p>
             </div>
-            <div className="rounded-2xl border border-[#e8e6e1] bg-[#faf8f4] p-6 lg:p-8">
-              <p className="text-[13px] font-semibold text-[#0f1613]">
-                Already ordered {product.name}?
-              </p>
-              <p className="mt-2 text-[13px] leading-[1.75] text-[#5c6762]">
-                Email <a className="underline decoration-dotted underline-offset-4 hover:text-[#1e6f58]" href={`mailto:reviews@titanpeptidelab.com?subject=${encodeURIComponent(`Review: ${product.name}`)}`}>reviews@titanpeptidelab.com</a> with your order number and what you observed.
-                We post verified researcher feedback once we&apos;ve matched it
-                to a real order and lot.
-              </p>
-              <p className="mt-3 text-[11px] leading-[1.6] text-[#8a9690]">
-                Reviews must reflect research observations only. We do not
-                publish therapeutic, dosing, or human-use claims.
-              </p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="rounded-2xl border border-[#e8e6e1] bg-white p-5">
+                <FileText className="h-4 w-4 text-[#1e6f58]" />
+                <p className="mt-3 text-[13px] font-semibold text-[#0f1613]">In-house release sheet</p>
+                <p className="mt-1.5 text-[12px] leading-[1.7] text-[#5c6762]">
+                  HPLC purity, identity, appearance — referenced to the lot
+                  printed on your bottle. Ships in the box.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-[#e8e6e1] bg-white p-5">
+                <FlaskConical className="h-4 w-4 text-[#1e6f58]" />
+                <p className="mt-3 text-[13px] font-semibold text-[#0f1613]">Independent ISO 17025 retest</p>
+                <p className="mt-1.5 text-[12px] leading-[1.7] text-[#5c6762]">
+                  A separate accredited lab retests the same lot. PDF
+                  emailed within 5 business days — same lot code, second
+                  signature.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-[#e8e6e1] bg-white p-5">
+                <ShieldCheck className="h-4 w-4 text-[#1e6f58]" />
+                <p className="mt-3 text-[13px] font-semibold text-[#0f1613]">Replacement or refund</p>
+                <p className="mt-1.5 text-[12px] leading-[1.7] text-[#5c6762]">
+                  Lot-mismatch, sterility failure, or shipping damage —
+                  email QA within 48h with photos. Refund returns to the
+                  same wallet.
+                </p>
+              </div>
+              <div className="rounded-2xl border border-[#1e6f58]/20 bg-[#f0f7f4] p-5">
+                <Check className="h-4 w-4 text-[#1e6f58]" />
+                <p className="mt-3 text-[13px] font-semibold text-[#0f1613]">Already ordered?</p>
+                <p className="mt-1.5 text-[12px] leading-[1.7] text-[#5c6762]">
+                  Email <a className="underline decoration-dotted underline-offset-4 hover:text-[#1e6f58]" href={`mailto:reviews@titanpeptidelab.com?subject=${encodeURIComponent(`Review: ${product.name}`)}`}>reviews@titanpeptidelab.com</a> with
+                  your order number. Verified feedback gets published with
+                  the lot tested — research observations only, no
+                  therapeutic claims.
+                </p>
+              </div>
             </div>
           </div>
         </div>
