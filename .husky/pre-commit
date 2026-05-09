@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+# Husky-style pre-commit hook for titan-peptide-lab-v3.
+# Composes multiple checks; append new ones here, do NOT replace.
+
+# 1. Asset lock guard — blocks unapproved changes to locked marketing assets.
+repo_root="$(git rev-parse --show-toplevel)"
+node "$repo_root/scripts/asset-lock-check.mjs" || exit 1
+
+# (append future checks below this line)

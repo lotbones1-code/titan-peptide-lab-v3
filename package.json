@@ -15,7 +15,11 @@
     "remove:product": "node scripts/remove-product.mjs",
     "push": "node scripts/push.mjs",
     "deploy": "node scripts/deploy.mjs",
-    "ship": "node scripts/ship.mjs"
+    "ship": "node scripts/ship.mjs",
+    "asset-lock:check": "node scripts/asset-lock-check.mjs",
+    "asset-lock:audit": "node scripts/asset-lock-check.mjs --audit",
+    "precommit": "node scripts/asset-lock-check.mjs",
+    "prepare": "git config core.hooksPath .husky 2>/dev/null || true"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

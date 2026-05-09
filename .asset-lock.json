@@ -1,0 +1,65 @@
+{
+  "$schema": "openclaw.asset-lock.v1",
+  "version": 1,
+  "locked_at": "2026-05-09",
+  "approver": "shamilkch17",
+  "policy": "Files listed under `assets` may not be modified, replaced, deleted, or have new sibling variants added without (a) Shamil's explicit chat approval naming the file, AND (b) updating the matching `sha256` here in the SAME commit, AND (c) the commit message containing the token `ASSET-LOCK-OVERRIDE: <reason>`. The pre-commit hook at `.husky/pre-commit` runs `scripts/asset-lock-check.mjs` to enforce this.",
+  "override_token": "ASSET-LOCK-OVERRIDE:",
+  "assets": [
+    {
+      "path": "public/titan-banner.png",
+      "sha256": "9f7ba811e9ed9a2dac07697e01a3523acfbcb65666a45db1b9a74e6974a982b6",
+      "size": 377623,
+      "note": "approved og:image — forest-green 'Research peptides without guesswork' banner (restored from 68eec2f after f80fa07 swap was rejected)"
+    },
+    {
+      "path": "public/titan-banner-square.png",
+      "sha256": "6f0c63c19c0da81af8c9a9cbfab07773731609b8b2215fb3adfef22d54d24c40",
+      "size": 536109,
+      "note": "approved square social variant"
+    },
+    {
+      "path": "public/titan-banner-twitter.png",
+      "sha256": "6b330b44bca9b75b845661b710ffb981dd8f67019f456827d7c9ca91d52fa765",
+      "size": 634949,
+      "note": "approved twitter card variant"
+    },
+    {
+      "path": "public/titan-banner-2.png",
+      "sha256": "2bbf2d9b9f3d526a91f8fd4b1cea48b1f00c5e039fb6977b0b6199a35ed99c5d",
+      "size": 624191,
+      "note": "active og:image used by layout metadata — green COA/vial banner with unique filename for social cache safety"
+    },
+    {
+      "path": "public/titan-banner-square-2.png",
+      "sha256": "e0b387a688df4606c38618a299e55973f3e0f7c432d8134f7e2e3e14848ccbc8",
+      "size": 1092064,
+      "note": "active square social variant paired with titan-banner-2.png"
+    },
+    {
+      "path": "public/titan-banner-twitter-2.png",
+      "sha256": "7936e65967957dc837e6cfed7d9ee6c5576d155d3acb9a7187828223713fca13",
+      "size": 658433,
+      "note": "active twitter card image used by layout metadata with unique filename for social cache safety"
+    },
+    {
+      "path": "src/app/favicon.ico",
+      "sha256": "2b8ad2d33455a8f736fc3a8ebf8f0bdea8848ad4c0db48a2833bd0f9cd775932",
+      "size": 25931,
+      "note": "Next.js app-router favicon (browser tab icon)"
+    },
+    {
+      "path": "public/titan-icon.png",
+      "sha256": "3927c02f3284a1fce2159faac5dcea10fda3c9bb20ec3dd4541e734b11939561",
+      "size": 47893,
+      "note": "brand mark / apple-touch-icon source"
+    }
+  ],
+  "rules": [
+    "No agent may iterate locked assets autonomously to chase a 'better' look. Any swap requires Shamil saying the new design is better in chat, with the new file/hash recorded here in the same commit.",
+    "No more than one approved swap per 24 hours unless Shamil explicitly authorizes a second.",
+    "Adding sibling variants without wiring them into layout/metadata AND adding them here is forbidden — dead assets caused confusion in the May 7-8 incident.",
+    "Before any approved swap: snapshot the current file to snapshots/banner-YYYYMMDD-HHMM/ first.",
+    "Override is escape-hatch only: include `ASSET-LOCK-OVERRIDE: <reason>` in the commit message. The hook will warn but allow the commit. Reason must name the file and why."
+  ]
+}
