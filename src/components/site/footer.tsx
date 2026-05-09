@@ -50,16 +50,19 @@ export function Footer() {
             <FooterColumn
               title="Research"
               links={[
-                { label: "BPC-157", href: "/research/bpc-157-nasal-spray" },
-                { label: "Selank", href: "/research/selank-anxiolytic-nootropic" },
-                { label: "Semax", href: "/research/semax-cognition-neuroplasticity" },
-                { label: "PT-141", href: "/research/pt-141-research" },
+                { label: "Research index", href: "/research" },
+                { label: "Recovery hub", href: "/research/recovery" },
+                { label: "Longevity hub", href: "/research/longevity" },
+                { label: "GLP-1 hub", href: "/research/glp-1" },
+                { label: "Cognitive hub", href: "/research/cognitive" },
+                { label: "Clinic hub", href: "/research/clinic" },
               ]}
             />
             <FooterColumn
               title="Company"
               links={[
                 { label: "Lab Testing", href: "/lab-testing" },
+                { label: "COA Archive", href: "/coa-archive" },
                 { label: "Shipping", href: "/shipping-faq" },
                 { label: "Contact", href: "/contact" },
                 { label: "FAQ", href: "/#faq" },
