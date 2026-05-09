@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
+import { RESEARCH_HUBS } from "@/lib/research-hubs";
 
 export const metadata: Metadata = {
   title: "Research — Titan Peptide Laboratory",
@@ -264,6 +265,60 @@ export default function ResearchHubPage() {
               );
             })}
           </ol>
+        </section>
+
+        {/* Research hubs */}
+        <section className="border-t border-[#d9dfd5] bg-[#f7f4ec]">
+          <div className="mx-auto max-w-7xl px-6 py-20 lg:py-24">
+            <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#6d7b74]">
+              §Research hubs — by audience
+            </div>
+            <h2 className="mt-4 max-w-2xl font-serif text-[clamp(1.8rem,3.6vw,2.8rem)] font-normal leading-[1.05] tracking-[-0.02em]">
+              Five hubs, thirty literature pointers.
+            </h2>
+            <p className="mt-4 max-w-2xl text-base leading-[1.7] text-[#4a5852]">
+              Audience-mapped reference index. Each hub gathers the primary
+              literature, methodology notes, and assay-design references most
+              relevant to its readers. Vendor-neutral, research-use only.
+            </p>
+
+            <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {RESEARCH_HUBS.map((hub) => (
+                <li key={hub.slug}>
+                  <Link
+                    href={`/research/${hub.slug}`}
+                    className="group block h-full rounded-md border border-[#e0e6dc] bg-white p-6 transition-colors hover:border-[#1e6f58]"
+                  >
+                    <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#8a9791]">
+                      {hub.spokes.length} spokes
+                    </div>
+                    <h3 className="mt-3 font-serif text-xl font-normal leading-tight transition-colors group-hover:text-[#1e6f58]">
+                      {hub.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-[1.7] text-[#4a5852]">
+                      {hub.audience}.
+                    </p>
+                    <div className="mt-5 font-mono text-[10px] uppercase tracking-[0.16em] text-[#1e6f58]">
+                      Open hub →
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* COA archive cross-link */}
+        <section className="border-t border-[#d9dfd5]">
+          <div className="mx-auto max-w-7xl px-6 py-12 lg:py-14">
+            <Link
+              href="/coa-archive"
+              className="inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#1e6f58] transition-opacity hover:opacity-70"
+            >
+              <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#1e6f58]" />
+              Browse the COA archive — lot-level analytical records →
+            </Link>
+          </div>
         </section>
 
         {/* Editorial footer strip */}
