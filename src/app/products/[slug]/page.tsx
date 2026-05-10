@@ -53,12 +53,6 @@ export default async function ProductPage({
       availability: "https://schema.org/InStock",
       seller: { "@type": "Organization", name: "Titan Peptide Lab" },
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: String(12 + Math.abs(product.id.length * 7) % 40),
-      bestRating: "5",
-    },
   };
 
   return (
