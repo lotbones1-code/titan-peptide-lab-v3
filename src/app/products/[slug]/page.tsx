@@ -18,13 +18,27 @@ export async function generateMetadata({
   const product = PRODUCTS.find((p) => p.slug === slug);
   if (!product) return {};
 
+  const title = `${product.name} — Titan Peptide Lab`;
+  const canonicalPath = `/products/${product.slug}/`;
+  const imageAlt = `${product.name} product image`;
+
   return {
-    title: `${product.name} — Titan Peptide Lab`,
+    title,
     description: product.description,
+    alternates: { canonical: canonicalPath },
     openGraph: {
-      title: `${product.name} — Titan Peptide Lab`,
+      title,
       description: product.tagline,
+      url: canonicalPath,
+      siteName: BRAND.name,
       type: "website",
+      images: [{ url: product.image, alt: imageAlt }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: product.tagline,
+      images: [product.image],
     },
   };
 }
