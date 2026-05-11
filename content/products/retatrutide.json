@@ -5,13 +5,13 @@
   "category": "injectable",
   "price": 199.99,
   "size": "10mg lyophilized",
-  "tagline": "Next-gen metabolic research",
-  "description": "Triple-agonist (GLP-1/GIP/glucagon). Emerging compound for metabolic research. Limited availability.",
+  "tagline": "Triple-agonist research catalog entry",
+  "description": "Triple-agonist (GLP-1/GIP/glucagon) research catalog entry for mechanism review, documentation comparison, and availability tracking.",
   "benefits": [
-    "Triple receptor agonist",
-    "Metabolic research",
-    "Limited stock",
-    "99%+ HPLC purity"
+    "Triple receptor mechanism",
+    "Metabolic literature review",
+    "Availability-tracked catalog item",
+    "HPLC purity documentation"
   ],
   "image": "/products/retatrutide.png",
   "newArrival": true

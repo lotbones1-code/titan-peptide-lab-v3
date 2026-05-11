@@ -5,13 +5,13 @@
   "category": "injectable",
   "price": 54.99,
   "size": "5mg lyophilized",
-  "tagline": "Classic research format",
-  "description": "Lyophilized BPC-157 in 5mg vial. For researchers who prefer subcutaneous protocols. Reconstitute with bacteriostatic water.",
+  "tagline": "Vial-format BPC-157 research material",
+  "description": "Lyophilized BPC-157 vial material for lab-controlled inventory, lot-traceability, and COA-first review. Intended for research catalog comparison, not protocol guidance.",
   "benefits": [
-    "Higher potency per dose",
-    "Lab-standard format",
-    "99%+ HPLC purity",
-    "Ships with COA"
+    "Vial-format research material",
+    "Lot-level traceability",
+    "COA-first review",
+    "HPLC purity documentation"
   ],
   "image": "/products/bpc157-vial.png"
 }

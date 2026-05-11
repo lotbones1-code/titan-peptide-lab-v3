@@ -46,13 +46,13 @@ export const PRODUCTS_DATA: Product[] = [
     "price": 64.99,
     "compareAtPrice": 84.99,
     "size": "15mL · 500mcg/spray",
-    "tagline": "Recovery, gut support, systemic repair",
-    "description": "Body Protection Compound 157 delivered via precision atomizer. Researchers report rapid tissue recovery and systemic anti-inflammatory action. HPLC-verified ≥99% purity.",
+    "tagline": "Nasal-format BPC-157 research material",
+    "description": "Nasal-format BPC-157 research material for recovery-model and gut-barrier literature review. Built around lot-matched COA review, HPLC purity documentation, and a low-friction spray format.",
     "benefits": [
-      "Tissue repair & recovery",
-      "Gut lining support",
-      "Non-invasive delivery",
-      "Sublingual-to-nasal bioavailability"
+      "Recovery-model literature review",
+      "Gut-barrier research context",
+      "Low-friction spray format",
+      "Lot-matched COA review"
     ],
     "image": "/products/bpc157-spray.png",
     "featured": true,
@@ -163,13 +163,13 @@ export const PRODUCTS_DATA: Product[] = [
     "price": 62.99,
     "compareAtPrice": 79.99,
     "size": "15mL · 500mcg/spray",
-    "tagline": "Sleep quality and recovery-state research",
-    "description": "Delta Sleep-Inducing Peptide delivered through a precision nasal atomizer. Suited to sleep architecture, recovery, and downshift-state research where a non-invasive format matters.",
+    "tagline": "Sleep-state research material",
+    "description": "Delta Sleep-Inducing Peptide in a precision nasal atomizer for sleep-state, recovery-state, and downshift-model literature review where a low-friction format matters.",
     "benefits": [
-      "Sleep architecture studies",
-      "Recovery-state support",
+      "Sleep-state literature review",
+      "Downshift-model research context",
       "Low-friction spray format",
-      "HPLC-verified purity"
+      "HPLC purity documentation"
     ],
     "image": "/products/dsip-spray.png",
     "newArrival": true
@@ -181,13 +181,13 @@ export const PRODUCTS_DATA: Product[] = [
     "category": "injectable",
     "price": 199.99,
     "size": "10mg lyophilized",
-    "tagline": "Next-gen metabolic research",
-    "description": "Triple-agonist (GLP-1/GIP/glucagon). Emerging compound for metabolic research. Limited availability.",
+    "tagline": "Triple-agonist research catalog entry",
+    "description": "Triple-agonist (GLP-1/GIP/glucagon) research catalog entry for mechanism review, documentation comparison, and availability tracking.",
     "benefits": [
-      "Triple receptor agonist",
-      "Metabolic research",
-      "Limited stock",
-      "99%+ HPLC purity"
+      "Triple receptor mechanism",
+      "Metabolic literature review",
+      "Availability-tracked catalog item",
+      "HPLC purity documentation"
     ],
     "image": "/products/retatrutide.png",
     "newArrival": true
@@ -199,13 +199,13 @@ export const PRODUCTS_DATA: Product[] = [
     "category": "injectable",
     "price": 54.99,
     "size": "5mg lyophilized",
-    "tagline": "Classic research format",
-    "description": "Lyophilized BPC-157 in 5mg vial. For researchers who prefer subcutaneous protocols. Reconstitute with bacteriostatic water.",
+    "tagline": "Vial-format BPC-157 research material",
+    "description": "Lyophilized BPC-157 vial material for lab-controlled inventory, lot-traceability, and COA-first review. Intended for research catalog comparison, not protocol guidance.",
     "benefits": [
-      "Higher potency per dose",
-      "Lab-standard format",
-      "99%+ HPLC purity",
-      "Ships with COA"
+      "Vial-format research material",
+      "Lot-level traceability",
+      "COA-first review",
+      "HPLC purity documentation"
     ],
     "image": "/products/bpc157-vial.png"
   },
@@ -216,13 +216,13 @@ export const PRODUCTS_DATA: Product[] = [
     "category": "injectable",
     "price": 119.99,
     "size": "5mg / 5mg blend",
-    "tagline": "GH axis research blend",
-    "description": "Pre-blended CJC-1295 (no DAC) with Ipamorelin. Most-studied GH secretagogue combo. Saves reconstitution steps.",
+    "tagline": "GH-axis research format",
+    "description": "Pre-blended CJC-1295 (no DAC) with Ipamorelin for GH-axis research catalog comparison. Useful when teams need one format to review peptide-class notes, lot docs, and COA context.",
     "benefits": [
-      "Pre-blended convenience",
-      "GH axis research",
-      "Two-peptide synergy",
-      "99%+ HPLC purity"
+      "Pre-blended research format",
+      "GH-axis literature review",
+      "Peptide-class comparison",
+      "COA-first documentation"
     ],
     "image": "/products/cjc-ipa.png"
   },
@@ -233,13 +233,13 @@ export const PRODUCTS_DATA: Product[] = [
     "category": "injectable",
     "price": 89.99,
     "size": "5mg lyophilized",
-    "tagline": "Systemic recovery research",
-    "description": "Thymosin Beta-4 fragment. Used in tissue repair and recovery studies. Pairs well with BPC-157 protocols.",
+    "tagline": "TB-4 fragment research material",
+    "description": "Thymosin beta-4 fragment research material for recovery-model literature review, catalog comparison, and lot-level documentation.",
     "benefits": [
-      "Thymosin Beta-4 active fragment",
-      "Tissue regeneration research",
-      "99%+ HPLC purity",
-      "Ships with COA"
+      "Recovery-model literature review",
+      "TB-4 fragment research context",
+      "Lot-level documentation",
+      "COA-first review"
     ],
     "image": "/products/tb500-vial.png"
   }
