@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { BRAND } from "@/lib/products";
-import { AIAdvisor } from "@/components/site/ai-advisor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -76,7 +75,6 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-[#faf9f7] font-sans text-[#1a1a1a]">
         {children}
-        <AIAdvisor />
       </body>
     </html>
   );
