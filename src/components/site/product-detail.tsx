@@ -305,6 +305,9 @@ export function ProductDetail({ product }: { product: Product }) {
                   <div className="flex items-center rounded-full border border-[rgb(15_22_19/12%)] bg-white">
                     <button
                       onClick={() => setQty(Math.max(1, qty - 1))}
+                      aria-label="Decrease quantity"
+                      data-titan-conversion="pdp_quantity_decrease"
+                      data-product-slug={product.slug}
                       className="h-10 w-10 text-[#5c6762] hover:bg-[#f7faf8] hover:text-[#0f1613] rounded-l-full transition-colors"
                     >
                       −
@@ -312,6 +315,9 @@ export function ProductDetail({ product }: { product: Product }) {
                     <span className="w-10 text-center text-sm font-medium text-[#0f1613]">{qty}</span>
                     <button
                       onClick={() => setQty(qty + 1)}
+                      aria-label="Increase quantity"
+                      data-titan-conversion="pdp_quantity_increase"
+                      data-product-slug={product.slug}
                       className="h-10 w-10 text-[#5c6762] hover:bg-[#f7faf8] hover:text-[#0f1613] rounded-r-full transition-colors"
                     >
                       +
@@ -354,7 +360,12 @@ export function ProductDetail({ product }: { product: Product }) {
                 </div>
 
                 {/* ── Checkout panel ── */}
-                <div className="mt-8 rounded-[1.6rem] border border-[rgb(15_22_19/8%)] bg-[#fafbfa] p-6 shadow-[0_1px_2px_rgb(15_22_19/4%),_0_24px_60px_-40px_rgb(15_22_19/15%)]">
+                <div
+                  className="mt-8 rounded-[1.6rem] border border-[rgb(15_22_19/8%)] bg-[#fafbfa] p-6 shadow-[0_1px_2px_rgb(15_22_19/4%),_0_24px_60px_-40px_rgb(15_22_19/15%)]"
+                  data-titan-checkout-surface="pdp"
+                  data-product-id={product.id}
+                  data-product-slug={product.slug}
+                >
                   {/* Step indicator */}
                   <div className="mb-5 flex items-center gap-2">
                     {(["details", "payment", "confirm"] as const).map((s, i) => (
@@ -465,6 +476,8 @@ export function ProductDetail({ product }: { product: Product }) {
                           setError("");
                           setStep("payment");
                         }}
+                        data-titan-conversion="pdp_continue_to_payment"
+                        data-product-slug={product.slug}
                         className="h-12 w-full rounded-full bg-[#1e6f58] text-white font-semibold hover:bg-[#175946]"
                       >
                         Continue to payment
@@ -499,6 +512,9 @@ export function ProductDetail({ product }: { product: Product }) {
                           <button
                             key={c.key}
                             onClick={() => setChain(c.key)}
+                            data-titan-conversion="pdp_payment_rail_select"
+                            data-product-slug={product.slug}
+                            data-payment-rail={c.key}
                             className={`rounded-xl border px-3 py-3 text-center text-xs font-medium transition-all ${
                               chain === c.key
                                 ? "border-[#1e6f58]/30 bg-[#f0f5f2] text-[#1e6f58] shadow-[0_0_0_1px_#1e6f58/10]"
@@ -517,7 +533,13 @@ export function ProductDetail({ product }: { product: Product }) {
                             <WalletIcon className="h-3.5 w-3.5" />
                             Send to this {CHAINS.find((c) => c.key === chain)?.chain} address
                           </span>
-                          <button onClick={copyAddr} className="flex items-center gap-1 text-[#1e6f58] hover:text-[#175946] transition-colors">
+                          <button
+                            onClick={copyAddr}
+                            data-titan-conversion="pdp_wallet_copy"
+                            data-product-slug={product.slug}
+                            data-payment-rail={chain}
+                            className="flex items-center gap-1 text-[#1e6f58] hover:text-[#175946] transition-colors"
+                          >
                             {copied ? <><Check className="h-3 w-3" /> Copied</> : <><Copy className="h-3 w-3" /> Copy</>}
                           </button>
                         </div>
@@ -557,6 +579,9 @@ export function ProductDetail({ product }: { product: Product }) {
                             setError("");
                             setStep("confirm");
                           }}
+                          data-titan-conversion="pdp_review_order"
+                          data-product-slug={product.slug}
+                          data-payment-rail={chain}
                           className="h-12 flex-[2] rounded-full bg-[#1e6f58] text-white font-semibold hover:bg-[#175946]"
                         >
                           Review order
@@ -596,6 +621,9 @@ export function ProductDetail({ product }: { product: Product }) {
                         <Button
                           onClick={handleSubmitOrder}
                           disabled={submitting}
+                          data-titan-conversion="pdp_prepare_order_email"
+                          data-product-slug={product.slug}
+                          data-payment-rail={chain}
                           className="h-12 flex-[2] rounded-full bg-[#1e6f58] text-white font-semibold hover:bg-[#175946] disabled:opacity-60"
                         >
                           {submitting ? (
