@@ -20,7 +20,8 @@ export async function generateMetadata({
 
   const title = `${product.name} — Titan Peptide Lab`;
   const canonicalPath = `/products/${product.slug}/`;
-  const imageAlt = `${product.name} product image`;
+  const socialImage = product.ogImage ?? product.image;
+  const imageAlt = `${product.name} social preview`;
 
   return {
     title,
@@ -32,13 +33,13 @@ export async function generateMetadata({
       url: canonicalPath,
       siteName: BRAND.name,
       type: "website",
-      images: [{ url: product.image, alt: imageAlt }],
+      images: [{ url: socialImage, alt: imageAlt, width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description: product.tagline,
-      images: [product.image],
+      images: [socialImage],
     },
   };
 }

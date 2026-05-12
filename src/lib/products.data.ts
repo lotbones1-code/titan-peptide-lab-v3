@@ -55,6 +55,7 @@ export const PRODUCTS_DATA: Product[] = [
       "Lot-matched COA review"
     ],
     "image": "/products/bpc157-spray.png",
+    "ogImage": "/products/og/bpc-157-nasal-spray.png",
     "featured": true,
     "bestseller": true
   },

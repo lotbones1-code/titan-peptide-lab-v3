@@ -24,6 +24,7 @@ export interface Product {
   description: string;
   benefits: string[];
   image: string;
+  ogImage?: string;
   featured?: boolean;
   bestseller?: boolean;
   newArrival?: boolean;
