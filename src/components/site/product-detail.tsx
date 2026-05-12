@@ -496,25 +496,28 @@ export function ProductDetail({ product }: { product: Product }) {
                         </p>
                         <p className="mt-1 text-xs leading-6 text-[#6b7a73]">{shippingProfile.customs}</p>
                       </div>
-                      <div className="rounded-[1rem] border border-[rgb(15_22_19/8%)] bg-[#faf9f7] p-4">
-                        <div className="flex items-center justify-between gap-3">
-                          <Label className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6b7a73]">
+                      <div>
+                        <div className="mb-1.5 flex items-end justify-between gap-3">
+                          <Label className="text-xs font-semibold uppercase tracking-[0.14em] text-[#5f6d67]">
                             Shipping address
                           </Label>
-                          <span className="rounded-full bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#6b7a73]">
-                            Required
-                          </span>
+                          <span className="text-[11px] text-[#8a948f]">Used for manual release review</span>
                         </div>
-                        <textarea
-                          value={address}
-                          onChange={(e) => setAddress(e.target.value)}
-                          placeholder={"Street address\nApartment, suite, or unit\nCity, state/province, postal code"}
-                          rows={4}
-                          className="mt-3 w-full resize-none rounded-xl border border-[rgb(15_22_19/10%)] bg-white px-4 py-3 text-sm leading-6 text-[#0f1613] shadow-sm shadow-[#dde4da]/40 outline-none transition-colors placeholder:text-[#a6b0ab] focus:border-[#1e6f58] focus:ring-2 focus:ring-[#1e6f58]/10"
-                        />
-                        <p className="mt-2 text-xs leading-5 text-[#6b7a73]">
-                          Include apartment/unit and postal code. International addresses are manually reviewed before release.
-                        </p>
+                        <div className="overflow-hidden rounded-xl border border-[rgb(15_22_19/12%)] bg-white shadow-[0_10px_24px_rgba(15,22,19,0.05)] transition-shadow focus-within:border-[#1e6f58] focus-within:shadow-[0_0_0_3px_rgba(30,111,88,0.10)]">
+                          <textarea
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                            placeholder={"Street address\nApt / suite / unit\nCity, state/province, postal code"}
+                            rows={4}
+                            className="block w-full resize-none border-0 bg-[linear-gradient(180deg,#fffdf9_0%,#ffffff_100%)] px-3.5 py-3 text-sm leading-6 text-[#0f1613] outline-none placeholder:text-[#a9b2ad]"
+                          />
+                          <div className="flex items-center justify-between gap-3 border-t border-[rgb(15_22_19/7%)] bg-[#faf9f4] px-3.5 py-2">
+                            <p className="text-[11px] leading-4 text-[#6b7a73]">
+                              Include unit and postal code. International destinations are checked before dispatch.
+                            </p>
+                            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#1e6f58]" />
+                          </div>
+                        </div>
                       </div>
                       <Button
                         onClick={() => {
