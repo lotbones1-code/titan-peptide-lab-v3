@@ -232,8 +232,8 @@ export function ProductDetail({ product }: { product: Product }) {
         `Transaction hash: ${txHash.trim()}`,
         `Customer name: ${name.trim()}`,
         `Customer email: ${email.trim()}`,
-        `Shipping region: ${shippingProfile.label}`,
         `Country: ${countryName}`,
+        `Auto shipping profile: ${shippingProfile.label}`,
         `Shipping address: ${address.trim()}`,
         `Discount code: ${appliedCode || "None"}`,
       ].join("\n")
@@ -446,7 +446,7 @@ export function ProductDetail({ product }: { product: Product }) {
                         Shipping details
                       </h3>
                       <p className="text-sm leading-7 text-[#5c6762]">
-                        Built for buyers worldwide. Pick your destination region first so shipping, customs language, and payment guidance stay accurate.
+                        Built for buyers worldwide. Pick your country once; shipping, customs language, and payment guidance update automatically.
                       </p>
                       <div>
                         <Label className="text-xs text-[#6b7a73]">Full name</Label>
@@ -467,38 +467,22 @@ export function ProductDetail({ product }: { product: Product }) {
                           className="mt-1 border-[rgb(15_22_19/10%)] bg-white"
                         />
                       </div>
-                      <div className="grid gap-4 sm:grid-cols-2">
-                        <div>
-                          <Label className="text-xs text-[#6b7a73]">Shipping region</Label>
-                          <select
-                            value={shippingRegion}
-                            onChange={(e) => setShippingRegion(e.target.value as ShippingRegionKey)}
-                            className="mt-1 h-10 w-full rounded-lg border border-[rgb(15_22_19/10%)] bg-white px-3 text-sm text-[#0f1613] outline-none transition-colors focus:border-[#1e6f58]"
-                          >
-                            {SHIPPING_REGIONS.map((region) => (
-                              <option key={region.key} value={region.key}>
-                                {region.label}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                        <div>
-                          <Label className="text-xs text-[#6b7a73]">Country / territory</Label>
-                          <select
-                            value={countryCode}
-                            onChange={(e) => handleCountryChange(e.target.value)}
-                            className="mt-1 h-10 w-full rounded-lg border border-[rgb(15_22_19/10%)] bg-white px-3 text-sm text-[#0f1613] outline-none transition-colors focus:border-[#1e6f58]"
-                          >
-                            <option value="" disabled>
-                              Select country / territory
+                      <div>
+                        <Label className="text-xs text-[#6b7a73]">Country / territory</Label>
+                        <select
+                          value={countryCode}
+                          onChange={(e) => handleCountryChange(e.target.value)}
+                          className="mt-1 h-10 w-full rounded-lg border border-[rgb(15_22_19/10%)] bg-white px-3 text-sm text-[#0f1613] outline-none transition-colors focus:border-[#1e6f58]"
+                        >
+                          <option value="" disabled>
+                            Select country / territory
+                          </option>
+                          {COUNTRY_OPTIONS.map((country) => (
+                            <option key={country.code} value={country.code}>
+                              {country.name}
                             </option>
-                            {COUNTRY_OPTIONS.map((country) => (
-                              <option key={country.code} value={country.code}>
-                                {country.name}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
+                          ))}
+                        </select>
                       </div>
                       <p className="text-xs leading-6 text-[#6b7a73]">
                         All ISO country/territory destinations are available for order-request intake. Restricted or sanctioned destinations are reviewed manually and may be declined; buyers remain responsible for local import rules.
@@ -642,7 +626,6 @@ export function ProductDetail({ product }: { product: Product }) {
                         <ConfirmRow label="Product" value={`${product.name} × ${qty}`} />
                         <ConfirmRow label="Total" value={`$${total.toFixed(2)}`} />
                         <ConfirmRow label="Payment" value={CHAINS.find((c) => c.key === chain)?.label || ""} />
-                        <ConfirmRow label="Region" value={shippingProfile.label} />
                         <ConfirmRow label="Country" value={countryName} />
                         <ConfirmRow label="Tx hash" value={txHash.slice(0, 16) + "..."} mono />
                         <div className="h-px bg-[rgb(15_22_19/6%)]" />
