@@ -496,15 +496,25 @@ export function ProductDetail({ product }: { product: Product }) {
                         </p>
                         <p className="mt-1 text-xs leading-6 text-[#6b7a73]">{shippingProfile.customs}</p>
                       </div>
-                      <div>
-                        <Label className="text-xs text-[#6b7a73]">Shipping address</Label>
+                      <div className="rounded-[1rem] border border-[rgb(15_22_19/8%)] bg-[#faf9f7] p-4">
+                        <div className="flex items-center justify-between gap-3">
+                          <Label className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6b7a73]">
+                            Shipping address
+                          </Label>
+                          <span className="rounded-full bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#6b7a73]">
+                            Required
+                          </span>
+                        </div>
                         <textarea
                           value={address}
                           onChange={(e) => setAddress(e.target.value)}
-                          placeholder={"123 Research Blvd\nSuite 400\nAustin, TX 78701"}
+                          placeholder={"Street address\nApartment, suite, or unit\nCity, state/province, postal code"}
                           rows={4}
-                          className="mt-1 w-full rounded-lg border border-[rgb(15_22_19/10%)] bg-white px-3 py-2.5 text-sm text-[#0f1613] placeholder:text-[#ccc] outline-none focus:border-[#1e6f58] transition-colors resize-none"
+                          className="mt-3 w-full resize-none rounded-xl border border-[rgb(15_22_19/10%)] bg-white px-4 py-3 text-sm leading-6 text-[#0f1613] shadow-sm shadow-[#dde4da]/40 outline-none transition-colors placeholder:text-[#a6b0ab] focus:border-[#1e6f58] focus:ring-2 focus:ring-[#1e6f58]/10"
                         />
+                        <p className="mt-2 text-xs leading-5 text-[#6b7a73]">
+                          Include apartment/unit and postal code. International addresses are manually reviewed before release.
+                        </p>
                       </div>
                       <Button
                         onClick={() => {
