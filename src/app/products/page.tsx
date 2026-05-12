@@ -108,12 +108,12 @@ function ProductsCatalog({ activeIcp }: { activeIcp: IcpFilter | null }) {
             </p>
             <div className="mt-4 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
               <h1 className="font-serif text-[clamp(2.8rem,5vw,4.4rem)] leading-[0.96] tracking-[-0.04em] text-[#13211c]">
-                Start with sprays,<br />then go deeper.
+                Simple formats.<br />Serious standards.
               </h1>
               <p className="max-w-md text-[15px] leading-7 text-[#596761] lg:text-right">
-                The catalog is built nasal-first. Sprays lead because they are
-                the easiest format to trust, while injectables and stacks stay
-                available for buyers who want them.
+                Browse nasal sprays, stacks, and injectable research peptides
+                with clear formats, batch-focused documentation, and plain next
+                steps.
               </p>
             </div>
 
