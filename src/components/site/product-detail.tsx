@@ -391,7 +391,7 @@ export function ProductDetail({ product }: { product: Product }) {
                         Shipping details
                       </h3>
                       <p className="text-sm leading-7 text-[#5c6762]">
-                        Built for US and international buyers. Pick your destination region first so shipping, customs language, and payment guidance stay accurate.
+                        Built for buyers worldwide. Pick your destination region first so shipping, customs language, and payment guidance stay accurate.
                       </p>
                       <div>
                         <Label className="text-xs text-[#6b7a73]">Full name</Label>
@@ -480,7 +480,7 @@ export function ProductDetail({ product }: { product: Product }) {
                         Send ${total.toFixed(2)} via crypto
                       </h3>
                       <p className="text-sm text-[#5c6762]">
-                        Checkout stays global here. Pick the rail that is easiest in your region, send the exact amount, then paste your transaction hash.
+                        Crypto checkout stays global here. Pick the supported rail that is easiest in your region, send the exact amount, then paste your transaction hash.
                       </p>
 
                       <div className="rounded-[1rem] border border-[rgb(15_22_19/8%)] bg-[#faf9f7] px-4 py-3 text-sm text-[#5c6762]">
@@ -515,7 +515,7 @@ export function ProductDetail({ product }: { product: Product }) {
                         <div className="flex items-center justify-between text-xs text-[#6b7a73]">
                           <span className="flex items-center gap-1.5">
                             <WalletIcon className="h-3.5 w-3.5" />
-                            Send to this {CHAINS.find((c) => c.key === chain)?.chain} address
+                            Send only to this {CHAINS.find((c) => c.key === chain)?.chain} address
                           </span>
                           <button onClick={copyAddr} className="flex items-center gap-1 text-[#1e6f58] hover:text-[#175946] transition-colors">
                             {copied ? <><Check className="h-3 w-3" /> Copied</> : <><Copy className="h-3 w-3" /> Copy</>}

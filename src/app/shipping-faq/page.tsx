@@ -4,7 +4,7 @@ import { Footer } from "@/components/site/footer";
 export const metadata = {
   title: "Shipping, Payment & Returns — Titan Peptide Laboratory",
   description:
-    "US and international shipping, cold-pack handling, global crypto checkout guidance, active discount codes, and returns policy for research-use products.",
+    "Worldwide order guidance, cold-pack handling, crypto-first checkout, active discount codes, and returns policy for research-use products.",
 };
 
 const SECTIONS = [
@@ -13,7 +13,7 @@ const SECTIONS = [
     label: "§S1",
     heading: "Shipping",
     blurb:
-      "Dispatched from Reno after payment confirmation. Clean outer carton, insulated inner pack, and region-aware handling for both US and international buyers.",
+      "Dispatched from Reno after payment confirmation. Global buyers are welcome: clean outer carton, insulated inner pack, and region-aware handling for domestic and cross-border orders.",
     items: [
       {
         q: "How fast does an order leave the laboratory?",
@@ -29,7 +29,7 @@ const SECTIONS = [
       },
       {
         q: "Do you ship internationally?",
-        a: "Yes. We support US, Canada, Latin America, Europe, the UK, Asia-Pacific, and selected Middle East and Africa destinations. The buyer remains responsible for local import rules, customs, VAT, or brokerage where applicable.",
+        a: "Yes. Buyers worldwide can place an order request. If a tracked carrier lane is available, Titan will prepare the shipment; the buyer remains responsible for local import rules, customs, VAT, brokerage, and destination restrictions.",
       },
       {
         q: "What about tracking?",
@@ -42,15 +42,15 @@ const SECTIONS = [
     label: "§S2",
     heading: "Payment",
     blurb:
-      "Crypto-only checkout, clearer regional guidance, and faster confirmation once the payment is received on the selected chain.",
+      "Crypto-first checkout for domestic and international buyers, with faster confirmation once payment is received on the selected chain.",
     items: [
       {
         q: "Which cryptocurrencies do you accept?",
-        a: "BTC, ETH, USDC ERC-20, SOL, and USDC SPL. US buyers usually prefer Solana rails for speed, while international buyers often prefer BTC, ETH, or USDC ERC-20 depending on local exchange access.",
+        a: "Live checkout supports BTC, ETH, USDC ERC-20, SOL, and USDC SPL. If you need another major crypto rail, contact Titan before sending so the correct receiving address can be confirmed first.",
       },
       {
         q: "Why crypto only?",
-        a: "It clears quickly, works across borders, removes card processor instability from the category, and keeps fulfillment tied to a confirmed transaction.",
+        a: "It clears quickly, works across borders, removes card processor instability from the category, and keeps fulfillment tied to a confirmed on-chain transaction.",
       },
       {
         q: "Can I pay by card?",
