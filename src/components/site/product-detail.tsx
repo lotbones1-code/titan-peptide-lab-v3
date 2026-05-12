@@ -103,6 +103,51 @@ const SHIPPING_REGIONS: {
   },
 ];
 
+const COUNTRY_CODES = [
+  "AF", "AX", "AL", "DZ", "AS", "AD", "AO", "AI", "AQ", "AG", "AR", "AM", "AW", "AU", "AT", "AZ", "BS", "BH", "BD", "BB", "BY", "BE", "BZ", "BJ", "BM", "BT", "BO", "BQ", "BA", "BW", "BV", "BR", "IO", "BN", "BG", "BF", "BI", "CV", "KH", "CM", "CA", "KY", "CF", "TD", "CL", "CN", "CX", "CC", "CO", "KM", "CG", "CD", "CK", "CR", "CI", "HR", "CU", "CW", "CY", "CZ", "DK", "DJ", "DM", "DO", "EC", "EG", "SV", "GQ", "ER", "EE", "SZ", "ET", "FK", "FO", "FJ", "FI", "FR", "GF", "PF", "TF", "GA", "GM", "GE", "DE", "GH", "GI", "GR", "GL", "GD", "GP", "GU", "GT", "GG", "GN", "GW", "GY", "HT", "HM", "VA", "HN", "HK", "HU", "IS", "IN", "ID", "IR", "IQ", "IE", "IM", "IL", "IT", "JM", "JP", "JE", "JO", "KZ", "KE", "KI", "KP", "KR", "KW", "KG", "LA", "LV", "LB", "LS", "LR", "LY", "LI", "LT", "LU", "MO", "MG", "MW", "MY", "MV", "ML", "MT", "MH", "MQ", "MR", "MU", "YT", "MX", "FM", "MD", "MC", "MN", "ME", "MS", "MA", "MZ", "MM", "NA", "NR", "NP", "NL", "NC", "NZ", "NI", "NE", "NG", "NU", "NF", "MK", "MP", "NO", "OM", "PK", "PW", "PS", "PA", "PG", "PY", "PE", "PH", "PN", "PL", "PT", "PR", "QA", "RE", "RO", "RU", "RW", "BL", "SH", "KN", "LC", "MF", "PM", "VC", "WS", "SM", "ST", "SA", "SN", "RS", "SC", "SL", "SG", "SX", "SK", "SI", "SB", "SO", "ZA", "GS", "SS", "ES", "LK", "SD", "SR", "SJ", "SE", "CH", "SY", "TW", "TJ", "TZ", "TH", "TL", "TG", "TK", "TO", "TT", "TN", "TR", "TM", "TC", "TV", "UG", "UA", "AE", "GB", "UM", "US", "UY", "UZ", "VU", "VE", "VN", "VG", "VI", "WF", "EH", "YE", "ZM", "ZW", "XK",
+] as const;
+
+type CountryCode = (typeof COUNTRY_CODES)[number];
+
+const COUNTRY_NAME_OVERRIDES: Partial<Record<CountryCode, string>> = {
+  XK: "Kosovo",
+};
+
+const REGION_COUNTRY_CODES: Record<ShippingRegionKey, readonly CountryCode[]> = {
+  us: ["US", "AS", "GU", "MP", "PR", "UM", "VI"],
+  canada: ["CA"],
+  "latin-america": [
+    "AI", "AG", "AR", "AW", "BS", "BB", "BZ", "BM", "BO", "BQ", "BR", "KY", "CL", "CO", "CR", "CU", "CW", "DM", "DO", "EC", "SV", "FK", "GF", "GD", "GP", "GT", "GY", "HT", "HN", "JM", "MQ", "MX", "MS", "NI", "PA", "PY", "PE", "BL", "KN", "LC", "MF", "PM", "VC", "SX", "SR", "TT", "TC", "UY", "VE", "VG",
+  ],
+  "europe-uk": [
+    "AX", "AL", "AD", "AT", "BY", "BE", "BA", "BG", "HR", "CY", "CZ", "DK", "EE", "FO", "FI", "FR", "DE", "GI", "GR", "GG", "VA", "HU", "IS", "IE", "IM", "IT", "JE", "XK", "LV", "LI", "LT", "LU", "MT", "MD", "MC", "ME", "NL", "MK", "NO", "PL", "PT", "RO", "RU", "SM", "RS", "SK", "SI", "ES", "SJ", "SE", "CH", "UA", "GB",
+  ],
+  "asia-pacific": [
+    "AF", "AQ", "AU", "BD", "BT", "BN", "KH", "CN", "CX", "CC", "CK", "FJ", "PF", "TF", "HK", "HM", "IN", "ID", "IO", "JP", "KZ", "KI", "KP", "KR", "KG", "LA", "MO", "MY", "MV", "MH", "FM", "MN", "MM", "NR", "NP", "NC", "NZ", "NU", "NF", "PK", "PW", "PG", "PH", "PN", "WS", "SG", "SB", "LK", "TW", "TJ", "TH", "TL", "TK", "TO", "TM", "TV", "UZ", "VU", "VN", "WF",
+  ],
+  "middle-east-africa": [
+    "DZ", "AO", "AM", "AZ", "BH", "BJ", "BW", "BV", "BF", "BI", "CM", "CV", "CF", "TD", "KM", "CG", "CD", "CI", "DJ", "EG", "GQ", "ER", "SZ", "ET", "GA", "GM", "GE", "GH", "GN", "GW", "IL", "IR", "IQ", "JO", "KE", "KW", "LB", "LS", "LR", "LY", "MG", "MW", "ML", "MR", "MU", "YT", "MA", "MZ", "NA", "NE", "NG", "OM", "PS", "QA", "RE", "RW", "SH", "ST", "SA", "SN", "SC", "SL", "SO", "ZA", "GS", "SS", "SD", "SY", "TZ", "TG", "TN", "TR", "UG", "AE", "EH", "YE", "ZM", "ZW",
+  ],
+};
+
+const COUNTRY_REGION_BY_CODE = new Map<CountryCode, ShippingRegionKey>(
+  Object.entries(REGION_COUNTRY_CODES).flatMap(([region, codes]) =>
+    codes.map((code) => [code, region as ShippingRegionKey])
+  )
+);
+
+const REGION_DISPLAY_NAMES = new Intl.DisplayNames(["en"], { type: "region" });
+
+const COUNTRY_OPTIONS = COUNTRY_CODES.map((code) => ({
+  code,
+  name: COUNTRY_NAME_OVERRIDES[code] ?? REGION_DISPLAY_NAMES.of(code) ?? code,
+  region: COUNTRY_REGION_BY_CODE.get(code) ?? "middle-east-africa",
+})).sort((a, b) => a.name.localeCompare(b.name));
+
+function findCountry(code: string) {
+  return COUNTRY_OPTIONS.find((country) => country.code === code);
+}
+
 function generateOrderId(): string {
   const ts = Date.now().toString(36).toUpperCase();
   const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
@@ -122,7 +167,7 @@ export function ProductDetail({ product }: { product: Product }) {
   const [step, setStep] = useState<OrderStep>("details");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [country, setCountry] = useState("");
+  const [countryCode, setCountryCode] = useState("");
   const [shippingRegion, setShippingRegion] = useState<ShippingRegionKey>("us");
   const [address, setAddress] = useState("");
   const [txHash, setTxHash] = useState("");
@@ -132,6 +177,8 @@ export function ProductDetail({ product }: { product: Product }) {
 
   const shippingProfile =
     SHIPPING_REGIONS.find((region) => region.key === shippingRegion) ?? SHIPPING_REGIONS[0];
+  const selectedCountry = findCountry(countryCode);
+  const countryName = selectedCountry?.name ?? "";
   const subtotal = product.price * qty;
   const discountPct = appliedCode ? DISCOUNT_CODES[appliedCode].percent : 0;
   const discountAmt = subtotal * (discountPct / 100);
@@ -150,9 +197,17 @@ export function ProductDetail({ product }: { product: Product }) {
     setTimeout(() => setCopied(false), 1500);
   };
 
+  const handleCountryChange = (nextCountryCode: string) => {
+    setCountryCode(nextCountryCode);
+    const nextCountry = findCountry(nextCountryCode);
+    if (nextCountry) {
+      setShippingRegion(nextCountry.region);
+    }
+  };
+
   const handleSubmitOrder = () => {
-    if (!email.trim() || !name.trim() || !country.trim() || !address.trim()) {
-      setError("Please fill in all fields.");
+    if (!email.trim() || !name.trim() || !countryCode || !address.trim()) {
+      setError("Please fill in all fields, including country/territory.");
       return;
     }
     if (!txHash.trim()) {
@@ -178,7 +233,7 @@ export function ProductDetail({ product }: { product: Product }) {
         `Customer name: ${name.trim()}`,
         `Customer email: ${email.trim()}`,
         `Shipping region: ${shippingProfile.label}`,
-        `Country: ${country.trim()}`,
+        `Country: ${countryName}`,
         `Shipping address: ${address.trim()}`,
         `Discount code: ${appliedCode || "None"}`,
       ].join("\n")
@@ -428,15 +483,26 @@ export function ProductDetail({ product }: { product: Product }) {
                           </select>
                         </div>
                         <div>
-                          <Label className="text-xs text-[#6b7a73]">Country</Label>
-                          <Input
-                            value={country}
-                            onChange={(e) => setCountry(e.target.value)}
-                            placeholder="United States"
-                            className="mt-1 border-[rgb(15_22_19/10%)] bg-white"
-                          />
+                          <Label className="text-xs text-[#6b7a73]">Country / territory</Label>
+                          <select
+                            value={countryCode}
+                            onChange={(e) => handleCountryChange(e.target.value)}
+                            className="mt-1 h-10 w-full rounded-lg border border-[rgb(15_22_19/10%)] bg-white px-3 text-sm text-[#0f1613] outline-none transition-colors focus:border-[#1e6f58]"
+                          >
+                            <option value="" disabled>
+                              Select country / territory
+                            </option>
+                            {COUNTRY_OPTIONS.map((country) => (
+                              <option key={country.code} value={country.code}>
+                                {country.name}
+                              </option>
+                            ))}
+                          </select>
                         </div>
                       </div>
+                      <p className="text-xs leading-6 text-[#6b7a73]">
+                        All ISO country/territory destinations are available for order-request intake. Restricted or sanctioned destinations are reviewed manually and may be declined; buyers remain responsible for local import rules.
+                      </p>
                       <div className="rounded-[1rem] border border-[rgb(15_22_19/8%)] bg-[#faf9f7] px-4 py-3">
                         <p className="text-sm font-medium text-[#0f1613]">{shippingProfile.note}</p>
                         <p className="mt-1 text-xs leading-6 text-[#6b7a73]">
@@ -458,8 +524,8 @@ export function ProductDetail({ product }: { product: Product }) {
                       </div>
                       <Button
                         onClick={() => {
-                          if (!name.trim() || !email.trim() || !country.trim() || !address.trim()) {
-                            setError("Please fill in all fields.");
+                          if (!name.trim() || !email.trim() || !countryCode || !address.trim()) {
+                            setError("Please fill in all fields, including country/territory.");
                             return;
                           }
                           setError("");
@@ -526,7 +592,7 @@ export function ProductDetail({ product }: { product: Product }) {
                           Amount: ${total.toFixed(2)}
                         </p>
                         <p className="mt-2 text-center text-xs leading-6 text-[#6b7a73]">
-                          Shipping to {country || shippingProfile.label} · {shipping === 0 ? "free shipping unlocked" : `$${shipping.toFixed(2)} shipping included`}
+                          Shipping to {countryName || shippingProfile.label} · {shipping === 0 ? "free shipping unlocked" : `$${shipping.toFixed(2)} shipping included`}
                         </p>
                       </div>
 
@@ -577,7 +643,7 @@ export function ProductDetail({ product }: { product: Product }) {
                         <ConfirmRow label="Total" value={`$${total.toFixed(2)}`} />
                         <ConfirmRow label="Payment" value={CHAINS.find((c) => c.key === chain)?.label || ""} />
                         <ConfirmRow label="Region" value={shippingProfile.label} />
-                        <ConfirmRow label="Country" value={country} />
+                        <ConfirmRow label="Country" value={countryName} />
                         <ConfirmRow label="Tx hash" value={txHash.slice(0, 16) + "..."} mono />
                         <div className="h-px bg-[rgb(15_22_19/6%)]" />
                         <ConfirmRow label="Ship to" value={name} />
@@ -610,7 +676,7 @@ export function ProductDetail({ product }: { product: Product }) {
                   )}
 
                   <p className="mt-4 text-center text-[11px] text-[#b0b0b0]">
-                    US and international orders supported · Ships after payment confirmation · Tracking included
+                    Worldwide order requests supported · Ships after payment confirmation · Tracking included
                   </p>
                 </div>
               </>
