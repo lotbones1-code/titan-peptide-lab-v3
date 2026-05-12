@@ -50,7 +50,7 @@ export function WhyTitan() {
             </h2>
             <p className="mt-5 max-w-xl text-[15px] leading-8 text-[#5c6762]">
               Most peptide vendors sell convenience. Titan sells proof, cleaner surfaces, and a more confident first impression.
-              The job here is making the product feel premium before the order form even starts.
+              The job here is making the product feel premium before the payment handoff even starts.
             </p>
           </div>
         </Reveal>

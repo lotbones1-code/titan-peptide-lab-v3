@@ -4,7 +4,7 @@ import { Footer } from "@/components/site/footer";
 export const metadata = {
   title: "Shipping, Payment & Returns — Titan Peptide Laboratory",
   description:
-    "Worldwide order guidance, cold-pack handling, crypto-first checkout, active discount codes, and returns policy for research-use products.",
+    "Worldwide order guidance, cold-pack handling, crypto-first payment guidance, active discount codes, and returns policy for research-use products.",
 };
 
 const SECTIONS = [
@@ -42,7 +42,7 @@ const SECTIONS = [
     label: "§S2",
     heading: "Payment",
     blurb:
-      "Crypto-first checkout for domestic and international buyers, with faster confirmation once payment is received on the selected chain.",
+      "Crypto-first payment guidance for domestic and international buyers, with faster confirmation once payment is received on the selected chain.",
     items: [
       {
         q: "Which cryptocurrencies do you accept?",
@@ -161,7 +161,7 @@ export default function ShippingFAQPage() {
                 <div className="mt-16 rounded-[1.8rem] border border-[#e5e5e5] bg-white p-8 text-[#13211c] shadow-[0_24px_60px_-40px_rgba(19,33,28,0.14)]">
                   <div className="flex items-baseline justify-between border-b border-[#d8dfd7] pb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-[#6f7b75]">
                     <span>Active discount codes</span>
-                    <span>Apply at checkout</span>
+                    <span>Mention with order</span>
                   </div>
                   <dl className="mt-6 grid gap-6 sm:grid-cols-2">
                     <Code code="FIRST10" v="10% off your first order" />

@@ -26,7 +26,7 @@ export function Footer() {
               {BRAND.name}
             </Link>
             <p className="mt-4 max-w-sm text-[14px] leading-7 text-[#5c6762]">
-              Nasal-first peptide research catalog. Cleaner proof, lighter design, and a checkout path that feels more premium than underground.
+              Nasal-first peptide research catalog. Cleaner proof, lighter design, and a payment handoff that feels clear, premium, and documented.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">

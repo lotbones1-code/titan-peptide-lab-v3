@@ -10,7 +10,7 @@ const STEPS = [
   {
     icon: Send,
     title: "Confirm payment",
-    text: "Checkout supports BTC, ETH, USDC ERC-20, SOL, and USDC SPL.",
+    text: "Payment handoff supports BTC, ETH, USDC ERC-20, SOL, and USDC SPL.",
   },
   {
     icon: PackageCheck,

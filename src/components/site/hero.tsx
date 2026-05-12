@@ -65,7 +65,7 @@ export function Hero() {
             className="mt-7 max-w-2xl text-[17px] leading-8 text-[#5c6762]"
           >
             Titan is the all-white, trust-first version of the category. Six spray compounds,
-            one stack, cleaner proof surfaces, simpler checkout, and a sharper nasal-first story
+            one stack, cleaner proof surfaces, clearer payment guidance, and a sharper nasal-first story
             that feels premium instead of sketchy.
           </motion.p>
 

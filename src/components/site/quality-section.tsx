@@ -2,7 +2,7 @@ const STEPS = [
   {
     n: "01",
     title: "Lot intake",
-    body: "Every nasal spray batch gets a Titan lot code before fill. That code stays tied to the bottle, internal record, certificate, and checkout reference.",
+    body: "Every nasal spray batch gets a Titan lot code before fill. That code stays tied to the bottle, internal record, certificate, and order reference.",
   },
   {
     n: "02",

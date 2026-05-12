@@ -67,7 +67,7 @@ export function PaymentMethods() {
           <div className="grid gap-8 lg:grid-cols-[0.42fr_0.58fr] lg:items-end">
             <div>
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#1e6f58]">
-                Crypto checkout
+                Crypto payment
               </p>
               <h2 className="mt-4 max-w-xl font-serif text-[clamp(2.5rem,4.5vw,4.3rem)] leading-[0.96] tracking-[-0.04em] text-[#0f1613]">
                 A payment flow that feels orderly, not improvised.
