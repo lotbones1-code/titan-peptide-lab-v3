@@ -33,12 +33,22 @@ export const metadata: Metadata = {
     description: BRAND.description,
     url: `https://${BRAND.domain}`,
     siteName: BRAND.name,
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: `${BRAND.name} — ${BRAND.tagline}`,
+        type: "image/png",
+      },
+    ],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: BRAND.name,
     description: BRAND.description,
+    images: ["/twitter-image.png"],
   },
   robots: { index: true, follow: true },
   keywords: [
