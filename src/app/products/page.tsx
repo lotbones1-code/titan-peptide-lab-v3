@@ -223,7 +223,7 @@ function ProductsCatalog({ activeIcp }: { activeIcp: IcpFilter | null }) {
                   Dispatch
                 </p>
                 <h3 className="mt-3 font-serif text-[1.6rem] leading-tight tracking-[-0.025em] text-[#13211c]">
-                  Cold-chain, same-day if ordered before 2 PM.
+                  Cold-chain, dispatched within 24h of payment.
                 </h3>
                 <p className="mt-3 text-sm leading-7 text-[#596761]">
                   Temperature-controlled packaging as standard. Tracking

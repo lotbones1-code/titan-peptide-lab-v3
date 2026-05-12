@@ -82,7 +82,7 @@ export function Hero() {
               FIRST10 for first orders
             </span>
             <span className="rounded-full border border-[#e5e5e5] bg-white px-4 py-2 text-[13px] text-[#666] shadow-[0_2px_10px_-6px_rgba(0,0,0,0.12)]">
-              Same-day if paid before 2 PM PT
+              Ships within 24h of payment
             </span>
           </motion.div>
 

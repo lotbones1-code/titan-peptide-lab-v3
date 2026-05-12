@@ -20,9 +20,9 @@ const POINTS = [
       "Temperature-controlled packaging on every liquid order so the bottle arrives intact, not cooked in transit.",
   },
   {
-    label: "Same-day dispatch",
+    label: "Fast dispatch",
     detail:
-      "Orders confirmed before 2 PM PT move the same day, with tracking and payment review following quickly after.",
+      "Manual fulfillment within 24 hours of payment confirmation. Tracking emailed as soon as the dispatch record is closed.",
   },
   {
     label: "6-test release",

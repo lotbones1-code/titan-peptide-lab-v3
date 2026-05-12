@@ -17,7 +17,7 @@ const SECTIONS = [
     items: [
       {
         q: "How fast does an order leave the laboratory?",
-        a: "Orders confirmed before 14:00 PT usually move same day. Everything else leaves inside 48 hours. Tracking is sent as soon as the dispatch record is closed, whether the destination is domestic or international.",
+        a: "Manual fulfillment within 24 hours of payment confirmation, and inside 48 hours for anything that needs extra handling. Tracking is sent as soon as the dispatch record is closed, whether the destination is domestic or international.",
       },
       {
         q: "What does the package look like?",

@@ -14,16 +14,16 @@ type Message = {
 
 const INITIAL_MESSAGE: Message = {
   role: "assistant",
-  text: "Hey — I can help you find the right compound. What are you researching? Recovery, cognitive performance, sleep, mood, something else?",
-  followUps: ["I need recovery support", "Something for focus", "Help me sleep better", "What's your bestseller?"],
+  text: "Hey — I can help narrow the catalog for research use. What are you comparing: recovery markers, cognition, sleep architecture, mood/stress models, or something else?",
+  followUps: ["Recovery-marker research", "Cognition research", "Sleep-architecture research", "What's your bestseller?"],
 };
 
 const QUICK_PROMPTS = [
-  { label: "Recovery & repair", query: "I need something for tissue recovery" },
-  { label: "Focus & cognition", query: "I want better focus and mental clarity" },
-  { label: "Sleep quality", query: "I need better deep sleep" },
-  { label: "Mood & anxiety", query: "I want to reduce anxiety" },
-  { label: "Best starter", query: "What should I start with?" },
+  { label: "Recovery markers", query: "I'm comparing compounds studied for tissue recovery markers" },
+  { label: "Cognition", query: "I'm comparing compounds studied for cognition and neuroplasticity" },
+  { label: "Sleep architecture", query: "I'm researching sleep architecture endpoints" },
+  { label: "Mood/stress models", query: "I'm comparing mood and stress-response research models" },
+  { label: "Best starter", query: "Which products are easiest to compare first?" },
   { label: "Libido research", query: "I'm looking at PT-141 for libido research" },
   { label: "Compare options", query: "Can you compare your top sellers?" },
   { label: "What's on sale", query: "What discounts do you have?" },
@@ -51,15 +51,15 @@ function matchProducts(query: string, history: Message[]): { text: string; produ
   if (q.match(/how.*(use|take|dose|dosing|dosage|administer)|protocol|how many sprays|how often/)) {
     if (lastMentioned && lastMentioned.category === "nasal-spray") {
       return {
-        text: `For ${lastMentioned.name}: Most researchers use 1-2 sprays per nostril, 1-2 times daily. Each spray delivers ${lastMentioned.size.split("·")[1]?.trim() || "a metered dose"}. Start with the lower end to assess response. The bottle is designed for consistent metered dosing — no measuring needed.`,
+        text: `I can't give use, dosing, or administration instructions. For ${lastMentioned.name}, I can help with research-only details: format, lot-matched COA, HPLC purity target, storage/shipping notes, and how it compares to nearby catalog options.`,
         products: [lastMentioned],
-        followUps: ["What pairs well with this?", "How long does a bottle last?", "Any side effects to watch for?"],
+        followUps: ["Show COA/testing details", "Compare nearby products", "Shipping and storage notes"],
       };
     }
     return {
-      text: "Dosing depends on the compound. For nasal sprays, it's typically 1-2 sprays per nostril, 1-2x daily. Injectables follow standard reconstitution protocols. Which product are you asking about?",
+      text: "I can't provide dosing, administration, or protocol instructions. I can help compare catalog formats, COA/testing status, product pages, and research literature summaries for laboratory research use only.",
       products: [],
-      followUps: ["BPC-157 dosing", "Semax dosing", "Selank dosing"],
+      followUps: ["Compare BPC-157 formats", "Show testing standards", "Shipping and storage notes"],
     };
   }
 
@@ -69,23 +69,23 @@ function matchProducts(query: string, history: Message[]): { text: string; produ
       const tb500 = PRODUCTS.find(p => p.id === "tb500-vial");
       const bpc = PRODUCTS.find(p => p.id === "bpc157-spray")!;
       return {
-        text: "BPC-157 + TB-500 is the gold standard recovery stack. BPC handles localized tissue repair and gut support while TB-500 promotes systemic healing and reduces inflammation. Researchers typically run them in parallel for 4-8 weeks.",
+        text: "BPC-157 and TB-500 are often compared together in recovery-marker research because they sit in adjacent tissue-response categories. I can compare format, COA/testing, and product-page evidence without giving protocol guidance.",
         products: [bpc, ...(tb500 ? [tb500] : [])],
-        followUps: ["Add both to my order", "How do I dose this stack?"],
+        followUps: ["Compare COA/testing", "Spray vs vial format", "Show product pages"],
       };
     }
     if (lastMentioned?.id === "selank-spray" || lastMentioned?.id === "semax-spray" || q.match(/selank|semax/)) {
       const stack = PRODUCTS.find(p => p.id === "selank-semax-stack")!;
       return {
-        text: "Selank + Semax is the classic cognitive-emotional stack. Semax sharpens focus and upregulates BDNF. Selank smooths the edges — calm without sedation. We sell them as a bundle for $105 (saves $15 vs buying separately). It's our most popular combo for a reason.",
+        text: "Selank and Semax are commonly compared in cognition and stress-response research. The bundle is a lower-cost way to evaluate both catalog entries side by side; I can also show the individual pages if you want a cleaner comparison.",
         products: [stack],
-        followUps: ["I'll take the stack", "How long does this last?"],
+        followUps: ["Show individual pages", "Compare COA/testing", "Shipping and storage notes"],
       };
     }
     return {
-      text: "Here are the best stacking combos:\n\n• Recovery: BPC-157 + TB-500\n• Cognitive: Selank + Semax (we sell this as a bundle)\n• Sleep + Recovery: DSIP + BPC-157\n• Focus + Calm: Semax + Selank\n\nWhich combination interests you?",
+      text: "Here are common research comparison groups:\n\n• Recovery markers: BPC-157 + TB-500\n• Cognition/stress-response: Selank + Semax\n• Sleep architecture + recovery-marker literature: DSIP + BPC-157\n\nI can compare catalog pages, pricing, COAs, and shipping notes, but not protocols.",
       products: [],
-      followUps: ["Recovery stack", "Cognitive stack", "Sleep + recovery"],
+      followUps: ["Recovery-marker comparison", "Cognition comparison", "Testing standards"],
     };
   }
 
@@ -93,16 +93,16 @@ function matchProducts(query: string, history: Message[]): { text: string; produ
   if (q.match(/compare|vs|versus|difference|which is better|between/)) {
     const sprays = NASAL_SPRAYS.slice(0, 4);
     return {
-      text: "Here's how our top sprays compare:\n\n• BPC-157 ($64.99) — Recovery + gut support. Our bestseller. Most versatile compound.\n• Selank ($59.99) — Anti-anxiety + focus. Non-sedating. Russian-developed.\n• Semax ($59.99) — Pure cognitive boost. BDNF upregulation. Pairs with Selank.\n• PT-141 ($69.99) — Libido/arousal. Central nervous system action, not hormonal.\n• DSIP ($62.99) — Sleep architecture. Works with natural sleep pathways.\n\nWhat matters most to you — recovery, brain, mood, or something specific?",
+      text: "Here's how our top sprays compare for research-only catalog review:\n\n• BPC-157 ($64.99) — recovery-marker and gut-lineage literature\n• Selank ($59.99) — stress-response and cognition literature\n• Semax ($59.99) — neuroplasticity and cognition literature\n• PT-141 ($69.99) — melanocortin-pathway research\n• DSIP ($62.99) — sleep-architecture literature\n\nWhat research category are you comparing?",
       products: sprays,
-      followUps: ["I want the best for recovery", "Cognitive performance is my priority", "I need better sleep"],
+      followUps: ["Recovery-marker research", "Cognition research", "Sleep-architecture research"],
     };
   }
 
   // Shipping / delivery questions
   if (q.match(/ship|deliver|how long|tracking|cold.?chain|packag/)) {
     return {
-      text: "Every order ships same-day if placed before 2 PM PT. Cold-chain packed (insulated + ice packs), discreet packaging. USPS Priority is standard (2-3 business days). You get tracking emailed as soon as we pack it. Free shipping on orders over $150.",
+      text: "Every order ships within 24 hours of payment confirmation. Cold-chain packed (insulated + ice packs), discreet packaging. USPS Priority is standard (2-3 business days). You get tracking emailed as soon as we pack it. Free shipping on orders over $150.",
       products: [],
       followUps: ["Do you ship internationally?", "What about the COA?"],
     };
@@ -121,15 +121,15 @@ function matchProducts(query: string, history: Message[]): { text: string; produ
   if (q.match(/how long.*(last|bottle)|how many doses|supply|duration/)) {
     if (lastMentioned && lastMentioned.category === "nasal-spray") {
       return {
-        text: `A ${lastMentioned.size.split("·")[0]?.trim() || "15mL"} bottle of ${lastMentioned.name} typically lasts 3-5 weeks at standard research dosing (1-2 sprays, 1-2x daily). Most researchers order 2-3 bottles for a full protocol cycle.`,
+        text: `${lastMentioned.name} is listed as ${lastMentioned.size}. I can't estimate use-duration or dosing schedules, but I can help compare price, format, COA/testing, storage, and shipping details for research-only purchasing.`,
         products: [lastMentioned],
-        followUps: ["I'll order 2", "What's the best bulk discount?"],
+        followUps: ["Show COA/testing details", "Compare nearby products", "Shipping and storage notes"],
       };
     }
     return {
-      text: "Our 15mL nasal spray bottles typically last 3-5 weeks at standard dosing. For a full 8-12 week research protocol, most researchers grab 2-3 bottles. Use code BULK15 for 15% off when you order 3+ items.",
+      text: "Bottle duration depends on a researcher's internal protocol, so I can't estimate use schedules. I can compare catalog price, format, testing, storage, shipping, and current discount codes.",
       products: [],
-      followUps: ["Show me bestsellers", "What's the bulk discount?"],
+      followUps: ["Show me bestsellers", "What's the bulk discount?", "Show testing standards"],
     };
   }
 
@@ -141,9 +141,9 @@ function matchProducts(query: string, history: Message[]): { text: string; produ
     const tb500 = PRODUCTS.find(p => p.id === "tb500-vial");
     const bpcVial = PRODUCTS.find(p => p.id === "bpc157-vial");
     return {
-      text: "BPC-157 is our top recovery compound — most-studied peptide for tissue repair, gut lining, and systemic inflammation. The nasal spray is the easiest format (no needles, fast absorption). For a full recovery protocol, pair it with TB-500.",
+      text: "BPC-157 is the main Titan catalog entry for recovery-marker research, with adjacent interest around gut-lineage and tissue-response literature. The nasal format is the simplest catalog format to review; TB-500 is the closest comparison page.",
       products: [bpc, ...(tb500 ? [tb500] : []), ...(bpcVial ? [bpcVial] : [])],
-      followUps: ["How does BPC-157 work?", "BPC-157 + TB-500 stack?", "Spray vs injectable?"],
+      followUps: ["Compare BPC-157 formats", "BPC-157 + TB-500 comparison", "Show COA/testing details"],
     };
   }
 
@@ -153,9 +153,9 @@ function matchProducts(query: string, history: Message[]): { text: string; produ
     const selank = PRODUCTS.find(p => p.id === "selank-spray")!;
     const stack = PRODUCTS.find(p => p.id === "selank-semax-stack")!;
     return {
-      text: "For cognitive performance: Semax is your primary driver — it upregulates BDNF and supports memory, focus, and neural recovery. If you want focus *without* the jittery edge, add Selank. The stack ($105, saves $15) is our most popular combo by a wide margin.",
+      text: "For cognition-focused research, Semax and Selank are the closest catalog pair. Semax is usually compared around neuroplasticity markers; Selank is usually compared around stress-response and cognition literature. The bundle lowers the combined catalog price.",
       products: [stack, semax, selank],
-      followUps: ["Tell me more about Semax", "Stack vs individual?", "How do I dose these?"],
+      followUps: ["Tell me more about Semax", "Stack vs individual pages", "Show COA/testing details"],
     };
   }
 
@@ -163,9 +163,9 @@ function matchProducts(query: string, history: Message[]): { text: string; produ
   if (q.match(/sleep|insomnia|rest|night|circadian|melatonin|dsip|delta/)) {
     const dsip = PRODUCTS.find(p => p.id === "dsip-spray")!;
     return {
-      text: "DSIP (Delta Sleep-Inducing Peptide) is built for sleep architecture research. Unlike sedatives, it works *with* your natural sleep pathways — researchers report deeper sleep phases without morning grogginess. One spray before bed, simple protocol.",
+      text: "DSIP (Delta Sleep-Inducing Peptide) is the sleep-architecture research entry in the catalog. I can compare the product page, COA/testing status, and relevant research notes without giving administration guidance.",
       products: [dsip],
-      followUps: ["How is this different from melatonin?", "Can I stack DSIP with anything?", "How long does a bottle last?"],
+      followUps: ["How is this different from melatonin research?", "Compare nearby products", "Shipping and storage notes"],
     };
   }
 
@@ -174,9 +174,9 @@ function matchProducts(query: string, history: Message[]): { text: string; produ
     const selank = PRODUCTS.find(p => p.id === "selank-spray")!;
     const oxytocin = PRODUCTS.find(p => p.id === "oxytocin-spray")!;
     return {
-      text: "Selank is the strongest anxiolytic in the catalog — GABA and serotonin modulation for calm, focused cognition without sedation. Russian-developed, extensively studied. Oxytocin is worth considering too if the research involves social bonding or stress regulation.",
+      text: "Selank is the main Titan catalog entry for stress-response and cognition research. Oxytocin is a separate social-cognition research entry. I can compare mechanisms described in the research summaries and show product/testing details.",
       products: [selank, oxytocin],
-      followUps: ["Selank vs prescription anxiolytics?", "Can I pair Selank with Semax?", "Tell me about Oxytocin"],
+      followUps: ["Selank vs Semax research", "Compare COA/testing", "Tell me about Oxytocin"],
     };
   }
 
@@ -184,9 +184,9 @@ function matchProducts(query: string, history: Message[]): { text: string; produ
   if (q.match(/libido|arousal|sexual|pt.?141|bremelanotide|intimacy|desire/)) {
     const pt141 = PRODUCTS.find(p => p.id === "pt141-spray")!;
     return {
-      text: "PT-141 (Bremelanotide) works through the central nervous system — not hormonal, not vascular. That's what makes it different. ~45 min onset, effective for both male and female research subjects. The nasal spray format makes it very accessible vs injectable.",
+      text: "PT-141 (Bremelanotide) is a melanocortin-pathway research compound. I can summarize the product page, compare format and testing details, and point to the research overview without making outcome or timing claims.",
       products: [pt141],
-      followUps: ["How does PT-141 compare to other options?", "Any side effects?", "How long does the effect last?"],
+      followUps: ["How does PT-141 compare to other options?", "Show COA/testing details", "Shipping and storage notes"],
     };
   }
 
@@ -194,9 +194,9 @@ function matchProducts(query: string, history: Message[]): { text: string; produ
   if (q.match(/social|bond|trust|connection|oxytocin|empathy|autis/)) {
     const oxytocin = PRODUCTS.find(p => p.id === "oxytocin-spray")!;
     return {
-      text: "Oxytocin nasal spray is the standard format for social cognition research. Trust, social behavior, autonomic stress regulation — it's one of the most-studied peptides in neuroscience. Intranasal delivery is the gold standard in published research.",
+      text: "Oxytocin nasal spray is a social-cognition research entry. Common literature categories include trust-behavior, social-salience, and autonomic stress-response models. I can compare research-page context and COA/testing details.",
       products: [oxytocin],
-      followUps: ["What dose do researchers typically use?", "Any other social cognition compounds?"],
+      followUps: ["Show research summary", "Any other social cognition compounds?", "Show COA/testing details"],
     };
   }
 
@@ -205,9 +205,9 @@ function matchProducts(query: string, history: Message[]): { text: string; produ
     const bpc = PRODUCTS.find(p => p.id === "bpc157-spray")!;
     const stack = PRODUCTS.find(p => p.id === "selank-semax-stack")!;
     return {
-      text: "Two no-brainer starting points:\n\n1. **BPC-157 Nasal Spray** ($64.99) — Our #1 seller. Broadest range of studied benefits: recovery, gut, anti-inflammatory. Everyone should have this.\n\n2. **Selank + Semax Stack** ($105) — If cognitive performance is the goal. Focus + calm in one protocol.\n\nUse code FIRST10 for 10% off your first order.",
+      text: "Two simple catalog starting points for research-only comparison:\n\n1. **BPC-157 Nasal Spray** ($64.99) — bestseller and closest fit for recovery-marker literature.\n\n2. **Selank + Semax Stack** ($105) — paired cognition/stress-response research pages at a lower combined price.\n\nUse code FIRST10 for 10% off your first order.",
       products: [bpc, stack],
-      followUps: ["Tell me more about BPC-157", "I'll go with the stack", "What else is popular?"],
+      followUps: ["Tell me more about BPC-157", "Show the Selank + Semax page", "What else is popular?"],
     };
   }
 
@@ -216,9 +216,9 @@ function matchProducts(query: string, history: Message[]): { text: string; produ
     const ret = PRODUCTS.find(p => p.id === "retatrutide");
     if (ret) {
       return {
-        text: "Retatrutide is next-gen metabolic research — triple-agonist (GLP-1/GIP/glucagon receptor). This is an injectable format for experienced researchers. Limited stock, and it's getting a lot of attention in the research community right now.",
+        text: "Retatrutide is a metabolic-research catalog entry around triple-agonist GLP-1/GIP/glucagon receptor literature. It is an injectable research format, so Titan keeps it framed around product specs, COA/testing, and order review rather than protocol guidance.",
         products: [ret],
-        followUps: ["How does this compare to semaglutide?", "What's the dosing protocol?"],
+        followUps: ["How does this compare to semaglutide research?", "Show COA/testing details"],
       };
     }
   }
@@ -228,9 +228,9 @@ function matchProducts(query: string, history: Message[]): { text: string; produ
     const cjc = PRODUCTS.find(p => p.id === "cjc-ipa");
     if (cjc) {
       return {
-        text: "CJC-1295 + Ipamorelin is the most-studied GH secretagogue duo. We pre-blend them so you skip the reconstitution math. Popular for GH axis, recovery, and body composition research.",
+        text: "CJC-1295 + Ipamorelin is a GH-secretagogue research pair. Titan's page focuses on the pre-blended vial format, product specs, COA/testing, and order-review details rather than reconstitution or protocol guidance.",
         products: [cjc],
-        followUps: ["How do I reconstitute this?", "What results do researchers see?"],
+        followUps: ["Show product specs", "Show COA/testing details"],
       };
     }
   }
@@ -240,25 +240,25 @@ function matchProducts(query: string, history: Message[]): { text: string; produ
     const sprays = [...NASAL_SPRAYS].sort((a, b) => a.price - b.price).slice(0, 3);
     const stack = PRODUCTS.find(p => p.id === "selank-semax-stack")!;
     return {
-      text: `Sprays start at $${sprays[0].price}. Best value plays:\n\n• Selank + Semax Stack ($105 — saves $15 vs separate)\n• Code **FIRST10** = 10% off first order\n• Code **BULK15** = 15% off 3+ items\n• Free shipping over $150\n\nSmart move: grab 3 sprays, use BULK15, and you're above $150 for free shipping too.`,
+      text: `Sprays start at $${sprays[0].price}. Current catalog value points:\n\n• Selank + Semax Stack ($105 — saves $15 vs separate)\n• Code **FIRST10** = 10% off first order\n• Code **BULK15** = 15% off 3+ items\n• Free shipping over $150\n\nI can compare by research category, COA/testing, or format.`,
       products: [...sprays, stack],
-      followUps: ["What 3 sprays do you recommend?", "I want the best deal possible"],
+      followUps: ["Compare by research category", "Show testing standards"],
     };
   }
 
   // Greeting / hi / hey
   if (q.match(/^(hi|hey|hello|sup|yo|what's up|whats up)\s*[!?.]*$/i)) {
     return {
-      text: "Hey! What are you researching? I can point you to the right compound — recovery, focus, sleep, mood, or something more specific.",
+      text: "Hey. What are you researching? I can narrow the catalog by recovery markers, cognition, sleep architecture, mood/stress models, or another category.",
       products: [],
-      followUps: ["Recovery & tissue repair", "Cognitive performance", "Better sleep", "Show me everything"],
+      followUps: ["Recovery-marker research", "Cognition research", "Sleep-architecture research", "Show me everything"],
     };
   }
 
   // Thanks / thank you
   if (q.match(/thank|thanks|thx|appreciate|cheers/)) {
     return {
-      text: "Anytime. If you have more questions about dosing, stacking, or anything else — just ask. Good luck with the research.",
+      text: "Anytime. I can help with product comparison, COA/testing, shipping, and research-only catalog context.",
       products: [],
     };
   }
@@ -276,9 +276,9 @@ function matchProducts(query: string, history: Message[]): { text: string; produ
   if (q.match(/injectable|vial|injection|subcutaneous|reconstitut/)) {
     const injectables = PRODUCTS.filter(p => p.category === "injectable");
     return {
-      text: "Our injectable lineup — all lyophilized, ship with COAs, 99%+ HPLC verified:\n\n• BPC-157 Vial (5mg) — $54.99\n• TB-500 (5mg) — $89.99\n• CJC-1295 + Ipamorelin (pre-blended) — $119.99\n• Retatrutide (10mg) — $199.99\n\nAll require standard reconstitution with bacteriostatic water.",
+      text: "Our injectable research lineup — all lyophilized, ship with COAs, 99%+ HPLC verified:\n\n• BPC-157 Vial (5mg) — $54.99\n• TB-500 (5mg) — $89.99\n• CJC-1295 + Ipamorelin (pre-blended) — $119.99\n• Retatrutide (10mg) — $199.99\n\nThese require qualified lab handling. I can compare specs and testing, but not reconstitution or administration instructions.",
       products: injectables,
-      followUps: ["Spray vs injectable BPC-157?", "How do I reconstitute?"],
+      followUps: ["Spray vs vial BPC-157", "Show COA/testing details"],
     };
   }
 

@@ -53,21 +53,36 @@ export default async function ProductPage({
   const product = PRODUCTS.find((p) => p.slug === slug);
   if (!product) notFound();
 
-  // JSON-LD structured data for product
+  const priceValidUntil = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .slice(0, 10);
+
+  const offer: Record<string, unknown> = {
+    "@type": "Offer",
+    price: product.price.toFixed(2),
+    priceCurrency: "USD",
+    priceValidUntil,
+    availability: "https://schema.org/InStock",
+    seller: { "@type": "Organization", name: "Titan Peptide Lab" },
+  };
+  if (product.compareAtPrice && product.compareAtPrice > product.price) {
+    offer.priceSpecification = {
+      "@type": "UnitPriceSpecification",
+      priceType: "https://schema.org/ListPrice",
+      price: product.compareAtPrice.toFixed(2),
+      priceCurrency: "USD",
+    };
+  }
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
     description: product.description,
     image: `https://${BRAND.domain}${product.image}`,
+    sku: product.slug,
     brand: { "@type": "Brand", name: "Titan Peptide Lab" },
-    offers: {
-      "@type": "Offer",
-      price: product.price.toFixed(2),
-      priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
-      seller: { "@type": "Organization", name: "Titan Peptide Lab" },
-    },
+    offers: offer,
   };
 
   return (

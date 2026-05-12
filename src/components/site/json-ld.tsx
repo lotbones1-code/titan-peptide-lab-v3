@@ -87,7 +87,7 @@ export function ProductListJsonLd() {
 export function FAQJsonLd() {
   const faqs = [
     { q: "How is purity verified?", a: "Every batch is third-party HPLC tested to ≥99%. The certificate of analysis is tied to the specific lot on your bottle." },
-    { q: "How fast do orders ship?", a: "Manual fulfillment within 24 hours of payment confirmation. Same-day dispatch for orders before 2 PM PT." },
+    { q: "How fast do orders ship?", a: "Manual fulfillment within 24 hours of payment confirmation. Tracking emailed as soon as the dispatch record is closed." },
     { q: "What payment methods do you accept?", a: "Crypto only — BTC, ETH, USDC (ERC-20), SOL, and USDC (SPL)." },
     { q: "Are these products for human use?", a: "No. All products are sold for laboratory research purposes only." },
     { q: "What is your return policy?", a: "Unopened items within 14 days. Contact support for a return authorization." },
