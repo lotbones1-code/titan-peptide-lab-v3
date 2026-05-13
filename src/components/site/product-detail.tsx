@@ -408,6 +408,25 @@ export function ProductDetail({ product }: { product: Product }) {
                   </div>
                 </div>
 
+                <div className="mt-5 rounded-[1.2rem] border border-[#dce7e0] bg-[#f7faf8] px-4 py-4">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#1e6f58]">
+                    Before you send payment
+                  </p>
+                  <p className="mt-2 text-sm leading-7 text-[#2a3530]">
+                    This is a manual crypto order request, not an instant card checkout. If you have questions about
+                    COA, shipping, or the payment rail, contact{" "}
+                    <a className="font-medium text-[#1e6f58] underline-offset-4 hover:underline" href="mailto:support@titanpeptidelab.com">
+                      support@titanpeptidelab.com
+                    </a>{" "}
+                    before sending funds.
+                  </p>
+                  <div className="mt-3 grid gap-2 text-xs leading-6 text-[#5c6762] sm:grid-cols-3">
+                    <p><strong className="text-[#0f1613]">1.</strong> Choose your country and shipping address.</p>
+                    <p><strong className="text-[#0f1613]">2.</strong> Send the exact crypto amount to the selected wallet.</p>
+                    <p><strong className="text-[#0f1613]">3.</strong> Paste the transaction hash so support can match the order request.</p>
+                  </div>
+                </div>
+
                 {/* ── Checkout panel ── */}
                 <div className="mt-8 rounded-[1.6rem] border border-[rgb(15_22_19/8%)] bg-[#fafbfa] p-6 shadow-[0_1px_2px_rgb(15_22_19/4%),_0_24px_60px_-40px_rgb(15_22_19/15%)]">
                   {/* Step indicator */}
