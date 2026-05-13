@@ -5,7 +5,7 @@ import { Footer } from "@/components/site/footer";
 export const metadata = {
   title: "Contact — Titan Peptide Laboratory",
   description:
-    "Write the laboratory. Replies inside 24–48 hours from the QA bench.",
+    "Contact Titan for order, COA, shipping, and manual crypto payment questions.",
 };
 
 const FORM_ACTION = "mailto:support@titanpeptidelab.com";
@@ -28,8 +28,9 @@ export default function ContactPage() {
                 </h1>
 
                 <p className="mt-8 max-w-md text-base leading-8 text-[#586761]">
-                  Replies inside 24–48 hours, usually same day from the QA bench.
-                  For the most common questions, the fastest answer is usually on the {" "}
+                  Use this page for order, COA, shipping, and manual crypto
+                  payment questions. For the most common questions, the fastest
+                  answer is usually on the{" "}
                   <Link
                     href="/shipping-faq"
                     className="text-[#203129] underline decoration-[#b9c7bf] underline-offset-[6px] hover:text-[#1e6f58] hover:decoration-[#1e6f58]"
@@ -66,6 +67,25 @@ export default function ContactPage() {
                   <h2 className="mt-6 font-serif text-3xl leading-[1.05] text-[#13211c]">
                     A note to the <em className="italic text-[#66756e]">laboratory</em>.
                   </h2>
+
+                  <div className="mt-6 rounded-[1.15rem] border border-[#d8dfd7] bg-[#fffdfa]/75 px-4 py-4">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#1e6f58]">
+                      Manual order help
+                    </p>
+                    <p className="mt-2 text-sm leading-7 text-[#53615b]">
+                      If you already used the crypto order flow, include your order ID,
+                      product, country, payment rail, and transaction hash so support
+                      can match the request faster. If this form does not open your
+                      mail app, email{" "}
+                      <a
+                        href="mailto:support@titanpeptidelab.com"
+                        className="text-[#203129] underline decoration-[#b9c7bf] underline-offset-[6px] hover:text-[#1e6f58] hover:decoration-[#1e6f58] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58] focus-visible:ring-offset-2"
+                      >
+                        support@titanpeptidelab.com
+                      </a>{" "}
+                      directly with the same details.
+                    </p>
+                  </div>
 
                   <form
                     action={FORM_ACTION}
@@ -123,7 +143,7 @@ export default function ContactPage() {
 
                     <div className="flex items-center justify-between pt-6">
                       <p className="max-w-xs font-mono text-[10px] uppercase tracking-[0.18em] text-[#738079]">
-                        Reply inside 24–48 h · from the QA bench
+                        Manual order support · include payment hash when available
                       </p>
                       <button
                         type="submit"
