@@ -5,6 +5,9 @@ import Link from "next/link";
 import { PRODUCTS, NASAL_SPRAYS, type Product } from "@/lib/products";
 import { MessageCircle, X, Send, Sparkles, ChevronRight, ArrowRight } from "lucide-react";
 
+// Status 2026-05-12: dormant source only. Do not mount without a fresh
+// CRO/compliance rewrite and proof that pricing, testing, shipping, and
+// research-only claims match current authority.
 type Message = {
   role: "assistant" | "user";
   text: string;
