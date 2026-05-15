@@ -58,7 +58,7 @@ export function PaymentMethods() {
             <ul className="mt-5 grid gap-2 text-[13px] text-[#44514b] sm:grid-cols-2">
               <li className="flex items-start gap-2"><span className="mt-1 size-1.5 shrink-0 rounded-full bg-[#1a5c48]"></span>No 3rd-party processor — funds confirm direct on-chain</li>
               <li className="flex items-start gap-2"><span className="mt-1 size-1.5 shrink-0 rounded-full bg-[#1a5c48]"></span>No chargebacks, no holds, no merchant flags</li>
-              <li className="flex items-start gap-2"><span className="mt-1 size-1.5 shrink-0 rounded-full bg-[#1a5c48]"></span>Refunds returned to the same wallet on QA failure</li>
+              <li className="flex items-start gap-2"><span className="mt-1 size-1.5 shrink-0 rounded-full bg-[#1a5c48]"></span>Refund path is confirmed during order review</li>
               <li className="flex items-start gap-2"><span className="mt-1 size-1.5 shrink-0 rounded-full bg-[#1a5c48]"></span>Same flow worldwide — no regional banking gates</li>
             </ul>
           </div>

@@ -261,7 +261,7 @@ export function ProductDetail({ product }: { product: Product }) {
                   block below (Elite Design playbook §Risk Reversal). */}
               <p className="flex items-center justify-center gap-1.5 text-[12px] text-[#5c6762]">
                 <ShieldCheck className="h-3.5 w-3.5 text-[#1e6f58]" />
-                Quality guarantee + 14-day unopened returns — replacement or refund on lot-mismatch, sterility failure, shipping damage, or unopened returns.
+                Quality guarantee + 14-day unopened returns — replacement or refund on lot-mismatch, documented lot-quality issue, shipping damage, or eligible unopened returns.
               </p>
 
               <div className="flex items-center justify-center gap-6 text-[11px] text-[#8a9690]">
@@ -295,7 +295,7 @@ export function ProductDetail({ product }: { product: Product }) {
                 <div className="rounded-[1rem] border border-[#1e6f58]/20 bg-[#f0f7f4] px-4 py-3">
                   <ShieldCheck className="h-4 w-4 text-[#1e6f58]" />
                   <p className="mt-2 text-[12px] font-medium text-[#0f1613]">Quality guarantee</p>
-                  <p className="mt-1 text-[11px] leading-5 text-[#6b7a73]">Replacement or refund on lot-mismatch, sterility failure, or shipping damage. Email QA within 48h with photos. See returns policy.</p>
+                  <p className="mt-1 text-[11px] leading-5 text-[#6b7a73]">Replacement or refund on lot-mismatch, documented lot-quality issue, shipping damage, or eligible unopened returns. Contact QA within 48h with photos. See returns policy.</p>
                 </div>
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
@@ -366,9 +366,9 @@ export function ProductDetail({ product }: { product: Product }) {
                 <ShieldCheck className="h-4 w-4 text-[#1e6f58]" />
                 <p className="mt-3 text-[13px] font-semibold text-[#0f1613]">Replacement or refund</p>
                 <p className="mt-1.5 text-[12px] leading-[1.7] text-[#5c6762]">
-                  Lot-mismatch, sterility failure, or shipping damage —
-                  email QA within 48h with photos. Refund returns to the
-                  same wallet.
+                  Lot-mismatch, documented lot-quality issue, shipping damage, or eligible unopened returns —
+                  contact QA within 48h with photos. Refund path is confirmed
+                  during order review.
                 </p>
               </div>
               <div className="rounded-2xl border border-[#1e6f58]/20 bg-[#f0f7f4] p-5">
