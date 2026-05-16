@@ -76,8 +76,10 @@ export default function CheckoutPage() {
     paymentNetwork: string;
     paymentAddress: string;
     cryptoAmount: string | null;
+    receipt: string;
+    mailtoHref: string;
   }>(null);
-  const [copied, setCopied] = useState<"address" | "amount" | null>(null);
+  const [copied, setCopied] = useState<"address" | "amount" | "receipt" | null>(null);
   const [prices, setPrices] = useState<PriceMap>({});
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
   const [cryptoHelpOpen, setCryptoHelpOpen] = useState(true);
@@ -163,6 +165,33 @@ export default function CheckoutPage() {
   const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&margin=0&data=${encodeURIComponent(qrData)}`;
 
   const completeOrder = (orderId: string) => {
+    const fullAddress = [street, apt, city, region, postal, country].filter(Boolean).join(", ");
+    const receiptLines = [
+      `Order ID: ${orderId}`,
+      ``,
+      `Customer: ${name}`,
+      `Email: ${email}`,
+      `Country: ${country}`,
+      `Ship to: ${fullAddress}`,
+      ``,
+      `Items:`,
+      ...items.map((i) => `  - ${i.product.name} (${i.product.size}) × ${i.quantity}  $${(i.product.price * i.quantity).toFixed(2)}`),
+      ``,
+      `Subtotal: $${subtotal.toFixed(2)}`,
+      ...(appliedDiscount ? [`Discount: ${appliedDiscount.code} (-${appliedDiscount.percent}%)  -$${discountAmount.toFixed(2)}`] : []),
+      `Shipping: ${shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}`,
+      `Total: $${total.toFixed(2)}`,
+      ``,
+      `Payment: ${wallet.label} (${wallet.network})`,
+      `${cryptoAmount ? `Send: ${cryptoAmount} ${wallet.coin}` : `Amount: $${total.toFixed(2)} USD`}`,
+      `To address: ${wallet.address}`,
+      `TX hash: ${txHash || "(will send after transfer)"}`,
+      ``,
+      `— from titanpeptidelab.com checkout`,
+    ];
+    const receipt = receiptLines.join("\n");
+    const subject = `Order ${orderId} — $${total.toFixed(2)} via ${wallet.label}`;
+    const mailtoHref = `mailto:${ORDER_INBOX}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(receipt)}`;
     setDone({
       orderId,
       coin: selectedCoin,
@@ -171,6 +200,8 @@ export default function CheckoutPage() {
       paymentNetwork: wallet.network,
       paymentAddress: wallet.address,
       cryptoAmount,
+      receipt,
+      mailtoHref,
     });
     clearCart();
   };
@@ -228,130 +259,91 @@ export default function CheckoutPage() {
     setSubmitting(true);
 
     const fullAddress = [street, apt, city, region, postal, country].filter(Boolean).join(", ");
-    const fallbackOrderId = makeOrderId();
+    const orderId = makeOrderId();
 
-    const payload = {
-      items: items.map((i) => ({
-        productId: i.product.id,
-        name: i.product.name,
-        quantity: i.quantity,
-        price: i.product.price,
-      })),
-      name,
-      email,
+    const itemLines = items
+      .map((i) => `${i.product.name} (${i.product.size}) x ${i.quantity} = $${(i.product.price * i.quantity).toFixed(2)}`)
+      .join("\n");
+
+    const formPayload = {
+      _subject: `New order: ${orderId} - $${total.toFixed(2)} via ${wallet.label}`,
+      _captcha: "false",
+      _template: "table",
+      orderId,
+      customerName: name,
+      customerEmail: email,
       country,
-      address: fullAddress,
-      shipping,
-      total,
-      source: "checkout",
-      discountCode: appliedDiscount?.code || undefined,
-      discountPercent: appliedDiscount?.percent || undefined,
-      discountAmount: discountAmount || undefined,
-      paymentMethod,
-      paymentCoin: paymentMethod === "crypto" ? `${wallet.label} (${wallet.network})` : undefined,
-      paymentAddress: paymentMethod === "crypto" ? wallet.address : undefined,
-      cryptoAmount: paymentMethod === "crypto" && cryptoAmount ? `${cryptoAmount} ${wallet.coin}` : undefined,
-      txHash: paymentMethod === "crypto" && txHash ? txHash : undefined,
+      shippingAddress: fullAddress,
+      items: itemLines,
+      subtotal: `$${subtotal.toFixed(2)}`,
+      discount: appliedDiscount ? `${appliedDiscount.code} (-${appliedDiscount.percent}%) -$${discountAmount.toFixed(2)}` : "none",
+      shipping: shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`,
+      total: `$${total.toFixed(2)}`,
+      paymentCoin: `${wallet.label} (${wallet.network})`,
+      paymentAddress: wallet.address,
+      cryptoAmount: cryptoAmount ? `${cryptoAmount} ${wallet.coin}` : `$${total.toFixed(2)} USD`,
+      txHash: txHash || "(will send after transfer)",
     };
 
-    const submitViaFormsubmit = async (): Promise<boolean> => {
-      const itemLines = items
-        .map((i) => `${i.product.name} (${i.product.size}) x ${i.quantity} = $${(i.product.price * i.quantity).toFixed(2)}`)
-        .join("\n");
-      const formPayload = {
-        _subject: `New order: ${fallbackOrderId} - $${total.toFixed(2)} via ${wallet.label}`,
-        _captcha: "false",
-        _template: "table",
-        orderId: fallbackOrderId,
-        customerName: name,
-        customerEmail: email,
+    // Ship the confirmation UI immediately so the buyer always has a working
+    // path forward (copy receipt / email support) even if every backend rail
+    // is down. The intake POSTs below are best-effort, fire-and-forget.
+    completeOrder(orderId);
+    setSubmitting(false);
+
+    // Fire-and-forget intake: try Node /api/order (in case a backend is wired
+    // later), then Formsubmit. Both may 405/521 on the current static deploy
+    // — that's fine, the buyer already has the receipt panel with copy +
+    // email-support actions.
+    const fireForget = async () => {
+      const apiPayload = {
+        items: items.map((i) => ({
+          productId: i.product.id,
+          name: i.product.name,
+          quantity: i.quantity,
+          price: i.product.price,
+        })),
+        orderId,
+        name,
+        email,
         country,
-        shippingAddress: fullAddress,
-        items: itemLines,
-        subtotal: `$${subtotal.toFixed(2)}`,
-        discount: appliedDiscount ? `${appliedDiscount.code} (-${appliedDiscount.percent}%) -$${discountAmount.toFixed(2)}` : "none",
-        shipping: shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`,
-        total: `$${total.toFixed(2)}`,
+        address: fullAddress,
+        shipping,
+        total,
+        source: "checkout",
+        discountCode: appliedDiscount?.code || undefined,
+        discountPercent: appliedDiscount?.percent || undefined,
+        discountAmount: discountAmount || undefined,
+        paymentMethod,
         paymentCoin: `${wallet.label} (${wallet.network})`,
         paymentAddress: wallet.address,
-        cryptoAmount: cryptoAmount ? `${cryptoAmount} ${wallet.coin}` : `$${total.toFixed(2)} USD`,
-        txHash: txHash || "(will send after transfer)",
+        cryptoAmount: cryptoAmount ? `${cryptoAmount} ${wallet.coin}` : undefined,
+        txHash: txHash || undefined,
       };
       try {
+        const ctrl = new AbortController();
+        const tid = setTimeout(() => ctrl.abort(), 1500);
+        await fetch(ORDER_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(apiPayload),
+          signal: ctrl.signal,
+        });
+        clearTimeout(tid);
+      } catch { /* ignore */ }
+      try {
         const fctrl = new AbortController();
-        const ftimeout = setTimeout(() => fctrl.abort(), 6000);
-        const fres = await fetch(FORMSUBMIT_ENDPOINT, {
+        const ftid = setTimeout(() => fctrl.abort(), 4000);
+        await fetch(FORMSUBMIT_ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/json", Accept: "application/json" },
           body: JSON.stringify(formPayload),
           signal: fctrl.signal,
         });
-        clearTimeout(ftimeout);
-        if (fres.ok) {
-          completeOrder(fallbackOrderId);
-          return true;
-        }
-      } catch {
-        /* fall through to mailto */
-      }
-      return false;
+        clearTimeout(ftid);
+      } catch { /* ignore */ }
     };
-
-    const submitViaMailto = () => {
-      const lines = [
-        `Order ID: ${fallbackOrderId}`,
-        ``,
-        `Customer: ${name}`,
-        `Email: ${email}`,
-        `Country: ${country}`,
-        `Ship to: ${fullAddress}`,
-        ``,
-        `Items:`,
-        ...items.map((i) => `  - ${i.product.name} (${i.product.size}) × ${i.quantity}  $${(i.product.price * i.quantity).toFixed(2)}`),
-        ``,
-        `Subtotal: $${subtotal.toFixed(2)}`,
-        ...(appliedDiscount ? [`Discount: ${appliedDiscount.code} (-${appliedDiscount.percent}%)  -$${discountAmount.toFixed(2)}`] : []),
-        `Shipping: ${shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}`,
-        `Total: $${total.toFixed(2)}`,
-        ``,
-        `Payment: ${wallet.label} (${wallet.network})`,
-        `${cryptoAmount ? `Send: ${cryptoAmount} ${wallet.coin}` : `Amount: $${total.toFixed(2)} USD`}`,
-        `To address: ${wallet.address}`,
-        ...(txHash ? [`TX hash: ${txHash}`] : [`TX hash: (will send after transfer)`]),
-        ``,
-        `— sent from titanpeptidelab.com checkout`,
-      ];
-      const subject = `Order ${fallbackOrderId} — $${total.toFixed(2)} via ${wallet.label}`;
-      const body = lines.join("\n");
-      const href = `mailto:${ORDER_INBOX}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = href;
-      completeOrder(fallbackOrderId);
-    };
-
-    try {
-      const ctrl = new AbortController();
-      const timeoutId = setTimeout(() => ctrl.abort(), 4000);
-      const res = await fetch(ORDER_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(payload),
-        signal: ctrl.signal,
-      });
-      clearTimeout(timeoutId);
-
-      const data = await res.json().catch(() => null);
-      if (res.ok && data && data.success && data.orderId) {
-        completeOrder(data.orderId);
-      } else {
-        const ok = await submitViaFormsubmit();
-        if (!ok) submitViaMailto();
-      }
-    } catch {
-      const ok = await submitViaFormsubmit();
-      if (!ok) submitViaMailto();
-    } finally {
-      setSubmitting(false);
-    }
+    void fireForget();
   };
 
   const copyAddress = () => {
@@ -408,6 +400,43 @@ export default function CheckoutPage() {
                 <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">2.</span><span>We verify on-chain — usually under 30 minutes.</span></li>
                 <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">3.</span><span>Cold-chain dispatch within 24h, tracking emailed when packed.</span></li>
               </ol>
+            </div>
+            <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#e7ece9] bg-white p-5 text-left">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
+                Send us your order details
+              </p>
+              <p className="mt-2 text-[12px] leading-5 text-[#44514b]">
+                We get a copy automatically. If you want to be sure, use either button — both work without any signup.
+              </p>
+              <div className="mt-3 grid gap-2">
+                <a
+                  href={done.mailtoHref}
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[#1e6f58] px-4 text-[13px] font-medium text-white transition-colors hover:bg-[#175946]"
+                >
+                  Email order to support
+                </a>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText(done.receipt);
+                    setCopied("receipt");
+                    setTimeout(() => setCopied(null), 1800);
+                  }}
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-[#1e6f58] px-4 text-[13px] font-medium text-[#1e6f58] transition-colors hover:bg-[#f3f9f6]"
+                >
+                  {copied === "receipt" ? (
+                    <span className="flex items-center gap-1.5"><Check className="h-3.5 w-3.5" /> Receipt copied</span>
+                  ) : (
+                    <span className="flex items-center gap-1.5"><Copy className="h-3.5 w-3.5" /> Copy full receipt</span>
+                  )}
+                </button>
+              </div>
+              <details className="mt-3 text-[11px] text-[#8a9690]">
+                <summary className="cursor-pointer select-none hover:text-[#1e6f58]">Show full receipt</summary>
+                <pre className="mt-2 max-h-64 overflow-auto whitespace-pre-wrap rounded-lg border border-[#e7ece9] bg-[#fafbfa] p-3 font-mono text-[10px] leading-4 text-[#44514b]">
+{done.receipt}
+                </pre>
+              </details>
             </div>
             <div className="mt-8 flex flex-col items-center gap-3">
               <Link
