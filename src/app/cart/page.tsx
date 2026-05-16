@@ -23,7 +23,14 @@ export default function CartPage() {
 
   useEffect(() => {
     if (hydrated && itemCount > 0) {
-      router.replace("/checkout");
+      let next = "/checkout";
+      try {
+        const ref = new URLSearchParams(window.location.search).get("ref") || sessionStorage.getItem("tpl_ref");
+        if (ref) next = `/checkout?ref=${encodeURIComponent(ref)}`;
+      } catch {
+        next = "/checkout";
+      }
+      router.replace(next);
     }
   }, [hydrated, itemCount, router]);
 

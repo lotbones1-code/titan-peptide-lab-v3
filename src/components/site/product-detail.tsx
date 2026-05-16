@@ -14,6 +14,7 @@ import {
   Truck,
   Globe,
   FlaskConical,
+  ArrowUpRight,
 } from "lucide-react";
 import { type Product, DISCOUNT_CODES } from "@/lib/products";
 import { zoneForCountry } from "@/lib/countries";
@@ -26,6 +27,17 @@ import { CoaThumb } from "./coa-thumb";
 function parseMgPerVial(size: string, fallback = 5): number {
   const m = size.match(/(\d+(?:\.\d+)?)\s*mg/i);
   return m ? parseFloat(m[1]) : fallback;
+}
+
+// No SKU-specific COA/HPLC PDFs exist in /public yet. Per the sales-path
+// constraint, route each PDP proof button to the COA index/workflow rather than
+// implying a product-specific PDF exists.
+function coaProofLink(productName: string) {
+  return {
+    href: "/lab-testing",
+    label: "View COA page",
+    ariaLabel: `View COA and HPLC workflow for ${productName}`,
+  };
 }
 
 export function ProductDetail({ product }: { product: Product }) {
@@ -49,6 +61,7 @@ export function ProductDetail({ product }: { product: Product }) {
   }, []);
 
   const lot = getLot(product.id);
+  const coaProof = coaProofLink(product.name);
 
   const subtotal = product.price * qty;
   const discountPct = appliedCode ? DISCOUNT_CODES[appliedCode].percent : 0;
@@ -87,13 +100,23 @@ export function ProductDetail({ product }: { product: Product }) {
             <CompoundPoster product={product} variant="detail" className="w-full" />
             <dl className="mt-5 grid grid-cols-3 divide-x divide-[rgb(15_22_19/8%)] border-t border-[rgb(15_22_19/8%)] pt-5">
               {[
-                { dt: "Purity", dd: "HPLC ≥99%" },
+                { dt: "Purity", dd: "HPLC ≥99% target", proof: true },
                 { dt: "Release", dd: "Lot sheet" },
                 { dt: "Dispatch", dd: "Within 24h" },
-              ].map(({ dt, dd }) => (
+              ].map(({ dt, dd, proof }) => (
                 <div key={dt} className="px-4 first:pl-0 last:pr-0">
                   <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">{dt}</dt>
                   <dd className="mt-0.5 text-[12px] font-medium text-[#0f1613]">{dd}</dd>
+                  {proof ? (
+                    <Link
+                      href={coaProof.href}
+                      aria-label={coaProof.ariaLabel}
+                      className="mt-2 inline-flex items-center gap-1 rounded-full border border-[#dfe6e2] px-2 py-1 text-[10px] font-semibold text-[#1e6f58] transition-colors hover:border-[#1e6f58]/40 hover:text-[#175946] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58]/20"
+                    >
+                      {coaProof.label}
+                      <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
+                    </Link>
+                  ) : null}
                 </div>
               ))}
             </dl>
@@ -265,7 +288,7 @@ export function ProductDetail({ product }: { product: Product }) {
               </p>
 
               <div className="flex items-center justify-center gap-6 text-[11px] text-[#8a9690]">
-                <span className="flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5" />HPLC ≥99%</span>
+                <Link href={coaProof.href} className="flex items-center gap-1.5 hover:text-[#1e6f58]"><ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />HPLC ≥99% target</Link>
                 <span className="flex items-center gap-1.5"><Zap className="h-3.5 w-3.5" />24h dispatch</span>
                 <span className="flex items-center gap-1.5"><Check className="h-3.5 w-3.5" />Lot release sheet</span>
               </div>

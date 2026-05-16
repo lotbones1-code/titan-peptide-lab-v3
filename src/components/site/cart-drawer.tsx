@@ -43,8 +43,15 @@ export function CartDrawer() {
   const router = useRouter();
 
   const handleCheckout = () => {
+    let next = "/checkout";
+    try {
+      const ref = new URLSearchParams(window.location.search).get("ref") || sessionStorage.getItem("tpl_ref");
+      if (ref) next = `/checkout?ref=${encodeURIComponent(ref)}`;
+    } catch {
+      next = "/checkout";
+    }
     setIsOpen(false);
-    router.push("/checkout");
+    router.push(next);
   };
 
   if (!isOpen) return null;

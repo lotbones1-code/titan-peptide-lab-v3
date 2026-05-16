@@ -4,6 +4,7 @@ import { Footer } from "@/components/site/footer";
 export const metadata = {
   title: "Privacy Policy — Titan Peptide Lab",
   description: "How The Titan Peptide Company handles your data.",
+  alternates: { canonical: "/legal/privacy/" },
 };
 
 export default function PrivacyPage() {

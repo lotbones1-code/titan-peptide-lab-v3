@@ -4,6 +4,7 @@ import { Footer } from "@/components/site/footer";
 export const metadata = {
   title: "Research Disclaimer — Titan Peptide Lab",
   description: "Important disclaimer regarding the research-only nature of Titan Peptide Lab products.",
+  alternates: { canonical: "/legal/research-disclaimer/" },
 };
 
 export default function ResearchDisclaimerPage() {

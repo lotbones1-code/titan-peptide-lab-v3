@@ -9,6 +9,7 @@ export const metadata = {
   title: "Contact — The Titan Peptide Company",
   description:
     "Write the laboratory. Replies inside 24–48 hours from the QA bench.",
+  alternates: { canonical: "/contact/" },
 };
 
 export default function ContactPage() {

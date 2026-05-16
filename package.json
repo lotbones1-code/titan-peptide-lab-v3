@@ -7,6 +7,7 @@
     "dev": "next dev",
     "prebuild": "node scripts/generate-catalog.mjs",
     "build": "next build --webpack",
+    "typecheck": "tsc --noEmit",
     "start": "next start",
     "gen:catalog": "node scripts/generate-catalog.mjs",
     "add:product": "node scripts/add-product.mjs",

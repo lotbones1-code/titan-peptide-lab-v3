@@ -4,6 +4,7 @@ import { Footer } from "@/components/site/footer";
 export const metadata = {
   title: "Terms of Service — Titan Peptide Lab",
   description: "Terms governing the purchase and use of products from The Titan Peptide Company.",
+  alternates: { canonical: "/legal/terms/" },
 };
 
 export default function TermsPage() {

@@ -5,6 +5,7 @@ export const metadata = {
   title: "Shipping, Payment & Returns \u2014 The Titan Peptide Company",
   description:
     "Discreet US domestic shipping, cold pack handling, crypto payment, active discount codes, and returns policy for research-use products.",
+  alternates: { canonical: "/shipping-faq/" },
 };
 
 const SECTIONS = [

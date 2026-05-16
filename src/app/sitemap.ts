@@ -37,10 +37,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // export URLs (`/path/index.html`) don't 301-redirect from sitemap entries.
   const pages: MetadataRoute.Sitemap = [
     { url: `${BASE}/`, lastModified: now, changeFrequency: "weekly", priority: 1.0 },
+    { url: `${BASE}/start/`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${BASE}/products/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/blog/`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
     { url: `${BASE}/about/`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/lab-testing/`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE}/how-to-pay-with-crypto/`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/research/`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE}/contact/`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE}/checkout/`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },

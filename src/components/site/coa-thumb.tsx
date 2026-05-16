@@ -4,13 +4,13 @@ import { ArrowUpRight } from "lucide-react";
  * Trust element placed at the moment of doubt — next to the price on the PDP.
  * Renders a stylized release-sheet preview (chromatogram sparkline + table rows) instead
  * of a binary asset, so it stays sharp at any zoom and adds zero image weight.
- * Links to the lab-testing workflow for the current lot/batch COA proof.
+ * Links to the lab-testing workflow until product-specific public PDFs exist.
  */
 export function CoaThumb({ lot, productName }: { lot: string; productName: string }) {
   return (
     <a
       href="/lab-testing"
-      aria-label={`View this batch's COA for ${productName}, lot ${lot}`}
+      aria-label={`View COA workflow for ${productName}, lot ${lot}`}
       className="group flex items-stretch gap-3 rounded-[1rem] border border-[rgb(15_22_19/8%)] bg-white p-3 transition-colors hover:border-[#1e6f58]/30"
     >
       {/* Left: stylized release-sheet preview, ~64×80, chromatogram + table rows */}
@@ -51,18 +51,18 @@ export function CoaThumb({ lot, productName }: { lot: string; productName: strin
       <div className="flex flex-1 flex-col justify-between py-0.5">
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
-            COA verified
+            COA workflow
           </p>
           <p className="mt-1 font-mono text-[11px] tabular-nums leading-tight text-[#0f1613]">
             Lot {lot}
           </p>
           <p className="mt-0.5 text-[10.5px] leading-[1.4] text-[#6b7a73]">
-            Batch-matched record for{" "}
+            Release-sheet path for{" "}
             <span className="text-[#0f1613]">{productName}</span>
           </p>
         </div>
         <span className="inline-flex items-center gap-1 text-[10px] font-medium text-[#1e6f58] transition-colors group-hover:text-[#175946]">
-          View this batch&apos;s COA →
+          View COA index →
           <ArrowUpRight className="h-3 w-3" aria-hidden />
         </span>
       </div>
