@@ -1,16 +1,6 @@
-"use client";
-
-import { useId, useState } from "react";
 import { Check, FileText, ShieldCheck } from "lucide-react";
 
 type Variant = "homepage" | "pdp" | "compact";
-
-type LeadMagnetRecord = {
-  email: string;
-  source: string;
-  product?: string;
-  createdAt: string;
-};
 
 type LeadMagnetCaptureProps = {
   variant?: Variant;
@@ -47,17 +37,38 @@ const COPY = {
   },
 } satisfies Record<Variant, { eyebrow: string; title: string; body: string; button: string; source: string }>;
 
-function saveLocal(record: LeadMagnetRecord) {
-  if (typeof window === "undefined") return;
-  try {
-    const existingRaw = window.localStorage.getItem(STORAGE_KEY);
-    const existing = existingRaw ? (JSON.parse(existingRaw) as LeadMagnetRecord[]) : [];
-    const next = [record, ...existing].slice(0, 50);
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-  } catch {
-    // Local fallback should never block the visitor experience.
-  }
-}
+const LOCAL_SAVE_SCRIPT = `
+(function () {
+  if (window.__titanLeadMagnetBound) return;
+  window.__titanLeadMagnetBound = true;
+  document.addEventListener("submit", function (event) {
+    var form = event.target;
+    if (!form || !form.matches || !form.matches("[data-lead-magnet-form]")) return;
+    var emailField = form.getAttribute("data-email-field") || "email";
+    var emailInput = form.querySelector("[name='" + emailField + "']") || form.querySelector("[name='email']");
+    var email = emailInput && emailInput.value ? String(emailInput.value).trim() : "";
+    var record = {
+      email: email,
+      source: form.querySelector("[name='source']") ? form.querySelector("[name='source']").value : "lead-magnet",
+      product: form.querySelector("[name='product']") ? form.querySelector("[name='product']").value : undefined,
+      createdAt: new Date().toISOString()
+    };
+    try {
+      var raw = window.localStorage.getItem("${STORAGE_KEY}");
+      var existing = raw ? JSON.parse(raw) : [];
+      window.localStorage.setItem("${STORAGE_KEY}", JSON.stringify([record].concat(existing).slice(0, 50)));
+    } catch (error) {}
+    if (form.getAttribute("data-local-only") === "true") {
+      event.preventDefault();
+      if (emailInput) emailInput.value = "";
+      var status = form.querySelector("[data-lead-magnet-status]");
+      var buttonLabel = form.querySelector("[data-lead-magnet-button-label]");
+      if (status) status.textContent = "Saved locally for QA. Connect the email provider to deliver the checklist.";
+      if (buttonLabel) buttonLabel.textContent = "Saved";
+    }
+  });
+})();
+`;
 
 export function LeadMagnetCapture({
   variant = "homepage",
@@ -65,30 +76,10 @@ export function LeadMagnetCapture({
   productName,
   className = "",
 }: LeadMagnetCaptureProps) {
-  const id = useId();
-  const [email, setEmail] = useState("");
-  const [saved, setSaved] = useState(false);
   const c = COPY[variant];
   const resolvedSource = source || c.source;
   const compact = variant === "compact";
-
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    const formData = new FormData(event.currentTarget);
-    const submittedEmail = String(formData.get(EMAIL_FIELD) || formData.get("email") || "").trim();
-
-    saveLocal({
-      email: submittedEmail,
-      source: resolvedSource,
-      product: productName,
-      createdAt: new Date().toISOString(),
-    });
-
-    if (!FORM_ACTION) {
-      event.preventDefault();
-      setSaved(true);
-      setEmail("");
-    }
-  }
+  const id = `lead-magnet-${resolvedSource}`.replace(/[^a-zA-Z0-9_-]/g, "-");
 
   return (
     <section
@@ -129,7 +120,9 @@ export function LeadMagnetCapture({
           <form
             action={FORM_ACTION || undefined}
             method="post"
-            onSubmit={handleSubmit}
+            data-lead-magnet-form
+            data-email-field={EMAIL_FIELD}
+            data-local-only={FORM_ACTION ? undefined : "true"}
             className="rounded-[1.3rem] border border-[#e6ebe8] bg-white p-4 shadow-[0_1px_2px_rgb(15_22_19/4%)]"
           >
             <input type="hidden" name="source" value={resolvedSource} />
@@ -146,11 +139,6 @@ export function LeadMagnetCapture({
                 name={EMAIL_FIELD}
                 type="email"
                 required
-                value={email}
-                onChange={(event) => {
-                  setEmail(event.target.value);
-                  if (saved) setSaved(false);
-                }}
                 placeholder="researcher@lab.org"
                 className="min-h-12 flex-1 rounded-full border border-[#dfe6e2] bg-white px-4 text-[14px] text-[#0f1613] outline-none transition-colors placeholder:text-[#b8c1bc] focus-visible:border-[#1e6f58] focus-visible:ring-2 focus-visible:ring-[#1e6f58]/15"
               />
@@ -158,11 +146,11 @@ export function LeadMagnetCapture({
                 type="submit"
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#1e6f58] px-5 text-[13px] font-semibold text-white transition-colors hover:bg-[#175946] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58]/25"
               >
-                {saved ? <Check className="h-3.5 w-3.5" aria-hidden="true" /> : null}
-                {saved ? "Saved" : c.button}
+                <Check className="h-3.5 w-3.5" aria-hidden="true" />
+                <span data-lead-magnet-button-label>{c.button}</span>
               </button>
             </div>
-            <p className="mt-3 text-[11px] leading-5 text-[#8a9690]">
+            <p data-lead-magnet-status aria-live="polite" className="mt-3 text-[11px] leading-5 text-[#8a9690]">
               {FORM_ACTION
                 ? "Uses Titan’s configured email form endpoint; no private API key is exposed."
                 : "Provider setup pending: this form saves test requests to localStorage so the UX can be verified before Kit is connected."}
@@ -170,6 +158,13 @@ export function LeadMagnetCapture({
           </form>
         </div>
       </div>
+      <script dangerouslySetInnerHTML={{ __html: LOCAL_SAVE_SCRIPT }} />
     </section>
   );
+}
+
+declare global {
+  interface Window {
+    __titanLeadMagnetBound?: boolean;
+  }
 }
