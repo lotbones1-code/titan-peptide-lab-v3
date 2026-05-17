@@ -23,6 +23,7 @@ import { CompoundPoster } from "./compound-poster";
 import { getLot } from "@/lib/lots";
 import { VialReconstitution } from "./vial-reconstitution";
 import { CoaThumb } from "./coa-thumb";
+import { LeadMagnetCapture } from "./lead-magnet-capture";
 
 function parseMgPerVial(size: string, fallback = 5): number {
   const m = size.match(/(\d+(?:\.\d+)?)\s*mg/i);
@@ -372,6 +373,14 @@ export function ProductDetail({ product }: { product: Product }) {
               </p>
             </div>
           </div>
+        </div>
+
+        <div className="mt-10">
+          <LeadMagnetCapture
+            variant="pdp"
+            source={`pdp-coa-checklist-${product.slug}`}
+            productName={product.name}
+          />
         </div>
 
         {product.category === "injectable" ? (
