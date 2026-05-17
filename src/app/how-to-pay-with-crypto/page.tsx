@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2, Clock3, FileText, Wallet } from "lucide-react";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
-import { WALLETS } from "@/lib/products";
+import { BRAND, WALLETS } from "@/lib/products";
 import { WalletCopyGrid } from "./wallet-copy-grid";
 
 const PAY_TITLE = "How to Pay with Crypto — Titan Peptide Lab";
@@ -80,8 +80,49 @@ const STEPS = [
 ];
 
 export default function HowToPayWithCryptoPage() {
+  const pageUrl = `https://${BRAND.domain}/how-to-pay-with-crypto/`;
+
+  const howToJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "How to Pay with Crypto on Titan Peptide Lab",
+    description: PAY_DESCRIPTION,
+    totalTime: "PT5M",
+    supply: [
+      { "@type": "HowToSupply", name: "A crypto wallet (Phantom, MetaMask, or any wallet that supports USDC, SOL, BTC, or ETH)" },
+      { "@type": "HowToSupply", name: "Funded balance matching the order total in USDC, SOL, BTC, or ETH" },
+    ],
+    tool: [
+      { "@type": "HowToTool", name: "Titan Peptide Lab checkout page" },
+    ],
+    step: STEPS.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.title,
+      text: s.body,
+      url: `${pageUrl}#step-${i + 1}`,
+    })),
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `https://${BRAND.domain}/` },
+      { "@type": "ListItem", position: 2, name: "How to Pay with Crypto", item: pageUrl },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <Nav />
       <main className="bg-white text-[#0f1613]">
         <section className="border-b border-[rgb(15_22_19/6%)] bg-[#fafbfa] py-14 lg:py-20">
@@ -160,10 +201,11 @@ export default function HowToPayWithCryptoPage() {
         <section className="py-14 lg:py-18">
           <div className="mx-auto max-w-5xl px-5 sm:px-6">
             <div className="grid gap-4 md:grid-cols-4">
-              {STEPS.map(({ n, icon: Icon, title, body }) => (
+              {STEPS.map(({ n, icon: Icon, title, body }, idx) => (
                 <article
                   key={n}
-                  className="rounded-[1.35rem] border border-[rgb(15_22_19/8%)] bg-white p-5 shadow-[0_1px_2px_rgb(15_22_19/3%)]"
+                  id={`step-${idx + 1}`}
+                  className="scroll-mt-24 rounded-[1.35rem] border border-[rgb(15_22_19/8%)] bg-white p-5 shadow-[0_1px_2px_rgb(15_22_19/3%)]"
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-[12px] font-semibold text-[#1e6f58]">
