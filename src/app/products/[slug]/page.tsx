@@ -5,6 +5,7 @@ import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { ProductDetail } from "@/components/site/product-detail";
 import { getLot } from "@/lib/lots";
+import { zoneForCountry } from "@/lib/countries";
 
 export function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }));
@@ -45,6 +46,7 @@ export default async function ProductPage({
   if (!product) notFound();
 
   const lot = getLot(product.id);
+  const usZone = zoneForCountry("US");
 
   const productJsonLd = {
     "@context": "https://schema.org",
@@ -66,13 +68,13 @@ export default async function ProductPage({
       // Closes Google Merchant Center "missing shippingDetails" /
       // "missing hasMerchantReturnPolicy" structured-data warnings and
       // makes the offer eligible for richer SERP treatment. Numbers track
-      // the live values in src/lib/countries.ts (US zone: $9 flat, free
-      // over $150) and the FAQ return policy (14 days, unopened).
+      // the live values in src/lib/countries.ts (US domestic zone + free
+      // over threshold) and the FAQ return policy (14 days, unopened).
       shippingDetails: {
         "@type": "OfferShippingDetails",
         shippingRate: {
           "@type": "MonetaryAmount",
-          value: "9.00",
+          value: usZone.rate.toFixed(2),
           currency: "USD",
         },
         shippingDestination: {

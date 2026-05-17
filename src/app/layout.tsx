@@ -7,7 +7,7 @@ import { AnnouncementBar } from "@/components/site/announcement-bar";
 import { EmailCapture } from "@/components/site/email-capture";
 import { CartDrawer } from "@/components/site/cart-drawer";
 import { RefPassthrough } from "@/components/site/ref-passthrough";
-import { OrganizationJsonLd, WebsiteJsonLd, FAQJsonLd } from "@/components/site/json-ld";
+import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/site/json-ld";
 import { CartProvider } from "@/lib/cart-context";
 import { BRAND } from "@/lib/products";
 
@@ -97,7 +97,6 @@ export default function RootLayout({
       <body className="min-h-full bg-background text-foreground font-sans">
         <OrganizationJsonLd />
         <WebsiteJsonLd />
-        <FAQJsonLd />
         <Grain />
         <CartProvider>
           <RefPassthrough />
