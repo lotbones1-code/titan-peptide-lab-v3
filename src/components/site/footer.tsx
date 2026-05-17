@@ -24,8 +24,10 @@ const BLOG_LINKS = [
 const COMPANY_LINKS = [
   ["About", "/about"],
   ["Lab testing", "/lab-testing"],
-  ["Contact", "/contact"],
   ["Shipping FAQ", "/shipping-faq"],
+  ["Affiliates", "/affiliates"],
+  ["Press", "/press"],
+  ["Contact", "/contact"],
 ];
 
 const LEGAL_LINKS = [
