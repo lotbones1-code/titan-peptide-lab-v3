@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   alternates: { canonical: "/checkout/" },
   openGraph: { title: TITLE, description: DESCRIPTION, url: "/checkout/" },
+  robots: { index: false, follow: true },
 };
 
 export default function CheckoutLayout({ children }: { children: React.ReactNode }) {

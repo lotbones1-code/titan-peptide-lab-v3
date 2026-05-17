@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   alternates: { canonical: "/cart/" },
   openGraph: { title: TITLE, description: DESCRIPTION, url: "/cart/" },
+  robots: { index: false, follow: true },
 };
 
 export default function CartLayout({ children }: { children: React.ReactNode }) {
