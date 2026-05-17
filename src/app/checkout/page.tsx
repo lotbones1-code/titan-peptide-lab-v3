@@ -204,6 +204,7 @@ export default function CheckoutPage() {
       mailtoHref,
     });
     clearCart();
+    return mailtoHref;
   };
 
   if (!hydrated) {
@@ -288,8 +289,15 @@ export default function CheckoutPage() {
     // Ship the confirmation UI immediately so the buyer always has a working
     // path forward (copy receipt / email support) even if every backend rail
     // is down. The intake POSTs below are best-effort, fire-and-forget.
-    completeOrder(orderId);
+    const mailtoHref = completeOrder(orderId);
     setSubmitting(false);
+
+    // Static checkout cannot rely on /api/order being available on GitHub
+    // Pages. Open the prefilled order email immediately so the support-side
+    // order record is not silently lost before the buyer sends crypto.
+    window.setTimeout(() => {
+      window.location.href = mailtoHref;
+    }, 100);
 
     // Fire-and-forget intake: try Node /api/order (in case a backend is wired
     // later), then Formsubmit. Both may 405/521 on the current static deploy
@@ -369,14 +377,14 @@ export default function CheckoutPage() {
               <Check className="h-7 w-7 text-white" />
             </div>
             <h1 className="mt-6 font-serif text-[2rem] leading-[1.1] tracking-[-0.02em] text-[#0f1613]">
-              Order received.
+              Order details ready.
             </h1>
             <p className="mt-3 text-[14px] text-[#44514b]">
               Your order ID:{" "}
               <span className="font-mono text-[#1e6f58]">{done.orderId}</span>
             </p>
             <p className="mt-2 text-[13px] text-[#8a9690]">
-              Save this order ID. If your email client just opened, send that email to confirm — we&apos;ll match it to your on-chain payment.
+              Save this order ID and send the prefilled email before paying — that is what lets us match your on-chain transfer.
             </p>
             <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#d9e7e0] bg-[#f3f9f6] p-5 text-left">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">Payment reference</p>
@@ -384,21 +392,21 @@ export default function CheckoutPage() {
                 {done.cryptoAmount ? `${done.cryptoAmount} ${done.coin.replace("-ERC", "").replace("-SOL", "")}` : `$${done.total.toFixed(2)} USD`}
               </p>
               <p className="mt-2 text-[12px] text-[#44514b]">
-                Send on <span className="font-medium text-[#0f1613]">{done.paymentLabel} · {done.paymentNetwork}</span> only.
+                Send on <span className="font-medium text-[#0f1613]">{done.paymentLabel} · {done.paymentNetwork}</span> only after your order email is sent.
               </p>
               <p className="mt-3 break-all rounded-lg border border-[#d9e7e0] bg-white px-3 py-2.5 font-mono text-[11px] leading-5 text-[#44514b]">
                 {done.paymentAddress}
               </p>
               <p className="mt-2 text-[11px] leading-5 text-[#6b7a73]">
-                Network must match the option selected at checkout. If you paid already, keep your transaction hash with this order ID.
+                Network must match the option selected at checkout. Keep your transaction hash with this order ID.
               </p>
             </div>
             <div className="mx-auto mt-8 max-w-sm rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-5 text-left text-[13px] leading-relaxed text-[#44514b]">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">What happens next</p>
               <ol className="mt-3 space-y-2.5">
-                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">1.</span><span>Send the exact crypto amount above if you haven&apos;t yet.</span></li>
-                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">2.</span><span>We verify on-chain — usually under 30 minutes.</span></li>
-                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">3.</span><span>Cold-chain dispatch within 24h, tracking emailed when packed.</span></li>
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">1.</span><span>Send the prefilled order email to support.</span></li>
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">2.</span><span>Send the exact crypto amount above on the selected network.</span></li>
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">3.</span><span>We verify on-chain — usually under 30 minutes — then cold-chain dispatch within 24h.</span></li>
               </ol>
             </div>
             <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#e7ece9] bg-white p-5 text-left">
@@ -406,14 +414,14 @@ export default function CheckoutPage() {
                 Send us your order details
               </p>
               <p className="mt-2 text-[12px] leading-5 text-[#44514b]">
-                We get a copy automatically. If you want to be sure, use either button — both work without any signup.
+                We try to open your email app automatically. If it did not open, tap the button below or copy the receipt — send this before sending crypto.
               </p>
               <div className="mt-3 grid gap-2">
                 <a
                   href={done.mailtoHref}
                   className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[#1e6f58] px-4 text-[13px] font-medium text-white transition-colors hover:bg-[#175946]"
                 >
-                  Email order to support
+                  Email order to support first
                 </a>
                 <button
                   type="button"
@@ -704,6 +712,9 @@ export default function CheckoutPage() {
 
                     {/* Payment card */}
                     <div className="mt-5 rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-5 sm:p-6">
+                      <div className="mb-4 rounded-xl border border-[#f0d6a1] bg-[#fff8e8] px-4 py-3 text-[12px] leading-5 text-[#6d4b14]">
+                        Payment preview: do not send crypto until checkout gives you an order ID and the prefilled order email is sent to support.
+                      </div>
                       <div className="flex flex-col items-center gap-5 sm:flex-row sm:items-start">
                         {/* QR Code — tappable on mobile to open wallet */}
                         <div className="shrink-0">
