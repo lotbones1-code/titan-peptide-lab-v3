@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Check, ShoppingBag } from "lucide-react";
 import { NASAL_SPRAYS } from "@/lib/products";
-import { Reveal } from "./reveal";
 import { CompoundPoster } from "./compound-poster";
 import { useCart } from "@/lib/cart-context";
 
@@ -27,8 +26,7 @@ export function Hero() {
   return (
     <section className="border-b border-[#ece9e2] bg-white">
       <div className="mx-auto max-w-7xl px-5 py-12 lg:px-10 lg:py-20">
-        <Reveal>
-          <div className="grid gap-10 lg:grid-cols-[1.04fr_0.96fr] lg:items-start lg:gap-14">
+        <div className="grid gap-10 lg:grid-cols-[1.04fr_0.96fr] lg:items-start lg:gap-14">
             <div className="min-w-0">
               <span className="inline-flex rounded-full border border-[#dde5df] bg-[#f7faf8] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#1a5c48]">
                 Nasal peptide catalog
@@ -178,7 +176,6 @@ export function Hero() {
               ) : null}
             </div>
           </div>
-        </Reveal>
       </div>
     </section>
   );
