@@ -1,5 +1,6 @@
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
+import { FAQJsonLd } from "@/components/site/json-ld";
 
 export const metadata = {
   title: "Shipping, Payment & Returns \u2014 The Titan Peptide Company",
@@ -63,7 +64,7 @@ const SECTIONS = [
       },
       {
         q: "Is there a volume contract for laboratories?",
-        a: "Yes. Email qa@titanpeptidelab.com with compound list, quantity, and cadence for a standing quote.",
+        a: "Yes. Email support@titanpeptidelab.com with compound list, quantity, and cadence for a standing quote.",
       },
     ],
   },
@@ -95,8 +96,11 @@ const SECTIONS = [
 ];
 
 export default function ShippingFAQPage() {
+  const faqs = SECTIONS.flatMap((section) => section.items);
+
   return (
     <>
+      <FAQJsonLd faqs={faqs} />
       <Nav />
       <main className="bg-white text-[#0f1613]">
         <section className="border-b border-[rgb(15_22_19/6%)] py-24 lg:py-32">

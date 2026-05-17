@@ -74,10 +74,10 @@ export default function ContactPage() {
                 label="General"
                 value="support@titanpeptidelab.com"
               />
-              <ContactRow label="QA / COA" value="qa@titanpeptidelab.com" />
+              <ContactRow label="QA / COA" value="support@titanpeptidelab.com" />
               <ContactRow
                 label="Volume"
-                value="hello@titanpeptidelab.com"
+                value="support@titanpeptidelab.com"
               />
             </dl>
           }

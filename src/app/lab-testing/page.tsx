@@ -183,7 +183,7 @@ export default function LabTestingPage() {
                   </span>
                   . That same lot appears on the bottle, the order record, and
                   the certificate. If you lost the printed copy, email
-                  qa@titanpeptidelab.com with the lot number and a signed PDF
+                  support@titanpeptidelab.com with the lot number and a signed PDF
                   can be reissued.
                 </p>
               </div>
