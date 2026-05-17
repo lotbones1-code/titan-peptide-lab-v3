@@ -190,6 +190,9 @@ export function CartDrawer() {
                 {promoError && (
                   <p className="text-xs text-red-500 pl-1">{promoError}</p>
                 )}
+                <p className="pl-1 text-[11px] leading-4 text-[#8a9690]">
+                  First order? Try <span className="font-semibold text-[#1e6f58]">FIRST10</span> for 10% off before checkout.
+                </p>
               </div>
             )}
 
@@ -209,6 +212,24 @@ export function CartDrawer() {
                 <div className="flex items-start gap-2.5">
                   <ShieldCheck className="mt-0.5 h-3.5 w-3.5 text-[#1e6f58]" />
                   <span>Titan confirms payment route, destination details, and dispatch timing before the order moves to fulfillment.</span>
+                </div>
+                <div className="flex items-start gap-2.5">
+                  <Lock className="mt-0.5 h-3.5 w-3.5 text-[#1e6f58]" />
+                  <span>
+                    Crypto-only at checkout (USDC on Solana recommended). New to crypto?{" "}
+                    <Link
+                      href="/how-to-pay-with-crypto"
+                      onClick={() => setIsOpen(false)}
+                      className="font-medium text-[#1e6f58] underline decoration-[#1e6f58]/30 underline-offset-4 hover:decoration-[#1e6f58]"
+                    >
+                      Read the 3-minute payment guide
+                    </Link>
+                    .
+                  </span>
+                </div>
+                <div className="flex items-start gap-2.5">
+                  <ShieldCheck className="mt-0.5 h-3.5 w-3.5 text-[#1e6f58]" />
+                  <span>Laboratory research use only. Not for human or animal consumption.</span>
                 </div>
               </div>
               <div className="mt-3 flex flex-wrap gap-2">

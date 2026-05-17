@@ -29,7 +29,7 @@ const FORMAT_GUIDE = [
   {
     label: "Nasal spray",
     title: "Start here.",
-    text: "Measured nasal sprays are the shortest path into a peptide protocol. No reconstitution, no needles, no dosing math — the bottle is the dose. Built for researchers who want compliance and consistency without handling lyophilized powder.",
+    text: "Metered nasal sprays are the shortest path into a compliant research workflow. No reconstitution, no needles, no handling math — each bottle ships ready for qualified laboratory review.",
   },
   {
     label: "Injectable",

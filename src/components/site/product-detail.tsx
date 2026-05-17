@@ -144,6 +144,11 @@ export function ProductDetail({ product }: { product: Product }) {
             <p className="mt-6 text-lg leading-8 text-[#2a3530]">{product.tagline}</p>
             <p className="mt-3 text-sm leading-7 text-[#5c6762]">{product.description}</p>
 
+            <div className="mt-4 rounded-[1rem] border border-[#dfe6e2] bg-[#f7faf8] px-4 py-3 text-[12px] leading-5 text-[#44514b]">
+              <span className="font-semibold text-[#0f1613]">Research use only.</span>{" "}
+              Not for human or animal consumption, diagnostic, therapeutic, or preventative use.
+            </div>
+
             <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#e8e6e1] bg-[#faf8f4] px-3 py-1.5">
               <FlaskConical className="h-3.5 w-3.5 text-[#1e6f58]" />
               <span className="text-[12px] font-medium text-[#2a3530]">
@@ -154,7 +159,7 @@ export function ProductDetail({ product }: { product: Product }) {
             {product.category === "nasal-spray" ? (
               <p className="mt-5 border-l-2 border-[#1e6f58]/30 pl-4 text-[13px] leading-[1.8] text-[#5c6762]">
                 Sprays are the lowest-friction entry point — no reconstitution,
-                no needles, measured dose per actuation.
+                no needles, metered fill per actuation.
               </p>
             ) : null}
 
@@ -199,6 +204,28 @@ export function ProductDetail({ product }: { product: Product }) {
                 In stock — lot {lot}
               </span>
               <span className="text-[#5c6762]">Dispatch target within 24h after payment confirmation. Tracking emails when packed.</span>
+            </div>
+
+            <div className="mt-5 rounded-[1.1rem] border border-[#dfe6e2] bg-[#fffdfa] p-4 shadow-[0_1px_2px_rgb(15_22_19/3%)]">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
+                    Crypto payment before you add
+                  </p>
+                  <p className="mt-2 max-w-[56ch] text-[12px] leading-6 text-[#44514b]">
+                    Checkout shows the exact wallet and network before payment. USDC on Solana is recommended for lowest fees; BTC, ETH, ERC-20 USDC, and SOL remain available.
+                  </p>
+                </div>
+                <Link
+                  href="/how-to-pay-with-crypto"
+                  className="inline-flex h-9 shrink-0 items-center justify-center rounded-full border border-[#cfdad3] bg-white px-4 text-[11px] font-semibold text-[#0f1110] transition-colors hover:border-[#1a5c48] hover:text-[#1a5c48] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1a5c48]/20"
+                >
+                  Preview rails
+                </Link>
+              </div>
+              <p className="mt-3 border-t border-[#edf0ec] pt-3 text-[11px] leading-5 text-[#6b7a73]">
+                Use only the network shown at checkout. Wrong-network sends require manual review and can delay dispatch.
+              </p>
             </div>
 
             {/* Quantity */}
@@ -285,6 +312,9 @@ export function ProductDetail({ product }: { product: Product }) {
               <p className="flex items-center justify-center gap-1.5 text-[12px] text-[#5c6762]">
                 <ShieldCheck className="h-3.5 w-3.5 text-[#1e6f58]" />
                 Quality guarantee + 14-day unopened returns — replacement or refund on lot-mismatch, documented lot-quality issue, shipping damage, or eligible unopened returns.
+              </p>
+              <p className="text-center text-[11px] leading-4 text-[#8a9690]">
+                Laboratory research use only · Not for human or animal consumption.
               </p>
 
               <div className="flex items-center justify-center gap-6 text-[11px] text-[#8a9690]">

@@ -66,6 +66,23 @@ export function Hero() {
                 <span className="font-semibold text-[#1a5c48]">FIRST10</span> — 10% off your first order at checkout.
               </p>
 
+              <div className="mt-5 rounded-[1.15rem] border border-[#dfe6e2] bg-[#f7faf8] p-4 sm:grid sm:grid-cols-[1fr_auto] sm:items-center sm:gap-5">
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
+                    Crypto checkout preview
+                  </p>
+                  <p className="mt-2 max-w-[48ch] text-[12px] leading-6 text-[#44514b]">
+                    USDC on Solana is the lowest-friction rail. Checkout still supports BTC, ETH, USDC, and SOL with the exact network and wallet shown before payment.
+                  </p>
+                </div>
+                <Link
+                  href="/how-to-pay-with-crypto"
+                  className="mt-3 inline-flex h-9 items-center justify-center rounded-full border border-[#cfdad3] bg-white px-4 text-[11px] font-semibold text-[#0f1110] transition-colors hover:border-[#1a5c48] hover:text-[#1a5c48] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1a5c48]/20 sm:mt-0"
+                >
+                  Preview payment rails
+                </Link>
+              </div>
+
               <div className="mt-10 grid gap-3 sm:grid-cols-2">
                 {[
                   ["≥99%", "HPLC purity, verified per lot"],
