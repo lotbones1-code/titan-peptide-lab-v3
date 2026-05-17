@@ -28,7 +28,7 @@ const MILESTONES = [
 
 const ABOUT_TITLE = "About — Titan Peptide Lab";
 const ABOUT_DESCRIPTION =
-  "Reno-based peptide lab. The certificate must resolve to the lot in the bottle. ISO 17025 third-party retest on every batch since 2021. Nasal-first since 2023.";
+  "Titan Peptide Lab is a COA-first, research-use-only peptide vendor built around lot-aware documentation, clearer checkout expectations, and claim-safe buyer education.";
 
 export const metadata = {
   title: ABOUT_TITLE,
@@ -46,10 +46,10 @@ export default function AboutPage() {
           eyebrow="About the company"
           title={
             <>
-              Founded in research,
+              Built for COA-first
               <br />
               <em className="not-italic text-[#1e6f58]">
-                built for integrity
+                buyer trust
               </em>
               .
             </>
@@ -101,82 +101,162 @@ export default function AboutPage() {
             <article className="mt-12">
               <div className="space-y-6 text-[15px] leading-[1.8] text-[#5c6762]">
                 <p className="font-serif text-[1.5rem] leading-[1.4] text-[#0f1613]">
-                  Titan started as a response to a basic failure in the
-                  peptide market &mdash; too many sellers acting like the label
-                  was the product instead of the batch data behind it.
+                  Titan exists because the peptide market asks serious buyers
+                  to tolerate too much uncertainty.
                 </p>
 
                 <p>
-                  The category was full of anonymous powder, generic
-                  certificates, and vague purity claims. The PDF in the
-                  envelope usually had no real relationship to the vial in the
-                  box. That gap &mdash; between the document and the
-                  compound &mdash; is exactly what this company was built to
-                  close.
+                  For years, the category has rewarded the wrong signals:
+                  louder product claims, cleaner labels, bigger menus, and
+                  checkout flows that feel more like workarounds than commerce.
+                  A polished storefront can say &ldquo;lab tested,&rdquo; but the
+                  buyer still has to ask the real questions: Does the
+                  certificate actually belong to this lot? Was the material
+                  re-checked, or is the COA just a recycled PDF? Is the fill
+                  amount clear? Is the payment path legitimate? If something
+                  looks off, is there a real support route &mdash; or just
+                  another anonymous vendor hiding behind generic copy?
                 </p>
 
                 <p>
-                  Titan operates on one discipline: the bottle, certificate,
-                  and order log should all resolve to the same lot. No
-                  representative COAs. No inherited test results. No softened
-                  purity language. When a run reads 99.42%, that is what gets
-                  recorded &mdash; not a rounded claim designed for easier
-                  marketing.
-                </p>
-
-                <h2 className="pt-6 font-serif text-[1.75rem] leading-[1.1] tracking-[-0.02em] text-[#0f1613]">
-                  The philosophy.
-                </h2>
-
-                <p>
-                  We take a narrow view of what a peptide company should do. We
-                  formulate, verify, and dispatch. We do not market to patient
-                  outcomes, blur into medical claims, or pad the copy with
-                  clinical theatre. Everything on the site is structured around
-                  research credibility first.
-                </p>
-
-                <p>
-                  That is why the tone is deliberate, a little quieter, and a
-                  lot more specific. The people who buy from a serious
-                  operation are not looking for hype. They are looking for
-                  evidence that the operation behind the bottle is actually
-                  disciplined.
+                  Titan Peptide Lab was built as a response to that gap. The
+                  company&apos;s starting point is simple: the paperwork is not
+                  decoration. In a research-use-only category, documentation is
+                  part of the product experience. A COA should not sit in the
+                  footer like a trust badge. It should be treated as a primary
+                  buying signal, connected to the lot, the product page, the
+                  release process, and the support path around the order.
                 </p>
 
                 <h2 className="pt-6 font-serif text-[1.75rem] leading-[1.1] tracking-[-0.02em] text-[#0f1613]">
-                  Supply chain discipline.
+                  What COA-first means.
                 </h2>
 
                 <p>
-                  The nasal spray line is filled against tightly controlled
-                  source material and matched to retained lot records. Bulk API
-                  is handled through a single audited manufacturing
-                  relationship instead of being shuffled between cheaper
-                  suppliers. Consistency of input is treated as a quality
-                  requirement, not a pricing lever.
+                  That is what COA-first means at Titan. It means buyers should
+                  not have to decode vague purity claims or trust a certificate
+                  that could have been copied from another batch. It means the
+                  product page should make the verification path easier to
+                  understand, not more confusing. It means the brand should be
+                  willing to say what can be checked and avoid implying what
+                  cannot be proven.
                 </p>
 
                 <p>
-                  Incoming lots are quarantined, re-identified, screened, and
-                  only then released to fill. If the incoming data and the
-                  internal read disagree beyond method tolerance, the batch is
-                  held. That policy matters more than any slogan on the
-                  homepage because it is what protects the customer from a bad
-                  lot actually leaving the building.
+                  The founder&apos;s view is that most of the peptide market is
+                  not broken because buyers are irrational. It is broken
+                  because too many vendors have trained buyers to accept opacity
+                  as normal.
                 </p>
 
                 <h2 className="pt-6 font-serif text-[1.75rem] leading-[1.1] tracking-[-0.02em] text-[#0f1613]">
-                  Who this is for.
+                  What the market gets wrong.
                 </h2>
 
                 <p>
-                  Titan is for buyers who care about whether the proof is
-                  attached to the product. Researchers, repeat buyers, labs,
-                  and serious hobbyists all end up asking the same
-                  question &mdash; does the certificate in front of me actually
-                  belong to this bottle? The entire brand exists to make that
-                  answer clearer.
+                  Some sellers make the COA hard to find. Some present
+                  &ldquo;representative&rdquo; testing without making the lot
+                  relationship obvious. Some list aggressive concentration or
+                  dose-style amount claims without enough clarity around fill,
+                  format, or batch documentation. Others push payment
+                  instructions that look sketchy from the first click:
+                  prepaid-card-only workarounds, unclear crypto networks,
+                  last-minute support email handoffs, or checkout pages that do
+                  not explain what happens after payment. Even when the product
+                  itself may be legitimate, the buying experience often forces
+                  the customer to act on faith.
+                </p>
+
+                <p>
+                  Titan is trying to move in the opposite direction. The
+                  promise is not hype. Titan does not market peptides as medical
+                  treatments, does not provide dosing advice, and does not build
+                  the brand around transformation stories. The promise is
+                  narrower and more operational: make the research-purchasing
+                  path feel documented, serious, and easier to verify.
+                </p>
+
+                <h2 className="pt-6 font-serif text-[1.75rem] leading-[1.1] tracking-[-0.02em] text-[#0f1613]">
+                  The promise.
+                </h2>
+
+                <p>
+                  That starts with restraint. Research-use-only language should
+                  not be a tiny disclaimer under a page full of outcome claims.
+                  It should shape the entire brand. Product education should
+                  explain format, documentation, handling expectations, and
+                  release standards without drifting into therapeutic language.
+                  If a claim belongs in a medical office, it does not belong in
+                  Titan&apos;s sales copy.
+                </p>
+
+                <p>
+                  It also starts with clarity. A serious buyer should understand
+                  the basics before they order: what the product is, what
+                  documentation is available, how the lot is treated, what
+                  payment method is expected, what the support route is, and
+                  what Titan will not claim. That clarity does not make the
+                  brand less premium. It makes the brand more credible.
+                </p>
+
+                <p>
+                  The market has enough vendors trying to look exciting. Titan
+                  is built to look accountable.
+                </p>
+
+                <p>
+                  A COA-first company has to care about the small operational
+                  details that most brands hide. The way product pages describe
+                  purity. The way checkout explains payment expectations before
+                  the buyer is already committed. The way support language
+                  handles order questions without overpromising. The way content
+                  avoids medical claims even when those claims would probably
+                  get more clicks. The way a brand admits when a proof point is
+                  not ready yet instead of stretching the copy to sound
+                  stronger.
+                </p>
+
+                <p>
+                  That discipline matters because trust is not created by a
+                  single PDF. Trust is created by a chain: product page,
+                  paperwork, lot logic, checkout clarity, support response, and
+                  the absence of exaggerated claims. If one link feels fake, the
+                  whole chain gets weaker.
+                </p>
+
+                <p>
+                  Titan&apos;s job is to make that chain stronger.
+                </p>
+
+                <p>
+                  The brand is founder-led because the category still needs an
+                  operator&apos;s standard, not just a marketer&apos;s voice. The
+                  work is not glamorous: tighten the product language, improve
+                  the buying path, remove vague claims, make the proof easier to
+                  understand, and build systems that make each order feel less
+                  anonymous. That is the real founder story. Not a private
+                  personal narrative. Not a dramatic origin myth. A public
+                  commitment to make a messy category feel more documented.
+                </p>
+
+                <p>
+                  Titan will not be the loudest peptide brand. It is not trying
+                  to be. The goal is to become the vendor a skeptical buyer can
+                  evaluate without feeling pushed: a vendor that treats research
+                  use only as an operating boundary, not a legal footnote; a
+                  vendor that knows a COA is important, but not sufficient by
+                  itself; a vendor that understands buyers are not only
+                  purchasing a vial or a spray &mdash; they are purchasing
+                  confidence that the company behind it has a real release
+                  process, a real support path, and the discipline to avoid
+                  claims it cannot support.
+                </p>
+
+                <p className="font-serif text-[1.35rem] leading-[1.4] text-[#0f1613]">
+                  That is why Titan exists: to make the proof visible, make the
+                  checkout path clearer, make the category less dependent on
+                  hype, and build a research-supply brand where documentation is
+                  not an afterthought &mdash; it is the standard.
                 </p>
               </div>
 
