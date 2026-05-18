@@ -7,6 +7,7 @@ import { AnnouncementBar } from "@/components/site/announcement-bar";
 import { EmailCapture } from "@/components/site/email-capture";
 import { CartDrawer } from "@/components/site/cart-drawer";
 import { RefPassthrough } from "@/components/site/ref-passthrough";
+import { AnalyticsEvents } from "@/components/site/analytics-events";
 import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/site/json-ld";
 import { CartProvider } from "@/lib/cart-context";
 import { BRAND } from "@/lib/products";
@@ -98,6 +99,7 @@ export default function RootLayout({
         <OrganizationJsonLd />
         <WebsiteJsonLd />
         <Grain />
+        <AnalyticsEvents />
         <CartProvider>
           <RefPassthrough />
           <AnnouncementBar />

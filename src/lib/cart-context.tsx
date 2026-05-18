@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
 import { type Product } from "./products";
+import { trackCartAdd } from "./analytics";
 
 export type CartItem = {
   product: Product;
@@ -80,6 +81,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
       return [...prev, { product, quantity: qty }];
     });
+    trackCartAdd(product, qty);
     setIsOpen(true);
   }, []);
 

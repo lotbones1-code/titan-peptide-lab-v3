@@ -1,6 +1,7 @@
 "use client";
 
 import { useCart } from "@/lib/cart-context";
+import { trackCheckoutStart } from "@/lib/analytics";
 import { DISCOUNT_CODES } from "@/lib/products";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -50,6 +51,13 @@ export function CartDrawer() {
     } catch {
       next = "/checkout";
     }
+    trackCheckoutStart({
+      cartValueUsd: discountedTotal,
+      cartLineCount: items.length,
+      itemCount,
+      unitSkus: items.map((item) => item.product.id),
+      source: "cart_drawer",
+    });
     setIsOpen(false);
     router.push(next);
   };
