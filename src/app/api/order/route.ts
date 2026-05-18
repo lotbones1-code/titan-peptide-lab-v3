@@ -1,47 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
 import nodemailer from "nodemailer";
+import { appendOrder, type OrderItem, type OrderLedgerEntry } from "@/lib/order-ledger";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const GMAIL_USER = process.env.GMAIL_SENDER;
 const GMAIL_PASS = process.env.GMAIL_APP_PASSWORD;
 const ORDER_NOTIFY_EMAIL = process.env.ORDER_NOTIFY_EMAIL || "support@titanpeptidelab.com";
 const FROM_EMAIL = process.env.FROM_EMAIL || "Titan Peptide Lab <support@titanpeptidelab.com>";
-const ORDERS_FILE = path.join(process.cwd(), "data", "orders.json");
 
-interface OrderItem {
-  productId: string;
-  name: string;
-  quantity: number;
-  price: number;
-}
-
-interface OrderPayload {
-  orderId: string;
-  items: OrderItem[];
-  subtotal: string;
-  shipping: string;
-  total: string;
-  customerEmail: string;
-  customerName: string;
-  country: string;
-  shippingAddress: string;
-  status: "awaiting_payment" | "payment_received" | "shipped";
-  source?: string;
-  paymentCoin?: string;
-  paymentAddress?: string;
-  cryptoAmount?: string;
-  paymentMethod?: "card" | "crypto";
-  // Legacy single-product fields (kept for backwards compat)
-  product?: string;
-  productId?: string;
-  quantity?: number;
-  chain?: string;
-  walletAddress?: string;
-  txHash?: string;
-  discountCode?: string;
-}
+type OrderPayload = OrderLedgerEntry;
 
 function customerConfirmationHtml(order: OrderPayload): string {
   const itemRows = order.items
@@ -179,19 +146,7 @@ async function sendEmail(to: string, subject: string, html: string) {
 }
 
 async function saveOrder(order: OrderPayload) {
-  const dir = path.dirname(ORDERS_FILE);
-  await fs.mkdir(dir, { recursive: true });
-
-  let orders: (OrderPayload & { _receivedAt?: string })[] = [];
-  try {
-    const raw = await fs.readFile(ORDERS_FILE, "utf-8");
-    orders = JSON.parse(raw);
-  } catch {
-    // file doesn't exist yet
-  }
-
-  orders.push({ ...order, _receivedAt: new Date().toISOString() });
-  await fs.writeFile(ORDERS_FILE, JSON.stringify(orders, null, 2));
+  await appendOrder(order);
 }
 
 function generateOrderId() {
@@ -221,7 +176,7 @@ export async function POST(req: NextRequest) {
         country: body.country,
         shippingAddress: body.address,
         status: body.txHash ? "payment_received" : "awaiting_payment",
-        paymentMethod: body.paymentMethod || "crypto",
+        paymentMethod: "crypto",
         source: body.source,
         paymentCoin: body.paymentCoin,
         paymentAddress: body.paymentAddress,
