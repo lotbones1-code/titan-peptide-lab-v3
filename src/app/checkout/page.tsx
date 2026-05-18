@@ -19,7 +19,6 @@ import {
   ChevronDown,
   HelpCircle,
   Globe,
-  Smartphone,
   Gift,
   Wallet,
 } from "lucide-react";
@@ -155,14 +154,6 @@ export default function CheckoutPage() {
     if (wallet.priceKey === "bitcoin") return amt.toFixed(6);
     return amt.toFixed(4);
   }, [prices, wallet.priceKey, total]);
-
-  const walletDeepLink = useMemo(() => {
-    if (!wallet.deepLinkPrefix) return null;
-    return `${wallet.deepLinkPrefix}${wallet.address}`;
-  }, [wallet]);
-
-  const qrData = walletDeepLink ?? wallet.address;
-  const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&margin=0&data=${encodeURIComponent(qrData)}`;
 
   const completeOrder = (orderId: string) => {
     const fullAddress = [street, apt, city, region, postal, country].filter(Boolean).join(", ");
@@ -354,19 +345,6 @@ export default function CheckoutPage() {
     void fireForget();
   };
 
-  const copyAddress = () => {
-    navigator.clipboard.writeText(wallet.address);
-    setCopied("address");
-    setTimeout(() => setCopied(null), 1800);
-  };
-
-  const copyAmount = () => {
-    if (!cryptoAmount) return;
-    navigator.clipboard.writeText(cryptoAmount);
-    setCopied("amount");
-    setTimeout(() => setCopied(null), 1800);
-  };
-
   if (done) {
     return (
       <>
@@ -397,6 +375,34 @@ export default function CheckoutPage() {
               <p className="mt-3 break-all rounded-lg border border-[#d9e7e0] bg-white px-3 py-2.5 font-mono text-[11px] leading-5 text-[#44514b]">
                 {done.paymentAddress}
               </p>
+              <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                {done.cryptoAmount && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText(done.cryptoAmount ?? "");
+                      setCopied("amount");
+                      setTimeout(() => setCopied(null), 1800);
+                    }}
+                    className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-[#1e6f58] bg-white px-3 text-[12px] font-medium text-[#1e6f58] transition-colors hover:bg-[#f3f9f6]"
+                  >
+                    {copied === "amount" ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied === "amount" ? "Amount copied" : "Copy amount"}
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText(done.paymentAddress);
+                    setCopied("address");
+                    setTimeout(() => setCopied(null), 1800);
+                  }}
+                  className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-[#1e6f58] bg-white px-3 text-[12px] font-medium text-[#1e6f58] transition-colors hover:bg-[#f3f9f6]"
+                >
+                  {copied === "address" ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                  {copied === "address" ? "Address copied" : "Copy address"}
+                </button>
+              </div>
               <p className="mt-2 text-[11px] leading-5 text-[#6b7a73]">
                 Network must match the option selected at checkout. Keep your transaction hash with this order ID.
               </p>
@@ -711,117 +717,45 @@ export default function CheckoutPage() {
                     </div>
 
                     {/* Payment card */}
-                    <div className="mt-5 rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-5 sm:p-6">
-                      <div className="mb-4 rounded-xl border border-[#f0d6a1] bg-[#fff8e8] px-4 py-3 text-[12px] leading-5 text-[#6d4b14]">
-                        Payment preview: do not send crypto until checkout gives you an order ID and the prefilled order email is sent to support.
-                      </div>
-                      <div className="flex flex-col items-center gap-5 sm:flex-row sm:items-start">
-                        {/* QR Code — tappable on mobile to open wallet */}
-                        <div className="shrink-0">
-                          {walletDeepLink ? (
-                            <a
-                              href={walletDeepLink}
-                              className="group relative block"
-                              title="Tap to open in wallet app"
-                            >
-                              <div className="flex h-48 w-48 items-center justify-center rounded-xl border border-[#e7ece9] bg-white p-2.5 transition-shadow group-hover:shadow-md sm:h-44 sm:w-44">
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img
-                                  key={wallet.address}
-                                  src={qrSrc}
-                                  alt={`${wallet.label} wallet QR`}
-                                  width={400}
-                                  height={400}
-                                  className="h-full w-full"
-                                />
-                              </div>
-                              <span className="mt-1.5 flex items-center justify-center gap-1 text-[10px] text-[#1e6f58] sm:hidden">
-                                <Smartphone className="h-3 w-3" />
-                                Tap to open wallet
-                              </span>
-                            </a>
-                          ) : (
-                            <div className="flex h-48 w-48 items-center justify-center rounded-xl border border-[#e7ece9] bg-white p-2.5 sm:h-44 sm:w-44">
-                              {/* eslint-disable-next-line @next/next/no-img-element */}
-                              <img
-                                key={wallet.address}
-                                src={qrSrc}
-                                alt={`${wallet.label} wallet QR`}
-                                width={400}
-                                height={400}
-                                className="h-full w-full"
-                              />
-                            </div>
-                          )}
+                    <div className="mt-5 rounded-2xl border border-[#d9e7e0] bg-[#f3f9f6] p-5 sm:p-6">
+                      <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
+                        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-[#d9e7e0] bg-white text-[1.75rem]">
+                          {wallet.icon}
                         </div>
-
-                        {/* Amount + address */}
-                        <div className="min-w-0 flex-1 text-center sm:text-left">
-                          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
-                            Send exactly
+                        <div className="min-w-0 flex-1">
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">
+                            Payment rail selected
                           </p>
-                          <div className="mt-1 flex items-center justify-center gap-2 sm:justify-start">
-                            <p className="font-serif text-[1.75rem] leading-none text-[#0f1613]">
-                              {cryptoAmount ? (
-                                <>
-                                  {cryptoAmount}{" "}
-                                  <span className="text-[1.1rem] text-[#44514b]">{wallet.coin.replace("-ERC", "").replace("-SOL", "")}</span>
-                                </>
-                              ) : (
-                                <>${total.toFixed(2)}</>
-                              )}
-                            </p>
-                            {cryptoAmount && (
-                              <button
-                                type="button"
-                                onClick={copyAmount}
-                                className="rounded-md border border-[#e7ece9] bg-white px-2 py-1 text-[10px] font-medium text-[#8a9690] transition-colors hover:border-[#1e6f58]/40 hover:text-[#1e6f58]"
-                              >
-                                {copied === "amount" ? (
-                                  <span className="flex items-center gap-1 text-[#1e6f58]"><Check className="h-3 w-3" /> Copied</span>
-                                ) : (
-                                  <span className="flex items-center gap-1"><Copy className="h-3 w-3" /> Copy</span>
-                                )}
-                              </button>
-                            )}
+                          <h3 className="mt-1 font-serif text-[1.45rem] leading-tight text-[#0f1613]">
+                            {wallet.label} · {wallet.network}
+                          </h3>
+                          <p className="mt-2 text-[13px] leading-6 text-[#44514b]">
+                            We create your order ID first, then show the exact amount, wallet address, QR code, and copy buttons on the confirmation screen. That keeps your payment tied to a support record before any crypto is sent.
+                          </p>
+                          <div className="mt-4 grid gap-2 text-[12px] text-[#44514b] sm:grid-cols-3">
+                            <div className="rounded-xl border border-[#d9e7e0] bg-white px-3 py-2.5">
+                              <p className="text-[10px] uppercase tracking-[0.12em] text-[#8a9690]">Order total</p>
+                              <p className="mt-1 font-medium text-[#0f1613]">${total.toFixed(2)} USD</p>
+                            </div>
+                            <div className="rounded-xl border border-[#d9e7e0] bg-white px-3 py-2.5">
+                              <p className="text-[10px] uppercase tracking-[0.12em] text-[#8a9690]">Next step</p>
+                              <p className="mt-1 font-medium text-[#0f1613]">Create order ID</p>
+                            </div>
+                            <div className="rounded-xl border border-[#d9e7e0] bg-white px-3 py-2.5">
+                              <p className="text-[10px] uppercase tracking-[0.12em] text-[#8a9690]">Safety gate</p>
+                              <p className="mt-1 font-medium text-[#0f1613]">Email before payment</p>
+                            </div>
                           </div>
-                          <p className="mt-1 text-[12px] text-[#8a9690]">
-                            ≈ ${total.toFixed(2)} USD {cryptoAmount ? "· live rate" : ""}
+                          <p className="mt-4 rounded-xl border border-[#f0d6a1] bg-[#fff8e8] px-4 py-3 text-[12px] leading-5 text-[#6d4b14]">
+                            Do not send crypto from this preview. Submit the form first so your order email and on-chain payment can be matched.
                           </p>
-                          <p className="mt-2 rounded-lg bg-white px-3 py-2 text-[11px] leading-5 text-[#6b7a73] ring-1 ring-[#e7ece9]">
-                            Network matters: send only on {wallet.network}. A transfer on the wrong chain may not be recoverable.
-                          </p>
-
-                          <div className="mt-4">
-                            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
-                              To this {wallet.label} address
-                            </p>
-                            <button
-                              type="button"
-                              onClick={copyAddress}
-                              className="mt-1.5 flex w-full items-center gap-2 rounded-lg border border-[#e7ece9] bg-white px-3 py-2.5 text-left transition-colors hover:border-[#1e6f58]/40"
-                            >
-                              <span className="flex-1 truncate font-mono text-[11px] text-[#44514b]">
-                                {wallet.address}
-                              </span>
-                              {copied === "address" ? (
-                                <span className="flex shrink-0 items-center gap-1 text-[11px] font-medium text-[#1e6f58]">
-                                  <Check className="h-3.5 w-3.5" /> Copied
-                                </span>
-                              ) : (
-                                <span className="flex shrink-0 items-center gap-1 text-[11px] font-medium text-[#8a9690]">
-                                  <Copy className="h-3.5 w-3.5" /> Copy
-                                </span>
-                              )}
-                            </button>
-                          </div>
                         </div>
                       </div>
 
                       {/* TX hash */}
-                      <div className="mt-5 border-t border-[#e7ece9] pt-5">
+                      <div className="mt-5 border-t border-[#d9e7e0] pt-5">
                         <label htmlFor="tx" className="block text-[12px] font-medium text-[#44514b]">
-                          Transaction hash <span className="text-[#8a9690]">(optional — speeds up verification)</span>
+                          Transaction hash <span className="text-[#8a9690]">(optional — paste here only if you already sent after receiving an order ID)</span>
                         </label>
                         <input
                           id="tx"
@@ -829,7 +763,7 @@ export default function CheckoutPage() {
                           value={txHash}
                           onChange={(e) => setTxHash(e.target.value)}
                           className="mt-1.5 h-11 w-full rounded-lg border border-[#e5e5e5] bg-white px-4 font-mono text-[12px] text-[#0f1613] transition-colors focus:border-[#1e6f58] focus:outline-none"
-                          placeholder="Paste after sending — or skip, we'll find it"
+                          placeholder="Optional after payment confirmation"
                         />
                       </div>
                     </div>
@@ -918,7 +852,7 @@ export default function CheckoutPage() {
                 ) : (
                   <>
                     <Lock className="h-4 w-4" />
-                    Place order · ${total.toFixed(2)}
+                    Create order ID · ${total.toFixed(2)}
                   </>
                 )}
               </button>
@@ -962,7 +896,7 @@ export default function CheckoutPage() {
                 ) : (
                   <>
                     <Lock className="h-4 w-4" />
-                    Place order · ${total.toFixed(2)}
+                    Create order ID · ${total.toFixed(2)}
                   </>
                 )}
               </button>

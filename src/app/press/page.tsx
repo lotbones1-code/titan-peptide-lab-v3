@@ -133,9 +133,9 @@ export default function PressPage() {
             </div>
             <div className="rounded-[1.5rem] border border-[#e6ebe8] bg-[#fafbfa] p-6 lg:col-span-7">
               <p className="text-[14px] leading-8 text-[#44514b]">
-                Shamil is the founder/operator behind Titan Peptide Lab, a research-use-only peptide vendor focused on
-                COA-first trust, lot-aware release documentation, and claim-safe buyer education. Titan is built to make
-                research-product ecommerce more transparent: clearer paperwork, clearer checkout expectations, and no medical,
+                Titan is founder/operator-led, with a research-use-only peptide vendor posture focused on
+                COA-first trust, lot-aware release documentation, and claim-safe buyer education. The public story is about
+                making research-product ecommerce more transparent: clearer paperwork, clearer checkout expectations, and no medical,
                 dosing, or outcome claims.
               </p>
               <p className="mt-4 text-[12px] leading-6 text-[#8a9690]">
