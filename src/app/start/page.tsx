@@ -90,6 +90,21 @@ export default function StartPage() {
                 </span>
               ))}
             </div>
+            <div className="mt-6 inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 rounded-full border border-[#dde5df] bg-white px-4 py-2 text-[12px] text-[#2a3530]">
+              <span className="font-semibold tracking-[0.04em] text-[#1a5c48]">FIRST10</span>
+              <span className="text-[#5c6762]">— 10% off your first order, applied at checkout.</span>
+            </div>
+            <p className="mt-4 text-[11.5px] text-[#5c6762]">
+              Want to see the paperwork first?{" "}
+              <a
+                href="/specimen-coa.pdf"
+                target="_blank"
+                rel="noopener"
+                className="font-semibold text-[#1e6f58] underline-offset-2 hover:underline"
+              >
+                Open a specimen lot release sheet (PDF)
+              </a>
+            </p>
           </div>
         </section>
 

@@ -12,6 +12,7 @@ import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import QRCode from "qrcode";
 import {
   ArrowLeft,
   ShieldCheck,
@@ -27,6 +28,36 @@ import {
   Gift,
   Wallet,
 } from "lucide-react";
+
+// Solana Pay USDC mint (public, well-known) — used to build SPL-token deep-links
+// so Phantom/Solflare/etc. open with the correct token + amount pre-filled.
+const USDC_SOL_MINT = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
+
+function buildPaymentUri(
+  coin: Coin,
+  address: string,
+  amount: string | null,
+): string {
+  if (!address) return "";
+  if (coin === "USDC-SOL") {
+    const params = new URLSearchParams();
+    if (amount) params.set("amount", amount);
+    params.set("spl-token", USDC_SOL_MINT);
+    return `solana:${address}?${params.toString()}`;
+  }
+  if (coin === "SOL") {
+    return `solana:${address}${amount ? `?amount=${amount}` : ""}`;
+  }
+  if (coin === "BTC") {
+    return `bitcoin:${address}${amount ? `?amount=${amount}` : ""}`;
+  }
+  if (coin === "ETH") {
+    return `ethereum:${address}`;
+  }
+  // USDC-ERC: deep-link support is inconsistent across wallets — encode the
+  // bare address so the QR still scans into any wallet without misrouting.
+  return address;
+}
 
 type PaymentMethod = "crypto";
 
@@ -85,6 +116,7 @@ export default function CheckoutPage() {
   }>(null);
   const [copied, setCopied] = useState<"address" | "amount" | "receipt" | null>(null);
   const [prices, setPrices] = useState<PriceMap>({});
+  const [qrDataUrl, setQrDataUrl] = useState<string>("");
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
   const [cryptoHelpOpen, setCryptoHelpOpen] = useState(true);
 
@@ -102,6 +134,36 @@ export default function CheckoutPage() {
   const [discountCode, setDiscountCode] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState<{ code: string; percent: number } | null>(null);
   const [discountError, setDiscountError] = useState("");
+
+  // Generate QR for the wallet deep-link once the order is finalized. Browser-
+  // side base64 PNG; closes the QR promise the checkout copy makes in 5 places.
+  useEffect(() => {
+    if (!done) {
+      setQrDataUrl("");
+      return;
+    }
+    const uri = buildPaymentUri(done.coin, done.paymentAddress, done.cryptoAmount);
+    if (!uri) {
+      setQrDataUrl("");
+      return;
+    }
+    let cancelled = false;
+    QRCode.toDataURL(uri, {
+      errorCorrectionLevel: "M",
+      margin: 2,
+      scale: 6,
+      color: { dark: "#0f1613", light: "#ffffff" },
+    })
+      .then((url) => {
+        if (!cancelled) setQrDataUrl(url);
+      })
+      .catch(() => {
+        if (!cancelled) setQrDataUrl("");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [done]);
 
   useEffect(() => {
     const ctrl = new AbortController();
@@ -410,6 +472,28 @@ export default function CheckoutPage() {
               <p className="mt-2 text-[12px] text-[#44514b]">
                 Send on <span className="font-medium text-[#0f1613]">{done.paymentLabel} · {done.paymentNetwork}</span> only after your order email is sent.
               </p>
+              {qrDataUrl ? (
+                <div className="mt-4 flex flex-col items-center gap-3">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={qrDataUrl}
+                    alt={`QR code to send ${done.cryptoAmount ?? ""} on ${done.paymentLabel} (${done.paymentNetwork}) to Titan order ${done.orderId}`}
+                    width={192}
+                    height={192}
+                    className="h-48 w-48 rounded-xl border border-[#d9e7e0] bg-white p-2"
+                  />
+                  <a
+                    href={buildPaymentUri(done.coin, done.paymentAddress, done.cryptoAmount)}
+                    className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-[#1e6f58] bg-white px-4 text-[12px] font-medium text-[#1e6f58] transition-colors hover:bg-[#f3f9f6] sm:hidden"
+                  >
+                    <Wallet className="h-3.5 w-3.5" />
+                    Open in wallet app
+                  </a>
+                  <p className="text-center text-[11px] leading-4 text-[#6b7a73] sm:hidden">
+                    Tap to open Phantom, MetaMask, or your wallet with the amount pre-filled.
+                  </p>
+                </div>
+              ) : null}
               <p className="mt-3 break-all rounded-lg border border-[#d9e7e0] bg-white px-3 py-2.5 font-mono text-[11px] leading-5 text-[#44514b]">
                 {done.paymentAddress}
               </p>
@@ -776,14 +860,27 @@ export default function CheckoutPage() {
                               <p className="mt-1 font-medium text-[#0f1613]">${total.toFixed(2)} USD</p>
                             </div>
                             <div className="rounded-xl border border-[#d9e7e0] bg-white px-3 py-2.5">
-                              <p className="text-[10px] uppercase tracking-[0.12em] text-[#8a9690]">Next step</p>
-                              <p className="mt-1 font-medium text-[#0f1613]">Create order ID</p>
+                              <p className="text-[10px] uppercase tracking-[0.12em] text-[#8a9690]">
+                                You&apos;ll send
+                              </p>
+                              <p className="mt-1 font-medium text-[#0f1613]" aria-live="polite">
+                                {cryptoAmount ? (
+                                  <>≈ {cryptoAmount} <span className="text-[#1e6f58]">{wallet.coin.replace("-ERC", "").replace("-SOL", "")}</span></>
+                                ) : (
+                                  <span className="text-[#8a9690]">Loading rate…</span>
+                                )}
+                              </p>
                             </div>
                             <div className="rounded-xl border border-[#d9e7e0] bg-white px-3 py-2.5">
                               <p className="text-[10px] uppercase tracking-[0.12em] text-[#8a9690]">Safety gate</p>
                               <p className="mt-1 font-medium text-[#0f1613]">Email before payment</p>
                             </div>
                           </div>
+                          {cryptoAmount ? (
+                            <p className="mt-2 text-[11px] leading-5 text-[#6b7a73]">
+                              Live {wallet.label} rate · Confirm your wallet has at least this amount on {wallet.network} before submitting. Final amount locks on the next screen.
+                            </p>
+                          ) : null}
                           <p className="mt-4 rounded-xl border border-[#f0d6a1] bg-[#fff8e8] px-4 py-3 text-[12px] leading-5 text-[#6d4b14]">
                             Do not send crypto from this preview. Submit the form first so your order email and on-chain payment can be matched.
                           </p>
