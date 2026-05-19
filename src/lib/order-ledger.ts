@@ -27,6 +27,14 @@ export interface OrderLedgerEntry {
   shippingAddress: string;
   status: OrderStatus;
   source?: string;
+  ocTouchId?: string;
+  refCode?: string;
+  utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
+  utmContent?: string;
+  utmTerm?: string;
+  attributionSessionId?: string;
   paymentMethod?: "crypto";
   paymentCoin?: string;
   paymentAddress?: string;

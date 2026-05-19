@@ -1,6 +1,11 @@
 "use client";
 
 import { useCart } from "@/lib/cart-context";
+import {
+  getAttributionContext,
+  trackOrderIntent,
+  type AttributionContext,
+} from "@/lib/analytics";
 import { WALLETS, DISCOUNT_CODES } from "@/lib/products";
 import { COUNTRIES, zoneForCountry } from "@/lib/countries";
 import { Nav } from "@/components/site/nav";
@@ -155,7 +160,7 @@ export default function CheckoutPage() {
     return amt.toFixed(4);
   }, [prices, wallet.priceKey, total]);
 
-  const completeOrder = (orderId: string) => {
+  const completeOrder = (orderId: string, attribution: AttributionContext = {}) => {
     const fullAddress = [street, apt, city, region, postal, country].filter(Boolean).join(", ");
     const receiptLines = [
       `Order ID: ${orderId}`,
@@ -177,6 +182,8 @@ export default function CheckoutPage() {
       `${cryptoAmount ? `Send: ${cryptoAmount} ${wallet.coin}` : `Amount: $${total.toFixed(2)} USD`}`,
       `To address: ${wallet.address}`,
       `TX hash: ${txHash || "(will send after transfer)"}`,
+      ...(attribution.oc_touch_id ? [`Touch ID: ${attribution.oc_touch_id}`] : []),
+      ...(attribution.utm_source ? [`UTM source: ${attribution.utm_source}`] : []),
       ``,
       `— from titanpeptidelab.com checkout`,
     ];
@@ -252,6 +259,21 @@ export default function CheckoutPage() {
 
     const fullAddress = [street, apt, city, region, postal, country].filter(Boolean).join(", ");
     const orderId = makeOrderId();
+    let attribution: AttributionContext = {};
+
+    // checkout must still work even when tracking/session storage fails.
+    try {
+      attribution = getAttributionContext();
+      trackOrderIntent({
+        orderId,
+        cartValueUsd: total,
+        itemCount: items.reduce((sum, item) => sum + item.quantity, 0),
+        unitSkus: items.map((item) => item.product.id),
+        source: "checkout_form",
+      });
+    } catch {
+      attribution = {};
+    }
 
     const itemLines = items
       .map((i) => `${i.product.name} (${i.product.size}) x ${i.quantity} = $${(i.product.price * i.quantity).toFixed(2)}`)
@@ -275,12 +297,20 @@ export default function CheckoutPage() {
       paymentAddress: wallet.address,
       cryptoAmount: cryptoAmount ? `${cryptoAmount} ${wallet.coin}` : `$${total.toFixed(2)} USD`,
       txHash: txHash || "(will send after transfer)",
+      ocTouchId: attribution.oc_touch_id || "",
+      refCode: attribution.ref || "",
+      utmSource: attribution.utm_source || "",
+      utmMedium: attribution.utm_medium || "",
+      utmCampaign: attribution.utm_campaign || "",
+      utmContent: attribution.utm_content || "",
+      utmTerm: attribution.utm_term || "",
+      attributionSessionId: attribution.session_id || "",
     };
 
     // Ship the confirmation UI immediately so the buyer always has a working
     // path forward (copy receipt / email support) even if every backend rail
     // is down. The intake POSTs below are best-effort, fire-and-forget.
-    const mailtoHref = completeOrder(orderId);
+    const mailtoHref = completeOrder(orderId, attribution);
     setSubmitting(false);
 
     // Static checkout cannot rely on /api/order being available on GitHub
@@ -309,7 +339,15 @@ export default function CheckoutPage() {
         address: fullAddress,
         shipping,
         total,
-        source: "checkout",
+        source: attribution.ref || "checkout",
+        ocTouchId: attribution.oc_touch_id || undefined,
+        refCode: attribution.ref || undefined,
+        utmSource: attribution.utm_source || undefined,
+        utmMedium: attribution.utm_medium || undefined,
+        utmCampaign: attribution.utm_campaign || undefined,
+        utmContent: attribution.utm_content || undefined,
+        utmTerm: attribution.utm_term || undefined,
+        attributionSessionId: attribution.session_id || undefined,
         discountCode: appliedDiscount?.code || undefined,
         discountPercent: appliedDiscount?.percent || undefined,
         discountAmount: discountAmount || undefined,

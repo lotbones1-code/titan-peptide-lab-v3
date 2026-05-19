@@ -103,6 +103,8 @@ function internalNotificationHtml(order: OrderPayload): string {
   <tr><td style="padding:4px 12px 4px 0;color:#888;">Country</td><td>${order.country}</td></tr>
   <tr><td style="padding:4px 12px 4px 0;color:#888;">Address</td><td style="white-space:pre-line;">${order.shippingAddress}</td></tr>
   ${order.source ? `<tr><td style="padding:4px 12px 4px 0;color:#888;">Source</td><td>${order.source}</td></tr>` : ""}
+  ${order.ocTouchId ? `<tr><td style="padding:4px 12px 4px 0;color:#888;">Touch ID</td><td>${order.ocTouchId}</td></tr>` : ""}
+  ${order.utmCampaign ? `<tr><td style="padding:4px 12px 4px 0;color:#888;">UTM campaign</td><td>${order.utmCampaign}</td></tr>` : ""}
   ${order.paymentMethod ? `<tr><td style="padding:4px 12px 4px 0;color:#888;">Payment method</td><td>🪙 Crypto</td></tr>` : ""}
   ${order.paymentCoin ? `<tr><td style="padding:4px 12px 4px 0;color:#888;">Payment coin</td><td>${order.paymentCoin}</td></tr>` : ""}
   ${order.cryptoAmount ? `<tr><td style="padding:4px 12px 4px 0;color:#888;">Crypto amount</td><td>${order.cryptoAmount}</td></tr>` : ""}
@@ -178,6 +180,14 @@ export async function POST(req: NextRequest) {
         status: body.txHash ? "payment_received" : "awaiting_payment",
         paymentMethod: "crypto",
         source: body.source,
+        ocTouchId: body.ocTouchId,
+        refCode: body.refCode,
+        utmSource: body.utmSource,
+        utmMedium: body.utmMedium,
+        utmCampaign: body.utmCampaign,
+        utmContent: body.utmContent,
+        utmTerm: body.utmTerm,
+        attributionSessionId: body.attributionSessionId,
         paymentCoin: body.paymentCoin,
         paymentAddress: body.paymentAddress,
         cryptoAmount: body.cryptoAmount,

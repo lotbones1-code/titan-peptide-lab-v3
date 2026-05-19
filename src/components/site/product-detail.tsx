@@ -19,6 +19,7 @@ import {
 import { type Product, DISCOUNT_CODES } from "@/lib/products";
 import { zoneForCountry } from "@/lib/countries";
 import { useCart } from "@/lib/cart-context";
+import { trackProductView } from "@/lib/analytics";
 import { CompoundPoster } from "./compound-poster";
 import { getLot } from "@/lib/lots";
 import { VialReconstitution } from "./vial-reconstitution";
@@ -49,6 +50,10 @@ export function ProductDetail({ product }: { product: Product }) {
   const [stickyVisible, setStickyVisible] = useState(false);
   const primaryCtaRef = useRef<HTMLButtonElement | null>(null);
   const { addItem } = useCart();
+
+  useEffect(() => {
+    trackProductView(product);
+  }, [product]);
 
   useEffect(() => {
     const node = primaryCtaRef.current;
