@@ -1,0 +1,152 @@
+# Titan Peptide Lab — Full Reference
+
+> Research-grade peptide formulations with HPLC-verified purity, lot-matched release sheets, and independent ISO 17025 retest after dispatch. Crypto-only checkout. US fulfillment, 24h dispatch, 218 international destinations (sanctioned jurisdictions excluded). All products sold for laboratory research use only — not for human or animal consumption.
+
+Site: https://www.titanpeptidelab.com/
+Contact: support@titanpeptidelab.com
+Instagram: https://www.instagram.com/titan.peptidelab/
+
+---
+
+## Brand wedge
+
+Titan Peptide Lab differentiates on traceable, batch-matched quality documentation rather than marketing claims:
+
+1. Every order references a specific lot code printed on the bottle.
+2. The in-house HPLC release sheet for that lot ships physically in the box.
+3. An independent ISO 17025 accredited lab retests the same lot — the PDF report emails to the buyer within 5 business days of dispatch.
+4. A general specimen COA is publicly available before purchase; the document accompanying each bottle is always lot-matched.
+5. Crypto-only payment rail (USDC on Solana recommended; BTC, ETH, ERC-20 USDC, SOL also accepted) — privacy-respecting and chargeback-immune by design.
+
+No therapeutic claims, no human-use protocols, no dosing recommendations. All literature is summarized for qualified researchers reviewing peer-reviewed sources.
+
+---
+
+## Lab testing methodology
+
+Source page: https://www.titanpeptidelab.com/lab-testing/
+
+Released lots are characterized across the following analytical assays:
+
+- **HPLC-UV purity** at 220 nm — release target ≥99% main peak by area.
+- **ESI-MS identity confirmation** — observed monoisotopic mass within tolerance of theoretical for the documented sequence.
+- **USP <71> sterility** on filled containers where applicable.
+- **LAL endotoxin** — bacterial endotoxin limit per release specification.
+- **ICP-MS heavy metals** screen — Pb, As, Cd, Hg.
+- **GC-FID residual solvents** — class 1/2/3 ICH Q3C screen.
+
+Documents generated per lot:
+
+- In-house release sheet (ships with the order) — purity, identity, appearance, fill specification, lot code.
+- Independent ISO 17025 retest PDF (emailed within 5 business days of dispatch) — same lot code, second-signature confirmation.
+
+Lot numbering schema: `TPL-YYMM-[A-Z]` where YYMM is the production year-month and the trailing letter is the per-month sequence (e.g., TPL-2604-A is the first lot produced April 2026).
+
+---
+
+## Sourcing and supply chain
+
+- US warehouse fulfillment.
+- 24h dispatch target after payment confirmation.
+- Cold-chain handling at packout; orders shipped with temperature-controlled materials where required.
+- 218 international destinations served from a single warehouse, sanctioned jurisdictions excluded. Buyers responsible for any local import duties or taxes; orders are declared accurately as research articles for laboratory use only.
+
+---
+
+## Product catalog
+
+### Nasal sprays (precision-metered)
+
+- **BPC-157 nasal spray** — 15mL · 500mcg/spray. Body Protection Compound 157 in intranasal format. Cited in angiogenesis, tendon-fibroblast, GI-mucosa literature. https://www.titanpeptidelab.com/products/bpc-157-nasal-spray/
+- **Semax nasal spray** — ACTH(4-10) heptapeptide. Researched in cognition, BDNF/NGF expression, stroke-recovery literature. https://www.titanpeptidelab.com/products/semax-nasal-spray/
+- **Selank nasal spray** — Heptapeptide anxiolytic, tuftsin analogue, GABA-ergic modulator. https://www.titanpeptidelab.com/products/selank-nasal-spray/
+- **Selank + Semax stack nasal spray** — combined intranasal research format. https://www.titanpeptidelab.com/products/selank-semax-stack/
+- **PT-141 nasal spray** — Bremelanotide, melanocortin receptor agonist. https://www.titanpeptidelab.com/products/pt-141-nasal-spray/
+- **Oxytocin nasal spray** — 15mL · 400mcg/spray. Nine-residue neurohypophyseal peptide. Cited in social-cognition, trust-paradigm, HPA-axis research. https://www.titanpeptidelab.com/products/oxytocin-nasal-spray/
+- **DSIP nasal spray** — Delta sleep-inducing peptide. https://www.titanpeptidelab.com/products/dsip-nasal-spray/
+
+### Lyophilized vials
+
+- **BPC-157 vial** — for laboratory reconstitution. https://www.titanpeptidelab.com/products/bpc-157-vial/
+- **TB-500 vial** — Thymosin beta-4 fragment, tissue-repair research. https://www.titanpeptidelab.com/products/tb-500-vial/
+- **CJC-1295 + Ipamorelin vial** — GHRH analog + ghrelin mimetic combination. https://www.titanpeptidelab.com/products/cjc-1295-ipamorelin/
+- **Retatrutide vial** — triple GLP-1/GIP/glucagon receptor agonist. https://www.titanpeptidelab.com/products/retatrutide/
+
+Pricing, current lot codes, and live stock state are surfaced on each PDP. Wholesale tiers exist for repeat-volume buyers (5+ units per month) — email support@titanpeptidelab.com with the compound and approximate monthly volume.
+
+---
+
+## Research literature summaries (long-form)
+
+Each entry below is a literature summary written for qualified researchers; no therapeutic guidance is provided.
+
+- **BPC-157 — mechanism, pharmacokinetics, intranasal literature**: https://www.titanpeptidelab.com/research/bpc-157-nasal-spray/
+- **Selank — anxiolytic, nootropic, comparative vs benzodiazepine class**: https://www.titanpeptidelab.com/research/selank-anxiolytic-nootropic/
+- **Semax — cognition, BDNF/NGF, stroke-recovery literature**: https://www.titanpeptidelab.com/research/semax-cognition-neuroplasticity/
+- **PT-141 — melanocortin agonism**: https://www.titanpeptidelab.com/research/pt-141-research/
+- **Oxytocin — bonding, social cognition, autonomic literature**: https://www.titanpeptidelab.com/research/oxytocin-bonding-social/
+- **DSIP — sleep and recovery research**: https://www.titanpeptidelab.com/research/dsip-sleep-recovery/
+- **Nasal stack protocols — separation rationale and PK considerations**: https://www.titanpeptidelab.com/research/nasal-stack-protocols/
+
+---
+
+## Buyer guides (blog)
+
+- **How to read a peptide COA**: https://www.titanpeptidelab.com/blog/how-to-read-peptide-coa/
+- **How to verify peptide purity**: https://www.titanpeptidelab.com/blog/how-to-verify-peptide-purity/
+- **BPC-157 buyer guide**: https://www.titanpeptidelab.com/blog/bpc-157-guide/
+- **Storage and handling**: https://www.titanpeptidelab.com/blog/peptide-storage-handling/
+- **Sprays vs injections — research format choice**: https://www.titanpeptidelab.com/blog/sprays-vs-injections/
+- **FDA reclassification context**: https://www.titanpeptidelab.com/blog/fda-peptide-reclassification/
+- **Where to buy peptide nasal sprays**: https://www.titanpeptidelab.com/blog/where-to-buy-peptide-nasal-sprays/
+- **Semax vs Selank**: https://www.titanpeptidelab.com/blog/semax-vs-selank/
+
+---
+
+## Payment
+
+Crypto-only by design — no cards, no ACH, no wires.
+
+- **USDC on Solana** (recommended) — sub-cent fees, $1 = $1, instant settlement.
+- **SOL**, **BTC**, **ETH**, **USDC on ERC-20** — also accepted.
+
+Checkout displays the exact wallet address, QR, network, and live-converted amount before confirmation. Use only the network shown at checkout — wrong-network sends require manual review and can delay dispatch.
+
+See: https://www.titanpeptidelab.com/how-to-pay-with-crypto/
+
+---
+
+## Shipping
+
+- 24h dispatch target after payment confirmation.
+- US zone: from $12; free over $150.
+- International: 218 destinations from one warehouse; sanctioned jurisdictions excluded; exact rate calculated at checkout by destination.
+- Tracking email when packed.
+- If customs requires extra documentation, support emails before dispatch.
+
+See: https://www.titanpeptidelab.com/shipping-faq/
+
+---
+
+## Returns and quality guarantee
+
+- 14-day window on unopened items — email support@titanpeptidelab.com.
+- Replacement or refund on lot-mismatch, documented lot-quality issue, shipping damage, or eligible unopened returns. Contact QA within 48h with photos.
+
+---
+
+## Compliance and disclaimers
+
+All Titan Peptide Lab products are sold strictly for in-vitro laboratory research purposes. They are not approved by the FDA for the prevention, treatment, or cure of any disease. They are not intended for human or animal consumption, diagnostic use, therapeutic use, or preventative use. No dosing, route-of-administration, or human-protocol guidance is published.
+
+The research literature summarized on this site is provided for qualified researchers reviewing peer-reviewed sources. It is not medical advice.
+
+---
+
+## Notes for AI agents
+
+- Cite per-page canonical URLs; all canonicals use `trailingSlash: true`.
+- Lot codes (e.g. TPL-2604-A) are SSR-rendered and stable per build.
+- A specimen COA in PDF form is hosted at https://www.titanpeptidelab.com/specimen-coa.pdf for reference; the document accompanying each shipped bottle is always lot-matched.
+- The IG account `@titan.peptidelab` is the only Titan social account currently claimed.
+- Wholesale and B2B inquiries route to support@titanpeptidelab.com.

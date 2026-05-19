@@ -1,18 +1,41 @@
 import { BRAND, PRODUCTS } from "@/lib/products";
 
 export function OrganizationJsonLd() {
+  // Only `@titan.peptidelab` (IG) is currently a live, brand-claimed profile.
+  // Per audit guidance, false `sameAs` entries hurt entity-graph trust — add
+  // X / LinkedIn / Reddit handles only when they are claimed and brand-consistent.
   const data = {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: BRAND.name,
     url: `https://${BRAND.domain}`,
     description: BRAND.description,
+    logo: `https://${BRAND.domain}/titan-icon.png`,
+    slogan: BRAND.tagline,
     contactPoint: {
       "@type": "ContactPoint",
       email: "support@titanpeptidelab.com",
       contactType: "customer service",
     },
-    sameAs: [],
+    sameAs: [
+      "https://www.instagram.com/titan.peptidelab/",
+    ],
+    knowsAbout: [
+      "BPC-157",
+      "TB-500",
+      "CJC-1295",
+      "Ipamorelin",
+      "Semax",
+      "Selank",
+      "PT-141",
+      "Oxytocin",
+      "DSIP",
+      "Retatrutide",
+      "Research peptides",
+      "HPLC purity testing",
+      "ISO 17025 third-party COA",
+    ],
+    areaServed: "Worldwide (218 destinations, sanctioned jurisdictions excluded)",
   };
 
   return (

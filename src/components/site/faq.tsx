@@ -7,6 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Reveal } from "./reveal";
+import { FAQJsonLd } from "./json-ld";
 
 const FAQS = [
   {
@@ -69,6 +70,9 @@ const FAQS = [
 export function FAQ() {
   return (
     <section id="faq" className="border-t border-[#e8e6e1] bg-[#faf8f4] py-20 lg:py-28">
+      <FAQJsonLd
+        faqs={FAQS.map((item) => ({ q: item.question, a: item.answer }))}
+      />
       <div className="mx-auto max-w-3xl px-5 sm:px-6 lg:px-8">
         <Reveal>
           <div className="mb-10 text-center">

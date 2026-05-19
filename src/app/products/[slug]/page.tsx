@@ -6,6 +6,7 @@ import { Footer } from "@/components/site/footer";
 import { ProductDetail } from "@/components/site/product-detail";
 import { getLot } from "@/lib/lots";
 import { zoneForCountry } from "@/lib/countries";
+import { getCoaMeta, HPLC_METHOD, IDENTITY_METHOD } from "@/lib/coa";
 
 export function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }));
@@ -47,6 +48,8 @@ export default async function ProductPage({
 
   const lot = getLot(product.id);
   const usZone = zoneForCountry("US");
+  const coa = getCoaMeta(product.id, product.slug);
+  const coaAbsoluteUrl = `https://${BRAND.domain}${coa.coaUrl}`;
 
   const productJsonLd = {
     "@context": "https://schema.org",
@@ -57,6 +60,49 @@ export default async function ProductPage({
     sku: product.id,
     mpn: lot,
     brand: { "@type": "Brand", name: "Titan Peptide Lab" },
+    manufacturer: {
+      "@type": "Organization",
+      name: "Titan Peptide Lab",
+      url: `https://${BRAND.domain}/`,
+    },
+    additionalProperty: [
+      {
+        "@type": "PropertyValue",
+        name: "Lot code",
+        value: lot,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "HPLC purity",
+        value: coa.purity,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Analytical method (purity)",
+        value: HPLC_METHOD,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Analytical method (identity)",
+        value: IDENTITY_METHOD,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "Third-party retest lab",
+        value: coa.thirdPartyLab,
+      },
+      {
+        "@type": "PropertyValue",
+        name: "COA issue date",
+        value: coa.issuedDate,
+      },
+    ],
+    subjectOf: {
+      "@type": "CreativeWork",
+      name: `Certificate of Analysis — ${product.name} (lot ${lot})`,
+      url: coaAbsoluteUrl,
+      encodingFormat: "application/pdf",
+    },
     offers: {
       "@type": "Offer",
       url: `https://${BRAND.domain}/products/${product.slug}/`,
@@ -134,6 +180,69 @@ export default async function ProductPage({
     ],
   };
 
+  // Per-SKU FAQ JSON-LD — COA / lot / shipping / storage / research-use
+  // questions per audit Fix #2 sketch. Plain-text answers so AI bots and
+  // Google rich-results extract cleanly. NO disease/dosing claims.
+  const productFaqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: `How is ${product.name} tested for purity?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "Every lot is HPLC-UV tested at 220 nm with a release target of \u226599% purity, plus ESI-MS identity confirmation against the documented sequence. An independent ISO 17025 accredited laboratory retests the same lot and emails the COA within 5 business days of dispatch \u2014 same lot code on both documents.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: `Is the COA tied to the specific lot I receive?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: `Yes. The in-house release sheet for lot ${lot} ships inside the order and references the lot code printed on your bottle. The independent ISO 17025 retest PDF references the same lot code and arrives by email within 5 business days of dispatch.`,
+        },
+      },
+      {
+        "@type": "Question",
+        name: `How is ${product.name} shipped and how fast?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "Orders dispatch from a US warehouse within 24 hours of payment confirmation, with cold-chain packing where applicable. Tracking is emailed at packout. International shipping reaches 218 destinations from one warehouse; sanctioned jurisdictions are excluded.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: `How should ${product.name} be stored?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "Refrigerate at 2\u20138\u00b0C (36\u201346\u00b0F). Storage guidance is included with each order. This is a laboratory handling specification \u2014 the product is sold for research use only, not for human or animal consumption.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: `Is ${product.name} intended for human use?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "No. All Titan Peptide Lab products are sold strictly for in-vitro laboratory research. They are not approved by the FDA for the prevention, treatment, or cure of any disease and are not intended for human or animal consumption, diagnostic, therapeutic, or preventative use.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: `What payment methods are accepted for ${product.name}?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "Crypto only. USDC on Solana is recommended for the lowest fees; BTC, ETH, USDC on ERC-20, and SOL are also accepted. The checkout page shows the wallet address, QR, network, and live-converted amount before payment. No cards, no ACH, no wires.",
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <Nav />
@@ -145,6 +254,10 @@ export default async function ProductPage({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productFaqJsonLd) }}
         />
         <ProductDetail product={product} />
       </main>
