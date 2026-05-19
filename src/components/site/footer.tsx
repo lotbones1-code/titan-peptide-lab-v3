@@ -24,6 +24,7 @@ const BLOG_LINKS = [
 const COMPANY_LINKS = [
   ["About", "/about"],
   ["Lab testing", "/lab-testing"],
+  ["How to pay with crypto", "/how-to-pay-with-crypto"],
   ["Shipping FAQ", "/shipping-faq"],
   ["Affiliates", "/affiliates"],
   ["Press", "/press"],

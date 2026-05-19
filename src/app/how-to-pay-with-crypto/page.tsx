@@ -177,17 +177,17 @@ export default function HowToPayWithCryptoPage() {
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
-                  href="/checkout/?ref=ig"
+                  href="/products"
                   className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#1e6f58] px-6 text-[13px] font-semibold text-white transition-colors hover:bg-[#175946] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58]/25"
                 >
-                  Open checkout
+                  Choose products first
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
                 <Link
-                  href="/start/?ref=ig"
+                  href="/checkout/"
                   className="inline-flex h-12 items-center justify-center rounded-full border border-[rgb(15_22_19/12%)] bg-white px-6 text-[13px] font-semibold text-[#0f1613] transition-colors hover:border-[#1e6f58]/40 hover:text-[#1e6f58] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58]/20"
                 >
-                  Pick a product first
+                  Open checkout if cart is ready
                 </Link>
               </div>
               <p className="mt-5 text-[11px] uppercase tracking-[0.14em] text-[#8a9690]">
@@ -317,14 +317,14 @@ export default function HowToPayWithCryptoPage() {
             </p>
             <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
-                href="/start/?ref=ig"
+                href="/products"
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#0f1613] px-6 text-[13px] font-semibold text-white transition-colors hover:bg-[#1a5c48] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0f1613]/20"
               >
                 Choose a peptide
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
               <Link
-                href="/lab-testing/?ref=ig"
+                href="/lab-testing/"
                 className="inline-flex h-12 items-center justify-center rounded-full border border-[rgb(15_22_19/12%)] px-6 text-[13px] font-semibold text-[#0f1613] transition-colors hover:border-[#1e6f58]/40 hover:text-[#1e6f58] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58]/20"
               >
                 Review COA workflow

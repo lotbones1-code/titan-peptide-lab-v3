@@ -5,6 +5,7 @@ import { CartButton } from "./cart-drawer";
 
 const LINKS = [
   { href: "/products", label: "Products" },
+  { href: "/how-to-pay-with-crypto", label: "How to Pay" },
   { href: "/lab-testing", label: "Lab Testing" },
   { href: "/research", label: "Research" },
   { href: "/blog", label: "Blog" },
