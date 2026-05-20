@@ -22,6 +22,7 @@ const BLOG_SLUGS = [
   "peptide-nasal-spray-benefits",
   "beginners-guide-nootropic-peptides",
   "how-to-verify-peptide-purity",
+  "usa-made-peptide-nasal-sprays",
 ];
 
 // Pull product slugs from the live catalog so the sitemap can never desync

@@ -180,6 +180,16 @@ const POSTS = [
     readingTime: "12 min",
     date: "2026-04-25",
   },
+  {
+    slug: "usa-made-peptide-nasal-sprays",
+    n: "17",
+    title: "USA-Made Peptide Nasal Sprays: What Domestic Sourcing Changes",
+    subtitle:
+      "A US shipping address is not the same as domestic synthesis, domestic fill, or finished-product testing. Here is how researchers can evaluate USA-made sourcing claims without relying on vague copy.",
+    category: "Sourcing",
+    readingTime: "10 min",
+    date: "2026-05-19",
+  },
 ];
 
 const CATEGORY_PALETTE: Record<string, string> = {
@@ -190,6 +200,7 @@ const CATEGORY_PALETTE: Record<string, string> = {
   "Regulatory Update": "bg-[#fef3e6] text-[#8a5a1a]",
   "Trend Analysis": "bg-[#e6f3fe] text-[#1a5a8a]",
   "Market Analysis": "bg-[#e8eef2] text-[#2a4a5a]",
+  Sourcing: "bg-[#eef0e6] text-[#4a5a1e]",
 };
 
 export default function BlogIndexPage() {
