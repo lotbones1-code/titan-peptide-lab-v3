@@ -210,18 +210,33 @@ export function CartDrawer() {
                 {promoError && (
                   <p className="text-xs text-red-500 pl-1">{promoError}</p>
                 )}
-                <p className="pl-1 text-[11px] leading-4 text-[#8a9690]">
-                  First order?{" "}
-                  <button
-                    type="button"
-                    onClick={() => handleApplyCode("FIRST10")}
-                    className="font-semibold text-[#1e6f58] underline-offset-2 hover:underline focus:underline focus:outline-none"
-                    aria-label="Apply FIRST10 discount code"
-                  >
-                    Apply FIRST10
-                  </button>{" "}
-                  for 10% off before checkout.
-                </p>
+                {itemCount >= 3 ? (
+                  <p className="pl-1 text-[11px] leading-4 text-[#8a9690]">
+                    3+ items in cart —{" "}
+                    <button
+                      type="button"
+                      onClick={() => handleApplyCode("BULK15")}
+                      className="font-semibold text-[#1e6f58] underline-offset-2 hover:underline focus:underline focus:outline-none"
+                      aria-label="Apply BULK15 discount code"
+                    >
+                      Apply BULK15
+                    </button>{" "}
+                    for 15% off this order.
+                  </p>
+                ) : (
+                  <p className="pl-1 text-[11px] leading-4 text-[#8a9690]">
+                    First order?{" "}
+                    <button
+                      type="button"
+                      onClick={() => handleApplyCode("FIRST10")}
+                      className="font-semibold text-[#1e6f58] underline-offset-2 hover:underline focus:underline focus:outline-none"
+                      aria-label="Apply FIRST10 discount code"
+                    >
+                      Apply FIRST10
+                    </button>{" "}
+                    for 10% off before checkout.
+                  </p>
+                )}
               </div>
             )}
 
