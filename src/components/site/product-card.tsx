@@ -84,7 +84,15 @@ export function ProductCard({
               </div>
               <p className="mt-0.5 flex items-center gap-1 text-[10px] text-[#aab6b0]">
                 <Globe className="h-3 w-3" />
-                Ships worldwide · Pay with crypto
+                <span>
+                  Ships worldwide ·{" "}
+                  <Link href="/how-to-pay-with-crypto" className="underline underline-offset-2 transition-colors hover:text-[#1a5c48]">
+                    Pay with crypto
+                  </Link>
+                </span>
+              </p>
+              <p className="mt-2 rounded-full border border-[#dce6df] bg-[#f6fbf8] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#1a5c48]">
+                First order? Use FIRST10 for 10% off at checkout.
               </p>
             </div>
           </div>
