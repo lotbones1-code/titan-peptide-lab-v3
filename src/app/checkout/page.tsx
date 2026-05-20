@@ -300,6 +300,7 @@ export default function CheckoutPage() {
     const upper = discountCode.trim().toUpperCase();
     const match = DISCOUNT_CODES[upper as keyof typeof DISCOUNT_CODES];
     if (match) {
+      setDiscountCode(upper);
       setAppliedDiscount({ code: upper, percent: match.percent });
       setDiscountError("");
     } else {
@@ -307,6 +308,22 @@ export default function CheckoutPage() {
       setDiscountError("Invalid code");
     }
   };
+
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const raw = params.get("discount") || params.get("code");
+      if (!raw) return;
+      const upper = raw.trim().toUpperCase();
+      const match = DISCOUNT_CODES[upper as keyof typeof DISCOUNT_CODES];
+      if (!match) return;
+      setDiscountCode(upper);
+      setAppliedDiscount({ code: upper, percent: match.percent });
+      setDiscountError("");
+    } catch {
+      // URL parsing is a convenience only; manual discount entry still works.
+    }
+  }, []);
 
   const removeDiscount = () => {
     setAppliedDiscount(null);

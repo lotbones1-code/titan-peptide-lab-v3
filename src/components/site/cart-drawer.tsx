@@ -44,13 +44,16 @@ export function CartDrawer() {
   const router = useRouter();
 
   const handleCheckout = () => {
-    let next = "/checkout";
+    const params = new URLSearchParams();
     try {
       const ref = new URLSearchParams(window.location.search).get("ref") || sessionStorage.getItem("tpl_ref");
-      if (ref) next = `/checkout?ref=${encodeURIComponent(ref)}`;
+      if (ref) params.set("ref", ref);
     } catch {
-      next = "/checkout";
+      // If browser storage is unavailable, still route the buyer to checkout.
     }
+    if (appliedCode) params.set("discount", appliedCode.code);
+    const query = params.toString();
+    const next = query ? `/checkout?${query}` : "/checkout";
     trackCheckoutStart({
       cartValueUsd: discountedTotal,
       cartLineCount: items.length,
