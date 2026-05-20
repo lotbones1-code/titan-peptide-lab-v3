@@ -54,23 +54,31 @@ export function Hero() {
                 </Link>
                 <Link
                   href="/lab-testing"
-                  className="inline-flex h-12 items-center justify-center rounded-full border border-[#d4d4d4] px-7 text-[13px] font-semibold text-[#0f1110] transition-colors hover:border-[#0f1110]"
+                  className="inline-flex h-12 items-center text-[13px] font-semibold text-[#1a5c48] underline decoration-[#cfdad3] decoration-1 underline-offset-[6px] transition-colors hover:decoration-[#1a5c48]"
                 >
                   See the COA format
                 </Link>
               </div>
 
-              <p className="mt-4 text-[12px] text-[#66736d]">
-                <span className="font-semibold text-[#1a5c48]">FIRST10</span> — 10% off your first order at checkout.
+              <p className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-[#66736d]">
+                <span>
+                  <span className="font-semibold text-[#1a5c48]">FIRST10</span> — 10% off your first order at checkout.
+                </span>
+                <span aria-hidden className="hidden text-[#cfdad3] sm:inline">·</span>
+                <span>
+                  Order today —{" "}
+                  <span className="font-semibold text-[#0f1110]">dispatch within 24h</span>{" "}
+                  after on-chain confirmation.
+                </span>
               </p>
 
               <div className="mt-5 rounded-[1.15rem] border border-[#dfe6e2] bg-[#f7faf8] p-4 sm:grid sm:grid-cols-[1fr_auto] sm:items-center sm:gap-5">
                 <div>
                   <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
-                    Crypto checkout preview
+                    Recommended rail · USDC on Solana
                   </p>
                   <p className="mt-2 max-w-[48ch] text-[12px] leading-6 text-[#44514b]">
-                    USDC on Solana is the lowest-friction rail. Checkout still supports BTC, ETH, USDC, and SOL with the exact network and wallet shown before payment.
+                    Sub-cent network fees, $1 = $1, settles in seconds. BTC, ETH, ERC-20 USDC, and SOL remain available — the exact wallet and network are shown before payment.
                   </p>
                 </div>
                 <Link
