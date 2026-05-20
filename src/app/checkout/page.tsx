@@ -10,6 +10,7 @@ import { WALLETS, DISCOUNT_CODES } from "@/lib/products";
 import { COUNTRIES, zoneForCountry } from "@/lib/countries";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
+import { SupportEmailLink } from "@/components/site/support-email-link";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import QRCode from "qrcode";
@@ -80,6 +81,23 @@ const WALLET_OPTIONS: WalletOption[] = [
   { coin: "ETH", label: "Ethereum", network: "ERC-20", address: WALLETS.eth, priceKey: "ethereum", icon: "⟠" },
   { coin: "USDC-ERC", label: "USDC", network: "ERC-20", address: WALLETS.usdcErc, priceKey: "usd-coin", icon: "💲" },
 ];
+
+function networkReassurance(wallet: Pick<WalletOption, "coin" | "label" | "network">) {
+  switch (wallet.coin) {
+    case "USDC-SOL":
+      return "USDC must be sent on Solana for this option. If your wallet shows Ethereum, Base, Polygon, BNB, or any other network, do not send — switch to Solana or choose USDC · ERC-20 instead.";
+    case "SOL":
+      return "SOL must be sent on the Solana network. Do not send wrapped SOL or SOL from another chain to this address.";
+    case "USDC-ERC":
+      return "USDC · ERC-20 must be sent from an Ethereum/ERC-20 wallet. If your wallet shows Solana, Base, Polygon, or BNB, switch networks or choose USDC · Solana instead.";
+    case "ETH":
+      return "ETH must be sent on Ethereum/ERC-20. Do not send ETH on Base, Arbitrum, Optimism, BNB, or another network unless the checkout option says so.";
+    case "BTC":
+      return "BTC must be sent on the Bitcoin network. Do not send wrapped BTC or BTC from another chain to this address.";
+    default:
+      return `Send only on ${wallet.network}. If your wallet shows a different network, switch before pressing send.`;
+  }
+}
 
 // Orders go through our own /api/order route when running with a Node host.
 // On the static GitHub Pages build there is no server, so we fall back to a
@@ -614,7 +632,7 @@ export default function CheckoutPage() {
                 </button>
               </div>
               <p className="mt-2 text-[11px] leading-5 text-[#6b7a73]">
-                Network must match the option selected at checkout. Keep your transaction hash with this order ID.
+                {networkReassurance({ coin: done.coin, label: done.paymentLabel, network: done.paymentNetwork })} Keep your transaction hash with this order ID.
               </p>
             </div>
             <div className="mx-auto mt-8 max-w-sm rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-5 text-left text-[13px] leading-relaxed text-[#44514b]">
@@ -969,6 +987,10 @@ export default function CheckoutPage() {
                               Live {wallet.label} rate · Confirm your wallet has at least this amount on {wallet.network} before submitting. Final amount locks on the next screen.
                             </p>
                           ) : null}
+                          <div className="mt-3 rounded-xl border border-[#d9e7e0] bg-white px-4 py-3 text-[12px] leading-5 text-[#44514b]">
+                            <p className="font-semibold text-[#0f1613]">Network check before paying</p>
+                            <p className="mt-1">{networkReassurance(wallet)}</p>
+                          </div>
                           <p className="mt-4 rounded-xl border border-[#f0d6a1] bg-[#fff8e8] px-4 py-3 text-[12px] leading-5 text-[#6d4b14]">
                             Do not send crypto from this preview. Submit the form first so your order email and on-chain payment can be matched.
                           </p>
@@ -1027,7 +1049,7 @@ export default function CheckoutPage() {
                             <div>
                               <p className="font-medium text-[#0f1613]">Scan the QR or copy the address</p>
                               <p className="mt-0.5 text-[12px] text-[#8a9690]">
-                                Send the exact amount shown above. On phone, just tap the QR code to open your wallet. That&apos;s it.
+                                After checkout creates your order ID, send the exact amount shown on the confirmation screen and confirm the wallet network matches the selected rail.
                               </p>
                             </div>
                           </li>
@@ -1052,12 +1074,9 @@ export default function CheckoutPage() {
               {/* Support callout */}
               <p className="text-center text-[12px] text-[#8a9690] sm:text-left">
                 Stuck on something? Email{" "}
-                <a
-                  href="mailto:support@titanpeptidelab.com"
+                <SupportEmailLink
                   className="text-[#1e6f58] underline decoration-[#1e6f58]/30 underline-offset-4 hover:decoration-[#1e6f58]"
-                >
-                  support@titanpeptidelab.com
-                </a>
+                />
                 {" "}— we reply in 24–48h, usually same day.
               </p>
 
