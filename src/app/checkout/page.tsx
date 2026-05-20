@@ -165,23 +165,115 @@ export default function CheckoutPage() {
     };
   }, [done]);
 
+  // Crypto price fetch with localStorage cache + CoinCap fallback. Without this
+  // a single CoinGecko hiccup (rate-limit, CORS preflight, browser extension
+  // block) leaves the receipt showing "$X USD" instead of the crypto amount —
+  // buyer has to compute conversion themselves and many drop off.
   useEffect(() => {
+    const CACHE_KEY = "tpl_crypto_prices_v1";
+    const CACHE_TTL_MS = 10 * 60 * 1000;
+    const applyPrices = (p: PriceMap) => {
+      setPrices((prev) => ({
+        bitcoin: p.bitcoin ?? prev.bitcoin,
+        ethereum: p.ethereum ?? prev.ethereum,
+        solana: p.solana ?? prev.solana,
+        "usd-coin": p["usd-coin"] ?? prev["usd-coin"] ?? 1,
+      }));
+    };
+    try {
+      const raw = window.localStorage.getItem(CACHE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as { ts: number; prices: PriceMap };
+        if (parsed && Date.now() - parsed.ts < CACHE_TTL_MS && parsed.prices) {
+          applyPrices(parsed.prices);
+        }
+      }
+    } catch {
+      // localStorage may be disabled (private mode, embedded webview) — fine.
+    }
+
     const ctrl = new AbortController();
-    fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,usd-coin&vs_currencies=usd",
-      { signal: ctrl.signal },
-    )
-      .then((r) => (r.ok ? r.json() : null))
-      .then((data) => {
-        if (!data) return;
-        setPrices({
+    const writeCache = (p: PriceMap) => {
+      try {
+        window.localStorage.setItem(
+          CACHE_KEY,
+          JSON.stringify({ ts: Date.now(), prices: p }),
+        );
+      } catch {
+        // ignore — cache write is best-effort.
+      }
+    };
+
+    const fetchCoinGecko = async (): Promise<PriceMap | null> => {
+      try {
+        const r = await fetch(
+          "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,usd-coin&vs_currencies=usd",
+          { signal: ctrl.signal },
+        );
+        if (!r.ok) return null;
+        const data = await r.json();
+        const p: PriceMap = {
           bitcoin: data.bitcoin?.usd,
           ethereum: data.ethereum?.usd,
           solana: data.solana?.usd,
           "usd-coin": data["usd-coin"]?.usd ?? 1,
-        });
-      })
-      .catch(() => {});
+        };
+        if (!p.bitcoin && !p.ethereum && !p.solana) return null;
+        return p;
+      } catch {
+        return null;
+      }
+    };
+
+    const fetchCoinCap = async (): Promise<PriceMap | null> => {
+      try {
+        const ids = ["bitcoin", "ethereum", "solana", "usd-coin"];
+        const out: PriceMap = { "usd-coin": 1 };
+        const results = await Promise.all(
+          ids.map(async (id) => {
+            try {
+              const r = await fetch(`https://api.coincap.io/v2/assets/${id}`, {
+                signal: ctrl.signal,
+              });
+              if (!r.ok) return null;
+              const j = await r.json();
+              const usd = parseFloat(j?.data?.priceUsd);
+              return Number.isFinite(usd) ? { id, usd } : null;
+            } catch {
+              return null;
+            }
+          }),
+        );
+        for (const row of results) {
+          if (!row) continue;
+          if (row.id === "bitcoin") out.bitcoin = row.usd;
+          else if (row.id === "ethereum") out.ethereum = row.usd;
+          else if (row.id === "solana") out.solana = row.usd;
+          else if (row.id === "usd-coin") out["usd-coin"] = row.usd;
+        }
+        if (!out.bitcoin && !out.ethereum && !out.solana) return null;
+        return out;
+      } catch {
+        return null;
+      }
+    };
+
+    (async () => {
+      const primary = await fetchCoinGecko();
+      if (primary) {
+        applyPrices(primary);
+        writeCache(primary);
+        return;
+      }
+      const fallback = await fetchCoinCap();
+      if (fallback) {
+        applyPrices(fallback);
+        writeCache(fallback);
+      }
+      // If both fail, the cached prices (if any) remain in state and the
+      // receipt still shows USD totals — checkout itself is never blocked.
+    })();
+
     return () => ctrl.abort();
   }, []);
 
