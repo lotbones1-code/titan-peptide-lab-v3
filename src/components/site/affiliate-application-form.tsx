@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
-import { Check } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 
 type AffiliateApplication = {
   name: string;
@@ -29,12 +29,13 @@ function saveApplication(application: AffiliateApplication) {
 
 export function AffiliateApplicationForm() {
   const id = useId();
-  const [saved, setSaved] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    saveApplication({
+    const form = event.currentTarget;
+    const application = {
       name: String(data.get("name") || "").trim(),
       email: String(data.get("email") || "").trim(),
       channel: String(data.get("channel") || "").trim(),
@@ -43,9 +44,40 @@ export function AffiliateApplicationForm() {
       audienceCategory: String(data.get("audienceCategory") || "").trim(),
       introPlan: String(data.get("introPlan") || "").trim(),
       createdAt: new Date().toISOString(),
-    });
-    event.currentTarget.reset();
-    setSaved(true);
+    } satisfies AffiliateApplication;
+
+    setStatus("sending");
+    saveApplication(application);
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/support@titanpeptidelab.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `[Titan Affiliate Beta] ${application.channel || "New applicant"} — ${application.name}`,
+          _captcha: "false",
+          _template: "table",
+          _autoresponse:
+            "Thanks for applying to the Titan affiliate beta. We received your application and will review fit, audience, disclosure standards, and claim-safe positioning before any link/code is issued.\n\n— The Titan Peptide Lab team",
+          Name: application.name,
+          Email: application.email,
+          Channel: application.channel,
+          "Platform URL": application.platformUrl,
+          "Audience size": application.audienceSize || "—",
+          "Audience category": application.audienceCategory || "—",
+          "Claim-safe intro plan": application.introPlan,
+        }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || (result.success !== true && result.success !== "true")) {
+        throw new Error("Affiliate application submission failed");
+      }
+
+      form.reset();
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
@@ -64,7 +96,7 @@ export function AffiliateApplicationForm() {
           </h2>
         </div>
         <span className="rounded-full border border-[#dfe6e2] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#8a9690]">
-          Local test capture
+          Small beta
         </span>
       </div>
 
@@ -113,14 +145,26 @@ export function AffiliateApplicationForm() {
 
       <button
         type="submit"
+        disabled={status === "sending"}
         className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#1e6f58] px-6 text-[13px] font-semibold text-white transition-colors hover:bg-[#175946] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58]/25 sm:w-auto"
       >
-        {saved ? <Check className="h-4 w-4" aria-hidden="true" /> : null}
-        {saved ? "Saved for review" : "Apply for review"}
+        {status === "sending" ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : null}
+        {status === "sent" ? <Check className="h-4 w-4" aria-hidden="true" /> : null}
+        {status === "sending" ? "Sending…" : status === "sent" ? "Application sent" : "Apply for review"}
       </button>
-      <p className="mt-3 text-[11px] leading-5 text-[#8a9690]">
-        Until FirstPromoter or a backend intake is approved, this beta form saves submissions to localStorage for QA only. No account, API key, or outbound email is created by this page.
-      </p>
+      {status === "error" ? (
+        <p className="mt-3 text-[12px] leading-5 text-red-500">
+          We saved a local copy in this browser, but the application did not reach the review inbox. Email{" "}
+          <a href="mailto:support@titanpeptidelab.com" className="underline underline-offset-4">
+            support@titanpeptidelab.com
+          </a>{" "}
+          with “Affiliate beta” in the subject.
+        </p>
+      ) : (
+        <p className="mt-3 text-[11px] leading-5 text-[#8a9690]">
+          Applications go to Titan&apos;s review inbox and are also saved locally in this browser for QA fallback. No account, API key, or affiliate link is created automatically.
+        </p>
+      )}
     </form>
   );
 }
