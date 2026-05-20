@@ -8,6 +8,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { X, Plus, Minus, ShoppingBag, Trash2, Lock, Tag, CheckCircle, ShieldCheck, Truck, FileText } from "lucide-react";
 
+// US free-shipping threshold doubles as the PDP shipping estimate and the most
+// universally recognized AOV anchor. International rates resolve at checkout
+// against the destination zone — buyers see that note next to the progress bar.
+const US_FREE_SHIPPING_THRESHOLD = 150;
+
 type DiscountEntry = {
   percent: number;
   label: string;
@@ -240,6 +245,8 @@ export function CartDrawer() {
               </div>
             )}
 
+            <FreeShippingProgress subtotal={discountedTotal} />
+
             <div className="rounded-xl border border-[#e7ece9] bg-[#fafbfa] p-4">
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8a9690]">
                 Order notes
@@ -336,6 +343,56 @@ export function CartDrawer() {
         )}
       </div>
     </>
+  );
+}
+
+function FreeShippingProgress({ subtotal }: { subtotal: number }) {
+  const unlocked = subtotal >= US_FREE_SHIPPING_THRESHOLD;
+  const remaining = Math.max(0, US_FREE_SHIPPING_THRESHOLD - subtotal);
+  const pct = Math.min(100, Math.round((subtotal / US_FREE_SHIPPING_THRESHOLD) * 100));
+
+  if (unlocked) {
+    return (
+      <div className="rounded-xl border border-[#1e6f58]/25 bg-[#f0f7f4] px-4 py-3">
+        <div className="flex items-center gap-2">
+          <Truck className="h-3.5 w-3.5 text-[#1e6f58]" />
+          <p className="text-[12px] font-semibold text-[#1a5c48]">
+            Free US shipping unlocked
+          </p>
+        </div>
+        <p className="mt-1 text-[11px] leading-4 text-[#5c6762]">
+          International orders see the exact destination rate at checkout.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-xl border border-[#e7ece9] bg-[#fafbfa] px-4 py-3">
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <Truck className="h-3.5 w-3.5 text-[#1e6f58]" />
+          <p className="text-[12px] font-medium text-[#0f1613]">
+            Add{" "}
+            <span className="font-semibold text-[#1e6f58]">
+              ${remaining.toFixed(2)}
+            </span>{" "}
+            for free US shipping
+          </p>
+        </div>
+        <span className="text-[11px] text-[#8a9690]">${US_FREE_SHIPPING_THRESHOLD}</span>
+      </div>
+      <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[#e7ece9]">
+        <div
+          className="h-full rounded-full bg-[#1e6f58] transition-[width] duration-300"
+          style={{ width: `${pct}%` }}
+          aria-hidden="true"
+        />
+      </div>
+      <p className="mt-1.5 text-[11px] leading-4 text-[#8a9690]">
+        US estimate · International rates calculated at checkout.
+      </p>
+    </div>
   );
 }
 
