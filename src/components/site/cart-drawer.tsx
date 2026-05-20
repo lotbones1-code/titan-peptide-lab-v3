@@ -36,6 +36,15 @@ export function CartDrawer() {
     }
   };
 
+  const handleApplyCode = (rawCode: string) => {
+    const entry = validateCode(rawCode);
+    if (entry) {
+      setAppliedCode({ code: rawCode.trim().toUpperCase(), discount: entry });
+      setPromoError("");
+      setPromoInput("");
+    }
+  };
+
   const discountAmount = appliedCode
     ? (subtotal * appliedCode.discount.percent) / 100
     : 0;
@@ -202,7 +211,16 @@ export function CartDrawer() {
                   <p className="text-xs text-red-500 pl-1">{promoError}</p>
                 )}
                 <p className="pl-1 text-[11px] leading-4 text-[#8a9690]">
-                  First order? Try <span className="font-semibold text-[#1e6f58]">FIRST10</span> for 10% off before checkout.
+                  First order?{" "}
+                  <button
+                    type="button"
+                    onClick={() => handleApplyCode("FIRST10")}
+                    className="font-semibold text-[#1e6f58] underline-offset-2 hover:underline focus:underline focus:outline-none"
+                    aria-label="Apply FIRST10 discount code"
+                  >
+                    Apply FIRST10
+                  </button>{" "}
+                  for 10% off before checkout.
                 </p>
               </div>
             )}

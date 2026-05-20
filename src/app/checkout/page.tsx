@@ -309,6 +309,16 @@ export default function CheckoutPage() {
     }
   };
 
+  const applyKnownCode = (rawCode: string) => {
+    const upper = rawCode.trim().toUpperCase();
+    const match = DISCOUNT_CODES[upper as keyof typeof DISCOUNT_CODES];
+    if (match) {
+      setDiscountCode(upper);
+      setAppliedDiscount({ code: upper, percent: match.percent });
+      setDiscountError("");
+    }
+  };
+
   useEffect(() => {
     try {
       const params = new URLSearchParams(window.location.search);
@@ -923,6 +933,20 @@ export default function CheckoutPage() {
                   )}
                   {discountError && (
                     <p className="mt-1.5 text-[12px] text-[#c87]">{discountError}</p>
+                  )}
+                  {!appliedDiscount && (
+                    <p className="mt-1.5 text-[12px] text-[#8a9690]">
+                      First order?{" "}
+                      <button
+                        type="button"
+                        onClick={() => applyKnownCode("FIRST10")}
+                        className="font-semibold text-[#1e6f58] underline-offset-2 hover:underline focus:underline focus:outline-none"
+                        aria-label="Apply FIRST10 discount code"
+                      >
+                        Apply FIRST10
+                      </button>{" "}
+                      for 10% off.
+                    </p>
                   )}
                 </div>
               </section>

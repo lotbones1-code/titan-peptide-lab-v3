@@ -83,6 +83,14 @@ export function ProductDetail({ product }: { product: Product }) {
     else setAppliedCode(null);
   };
 
+  const applyCodeDirect = (rawCode: string) => {
+    const upper = rawCode.toUpperCase().trim();
+    if (upper in DISCOUNT_CODES) {
+      setAppliedCode(upper as keyof typeof DISCOUNT_CODES);
+      setCode("");
+    }
+  };
+
   const handleAddToCart = () => {
     addItem(product, qty);
     setAddedToCart(true);
@@ -197,7 +205,16 @@ export function ProductDetail({ product }: { product: Product }) {
                 </p>
                 {!appliedCode && (
                   <p className="mt-1.5 text-[12px] font-medium text-[#1e6f58]">
-                    First order? Use <span className="font-semibold">FIRST10</span> for 10% off — saves ${(product.price * 0.1).toFixed(2)} on this bottle.
+                    First order?{" "}
+                    <button
+                      type="button"
+                      onClick={() => applyCodeDirect("FIRST10")}
+                      className="font-semibold underline-offset-2 hover:underline focus:underline focus:outline-none"
+                      aria-label="Apply FIRST10 discount code"
+                    >
+                      Apply FIRST10
+                    </button>{" "}
+                    for 10% off — saves ${(product.price * 0.1).toFixed(2)} on this bottle.
                   </p>
                 )}
               </div>
