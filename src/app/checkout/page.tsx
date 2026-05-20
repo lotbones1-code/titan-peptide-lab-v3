@@ -225,32 +225,28 @@ export default function CheckoutPage() {
       }
     };
 
-    const fetchCoinCap = async (): Promise<PriceMap | null> => {
+    const fetchKraken = async (): Promise<PriceMap | null> => {
       try {
-        const ids = ["bitcoin", "ethereum", "solana", "usd-coin"];
-        const out: PriceMap = { "usd-coin": 1 };
-        const results = await Promise.all(
-          ids.map(async (id) => {
-            try {
-              const r = await fetch(`https://api.coincap.io/v2/assets/${id}`, {
-                signal: ctrl.signal,
-              });
-              if (!r.ok) return null;
-              const j = await r.json();
-              const usd = parseFloat(j?.data?.priceUsd);
-              return Number.isFinite(usd) ? { id, usd } : null;
-            } catch {
-              return null;
-            }
-          }),
+        const r = await fetch(
+          "https://api.kraken.com/0/public/Ticker?pair=XBTUSD,ETHUSD,SOLUSD,USDCUSD",
+          { signal: ctrl.signal },
         );
-        for (const row of results) {
-          if (!row) continue;
-          if (row.id === "bitcoin") out.bitcoin = row.usd;
-          else if (row.id === "ethereum") out.ethereum = row.usd;
-          else if (row.id === "solana") out.solana = row.usd;
-          else if (row.id === "usd-coin") out["usd-coin"] = row.usd;
-        }
+        if (!r.ok) return null;
+        const j = await r.json();
+        if (j?.error?.length) return null;
+        const res = j?.result || {};
+        // Kraken returns BTC under XXBTZUSD and ETH under XETHZUSD when the
+        // legacy pair codes are used; SOL/USDC use the modern codes.
+        const pick = (key: string) => {
+          const last = parseFloat(res?.[key]?.c?.[0]);
+          return Number.isFinite(last) ? last : undefined;
+        };
+        const out: PriceMap = {
+          bitcoin: pick("XXBTZUSD") ?? pick("XBTUSD"),
+          ethereum: pick("XETHZUSD") ?? pick("ETHUSD"),
+          solana: pick("SOLUSD"),
+          "usd-coin": pick("USDCUSD") ?? 1,
+        };
         if (!out.bitcoin && !out.ethereum && !out.solana) return null;
         return out;
       } catch {
@@ -265,7 +261,7 @@ export default function CheckoutPage() {
         writeCache(primary);
         return;
       }
-      const fallback = await fetchCoinCap();
+      const fallback = await fetchKraken();
       if (fallback) {
         applyPrices(fallback);
         writeCache(fallback);
