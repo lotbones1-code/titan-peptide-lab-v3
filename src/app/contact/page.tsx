@@ -4,6 +4,7 @@ import { Footer } from "@/components/site/footer";
 import { PageHero } from "@/components/site/page-hero";
 import { NextRead } from "@/components/site/next-read";
 import { ContactForm } from "@/components/site/contact-form";
+import { SupportEmailLink } from "@/components/site/support-email-link";
 
 export const metadata = {
   title: "Contact — The Titan Peptide Company",
@@ -72,12 +73,10 @@ export default function ContactPage() {
             <dl className="mt-10 space-y-4 text-[14px]">
               <ContactRow
                 label="General"
-                value="support@titanpeptidelab.com"
               />
-              <ContactRow label="QA / COA" value="support@titanpeptidelab.com" />
+              <ContactRow label="QA / COA" />
               <ContactRow
                 label="Volume"
-                value="support@titanpeptidelab.com"
               />
             </dl>
           }
@@ -95,19 +94,16 @@ export default function ContactPage() {
   );
 }
 
-function ContactRow({ label, value }: { label: string; value: string }) {
+function ContactRow({ label }: { label: string }) {
   return (
     <div className="grid grid-cols-[100px_1fr] items-baseline gap-4 border-t border-[rgb(15_22_19/6%)] pt-3">
       <dt className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#8a9690]">
         {label}
       </dt>
       <dd>
-        <a
-          href={`mailto:${value}`}
+        <SupportEmailLink
           className="text-[#0f1613] underline decoration-[rgb(15_22_19/20%)] underline-offset-[4px] hover:text-[#1e6f58] hover:decoration-[#1e6f58]"
-        >
-          {value}
-        </a>
+        />
       </dd>
     </div>
   );

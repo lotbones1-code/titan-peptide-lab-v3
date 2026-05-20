@@ -3,6 +3,7 @@ import { ArrowRight, CheckCircle2, Clock3, FileText, Wallet } from "lucide-react
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { FAQJsonLd } from "@/components/site/json-ld";
+import { SupportEmailLink } from "@/components/site/support-email-link";
 import { BRAND, WALLETS } from "@/lib/products";
 import { WalletCopyGrid } from "./wallet-copy-grid";
 
@@ -297,7 +298,7 @@ export default function HowToPayWithCryptoPage() {
                     {faq.q}
                   </dt>
                   <dd className="mt-2 text-[13.5px] leading-[1.8] text-[#44514b]">
-                    {faq.a}
+                    {renderAnswerWithSupportEmail(faq.a)}
                   </dd>
                 </div>
               ))}
@@ -336,4 +337,20 @@ export default function HowToPayWithCryptoPage() {
       <Footer />
     </>
   );
+}
+
+function renderAnswerWithSupportEmail(answer: string) {
+  const email = "support@titanpeptidelab.com";
+  const parts = answer.split(email);
+
+  if (parts.length === 1) return answer;
+
+  return parts.map((part, index) => (
+    <span key={`${part}-${index}`}>
+      {part}
+      {index < parts.length - 1 ? (
+        <SupportEmailLink className="text-[#0f1613] underline decoration-[rgb(15_22_19/20%)] underline-offset-[4px] hover:text-[#1e6f58] hover:decoration-[#1e6f58]" />
+      ) : null}
+    </span>
+  ));
 }

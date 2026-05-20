@@ -2,6 +2,7 @@ import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { PageHero } from "@/components/site/page-hero";
 import { NextRead } from "@/components/site/next-read";
+import { SupportEmailLink } from "@/components/site/support-email-link";
 
 const LAB_TITLE = "Lab Testing — Titan Peptide Lab";
 const LAB_DESCRIPTION =
@@ -182,9 +183,9 @@ export default function LabTestingPage() {
                     TPL-YYMM-[A-Z]
                   </span>
                   . That same lot appears on the bottle, the order record, and
-                  the certificate. If you lost the printed copy, email
-                  support@titanpeptidelab.com with the lot number and a signed PDF
-                  can be reissued.
+                  the certificate. If you lost the printed copy, email {" "}
+                  <SupportEmailLink className="text-[#0f1613] underline decoration-[rgb(15_22_19/20%)] underline-offset-[4px] hover:text-[#1e6f58] hover:decoration-[#1e6f58]" />{" "}
+                  with the lot number and a signed PDF can be reissued.
                 </p>
               </div>
             </>

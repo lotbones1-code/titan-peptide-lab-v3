@@ -1,6 +1,7 @@
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { FAQJsonLd } from "@/components/site/json-ld";
+import { SupportEmailLink } from "@/components/site/support-email-link";
 
 export const metadata = {
   title: "Shipping, Payment & Returns \u2014 The Titan Peptide Company",
@@ -118,9 +119,9 @@ export default function ShippingFAQPage() {
                   The logistics.
                 </h1>
                 <p className="mt-5 max-w-xs text-[14px] leading-[1.7] text-[#5c6762]">
-                  For anything not covered here, email
-                  support@titanpeptidelab.com. Replies usually arrive inside
-                  24–48 hours.
+                  For anything not covered here, email {" "}
+                  <SupportEmailLink className="text-[#0f1613] underline decoration-[rgb(15_22_19/20%)] underline-offset-[4px] hover:text-[#1e6f58] hover:decoration-[#1e6f58]" />
+                  . Replies usually arrive inside 24–48 hours.
                 </p>
               </div>
 
@@ -162,7 +163,7 @@ export default function ShippingFAQPage() {
                             </span>
                           </summary>
                           <dd className="pb-6 pl-[2.75rem] pr-8 text-[13.5px] leading-[1.7] text-[#5c6762]">
-                            {f.a}
+                            {renderAnswerWithSupportEmail(f.a)}
                           </dd>
                         </details>
                       ))}
@@ -195,6 +196,22 @@ export default function ShippingFAQPage() {
       <Footer />
     </>
   );
+}
+
+function renderAnswerWithSupportEmail(answer: string) {
+  const email = "support@titanpeptidelab.com";
+  const parts = answer.split(email);
+
+  if (parts.length === 1) return answer;
+
+  return parts.map((part, index) => (
+    <span key={`${part}-${index}`}>
+      {part}
+      {index < parts.length - 1 ? (
+        <SupportEmailLink className="text-[#0f1613] underline decoration-[rgb(15_22_19/20%)] underline-offset-[4px] hover:text-[#1e6f58] hover:decoration-[#1e6f58]" />
+      ) : null}
+    </span>
+  ));
 }
 
 function Code({ code, v }: { code: string; v: string }) {
