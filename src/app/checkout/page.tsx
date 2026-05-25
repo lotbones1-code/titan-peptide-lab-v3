@@ -117,6 +117,7 @@ export default function CheckoutPage() {
   const [copied, setCopied] = useState<"address" | "amount" | "receipt" | null>(null);
   const [prices, setPrices] = useState<PriceMap>({});
   const [qrDataUrl, setQrDataUrl] = useState<string>("");
+  const [previewQrDataUrl, setPreviewQrDataUrl] = useState<string>("");
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
   const [cryptoHelpOpen, setCryptoHelpOpen] = useState(true);
 
@@ -221,6 +222,30 @@ export default function CheckoutPage() {
     if (wallet.priceKey === "bitcoin") return amt.toFixed(6);
     return amt.toFixed(4);
   }, [prices, wallet.priceKey, total]);
+
+  useEffect(() => {
+    const uri = buildPaymentUri(wallet.coin, wallet.address, cryptoAmount);
+    if (!uri) {
+      setPreviewQrDataUrl("");
+      return;
+    }
+    let cancelled = false;
+    QRCode.toDataURL(uri, {
+      errorCorrectionLevel: "M",
+      margin: 2,
+      scale: 5,
+      color: { dark: "#0f1613", light: "#ffffff" },
+    })
+      .then((url) => {
+        if (!cancelled) setPreviewQrDataUrl(url);
+      })
+      .catch(() => {
+        if (!cancelled) setPreviewQrDataUrl("");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [cryptoAmount, wallet.address, wallet.coin]);
 
   const completeOrder = (orderId: string, attribution: AttributionContext = {}) => {
     const fullAddress = [street, apt, city, region, postal, country].filter(Boolean).join(", ");
@@ -852,7 +877,7 @@ export default function CheckoutPage() {
                             {wallet.label} · {wallet.network}
                           </h3>
                           <p className="mt-2 text-[13px] leading-6 text-[#44514b]">
-                            We create your order ID first, then show the exact amount, wallet address, QR code, and copy buttons on the confirmation screen. That keeps your payment tied to a support record before any crypto is sent.
+                            Wallet address and QR are visible here so you can verify the rail before submitting. Create the order ID before sending so support can match the transfer.
                           </p>
                           <div className="mt-4 grid gap-2 text-[12px] text-[#44514b] sm:grid-cols-3">
                             <div className="rounded-xl border border-[#d9e7e0] bg-white px-3 py-2.5">
@@ -884,6 +909,61 @@ export default function CheckoutPage() {
                           <p className="mt-4 rounded-xl border border-[#f0d6a1] bg-[#fff8e8] px-4 py-3 text-[12px] leading-5 text-[#6d4b14]">
                             Do not send crypto from this preview. Submit the form first so your order email and on-chain payment can be matched.
                           </p>
+                        </div>
+                      </div>
+
+                      <div className="mt-5 grid gap-4 rounded-2xl border border-[#d9e7e0] bg-white p-4 sm:grid-cols-[144px_1fr] sm:items-start">
+                        <div className="flex justify-center sm:justify-start">
+                          {previewQrDataUrl ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={previewQrDataUrl}
+                              alt={`${wallet.label} ${wallet.network} payment QR`}
+                              width={132}
+                              height={132}
+                              className="h-[132px] w-[132px] rounded-xl border border-[#d9e7e0] bg-white p-2"
+                            />
+                          ) : (
+                            <div className="flex h-[132px] w-[132px] items-center justify-center rounded-xl border border-[#d9e7e0] bg-[#fafbfa] text-center text-[11px] leading-4 text-[#8a9690]">
+                              QR loads after rate check
+                            </div>
+                          )}
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#8a9690]">
+                            Wallet address
+                          </p>
+                          <p className="mt-2 break-all rounded-lg border border-[#e7ece9] bg-[#fafbfa] px-3 py-2.5 font-mono text-[11px] leading-5 text-[#0f1613]">
+                            {wallet.address}
+                          </p>
+                          <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                            {cryptoAmount && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  navigator.clipboard.writeText(cryptoAmount);
+                                  setCopied("amount");
+                                  setTimeout(() => setCopied(null), 1800);
+                                }}
+                                className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-[#1e6f58] bg-white px-3 text-[12px] font-medium text-[#1e6f58] transition-colors hover:bg-[#f3f9f6]"
+                              >
+                                {copied === "amount" ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                                {copied === "amount" ? "Amount copied" : "Copy amount"}
+                              </button>
+                            )}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                navigator.clipboard.writeText(wallet.address);
+                                setCopied("address");
+                                setTimeout(() => setCopied(null), 1800);
+                              }}
+                              className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-[#1e6f58] bg-white px-3 text-[12px] font-medium text-[#1e6f58] transition-colors hover:bg-[#f3f9f6]"
+                            >
+                              {copied === "address" ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                              {copied === "address" ? "Address copied" : "Copy address"}
+                            </button>
+                          </div>
                         </div>
                       </div>
 
