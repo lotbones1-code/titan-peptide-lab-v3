@@ -35,7 +35,10 @@ function getMessage() {
 
 function preservedFiles(dir) {
   // Things that must NOT be wiped when syncing out/ → pages repo.
-  return new Set([".git", "CNAME", ".nojekyll"]);
+  // Preserve _next/static across deploys. GitHub Pages/CDN/Safari can briefly
+  // hold HTML that references the previous hashed CSS/JS files; deleting those
+  // assets makes cached pages render as raw unstyled HTML.
+  return new Set([".git", "CNAME", ".nojekyll", "_next"]);
 }
 
 function wipePagesRepo() {
