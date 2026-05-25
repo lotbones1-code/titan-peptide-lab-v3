@@ -14,6 +14,7 @@ const SCROLL_THRESHOLD = 0.7;
 const MIN_DWELL_MS = 8_000;
 const DISMISS_KEY = "titan-email-dismissed-at";
 const DISMISS_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/4ec82415df18ef2a8a1519b6919ace7c";
 
 function isFreshDismiss(): boolean {
   if (typeof window === "undefined") return false;
@@ -119,11 +120,12 @@ export function EmailCapture() {
           body: body.toString(),
         });
       } else {
-        await fetch("https://formsubmit.co/ajax/support@titanpeptidelab.com", {
+        await fetch(FORMSUBMIT_ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/json", Accept: "application/json" },
           body: JSON.stringify({
             email: email.trim(),
+            Email: email.trim(),
             _subject: "New Titan Subscriber (popup)",
             source: "homepage-popup",
             _template: "table",
@@ -171,9 +173,23 @@ export function EmailCapture() {
           {submitted ? (
             <div className="py-4 text-center">
               <p className="text-[16px] font-medium text-[#1e6f58]">Welcome to the lab.</p>
-              <p className="mt-2 text-[14px] text-[#888]">
-                Check your inbox for your FIRST10 code and the next batch release.
+              <div className="mt-3 rounded-xl border border-[#dce5df] bg-[#f7faf8] px-4 py-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8a9690]">
+                  Use at checkout
+                </p>
+                <p className="mt-2 font-serif text-[1.9rem] leading-none tracking-[0.12em] text-[#1e6f58]">
+                  FIRST10
+                </p>
+              </div>
+              <p className="mt-3 text-[14px] text-[#888]">
+                You&apos;re on the release list now. Use the code today or keep an eye out for new lot drops and restocks.
               </p>
+              <a
+                href="/products"
+                className="mt-4 inline-flex items-center justify-center rounded-full bg-[#1e6f58] px-5 py-2.5 text-[12px] font-semibold text-white transition-colors hover:bg-[#175946]"
+              >
+                Browse products
+              </a>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">

@@ -8,6 +8,7 @@ import { ArrowRight, ShieldCheck, Wallet, Truck, FileText } from "lucide-react";
 const START_TITLE = "Start here — Titan Peptide Lab";
 const START_DESCRIPTION =
   "Three research peptide paths for first-time buyers: BPC-157 + TB-500, CJC-1295 + Ipamorelin, Semax. HPLC ≥99% target, lot release sheet per bottle, crypto-only.";
+const FIRST_ORDER_QUERY = "?discount=FIRST10";
 
 export const metadata = {
   title: START_TITLE,
@@ -59,13 +60,13 @@ export default function StartPage() {
     <>
       <Nav />
       <main className="bg-white text-[#0f1613]">
-        {/* Single-column rotation hero — IG visitor lands here, no homepage scan */}
+        {/* Single-column rotation hero — first-time buyers land here, no homepage scan */}
         <section className="border-b border-[rgb(15_22_19/6%)] bg-[#fafbfa] py-14 lg:py-20">
           <div className="mx-auto max-w-2xl px-5 text-center sm:px-6">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#dde5df] bg-white px-3 py-1">
               <span className="size-1.5 rounded-full bg-[#1e6f58]" />
               <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#1a5c48]">
-                For Instagram visitors
+                First-buyer path
               </span>
             </div>
             <h1 className="mt-6 text-balance font-serif text-[clamp(2.4rem,5.5vw,3.8rem)] leading-[0.98] tracking-[-0.04em]">
@@ -75,7 +76,7 @@ export default function StartPage() {
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-[15px] leading-[1.8] text-[#5c6762]">
               Eleven products is too many for a first look. These are the three
-              fastest paths from an IG tap to a product page: pick one, review
+              fastest paths from a first click to a product page: pick one, review
               the COA workflow, then add to cart. Crypto-only checkout, no site
               account required.
             </p>
@@ -152,14 +153,14 @@ export default function StartPage() {
 
                       <div className="mt-5 flex flex-col gap-2.5 sm:flex-row">
                         <Link
-                          href={`/products/${primary.slug}/?ref=ig`}
+                          href={`/products/${primary.slug}${FIRST_ORDER_QUERY}`}
                           className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-full bg-[#1e6f58] px-5 text-[13px] font-semibold text-white transition-colors hover:bg-[#175946] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58]/25"
                         >
                           View COA → Add to cart
                           <ArrowRight className="h-4 w-4" aria-hidden="true" />
                         </Link>
                         <Link
-                          href="/lab-testing/?ref=ig"
+                          href={`/lab-testing${FIRST_ORDER_QUERY}`}
                           className="inline-flex h-11 items-center justify-center rounded-full border border-[rgb(15_22_19/12%)] px-5 text-[13px] font-semibold text-[#0f1613] transition-colors hover:border-[#0f1613] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0f1613]/15"
                         >
                           COA workflow
@@ -172,7 +173,7 @@ export default function StartPage() {
                             <li key={p.id} className="flex items-center gap-2">
                               <span className="size-1 rounded-full bg-[#1e6f58]" />
                               <Link
-                                href={`/products/${p.slug}/?ref=ig`}
+                                href={`/products/${p.slug}${FIRST_ORDER_QUERY}`}
                                 className="hover:text-[#0f1613] hover:underline"
                               >
                                 {p.name} — ${p.price.toFixed(2)} · {p.size}
@@ -205,7 +206,7 @@ export default function StartPage() {
                 what to send, and how confirmation works before checkout.
               </p>
               <Link
-                href="/how-to-pay-with-crypto/?ref=ig"
+                href={`/how-to-pay-with-crypto${FIRST_ORDER_QUERY}`}
                 className="mt-5 inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#0f1613] px-6 text-[13px] font-semibold text-white transition-colors hover:bg-[#1a5c48]"
               >
                 Read the 4-step walkthrough
@@ -222,7 +223,7 @@ export default function StartPage() {
               Looking for Selank, PT-141, Oxytocin, DSIP, or Retatrutide?
             </p>
             <Link
-              href="/products/?ref=ig"
+              href={`/products${FIRST_ORDER_QUERY}`}
               className="mt-3 inline-flex items-center gap-2 text-[13.5px] font-semibold text-[#1e6f58] hover:text-[#175946]"
             >
               See the full catalog ({PRODUCTS.length} products)

@@ -15,6 +15,7 @@ import {
   Globe,
   FlaskConical,
   ArrowUpRight,
+  Mail,
 } from "lucide-react";
 import { type Product, DISCOUNT_CODES } from "@/lib/products";
 import { zoneForCountry } from "@/lib/countries";
@@ -56,6 +57,24 @@ export function ProductDetail({ product }: { product: Product }) {
   }, [product]);
 
   useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const raw =
+        params.get("discount") ||
+        params.get("code") ||
+        sessionStorage.getItem("tpl_attr_discount") ||
+        sessionStorage.getItem("tpl_attr_code");
+      if (!raw) return;
+      const upper = raw.toUpperCase().trim();
+      if (!(upper in DISCOUNT_CODES)) return;
+      setCode(upper);
+      setAppliedCode(upper as keyof typeof DISCOUNT_CODES);
+    } catch {
+      // Discount persistence is a convenience layer, not a blocker.
+    }
+  }, []);
+
+  useEffect(() => {
     const node = primaryCtaRef.current;
     if (!node) return;
     const observer = new IntersectionObserver(
@@ -68,6 +87,11 @@ export function ProductDetail({ product }: { product: Product }) {
 
   const lot = getLot(product.id);
   const coaProof = coaProofLink(product.name);
+  const documentationQuestionHref = `mailto:support@titanpeptidelab.com?subject=${encodeURIComponent(
+    `Titan lot question before ordering: ${product.name} ${lot}`,
+  )}&body=${encodeURIComponent(
+    `Product: ${product.name}\nLot: ${lot}\n\nQuestion about COA/SDS/release sheet before ordering:`,
+  )}`;
 
   const subtotal = product.price * qty;
   const discountPct = appliedCode ? DISCOUNT_CODES[appliedCode].percent : 0;
@@ -243,12 +267,37 @@ export function ProductDetail({ product }: { product: Product }) {
                   href="/how-to-pay-with-crypto"
                   className="inline-flex h-9 shrink-0 items-center justify-center rounded-full border border-[#cfdad3] bg-white px-4 text-[11px] font-semibold text-[#0f1110] transition-colors hover:border-[#1a5c48] hover:text-[#1a5c48] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1a5c48]/20"
                 >
-                  Preview rails
+                  Payment guide
                 </Link>
               </div>
               <p className="mt-3 border-t border-[#edf0ec] pt-3 text-[11px] leading-5 text-[#6b7a73]">
                 Use only the network shown at checkout. Wrong-network sends require manual review and can delay dispatch.
               </p>
+            </div>
+
+            <div className="mt-5 rounded-[1.1rem] border border-[#d9e7e0] bg-[#f7fbf9] p-4">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
+                Need paperwork before adding?
+              </p>
+              <p className="mt-2 text-[12px] leading-5 text-[#44514b]">
+                Open the lab workflow or send a lot-specific documentation question before this product enters checkout.
+              </p>
+              <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+                <Link
+                  href="/lab-testing"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-[#1e6f58]/30 bg-white px-4 text-[12px] font-semibold text-[#1a5c48] transition-colors hover:border-[#1a5c48] hover:text-[#0f1613] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58]/20"
+                >
+                  <FileText className="h-3.5 w-3.5" aria-hidden="true" />
+                  Review lab workflow
+                </Link>
+                <a
+                  href={documentationQuestionHref}
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-[#0f1613] px-4 text-[12px] font-semibold text-white transition-colors hover:bg-[#1a5c48] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0f1613]/20"
+                >
+                  <Mail className="h-3.5 w-3.5" aria-hidden="true" />
+                  Ask about lot {lot}
+                </a>
+              </div>
             </div>
 
             {/* Quantity */}

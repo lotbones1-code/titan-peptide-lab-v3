@@ -12,6 +12,11 @@ type LeadMagnetCaptureProps = {
 const STORAGE_KEY = "titan_lead_magnet_requests";
 const FORM_ACTION = process.env.NEXT_PUBLIC_LEAD_MAGNET_FORM_ACTION || "";
 const EMAIL_FIELD = process.env.NEXT_PUBLIC_LEAD_MAGNET_EMAIL_FIELD || "email";
+const KLAVIYO_LIST_ID = process.env.NEXT_PUBLIC_KLAVIYO_LIST_ID || "";
+const FALLBACK_FORM_ACTION = "https://formsubmit.co/4ec82415df18ef2a8a1519b6919ace7c";
+const GUIDE_DOWNLOAD_URL = "https://www.titanpeptidelab.com/guide?download=1&source=email-checklist";
+const PRODUCTS_URL = "https://www.titanpeptidelab.com/products";
+const SUCCESS_MESSAGE = "Request captured. Titan logged your checklist request.";
 
 const COPY = {
   homepage: {
@@ -58,14 +63,67 @@ const LOCAL_SAVE_SCRIPT = `
       var existing = raw ? JSON.parse(raw) : [];
       window.localStorage.setItem("${STORAGE_KEY}", JSON.stringify([record].concat(existing).slice(0, 50)));
     } catch (error) {}
-    if (form.getAttribute("data-local-only") === "true") {
-      event.preventDefault();
-      if (emailInput) emailInput.value = "";
-      var status = form.querySelector("[data-lead-magnet-status]");
-      var buttonLabel = form.querySelector("[data-lead-magnet-button-label]");
-      if (status) status.textContent = "Saved locally for QA. Connect the email provider to deliver the checklist.";
-      if (buttonLabel) buttonLabel.textContent = "Saved";
+    var status = form.querySelector("[data-lead-magnet-status]");
+    var buttonLabel = form.querySelector("[data-lead-magnet-button-label]");
+    var submitButton = form.querySelector("[data-lead-magnet-submit]");
+    var useAjax = form.getAttribute("data-use-ajax") === "true";
+    var source = form.querySelector("[name='source']") ? form.querySelector("[name='source']").value : "lead-magnet";
+    var product = form.querySelector("[name='product']") ? form.querySelector("[name='product']").value : "";
+    if (!useAjax) {
+      if (status) status.textContent = "Opening the guide and emailing your copy...";
+      if (buttonLabel) buttonLabel.textContent = "Opening guide...";
+      if (submitButton) submitButton.setAttribute("disabled", "disabled");
+      return;
     }
+    event.preventDefault();
+    if (status) status.textContent = "Sending your checklist request...";
+    if (buttonLabel) buttonLabel.textContent = "Sending...";
+    if (submitButton) submitButton.setAttribute("disabled", "disabled");
+    var endpoint = form.getAttribute("data-form-action");
+    var klaviyoListId = form.getAttribute("data-klaviyo-list-id");
+    var onComplete = function () {
+      if (emailInput) emailInput.value = "";
+      if (status) status.textContent = "${SUCCESS_MESSAGE}";
+      if (buttonLabel) buttonLabel.textContent = "Requested";
+    };
+    var onError = function () {
+      if (status) status.textContent = "We couldn't send it automatically. Email support@titanpeptidelab.com and mention the COA checklist.";
+      if (buttonLabel) buttonLabel.textContent = "Try again";
+      if (submitButton) submitButton.removeAttribute("disabled");
+    };
+    if (klaviyoListId) {
+      var body = new URLSearchParams();
+      body.set("g", klaviyoListId);
+      body.set("email", email);
+      body.set("$source", source);
+      window.fetch("https://manage.kmail-lists.com/ajax/subscriptions/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/json"
+        },
+        body: body.toString()
+      }).then(onComplete).catch(onError);
+      return;
+    }
+    if (endpoint) {
+      window.fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          email: email,
+          source: source,
+          product: product || undefined,
+          _subject: "New Titan COA Checklist Request",
+          _template: "table",
+          _captcha: "false"
+        })
+      }).then(onComplete).catch(onError);
+      return;
+    }
+    if (status) status.textContent = "Capture endpoint missing. Email support@titanpeptidelab.com for the checklist.";
+    if (buttonLabel) buttonLabel.textContent = "Email support";
+    if (submitButton) submitButton.removeAttribute("disabled");
   });
 })();
 `;
@@ -80,6 +138,23 @@ export function LeadMagnetCapture({
   const resolvedSource = source || c.source;
   const compact = variant === "compact";
   const id = `lead-magnet-${resolvedSource}`.replace(/[^a-zA-Z0-9_-]/g, "-");
+  const guideParams = new URLSearchParams({
+    download: "1",
+    source: resolvedSource,
+  });
+  if (productName) guideParams.set("product", productName);
+  const guideLandingUrl = `https://www.titanpeptidelab.com/guide?${guideParams.toString()}`;
+  const leadMagnetAutoresponse = [
+    "Thanks for requesting Titan's 12-point COA checklist.",
+    "",
+    `Open the guide: ${GUIDE_DOWNLOAD_URL}`,
+    "Your first-order code: FIRST10 — 10% off anything in the catalog.",
+    `Shop Titan: ${PRODUCTS_URL}`,
+    "",
+    "If you want a second set of eyes on a COA or lot sheet, reply to this email.",
+    "",
+    "— Titan Peptide Lab",
+  ].join("\n");
 
   return (
     <section
@@ -118,15 +193,21 @@ export function LeadMagnetCapture({
 
         <div className="border-t border-[#dfe6e2] bg-white p-5 md:p-6 lg:border-l lg:border-t-0">
           <form
-            action={FORM_ACTION || undefined}
-            method="post"
+            action={FALLBACK_FORM_ACTION}
+            method="POST"
             data-lead-magnet-form
             data-email-field={EMAIL_FIELD}
-            data-local-only={FORM_ACTION ? undefined : "true"}
+            data-form-action={FORM_ACTION || undefined}
+            data-use-ajax={KLAVIYO_LIST_ID || FORM_ACTION ? "true" : undefined}
+            data-klaviyo-list-id={KLAVIYO_LIST_ID || undefined}
             className="rounded-[1.3rem] border border-[#e6ebe8] bg-white p-4 shadow-[0_1px_2px_rgb(15_22_19/4%)]"
           >
             <input type="hidden" name="source" value={resolvedSource} />
             {productName ? <input type="hidden" name="product" value={productName} /> : null}
+            <input type="hidden" name="_subject" value="New Titan COA Checklist Request" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_next" value={guideLandingUrl} />
+            <input type="hidden" name="_autoresponse" value={leadMagnetAutoresponse} />
             <label
               htmlFor={`${id}-email`}
               className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]"
@@ -144,6 +225,7 @@ export function LeadMagnetCapture({
               />
               <button
                 type="submit"
+                data-lead-magnet-submit
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#1e6f58] px-5 text-[13px] font-semibold text-white transition-colors hover:bg-[#175946] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58]/25"
               >
                 <Check className="h-3.5 w-3.5" aria-hidden="true" />
@@ -151,9 +233,9 @@ export function LeadMagnetCapture({
               </button>
             </div>
             <p data-lead-magnet-status aria-live="polite" className="mt-3 text-[11px] leading-5 text-[#8a9690]">
-              {FORM_ACTION
-                ? "Uses Titan’s configured email form endpoint; no private API key is exposed."
-                : "Provider setup pending: this form saves test requests to localStorage so the UX can be verified before Kit is connected."}
+              {KLAVIYO_LIST_ID || FORM_ACTION
+                ? "Checklist requests go to Titan’s configured email capture endpoint."
+                : "Submit to open the guide immediately and email the same checklist plus FIRST10 to yourself."}
             </p>
           </form>
         </div>

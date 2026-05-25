@@ -50,15 +50,17 @@ export function AffiliateApplicationForm() {
     saveApplication(application);
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/support@titanpeptidelab.com", {
+      const response = await fetch("https://formsubmit.co/ajax/4ec82415df18ef2a8a1519b6919ace7c", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           _subject: `[Titan Affiliate Beta] ${application.channel || "New applicant"} — ${application.name}`,
           _captcha: "false",
           _template: "table",
+          _replyto: application.email,
           _autoresponse:
             "Thanks for applying to the Titan affiliate beta. We received your application and will review fit, audience, disclosure standards, and claim-safe positioning before any link/code is issued.\n\n— The Titan Peptide Lab team",
+          email: application.email,
           Name: application.name,
           Email: application.email,
           Channel: application.channel,

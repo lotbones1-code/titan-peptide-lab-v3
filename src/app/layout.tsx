@@ -36,6 +36,33 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
+const criticalFallbackCss = `
+html{background:#fff;color:#0f1613;font-family:var(--font-geist-sans),-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-text-size-adjust:100%}
+body{margin:0;min-width:320px;background:#fff;color:#0f1613;font-family:var(--font-geist-sans),-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#1e6f58;text-decoration-thickness:1px;text-underline-offset:.18em}
+img,svg{max-width:100%;height:auto}
+button,input,textarea,select{font:inherit}
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);border-bottom:1px solid rgba(15,22,19,.08);backdrop-filter:blur(16px)}
+header>div,main>section>div,footer>div{max-width:80rem;margin-inline:auto;padding-inline:1.25rem}
+nav{display:flex;gap:1.25rem;align-items:center;flex-wrap:wrap}
+main{background:#fff;color:#0f1613}
+section{padding-block:3.5rem;border-bottom:1px solid rgba(15,22,19,.06)}
+h1,h2,h3{margin:0;color:#0f1613;font-family:var(--font-serif),Georgia,serif;letter-spacing:0;line-height:1.02}
+h1{font-size:clamp(2.35rem,10vw,4.5rem)}
+h2{font-size:clamp(1.9rem,6vw,3rem)}
+h3{font-size:1.35rem}
+p{margin:1rem 0 0;color:#5c6762}
+ul{padding-left:1.2rem}
+.bg-\\[\\#0f1110\\]{background:#0f1110;color:#fff}
+.text-white{color:#fff}
+.font-serif{font-family:var(--font-serif),Georgia,serif}
+.rounded-full{border-radius:999px}
+.hidden{display:none}
+@media (min-width:768px){.md\\:flex{display:flex}.md\\:hidden{display:none}}
+@media (max-width:767px){nav{gap:.6rem;font-size:.9rem}header>div{padding-block:.7rem}section{padding-block:2.75rem}}
+`;
+
 export const metadata: Metadata = {
   title: `${BRAND.name} — ${BRAND.tagline}`,
   description: BRAND.description,
@@ -83,6 +110,10 @@ export default function RootLayout({
     >
 
       <head>
+        <style
+          id="critical-fallback-css"
+          dangerouslySetInnerHTML={{ __html: criticalFallbackCss }}
+        />
         {GA_ID && (
           <>
             <Script

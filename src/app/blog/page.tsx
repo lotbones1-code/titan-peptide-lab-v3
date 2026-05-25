@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
+import { ContentBuyerCta } from "@/components/site/content-buyer-cta";
 
 export const metadata: Metadata = {
   title: "Blog — Titan Peptide Laboratory",
@@ -319,6 +320,19 @@ export default function BlogIndexPage() {
               );
             })}
           </ol>
+
+          <div className="mt-14 border-t border-[#d9dfd5] pt-14">
+            <ContentBuyerCta
+              eyebrow="Next step"
+              title="Enough reading. Start with the shortest buyer path."
+              body="Use the curated first-buyer route if you already know you want a real product page, visible lot proof, and FIRST10 already attached before checkout."
+              primaryHref="/start/?ref=content&discount=FIRST10&utm_source=onsite&utm_medium=blog_index&utm_content=footer"
+              primaryLabel="Start with FIRST10"
+              secondaryHref="/lab-testing?utm_source=onsite&utm_medium=blog_index&utm_content=footer"
+              secondaryLabel="See COA workflow"
+              note="Built for readers who are done comparing and want the quickest route into the catalog."
+            />
+          </div>
         </section>
       </main>
       <Footer />

@@ -327,13 +327,18 @@ export default function CheckoutPage() {
   useEffect(() => {
     try {
       const params = new URLSearchParams(window.location.search);
-      const raw = params.get("discount") || params.get("code");
+      const raw =
+        params.get("discount") ||
+        params.get("code") ||
+        sessionStorage.getItem("tpl_attr_discount") ||
+        sessionStorage.getItem("tpl_attr_code");
       if (!raw) return;
       const upper = raw.trim().toUpperCase();
       const match = DISCOUNT_CODES[upper as keyof typeof DISCOUNT_CODES];
       if (!match) return;
       setDiscountCode(upper);
       setAppliedDiscount({ code: upper, percent: match.percent });
+      sessionStorage.setItem("tpl_attr_discount", upper);
       setDiscountError("");
     } catch {
       // URL parsing is a convenience only; manual discount entry still works.
@@ -1171,7 +1176,7 @@ export default function CheckoutPage() {
                             <p className="mt-1">{networkReassurance(wallet)}</p>
                           </div>
                           <p className="mt-4 rounded-xl border border-[#f0d6a1] bg-[#fff8e8] px-4 py-3 text-[12px] leading-5 text-[#6d4b14]">
-                            Do not send crypto from this preview. Submit the form first so your order ID, wallet instructions, and support record are created before payment.
+                            Preview only: submit the form first to create the order ID, then use this same selected wallet and final amount on the confirmation screen.
                           </p>
                         </div>
                       </div>

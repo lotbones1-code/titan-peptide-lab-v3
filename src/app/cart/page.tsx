@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useCart } from "@/lib/cart-context";
 import { Nav } from "@/components/site/nav";
@@ -19,20 +18,19 @@ import { Footer } from "@/components/site/footer";
 //   - never 404s, never double-renders the drawer
 export default function CartPage() {
   const { items, hydrated, itemCount } = useCart();
-  const router = useRouter();
 
   useEffect(() => {
     if (hydrated && itemCount > 0) {
-      let next = "/checkout";
+      let next = "/checkout/";
       try {
         const ref = new URLSearchParams(window.location.search).get("ref") || sessionStorage.getItem("tpl_ref");
-        if (ref) next = `/checkout?ref=${encodeURIComponent(ref)}`;
+        if (ref) next = `/checkout/?ref=${encodeURIComponent(ref)}`;
       } catch {
-        next = "/checkout";
+        next = "/checkout/";
       }
-      router.replace(next);
+      window.location.replace(next);
     }
-  }, [hydrated, itemCount, router]);
+  }, [hydrated, itemCount]);
 
   return (
     <>

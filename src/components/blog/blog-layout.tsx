@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { ContentBuyerCta } from "@/components/site/content-buyer-cta";
 
 export interface BlogTocItem {
   id: string;
@@ -86,6 +87,19 @@ export function BlogLayout({
                 ))}
               </ol>
             </nav>
+            <div className="mt-8">
+              <ContentBuyerCta
+                compact
+                eyebrow="First order path"
+                title="Finished comparing?"
+                body="Skip the broad catalog. The curated buyer path keeps FIRST10 attached and moves straight into product pages with the COA workflow visible."
+                primaryHref="/start/?ref=content&discount=FIRST10&utm_source=onsite&utm_medium=blog&utm_content=sidebar"
+                primaryLabel="Start with FIRST10"
+                secondaryHref="/lab-testing?utm_source=onsite&utm_medium=blog&utm_content=sidebar"
+                secondaryLabel="See COA workflow"
+                note="For research use only. Start from this path and the first-order discount follows into the next step."
+              />
+            </div>
           </aside>
 
           {/* Prose */}

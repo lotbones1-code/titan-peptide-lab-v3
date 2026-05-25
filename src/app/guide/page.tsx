@@ -1,10 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { Check, Download, Loader2, ArrowRight, BookOpen, FlaskConical, ShieldCheck, Layers } from "lucide-react";
+
+const FORMSUBMIT_ACTION = "https://formsubmit.co/4ec82415df18ef2a8a1519b6919ace7c";
+const GUIDE_UNLOCK_URL = "https://www.titanpeptidelab.com/guide?download=1&source=guide-download";
+const GUIDE_AUTORESPONSE = [
+  "Thanks for requesting Titan's peptide nasal spray guide.",
+  "",
+  "Your guide is unlocked here:",
+  GUIDE_UNLOCK_URL,
+  "",
+  "Your first-order code: FIRST10 — 10% off anything in the catalog.",
+  "Shop Titan: https://www.titanpeptidelab.com/products",
+  "",
+  "Reply to this email if you want help comparing a lot sheet or COA before you order.",
+  "",
+  "— Titan Peptide Lab",
+].join("\n");
 
 const GUIDE_CONTENTS = [
   {
@@ -30,34 +46,22 @@ const GUIDE_CONTENTS = [
 ];
 
 export default function GuidePage() {
+  const [unlocked, setUnlocked] = useState(false);
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "sending">("idle");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email.trim() || status === "sending") return;
-    setStatus("sending");
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    setUnlocked(params.get("download") === "1");
+  }, []);
 
-    // Fire-and-forget email capture via FormSubmit.co
-    // Always unlock the guide regardless of backend result — the lead magnet
-    // should never be blocked by a transient third-party failure.
-    try {
-      await fetch("https://formsubmit.co/ajax/support@titanpeptidelab.com", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          email: email.trim(),
-          _subject: `[Titan Guide] New download — ${email.trim()}`,
-          _captcha: "false",
-          _template: "table",
-          Source: "guide-download",
-          Email: email.trim(),
-        }),
-      });
-    } catch {
-      // Swallow — guide access must not depend on form backend
+  const handleSubmit = (e: React.FormEvent) => {
+    if (!email.trim() || status === "sending") {
+      e.preventDefault();
+      return;
     }
-    setStatus("done");
+    setStatus("sending");
   };
 
   return (
@@ -138,12 +142,12 @@ export default function GuidePage() {
                       Get instant access to<br />the full guide
                     </h2>
                     <p className="mt-2 text-[13px] leading-[1.7] text-white/70">
-                      Enter your email and we&apos;ll also send you early access to new batch releases and research protocols.
+                      Enter your email and we&apos;ll unlock the guide instantly, then send the same link plus FIRST10 to your inbox.
                     </p>
                   </div>
 
                   <div className="px-8 py-7">
-                    {status === "done" ? (
+                    {unlocked ? (
                       /* ── Success state ───────────────────────── */
                       <div>
                         <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-[#e8f2ee]">
@@ -153,8 +157,19 @@ export default function GuidePage() {
                           You&apos;re in — download below.
                         </h3>
                         <p className="mt-2 text-[13.5px] leading-[1.7] text-[#6a7870]">
-                          We&apos;ve also sent a copy to your inbox. Check spam if it doesn&apos;t arrive within 5 minutes.
+                          The guide is unlocked now, and a copy is being sent to your inbox with code FIRST10 for 10% off your first order.
                         </p>
+                        <div className="mt-5 rounded-2xl border border-[#dce5df] bg-[#f7faf8] px-5 py-4 text-center">
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8a9690]">
+                            First-order code
+                          </p>
+                          <p className="mt-2 font-serif text-[2rem] leading-none tracking-[0.12em] text-[#1e6f58]">
+                            FIRST10
+                          </p>
+                          <p className="mt-2 text-[12px] text-[#6a7870]">
+                            Use at checkout for 10% off your first order.
+                          </p>
+                        </div>
                         <a
                           href="/peptide-guide.html"
                           target="_blank"
@@ -182,7 +197,17 @@ export default function GuidePage() {
                       </div>
                     ) : (
                       /* ── Form state ──────────────────────────── */
-                      <form onSubmit={handleSubmit} className="space-y-4">
+                      <form
+                        action={FORMSUBMIT_ACTION}
+                        method="POST"
+                        onSubmit={handleSubmit}
+                        className="space-y-4"
+                      >
+                        <input type="hidden" name="_subject" value="[Titan Guide] New download" />
+                        <input type="hidden" name="_template" value="table" />
+                        <input type="hidden" name="_next" value={GUIDE_UNLOCK_URL} />
+                        <input type="hidden" name="_autoresponse" value={GUIDE_AUTORESPONSE} />
+                        <input type="hidden" name="Source" value="guide-download" />
                         <div>
                           <label
                             htmlFor="guide-email"
@@ -192,6 +217,7 @@ export default function GuidePage() {
                           </label>
                           <input
                             id="guide-email"
+                            name="email"
                             type="email"
                             required
                             value={email}
@@ -214,20 +240,10 @@ export default function GuidePage() {
                           ) : (
                             <>
                               <Download className="h-4 w-4" />
-                              Get free guide
+                              Unlock guide + FIRST10
                             </>
                           )}
                         </button>
-
-                        {status === "error" && (
-                          <p className="text-center text-[12px] text-red-500">
-                            Something went wrong. Email{" "}
-                            <a href="mailto:support@titanpeptidelab.com" className="underline">
-                              support@titanpeptidelab.com
-                            </a>{" "}
-                            and we&apos;ll send it directly.
-                          </p>
-                        )}
 
                         <p className="text-center text-[11px] leading-[1.6] text-[#b0b9b4]">
                           No spam. Unsubscribe anytime. We only send batch releases and research updates.

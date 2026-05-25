@@ -1,11 +1,10 @@
 "use client";
 
-import { useCart } from "@/lib/cart-context";
+import { useCart, type CartItem } from "@/lib/cart-context";
 import { trackCheckoutStart } from "@/lib/analytics";
-import { DISCOUNT_CODES } from "@/lib/products";
+import { DISCOUNT_CODES, PRODUCTS, type Product } from "@/lib/products";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { X, Plus, Minus, ShoppingBag, Trash2, Lock, Tag, CheckCircle, ShieldCheck, Truck, FileText } from "lucide-react";
 
 // US free-shipping threshold doubles as the PDP shipping estimate and the most
@@ -18,24 +17,146 @@ type DiscountEntry = {
   label: string;
 };
 
+type CartUpsell = {
+  badge: string;
+  product: Product;
+  reason: string;
+};
+
+const COMPLEMENTARY_PRODUCT_IDS: Record<string, string[]> = {
+  "bpc157-spray": ["tb500-vial", "bpc157-vial"],
+  "bpc157-vial": ["tb500-vial", "bpc157-spray"],
+  "cjc-ipa": ["retatrutide", "tb500-vial"],
+  "dsip-spray": ["selank-spray", "semax-spray"],
+  "oxytocin-spray": ["pt141-spray", "selank-spray"],
+  "pt141-spray": ["oxytocin-spray", "dsip-spray"],
+  "retatrutide": ["cjc-ipa", "tb500-vial"],
+  "selank-spray": ["semax-spray", "selank-semax-stack"],
+  "semax-spray": ["selank-spray", "selank-semax-stack"],
+  "tb500-vial": ["bpc157-vial", "bpc157-spray"],
+};
+
+function buildCartUpsells(items: CartItem[], subtotal: number): CartUpsell[] {
+  const inCart = new Set(items.map((item) => item.product.id));
+  const suggestions: CartUpsell[] = [];
+  const addSuggestion = (productId: string, badge: string, reason: string) => {
+    if (inCart.has(productId) || suggestions.some((entry) => entry.product.id === productId)) {
+      return;
+    }
+    const product = PRODUCTS.find((entry) => entry.id === productId);
+    if (!product) return;
+    suggestions.push({ badge, product, reason });
+  };
+
+  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
+
+  if (itemCount === 2) {
+    const unlockBulk = PRODUCTS
+      .filter((product) => !inCart.has(product.id))
+      .sort((a, b) => a.price - b.price)[0];
+    if (unlockBulk) {
+      addSuggestion(
+        unlockBulk.id,
+        "Unlock BULK15",
+        "Add one more item and use BULK15 for 15% off this order.",
+      );
+    }
+  }
+
+  if (subtotal < US_FREE_SHIPPING_THRESHOLD) {
+    const remaining = US_FREE_SHIPPING_THRESHOLD - subtotal;
+    const freeShipPick = PRODUCTS
+      .filter((product) => !inCart.has(product.id))
+      .sort((a, b) => {
+        const aDelta = Math.abs(a.price - remaining);
+        const bDelta = Math.abs(b.price - remaining);
+        if (aDelta !== bDelta) return aDelta - bDelta;
+        return a.price - b.price;
+      })[0];
+    if (freeShipPick) {
+      addSuggestion(
+        freeShipPick.id,
+        "Free shipping",
+        freeShipPick.price >= remaining
+          ? "This pushes the cart over the free US shipping line."
+          : "This is the closest add-on to the free US shipping line.",
+      );
+    }
+  }
+
+  for (const item of items) {
+    for (const productId of COMPLEMENTARY_PRODUCT_IDS[item.product.id] ?? []) {
+      addSuggestion(
+        productId,
+        "Popular pair",
+        `Common companion to ${item.product.name.replace(/\s+\(.*\)$/u, "")}.`,
+      );
+      if (suggestions.length >= 2) return suggestions;
+    }
+  }
+
+  if (suggestions.length < 2) {
+    for (const product of PRODUCTS.filter((entry) => !inCart.has(entry.id) && entry.featured)) {
+      addSuggestion(product.id, "Featured", "High-intent add-on from the main catalog.");
+      if (suggestions.length >= 2) break;
+    }
+  }
+
+  return suggestions.slice(0, 2);
+}
+
 function validateCode(code: string): DiscountEntry | null {
   const upper = code.trim().toUpperCase();
   const entry = (DISCOUNT_CODES as Record<string, DiscountEntry>)[upper];
   return entry ?? null;
 }
 
+function readPassthroughValue(params: URLSearchParams, key: string) {
+  return (
+    params.get(key) ||
+    sessionStorage.getItem(`tpl_attr_${key}`) ||
+    (key === "ref" ? sessionStorage.getItem("tpl_ref") : null) ||
+    null
+  );
+}
+
 export function CartDrawer() {
-  const { items, removeItem, updateQuantity, clearCart, itemCount, subtotal, isOpen, setIsOpen } = useCart();
+  const { items, removeItem, updateQuantity, clearCart, itemCount, subtotal, isOpen, setIsOpen, addItem } = useCart();
   const [promoInput, setPromoInput] = useState("");
   const [appliedCode, setAppliedCode] = useState<{ code: string; discount: DiscountEntry } | null>(null);
   const [promoError, setPromoError] = useState("");
+  const [upsellAddedId, setUpsellAddedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const raw =
+        params.get("discount") ||
+        params.get("code") ||
+        sessionStorage.getItem("tpl_attr_discount") ||
+        sessionStorage.getItem("tpl_attr_code");
+      if (!raw) return;
+      const entry = validateCode(raw);
+      if (!entry) return;
+      setAppliedCode({ code: raw.trim().toUpperCase(), discount: entry });
+      setPromoError("");
+    } catch {
+      // Promo persistence is a convenience only.
+    }
+  }, []);
 
   const handleApplyPromo = () => {
     const entry = validateCode(promoInput);
     if (entry) {
-      setAppliedCode({ code: promoInput.trim().toUpperCase(), discount: entry });
+      const code = promoInput.trim().toUpperCase();
+      setAppliedCode({ code, discount: entry });
       setPromoError("");
       setPromoInput("");
+      try {
+        sessionStorage.setItem("tpl_attr_discount", code);
+      } catch {
+        // Promo persistence is a convenience only.
+      }
     } else {
       setPromoError("Invalid code. Please check your code and try again.");
     }
@@ -44,9 +165,15 @@ export function CartDrawer() {
   const handleApplyCode = (rawCode: string) => {
     const entry = validateCode(rawCode);
     if (entry) {
-      setAppliedCode({ code: rawCode.trim().toUpperCase(), discount: entry });
+      const code = rawCode.trim().toUpperCase();
+      setAppliedCode({ code, discount: entry });
       setPromoError("");
       setPromoInput("");
+      try {
+        sessionStorage.setItem("tpl_attr_discount", code);
+      } catch {
+        // Promo persistence is a convenience only.
+      }
     }
   };
 
@@ -54,20 +181,24 @@ export function CartDrawer() {
     ? (subtotal * appliedCode.discount.percent) / 100
     : 0;
   const discountedTotal = subtotal - discountAmount;
-
-  const router = useRouter();
+  const upsells = buildCartUpsells(items, discountedTotal);
 
   const handleCheckout = () => {
     const params = new URLSearchParams();
     try {
-      const ref = new URLSearchParams(window.location.search).get("ref") || sessionStorage.getItem("tpl_ref");
+      const current = new URLSearchParams(window.location.search);
+      const ref = readPassthroughValue(current, "ref");
+      const discount =
+        appliedCode?.code ||
+        readPassthroughValue(current, "discount") ||
+        readPassthroughValue(current, "code");
       if (ref) params.set("ref", ref);
+      if (discount) params.set("discount", discount.trim().toUpperCase());
     } catch {
       // If browser storage is unavailable, still route the buyer to checkout.
     }
-    if (appliedCode) params.set("discount", appliedCode.code);
     const query = params.toString();
-    const next = query ? `/checkout?${query}` : "/checkout";
+    const next = query ? `/checkout/?${query}` : "/checkout/";
     trackCheckoutStart({
       cartValueUsd: discountedTotal,
       cartLineCount: items.length,
@@ -76,7 +207,13 @@ export function CartDrawer() {
       source: "cart_drawer",
     });
     setIsOpen(false);
-    router.push(next);
+    window.location.assign(next);
+  };
+
+  const handleUpsellAdd = (product: Product) => {
+    addItem(product, 1);
+    setUpsellAddedId(product.id);
+    window.setTimeout(() => setUpsellAddedId((current) => (current === product.id ? null : current)), 1800);
   };
 
   if (!isOpen) return null;
@@ -88,7 +225,7 @@ export function CartDrawer() {
         onClick={() => setIsOpen(false)}
       />
 
-      <div className="fixed right-0 top-0 z-[71] flex h-full w-full max-w-md flex-col bg-white shadow-2xl">
+      <div className="fixed right-0 top-0 z-[71] flex h-[100dvh] max-h-[100dvh] w-full max-w-md flex-col overflow-hidden bg-white shadow-2xl">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-[#e5e5e5] px-6 py-4">
           <div className="flex items-center gap-2">
@@ -174,7 +311,7 @@ export function CartDrawer() {
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="border-t border-[#e5e5e5] px-6 py-4 space-y-3">
+          <div className="max-h-[calc(100dvh-7rem)] shrink-0 space-y-3 overflow-y-auto border-t border-[#e5e5e5] px-6 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
             {/* Promo code */}
             {appliedCode ? (
               <div className="flex items-center justify-between rounded-xl bg-[#f0f5f2] px-4 py-2.5">
@@ -246,6 +383,57 @@ export function CartDrawer() {
             )}
 
             <FreeShippingProgress subtotal={discountedTotal} />
+
+            {upsells.length > 0 && (
+              <div className="rounded-xl border border-[#e7ece9] bg-white p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8a9690]">
+                      Complete your cart
+                    </p>
+                    <p className="mt-1 text-[12px] leading-5 text-[#44514b]">
+                      Easy adds that raise order value or unlock the next savings step.
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-3 space-y-3">
+                  {upsells.map(({ badge, product, reason }) => (
+                    <div
+                      key={product.id}
+                      className="rounded-xl border border-[#edf1ee] bg-[#fafbfa] p-3"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="inline-flex rounded-full border border-[#dce6df] bg-[#f3f9f6] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#1e6f58]">
+                            {badge}
+                          </p>
+                          <p className="mt-2 text-[13px] font-semibold text-[#0f1613]">
+                            {product.name}
+                          </p>
+                          <p className="mt-0.5 text-[11px] text-[#8a9690]">
+                            {product.size} · ${product.price.toFixed(2)}
+                          </p>
+                          <p className="mt-1.5 text-[12px] leading-5 text-[#44514b]">
+                            {reason}
+                          </p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => handleUpsellAdd(product)}
+                          className={`shrink-0 rounded-full px-3 py-2 text-[11px] font-semibold transition-colors ${
+                            upsellAddedId === product.id
+                              ? "bg-[#175946] text-white"
+                              : "bg-[#1e6f58] text-white hover:bg-[#175946]"
+                          }`}
+                        >
+                          {upsellAddedId === product.id ? "Added" : "Add"}
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="rounded-xl border border-[#e7ece9] bg-[#fafbfa] p-4">
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8a9690]">

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { appendOrder, type OrderItem, type OrderLedgerEntry } from "@/lib/order-ledger";
+import { WALLETS } from "@/lib/products";
 
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const GMAIL_USER = process.env.GMAIL_SENDER;
@@ -9,6 +10,39 @@ const ORDER_NOTIFY_EMAIL = process.env.ORDER_NOTIFY_EMAIL || "support@titanpepti
 const FROM_EMAIL = process.env.FROM_EMAIL || "Titan Peptide Lab <support@titanpeptidelab.com>";
 
 type OrderPayload = OrderLedgerEntry;
+
+function fallbackWalletLinesHtml() {
+  return [
+    ["BTC", WALLETS.btc],
+    ["ETH / USDC ERC-20", WALLETS.eth],
+    ["SOL / USDC Solana", WALLETS.sol],
+  ]
+    .map(
+      ([label, address]) =>
+        `<p style="margin:0 0 4px;"><strong>${label}:</strong> <span style="font-family:monospace;font-size:11px;word-break:break-all;">${address}</span></p>`,
+    )
+    .join("");
+}
+
+function selectedWalletHtml(order: OrderPayload) {
+  if (!order.paymentCoin || !order.paymentAddress) {
+    return `
+        <p style="margin:0 0 8px;">Send <strong>$${order.total} USD</strong> in crypto to one of these wallets:</p>
+        ${fallbackWalletLinesHtml()}
+    `;
+  }
+
+  return `
+        <p style="margin:0 0 8px;">Selected payment rail:</p>
+        <p style="margin:0 0 4px;"><strong>${order.paymentCoin}</strong></p>
+        ${
+          order.cryptoAmount
+            ? `<p style="margin:0 0 4px;">Send: <strong>${order.cryptoAmount}</strong></p>`
+            : `<p style="margin:0 0 4px;">Send: <strong>$${order.total} USD</strong></p>`
+        }
+        <p style="margin:0 0 12px;">To address: <span style="font-family:monospace;font-size:11px;word-break:break-all;">${order.paymentAddress}</span></p>
+    `;
+}
 
 function customerConfirmationHtml(order: OrderPayload): string {
   const itemRows = order.items
@@ -61,10 +95,7 @@ function customerConfirmationHtml(order: OrderPayload): string {
     <div style="background:#ffffff;border-radius:16px;border:1px solid #e8e8e8;padding:24px;margin-bottom:24px;">
       <h3 style="font-size:14px;color:#0f1613;margin:0 0 12px;">Pay with crypto</h3>
       <div style="font-size:13px;color:#555;line-height:1.7;">
-        <p style="margin:0 0 8px;">Send <strong>$${order.total} USD</strong> in crypto to one of these wallets:</p>
-        <p style="margin:0 0 4px;"><strong>BTC:</strong> <span style="font-family:monospace;font-size:11px;word-break:break-all;">bc1qkshtp26f3qjkcgfdr2275wed2e8wkw25tr7vsd</span></p>
-        <p style="margin:0 0 4px;"><strong>ETH/USDC:</strong> <span style="font-family:monospace;font-size:11px;word-break:break-all;">0x24c5Fe40f83ae20De82ae3637b66DE8B0e5Cd362</span></p>
-        <p style="margin:0 0 12px;"><strong>SOL/USDC:</strong> <span style="font-family:monospace;font-size:11px;word-break:break-all;">7eLiph9vAA6DPeaHJASCstjbM6eVg9PyQAoYcBk3Bg3o</span></p>
+        ${selectedWalletHtml(order)}
         <p style="margin:0;">Reply to this email with your <strong>transaction hash</strong> once sent. We'll verify and ship within 24 hours.</p>
       </div>
     </div>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
+import { ContentBuyerCta } from "@/components/site/content-buyer-cta";
 
 export const metadata: Metadata = {
   title: "Research — Titan Peptide Laboratory",
@@ -264,6 +265,19 @@ export default function ResearchHubPage() {
               );
             })}
           </ol>
+
+          <div className="mt-14 border-t border-[#d9dfd5] pt-14">
+            <ContentBuyerCta
+              eyebrow="Next step"
+              title="Ready to move from papers to product pages?"
+              body="The buyer path trims the catalog down to the fastest first-order options, keeps FIRST10 attached, and still puts the COA workflow in front of the cart."
+              primaryHref="/start/?ref=content&discount=FIRST10&utm_source=onsite&utm_medium=research_index&utm_content=footer"
+              primaryLabel="Open buyer path"
+              secondaryHref="/lab-testing?utm_source=onsite&utm_medium=research_index&utm_content=footer"
+              secondaryLabel="Review lot proof"
+              note="This is the shortest path from long-form research content into a documented first order."
+            />
+          </div>
         </section>
 
         {/* Editorial footer strip */}

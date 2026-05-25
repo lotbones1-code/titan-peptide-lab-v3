@@ -16,14 +16,16 @@ export function ContactForm() {
     setStatus("sending");
 
     try {
-      const res = await fetch("https://formsubmit.co/ajax/support@titanpeptidelab.com", {
+      const res = await fetch("https://formsubmit.co/ajax/4ec82415df18ef2a8a1519b6919ace7c", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           _subject: `[Titan Contact] ${topic || "General"}: ${subject || "No subject"} — ${name}`,
           _captcha: "false",
           _template: "table",
+          _replyto: email,
           _autoresponse: `Thanks for reaching out — we got your message and we'll reply within 24–48 hours from the QA bench, usually same day.\n\nIf it's urgent, reply to this email with your order ID or lot number and we'll prioritize.\n\n— The Titan Peptide Lab team`,
+          email,
           Name: name,
           Email: email,
           Topic: topic || "General",

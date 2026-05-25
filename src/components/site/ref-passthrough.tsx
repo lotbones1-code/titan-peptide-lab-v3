@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-const ATTRIBUTION_KEYS = [
+const PASSTHROUGH_KEYS = [
   "ref",
   "oc_touch_id",
   "utm_source",
@@ -10,15 +10,17 @@ const ATTRIBUTION_KEYS = [
   "utm_campaign",
   "utm_content",
   "utm_term",
+  "discount",
+  "code",
 ] as const;
 const ATTRIBUTION_STORAGE_PREFIX = "tpl_attr_";
 const STATIC_ASSET_PATTERN = /\.(pdf|png|jpe?g|svg|webp|gif|ico|css|js|json|xml|txt)$/i;
 
-function currentAttributionParams() {
+function currentPassthroughParams() {
   const url = new URL(window.location.href);
   const params: Record<string, string> = {};
 
-  for (const key of ATTRIBUTION_KEYS) {
+  for (const key of PASSTHROUGH_KEYS) {
     const fromUrl = url.searchParams.get(key);
     if (fromUrl) {
       params[key] = fromUrl;
@@ -40,6 +42,28 @@ function currentAttributionParams() {
   }
 
   return params;
+}
+
+function maybeRedirectInstagramLanding(params: Record<string, string>) {
+  const url = new URL(window.location.href);
+  const isHomepage = url.pathname === "/" || url.pathname === "/index.html";
+  const utmSource = params.utm_source?.toLowerCase();
+  const utmContent = params.utm_content?.toLowerCase();
+
+  if (!isHomepage) return false;
+  if (utmSource !== "ig" && utmSource !== "instagram") return false;
+  if (utmContent !== "link_in_bio" && !document.referrer.includes("instagram.com")) return false;
+
+  const target = new URL("/start/", window.location.origin);
+  url.searchParams.forEach((value, key) => {
+    target.searchParams.set(key, value);
+  });
+  if (!target.searchParams.has("ref")) target.searchParams.set("ref", "ig");
+  if (!target.searchParams.has("discount") && !target.searchParams.has("code")) {
+    target.searchParams.set("discount", "FIRST10");
+  }
+  window.location.replace(target.toString());
+  return true;
 }
 
 function shouldRewrite(anchor: HTMLAnchorElement, params: Record<string, string>) {
@@ -72,8 +96,9 @@ function rewriteAnchor(anchor: HTMLAnchorElement, params: Record<string, string>
 
 export function RefPassthrough() {
   useEffect(() => {
-    const params = currentAttributionParams();
+    const params = currentPassthroughParams();
     if (Object.keys(params).length === 0) return;
+    if (maybeRedirectInstagramLanding(params)) return;
 
     const rewriteAll = () => {
       document

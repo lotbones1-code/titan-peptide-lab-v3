@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { ContentBuyerCta } from "@/components/site/content-buyer-cta";
 
 export interface TocItem {
   id: string;
@@ -86,6 +87,19 @@ export function ArticleLayout({
                 ))}
               </ol>
             </nav>
+            <div className="mt-8">
+              <ContentBuyerCta
+                compact
+                eyebrow="Buyer next step"
+                title="From literature to lot."
+                body="If the paper trail checks out, use the short buyer path with FIRST10 attached or inspect the COA workflow before cart."
+                primaryHref="/start/?ref=content&discount=FIRST10&utm_source=onsite&utm_medium=research&utm_content=sidebar"
+                primaryLabel="Open buyer path"
+                secondaryHref="/lab-testing?utm_source=onsite&utm_medium=research&utm_content=sidebar"
+                secondaryLabel="Inspect COA flow"
+                note="For qualified researchers only. This keeps the first-order code attached without asking the reader to remember it."
+              />
+            </div>
           </aside>
 
           {/* Prose */}

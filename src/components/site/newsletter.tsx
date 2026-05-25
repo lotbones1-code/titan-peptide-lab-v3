@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Reveal } from "./reveal";
 import { Check, Loader2 } from "lucide-react";
 
+const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/4ec82415df18ef2a8a1519b6919ace7c";
+
 export function Newsletter() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
@@ -16,7 +18,7 @@ export function Newsletter() {
     setStatus("sending");
 
     try {
-      const res = await fetch("https://formsubmit.co/ajax/support@titanpeptidelab.com", {
+      const res = await fetch(FORMSUBMIT_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
@@ -24,6 +26,7 @@ export function Newsletter() {
           _captcha: "false",
           _template: "table",
           _autoresponse: `Welcome to the Titan Peptide Lab list.\n\nYou'll get restock and batch release emails. No spam, no upsells.\n\nYour first-order code: FIRST10 — 10% off anything in the catalog.\nShop: https://titanpeptidelab.com/products\n\n— Titan Peptide Lab`,
+          email: email.trim(),
           Email: email.trim(),
           Source: "homepage-newsletter",
         }),
@@ -52,9 +55,20 @@ export function Newsletter() {
               We email when core sprays come back in stock or new batches release. No spam, no upsells.
             </p>
             {status === "sent" ? (
-              <div className="mx-auto mt-6 inline-flex items-center gap-2 rounded-full bg-[#1a5c48] px-5 py-2.5 text-[13px] font-semibold text-white">
-                <Check className="h-4 w-4" />
-                Subscribed — check your inbox for FIRST10.
+              <div className="mx-auto mt-6 max-w-sm rounded-2xl bg-[#1a5c48] px-6 py-5 text-white">
+                <div className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-white/80">
+                  <Check className="h-3.5 w-3.5" />
+                  Saved
+                </div>
+                <p className="mt-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">
+                  Use at checkout
+                </p>
+                <p className="mt-2 font-serif text-[2rem] leading-none tracking-[0.12em] text-white">
+                  FIRST10
+                </p>
+                <p className="mt-3 text-[12px] leading-6 text-white/75">
+                  You&apos;re on the list for restocks and batch drops. Use the code now for 10% off your first order.
+                </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="mx-auto mt-6 flex max-w-md flex-col gap-3 sm:flex-row">
