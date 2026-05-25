@@ -7,6 +7,7 @@ import {
   type AttributionContext,
 } from "@/lib/analytics";
 import { WALLETS, DISCOUNT_CODES } from "@/lib/products";
+import { getLot } from "@/lib/lots";
 import { COUNTRIES, zoneForCountry } from "@/lib/countries";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
@@ -64,6 +65,8 @@ type PaymentMethod = "crypto";
 
 type Coin = "BTC" | "ETH" | "USDC-ERC" | "SOL" | "USDC-SOL";
 
+type OrderIntakeState = "idle" | "pending" | "sent" | "manual";
+
 type WalletOption = {
   coin: Coin;
   label: string;
@@ -108,7 +111,7 @@ const ORDER_INBOX = "support@titanpeptidelab.com";
 // Static-host fallback: Formsubmit forwards form payloads to the order inbox
 // without any server. Zero signup; first inbound triggers a one-click activation
 // email. Keeps the customer on-site instead of bouncing to mailto.
-const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/support@titanpeptidelab.com";
+const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/4ec82415df18ef2a8a1519b6919ace7c";
 
 function makeOrderId() {
   const ts = Date.now().toString(36);
@@ -121,6 +124,7 @@ type PriceMap = Partial<Record<WalletOption["priceKey"], number>>;
 export default function CheckoutPage() {
   const { items, subtotal, clearCart, hydrated } = useCart();
   const [submitting, setSubmitting] = useState(false);
+  const [orderIntakeState, setOrderIntakeState] = useState<OrderIntakeState>("idle");
   const [done, setDone] = useState<null | {
     orderId: string;
     coin: Coin;
@@ -135,6 +139,7 @@ export default function CheckoutPage() {
   const [copied, setCopied] = useState<"address" | "amount" | "receipt" | null>(null);
   const [prices, setPrices] = useState<PriceMap>({});
   const [qrDataUrl, setQrDataUrl] = useState<string>("");
+  const [previewQrDataUrl, setPreviewQrDataUrl] = useState<string>("");
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
   const [cryptoHelpOpen, setCryptoHelpOpen] = useState(true);
 
@@ -355,6 +360,44 @@ export default function CheckoutPage() {
     return amt.toFixed(4);
   }, [prices, wallet.priceKey, total]);
 
+  useEffect(() => {
+    const uri = buildPaymentUri(selectedCoin, wallet.address, cryptoAmount);
+    if (!uri) {
+      setPreviewQrDataUrl("");
+      return;
+    }
+    let cancelled = false;
+    QRCode.toDataURL(uri, {
+      errorCorrectionLevel: "M",
+      margin: 2,
+      scale: 5,
+      color: { dark: "#0f1613", light: "#ffffff" },
+    })
+      .then((url) => {
+        if (!cancelled) setPreviewQrDataUrl(url);
+      })
+      .catch(() => {
+        if (!cancelled) setPreviewQrDataUrl("");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedCoin, wallet.address, cryptoAmount]);
+
+  const checkoutLotLines = useMemo(
+    () =>
+      items.map((item) => ({
+        id: item.product.id,
+        name: item.product.name.replace(/\s*\(Injectable Vial\)/i, ""),
+        lot: getLot(item.product.id),
+      })),
+    [items],
+  );
+
+  const checkoutLotSummary = checkoutLotLines
+    .map((entry) => `${entry.name}: ${entry.lot}`)
+    .join("; ");
+
   const completeOrder = (orderId: string, attribution: AttributionContext = {}) => {
     const fullAddress = [street, apt, city, region, postal, country].filter(Boolean).join(", ");
     const receiptLines = [
@@ -367,6 +410,7 @@ export default function CheckoutPage() {
       ``,
       `Items:`,
       ...items.map((i) => `  - ${i.product.name} (${i.product.size}) × ${i.quantity}  $${(i.product.price * i.quantity).toFixed(2)}`),
+      ...(checkoutLotSummary ? [`Documentation lot check: ${checkoutLotSummary}`] : []),
       ``,
       `Subtotal: $${subtotal.toFixed(2)}`,
       ...(appliedDiscount ? [`Discount: ${appliedDiscount.code} (-${appliedDiscount.percent}%)  -$${discountAmount.toFixed(2)}`] : []),
@@ -478,12 +522,15 @@ export default function CheckoutPage() {
       _subject: `New order: ${orderId} - $${total.toFixed(2)} via ${wallet.label}`,
       _captcha: "false",
       _template: "table",
+      _replyto: email,
       orderId,
+      email,
       customerName: name,
       customerEmail: email,
       country,
       shippingAddress: fullAddress,
       items: itemLines,
+      documentationLotCheck: checkoutLotSummary,
       subtotal: `$${subtotal.toFixed(2)}`,
       discount: appliedDiscount ? `${appliedDiscount.code} (-${appliedDiscount.percent}%) -$${discountAmount.toFixed(2)}` : "none",
       shipping: shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`,
@@ -506,24 +553,19 @@ export default function CheckoutPage() {
     // path forward (copy receipt / email support) even if every backend rail
     // is down. The intake POSTs below are best-effort, fire-and-forget.
     const mailtoHref = completeOrder(orderId, attribution);
+    setOrderIntakeState("pending");
     setSubmitting(false);
 
-    // Static checkout cannot rely on /api/order being available on GitHub
-    // Pages. Open the prefilled order email immediately so the support-side
-    // order record is not silently lost before the buyer sends crypto.
-    window.setTimeout(() => {
-      window.location.href = mailtoHref;
-    }, 100);
-
     // Fire-and-forget intake: try Node /api/order (in case a backend is wired
-    // later), then Formsubmit. Both may 405/521 on the current static deploy
-    // — that's fine, the buyer already has the receipt panel with copy +
-    // email-support actions.
+    // later), then FormSubmit. If neither confirms, the buyer still has the
+    // backup email and full receipt on-screen.
     const fireForget = async () => {
+      let delivered = false;
       const apiPayload = {
         items: items.map((i) => ({
           productId: i.product.id,
           name: i.product.name,
+          lot: getLot(i.product.id),
           quantity: i.quantity,
           price: i.product.price,
         })),
@@ -555,25 +597,31 @@ export default function CheckoutPage() {
       try {
         const ctrl = new AbortController();
         const tid = setTimeout(() => ctrl.abort(), 1500);
-        await fetch(ORDER_ENDPOINT, {
+        const response = await fetch(ORDER_ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/json", Accept: "application/json" },
           body: JSON.stringify(apiPayload),
           signal: ctrl.signal,
         });
         clearTimeout(tid);
+        if (response.ok) delivered = true;
       } catch { /* ignore */ }
       try {
         const fctrl = new AbortController();
         const ftid = setTimeout(() => fctrl.abort(), 4000);
-        await fetch(FORMSUBMIT_ENDPOINT, {
+        const response = await fetch(FORMSUBMIT_ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/json", Accept: "application/json" },
           body: JSON.stringify(formPayload),
           signal: fctrl.signal,
         });
         clearTimeout(ftid);
+        const data = await response.json().catch(() => null);
+        if (response.ok && (data?.success === true || data?.success === "true")) {
+          delivered = true;
+        }
       } catch { /* ignore */ }
+      setOrderIntakeState(delivered ? "sent" : "manual");
     };
     void fireForget();
   };
@@ -594,16 +642,38 @@ export default function CheckoutPage() {
               Your order ID:{" "}
               <span className="font-mono text-[#1e6f58]">{done.orderId}</span>
             </p>
-            <p className="mt-2 text-[13px] text-[#8a9690]">
-              Save this order ID and send the prefilled email before paying — that is what lets us match your on-chain transfer.
-            </p>
+            <div className={`mx-auto mt-4 max-w-sm rounded-2xl border px-4 py-3 text-left text-[12px] leading-5 ${
+              orderIntakeState === "sent"
+                ? "border-[#cde2d9] bg-[#f3f9f6] text-[#1e6f58]"
+                : orderIntakeState === "manual"
+                  ? "border-[#f0d6a1] bg-[#fff8e8] text-[#6d4b14]"
+                  : "border-[#e7ece9] bg-[#fafbfa] text-[#5c6762]"
+            }`}>
+              <p className="font-semibold">
+                {orderIntakeState === "sent"
+                  ? "Order details sent to Titan automatically."
+                  : orderIntakeState === "manual"
+                    ? "Auto-send did not confirm."
+                    : "Sending order details to Titan now..."}
+              </p>
+              <p className="mt-1">
+                {orderIntakeState === "sent"
+                  ? "You can pay the exact amount below now. The email button remains here as a backup copy."
+                  : orderIntakeState === "manual"
+                    ? "Use the backup email button below before sending crypto so support can match your transfer."
+                    : "This usually clears in a few seconds. If it does not, use the backup email button below before paying."}
+              </p>
+            </div>
             <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#d9e7e0] bg-[#f3f9f6] p-5 text-left">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">Payment reference</p>
               <p className="mt-2 font-serif text-[1.5rem] leading-none text-[#0f1613]">
                 {done.cryptoAmount ? `${done.cryptoAmount} ${done.coin.replace("-ERC", "").replace("-SOL", "")}` : `$${done.total.toFixed(2)} USD`}
               </p>
               <p className="mt-2 text-[12px] text-[#44514b]">
-                Send on <span className="font-medium text-[#0f1613]">{done.paymentLabel} · {done.paymentNetwork}</span> only after your order email is sent.
+                Send on <span className="font-medium text-[#0f1613]">{done.paymentLabel} · {done.paymentNetwork}</span>{" "}
+                {orderIntakeState === "sent"
+                  ? "once you are ready to pay."
+                  : "only after your order details are on file."}
               </p>
               {qrDataUrl ? (
                 <div className="mt-4 flex flex-col items-center gap-3">
@@ -665,24 +735,26 @@ export default function CheckoutPage() {
             <div className="mx-auto mt-8 max-w-sm rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-5 text-left text-[13px] leading-relaxed text-[#44514b]">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">What happens next</p>
               <ol className="mt-3 space-y-2.5">
-                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">1.</span><span>Send the prefilled order email to support.</span></li>
-                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">2.</span><span>Send the exact crypto amount above on the selected network.</span></li>
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">1.</span><span>{orderIntakeState === "sent" ? "Send the exact crypto amount above on the selected network." : "Use the backup email button below if the order was not auto-sent yet."}</span></li>
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">2.</span><span>{orderIntakeState === "sent" ? "Keep this order ID plus your transaction hash until the payment is confirmed." : "Then send the exact crypto amount above on the selected network."}</span></li>
                 <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">3.</span><span>We verify on-chain — usually under 30 minutes — then cold-chain dispatch within 24h.</span></li>
               </ol>
             </div>
             <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#e7ece9] bg-white p-5 text-left">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
-                Send us your order details
+                {orderIntakeState === "sent" ? "Backup copy for support" : "Send us your order details"}
               </p>
               <p className="mt-2 text-[12px] leading-5 text-[#44514b]">
-                We try to open your email app automatically. If it did not open, tap the button below or copy the receipt — send this before sending crypto.
+                {orderIntakeState === "sent"
+                  ? "Your order details already reached Titan automatically. Use this only if you want a backup copy in your own mail app or need to resend the receipt manually."
+                  : "If auto-send does not confirm, tap the button below or copy the receipt and send it before sending crypto."}
               </p>
               <div className="mt-3 grid gap-2">
                 <a
                   href={done.mailtoHref}
                   className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[#1e6f58] px-4 text-[13px] font-medium text-white transition-colors hover:bg-[#175946]"
                 >
-                  Email order to support first
+                  {orderIntakeState === "sent" ? "Email backup copy" : "Email order to support"}
                 </a>
                 <button
                   type="button"
@@ -1020,7 +1092,7 @@ export default function CheckoutPage() {
                             </div>
                             <div className="rounded-xl border border-[#d9e7e0] bg-white px-3 py-2.5">
                               <p className="text-[10px] uppercase tracking-[0.12em] text-[#8a9690]">Safety gate</p>
-                              <p className="mt-1 font-medium text-[#0f1613]">Email before payment</p>
+                              <p className="mt-1 font-medium text-[#0f1613]">Order ID before payment</p>
                             </div>
                           </div>
                           {cryptoAmount ? (
@@ -1028,12 +1100,78 @@ export default function CheckoutPage() {
                               Live {wallet.label} rate · Confirm your wallet has at least this amount on {wallet.network} before submitting. Final amount locks on the next screen.
                             </p>
                           ) : null}
+                          <div className="mt-4 grid gap-4 rounded-xl border border-[#d9e7e0] bg-white p-4 sm:grid-cols-[132px_1fr]">
+                            <div className="flex flex-col items-center gap-2">
+                              {previewQrDataUrl ? (
+                                <>
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                  <img
+                                    src={previewQrDataUrl}
+                                    alt={`QR code preview for ${wallet.label} on ${wallet.network}`}
+                                    width={132}
+                                    height={132}
+                                    className="h-[132px] w-[132px] rounded-lg border border-[#d9e7e0] bg-white p-1.5"
+                                  />
+                                  <a
+                                    href={buildPaymentUri(selectedCoin, wallet.address, cryptoAmount)}
+                                    className="inline-flex h-8 items-center justify-center gap-1.5 rounded-lg border border-[#1e6f58] bg-white px-3 text-[11px] font-medium text-[#1e6f58] transition-colors hover:bg-[#f3f9f6] sm:hidden"
+                                  >
+                                    <Wallet className="h-3.5 w-3.5" />
+                                    Open wallet
+                                  </a>
+                                </>
+                              ) : (
+                                <div className="flex h-[132px] w-[132px] items-center justify-center rounded-lg border border-[#d9e7e0] bg-[#fafbfa] text-center text-[11px] leading-4 text-[#8a9690]">
+                                  QR loading
+                                </div>
+                              )}
+                            </div>
+                            <div className="min-w-0">
+                              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
+                                Wallet address visible before checkout
+                              </p>
+                              <p className="mt-1 text-[12px] leading-5 text-[#44514b]">
+                                Use this to confirm the network and destination. Submit the form first so the payment is tied to an order ID before sending.
+                              </p>
+                              <p className="mt-3 break-all rounded-lg border border-[#d9e7e0] bg-[#fafbfa] px-3 py-2.5 font-mono text-[11px] leading-5 text-[#44514b]">
+                                {wallet.address}
+                              </p>
+                              <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                                {cryptoAmount && (
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      navigator.clipboard.writeText(cryptoAmount);
+                                      setCopied("amount");
+                                      setTimeout(() => setCopied(null), 1800);
+                                    }}
+                                    className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-[#1e6f58] bg-white px-3 text-[12px] font-medium text-[#1e6f58] transition-colors hover:bg-[#f3f9f6]"
+                                  >
+                                    {copied === "amount" ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                                    {copied === "amount" ? "Amount copied" : "Copy amount"}
+                                  </button>
+                                )}
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(wallet.address);
+                                    setCopied("address");
+                                    setTimeout(() => setCopied(null), 1800);
+                                  }}
+                                  className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-[#1e6f58] bg-white px-3 text-[12px] font-medium text-[#1e6f58] transition-colors hover:bg-[#f3f9f6]"
+                                >
+                                  {copied === "address" ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                                  {copied === "address" ? "Address copied" : "Copy address"}
+                                </button>
+                              </div>
+                            </div>
+                          </div>
                           <div className="mt-3 rounded-xl border border-[#d9e7e0] bg-white px-4 py-3 text-[12px] leading-5 text-[#44514b]">
                             <p className="font-semibold text-[#0f1613]">Network check before paying</p>
                             <p className="mt-1">{networkReassurance(wallet)}</p>
                           </div>
                           <p className="mt-4 rounded-xl border border-[#f0d6a1] bg-[#fff8e8] px-4 py-3 text-[12px] leading-5 text-[#6d4b14]">
-                            Do not send crypto from this preview. Submit the form first so your order email and on-chain payment can be matched.
+                            Do not send crypto from this preview. Submit the form first so your order ID, wallet instructions, and support record are created before payment.
                           </p>
                         </div>
                       </div>
@@ -1105,6 +1243,57 @@ export default function CheckoutPage() {
                 )}
               </section>
 
+              <section className="rounded-2xl border border-[#d9e7e0] bg-[#f7fbf9] p-5 sm:p-6">
+                <h2 className="flex items-center gap-2 text-[16px] font-semibold text-[#0f1613]">
+                  <FileText className="h-4 w-4 text-[#1e6f58]" />
+                  Documentation before payment
+                </h2>
+                <p className="mt-2 text-[13px] leading-6 text-[#44514b]">
+                  Check the lot trail before you send crypto. Your order record keeps these lot codes with the payment instructions.
+                </p>
+                <div className="mt-4 rounded-xl border border-[#d9e7e0] bg-white p-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
+                    Current cart lots
+                  </p>
+                  <ul className="mt-2 space-y-1.5 text-[12px] leading-5 text-[#44514b]">
+                    {checkoutLotLines.map((entry) => (
+                      <li key={entry.id} className="flex items-start gap-2">
+                        <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#1e6f58]" />
+                        <span>
+                          <span className="font-medium text-[#0f1613]">{entry.name}</span>
+                          {" "}ships under lot {entry.lot}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="mt-4 grid gap-2 text-[12px] leading-5 text-[#44514b] sm:grid-cols-3">
+                  <div className="rounded-xl border border-[#d9e7e0] bg-white px-3 py-3">
+                    Lot release sheet in every order.
+                  </div>
+                  <div className="rounded-xl border border-[#d9e7e0] bg-white px-3 py-3">
+                    Independent retest follows by email.
+                  </div>
+                  <div className="rounded-xl border border-[#d9e7e0] bg-white px-3 py-3">
+                    COA/SDS questions can be sent before payment.
+                  </div>
+                </div>
+                <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+                  <Link
+                    href="/lab-testing"
+                    className="inline-flex h-10 items-center justify-center rounded-lg border border-[#1e6f58] bg-white px-4 text-[12px] font-medium text-[#1e6f58] transition-colors hover:bg-[#f3f9f6]"
+                  >
+                    Review lab workflow
+                  </Link>
+                  <a
+                    href={`mailto:${ORDER_INBOX}?subject=${encodeURIComponent("Titan documentation question before payment")}&body=${encodeURIComponent(`Cart lots: ${checkoutLotSummary}\n\nQuestion about COA/SDS/handling context:`)}`}
+                    className="inline-flex h-10 items-center justify-center rounded-lg bg-[#0f1613] px-4 text-[12px] font-medium text-white transition-colors hover:bg-[#1a5c48]"
+                  >
+                    Ask before paying
+                  </a>
+                </div>
+              </section>
+
               {/* Trust row */}
               <div className="grid gap-3 text-[12px] text-[#44514b] sm:grid-cols-3">
                 <TrustRow icon={FileText} text="Lot release sheet with every order" />
@@ -1135,7 +1324,7 @@ export default function CheckoutPage() {
                 ) : (
                   <>
                     <Lock className="h-4 w-4" />
-                    Create order ID · ${total.toFixed(2)}
+                    Get wallet + order ID · ${total.toFixed(2)}
                   </>
                 )}
               </button>
@@ -1179,7 +1368,7 @@ export default function CheckoutPage() {
                 ) : (
                   <>
                     <Lock className="h-4 w-4" />
-                    Create order ID · ${total.toFixed(2)}
+                    Get wallet + order ID · ${total.toFixed(2)}
                   </>
                 )}
               </button>
