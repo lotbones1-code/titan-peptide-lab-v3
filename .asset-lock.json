@@ -53,6 +53,24 @@
       "sha256": "3927c02f3284a1fce2159faac5dcea10fda3c9bb20ec3dd4541e734b11939561",
       "size": 47893,
       "note": "brand mark / apple-touch-icon source"
+    },
+    {
+      "path": "public/titan-banner-3.png",
+      "sha256": "a888fedb4039733f4eac4512135250ad33c54f4b4fb06956240b9e2f7c5f57ae",
+      "size": 845144,
+      "note": "active og:image — premium typographic forest-green card (Every batch, matched to its own COA); replaces vibe-coded titan-banner-2; -3 filename busts social cache"
+    },
+    {
+      "path": "public/titan-banner-twitter-3.png",
+      "sha256": "a36c96f60cb71d1010543ee869a01309c321f5b52d1446f017efa5b8a3b9dd93",
+      "size": 845135,
+      "note": "active twitter card — premium typographic card paired with titan-banner-3"
+    },
+    {
+      "path": "public/titan-banner-square-3.png",
+      "sha256": "26a3eb40471c5c79e7acb8f20afce44a14e07fdb36688d66610171a8f75c3a98",
+      "size": 1541132,
+      "note": "square social variant paired with titan-banner-3 (manual-share parity with -2)"
     }
   ],
   "rules": [
