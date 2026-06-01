@@ -375,12 +375,10 @@ export default function CheckoutPage() {
     const mailtoHref = completeOrder(orderId, attribution);
     setSubmitting(false);
 
-    // Static checkout cannot rely on /api/order being available on GitHub
-    // Pages. Open the prefilled order email immediately so the support-side
-    // order record is not silently lost before the buyer sends crypto.
-    window.setTimeout(() => {
-      window.location.href = mailtoHref;
-    }, 100);
+    // Order details are captured automatically by the Formsubmit POST below,
+    // so we no longer hijack the buyer's mail app at the payment moment. The
+    // prefilled email stays available as an optional backup button on the
+    // confirmation panel (done.mailtoHref).
 
     // Fire-and-forget intake: try Node /api/order (in case a backend is wired
     // later), then Formsubmit. Both may 405/521 on the current static deploy
@@ -455,14 +453,14 @@ export default function CheckoutPage() {
               <Check className="h-7 w-7 text-white" />
             </div>
             <h1 className="mt-6 font-serif text-[2rem] leading-[1.1] tracking-[-0.02em] text-[#0f1613]">
-              Order details ready.
+              Order created.
             </h1>
             <p className="mt-3 text-[14px] text-[#44514b]">
               Your order ID:{" "}
               <span className="font-mono text-[#1e6f58]">{done.orderId}</span>
             </p>
             <p className="mt-2 text-[13px] text-[#8a9690]">
-              Save this order ID and send the prefilled email before paying — that is what lets us match your on-chain transfer.
+              Your order details were sent to Titan automatically. Save this order ID, send the exact amount below, and we&apos;ll match your transfer on-chain.
             </p>
             <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#d9e7e0] bg-[#f3f9f6] p-5 text-left">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">Payment reference</p>
@@ -470,7 +468,7 @@ export default function CheckoutPage() {
                 {done.cryptoAmount ? `${done.cryptoAmount} ${done.coin.replace("-ERC", "").replace("-SOL", "")}` : `$${done.total.toFixed(2)} USD`}
               </p>
               <p className="mt-2 text-[12px] text-[#44514b]">
-                Send on <span className="font-medium text-[#0f1613]">{done.paymentLabel} · {done.paymentNetwork}</span> only after your order email is sent.
+                Send on <span className="font-medium text-[#0f1613]">{done.paymentLabel} · {done.paymentNetwork}</span> only — using any other network can delay your order.
               </p>
               {qrDataUrl ? (
                 <div className="mt-4 flex flex-col items-center gap-3">
@@ -532,24 +530,24 @@ export default function CheckoutPage() {
             <div className="mx-auto mt-8 max-w-sm rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-5 text-left text-[13px] leading-relaxed text-[#44514b]">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">What happens next</p>
               <ol className="mt-3 space-y-2.5">
-                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">1.</span><span>Send the prefilled order email to support.</span></li>
-                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">2.</span><span>Send the exact crypto amount above on the selected network.</span></li>
-                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">3.</span><span>We verify on-chain — usually under 30 minutes — then cold-chain dispatch within 24h.</span></li>
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">1.</span><span>Send the exact crypto amount above on the selected network.</span></li>
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">2.</span><span>We verify your payment on-chain — usually under 30 minutes.</span></li>
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">3.</span><span>Your order ships cold-chain within 24h of confirmation, with tracking by email.</span></li>
               </ol>
             </div>
             <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#e7ece9] bg-white p-5 text-left">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
-                Send us your order details
+                Want a backup copy on record?
               </p>
               <p className="mt-2 text-[12px] leading-5 text-[#44514b]">
-                We try to open your email app automatically. If it did not open, tap the button below or copy the receipt — send this before sending crypto.
+                Your order details already went to Titan automatically. This step is optional — email a backup copy to support or save the receipt for your own records.
               </p>
               <div className="mt-3 grid gap-2">
                 <a
                   href={done.mailtoHref}
                   className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[#1e6f58] px-4 text-[13px] font-medium text-white transition-colors hover:bg-[#175946]"
                 >
-                  Email order to support first
+                  Email a backup copy to support
                 </a>
                 <button
                   type="button"
@@ -872,8 +870,8 @@ export default function CheckoutPage() {
                               </p>
                             </div>
                             <div className="rounded-xl border border-[#d9e7e0] bg-white px-3 py-2.5">
-                              <p className="text-[10px] uppercase tracking-[0.12em] text-[#8a9690]">Safety gate</p>
-                              <p className="mt-1 font-medium text-[#0f1613]">Email before payment</p>
+                              <p className="text-[10px] uppercase tracking-[0.12em] text-[#8a9690]">Next step</p>
+                              <p className="mt-1 font-medium text-[#0f1613]">Get your wallet QR</p>
                             </div>
                           </div>
                           {cryptoAmount ? (
@@ -882,7 +880,7 @@ export default function CheckoutPage() {
                             </p>
                           ) : null}
                           <p className="mt-4 rounded-xl border border-[#f0d6a1] bg-[#fff8e8] px-4 py-3 text-[12px] leading-5 text-[#6d4b14]">
-                            Do not send crypto from this preview. Submit the form first so your order email and on-chain payment can be matched.
+                            Don&apos;t send crypto yet — tap Create order ID below to lock your exact amount and get your wallet QR. Your order details send to Titan automatically.
                           </p>
                         </div>
                       </div>
