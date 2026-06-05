@@ -10,7 +10,8 @@ type LeadMagnetCaptureProps = {
 };
 
 const STORAGE_KEY = "titan_lead_magnet_requests";
-const FORM_ACTION = process.env.NEXT_PUBLIC_LEAD_MAGNET_FORM_ACTION || "";
+const DEFAULT_LEAD_FORM_ACTION = "https://formsubmit.co/support@titanpeptidelab.com";
+const FORM_ACTION = process.env.NEXT_PUBLIC_LEAD_MAGNET_FORM_ACTION || DEFAULT_LEAD_FORM_ACTION;
 const EMAIL_FIELD = process.env.NEXT_PUBLIC_LEAD_MAGNET_EMAIL_FIELD || "email";
 
 const COPY = {
@@ -125,6 +126,9 @@ export function LeadMagnetCapture({
             data-local-only={FORM_ACTION ? undefined : "true"}
             className="rounded-[1.3rem] border border-[#e6ebe8] bg-white p-4 shadow-[0_1px_2px_rgb(15_22_19/4%)]"
           >
+            <input type="hidden" name="_subject" value="Titan COA checklist lead" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="table" />
             <input type="hidden" name="source" value={resolvedSource} />
             {productName ? <input type="hidden" name="product" value={productName} /> : null}
             <label
@@ -151,9 +155,7 @@ export function LeadMagnetCapture({
               </button>
             </div>
             <p data-lead-magnet-status aria-live="polite" className="mt-3 text-[11px] leading-5 text-[#8a9690]">
-              {FORM_ACTION
-                ? "Uses Titan’s configured email form endpoint; no private API key is exposed."
-                : "Provider setup pending: this form saves test requests to localStorage so the UX can be verified before Kit is connected."}
+              Checklist request goes to Titan support; use it to compare lot proof, payment clarity, and vendor red flags before ordering.
             </p>
           </form>
         </div>
