@@ -190,16 +190,22 @@ export default function CheckoutPage() {
   const discountAmount = appliedDiscount ? subtotal * (appliedDiscount.percent / 100) : 0;
   const total = subtotal - discountAmount + shipping;
 
-  const applyDiscount = () => {
-    const upper = discountCode.trim().toUpperCase();
+  const applyDiscountCode = (rawCode: string) => {
+    const upper = rawCode.trim().toUpperCase();
     const match = DISCOUNT_CODES[upper as keyof typeof DISCOUNT_CODES];
     if (match) {
       setAppliedDiscount({ code: upper, percent: match.percent });
+      setDiscountCode(upper);
       setDiscountError("");
-    } else {
-      setAppliedDiscount(null);
-      setDiscountError("Invalid code");
+      return true;
     }
+    setAppliedDiscount(null);
+    setDiscountError("Invalid code");
+    return false;
+  };
+
+  const applyDiscount = () => {
+    applyDiscountCode(discountCode);
   };
 
   const removeDiscount = () => {
@@ -778,22 +784,41 @@ export default function CheckoutPage() {
                       </button>
                     </div>
                   ) : (
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        value={discountCode}
-                        onChange={(e) => { setDiscountCode(e.target.value); setDiscountError(""); }}
-                        placeholder="Enter code"
-                        className="h-11 flex-1 rounded-lg border border-[#e5e5e5] bg-white px-4 text-[14px] text-[#0f1613] uppercase tracking-wide transition-colors focus:border-[#1e6f58] focus:outline-none"
-                      />
-                      <button
-                        type="button"
-                        onClick={applyDiscount}
-                        disabled={!discountCode.trim()}
-                        className="h-11 rounded-lg border border-[#1e6f58] px-5 text-[13px] font-medium text-[#1e6f58] transition-colors hover:bg-[#f3f9f6] disabled:cursor-not-allowed disabled:opacity-40"
-                      >
-                        Apply
-                      </button>
+                    <div className="space-y-3">
+                      <div className="rounded-xl border border-[#1e6f58]/20 bg-[#f3f9f6] px-4 py-3">
+                        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                          <div>
+                            <p className="text-[12px] font-semibold text-[#0f1613]">First Titan order?</p>
+                            <p className="mt-1 text-[12px] leading-5 text-[#44514b]">
+                              Apply <span className="font-semibold text-[#1e6f58]">FIRST10</span> now and take 10% off before you create the order ID.
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => applyDiscountCode("FIRST10")}
+                            className="inline-flex h-10 shrink-0 items-center justify-center rounded-lg bg-[#1e6f58] px-4 text-[12px] font-semibold text-white transition-colors hover:bg-[#175946]"
+                          >
+                            Apply FIRST10
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={discountCode}
+                          onChange={(e) => { setDiscountCode(e.target.value); setDiscountError(""); }}
+                          placeholder="Enter code"
+                          className="h-11 flex-1 rounded-lg border border-[#e5e5e5] bg-white px-4 text-[14px] text-[#0f1613] uppercase tracking-wide transition-colors focus:border-[#1e6f58] focus:outline-none"
+                        />
+                        <button
+                          type="button"
+                          onClick={applyDiscount}
+                          disabled={!discountCode.trim()}
+                          className="h-11 rounded-lg border border-[#1e6f58] px-5 text-[13px] font-medium text-[#1e6f58] transition-colors hover:bg-[#f3f9f6] disabled:cursor-not-allowed disabled:opacity-40"
+                        >
+                          Apply
+                        </button>
+                      </div>
                     </div>
                   )}
                   {discountError && (
