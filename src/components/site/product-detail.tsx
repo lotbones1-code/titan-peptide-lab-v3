@@ -86,7 +86,6 @@ export function ProductDetail({ product }: { product: Product }) {
   const handleAddToCart = () => {
     addItem(product, qty);
     setAddedToCart(true);
-    setTimeout(() => setAddedToCart(false), 2000);
   };
 
   return (
@@ -216,10 +215,10 @@ export function ProductDetail({ product }: { product: Product }) {
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                   <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#1a5c48]">
-                    Crypto payment before you add
+                    Crypto checkout preview
                   </p>
                   <p className="mt-2 max-w-[56ch] text-[12px] leading-6 text-[#44514b]">
-                    Checkout shows the exact wallet and network before payment. USDC on Solana is recommended for lowest fees; BTC, ETH, ERC-20 USDC, and SOL remain available.
+                    Add the bottle first; checkout shows the exact wallet and network before payment. USDC on Solana is recommended for lowest fees; BTC, ETH, ERC-20 USDC, and SOL remain available.
                   </p>
                 </div>
                 <Link
@@ -311,6 +310,16 @@ export function ProductDetail({ product }: { product: Product }) {
                   </>
                 )}
               </button>
+
+              {addedToCart ? (
+                <Link
+                  href="/checkout"
+                  className="flex h-14 w-full items-center justify-center gap-2.5 rounded-full bg-[#0f1613] text-[15px] font-semibold text-white transition-colors hover:bg-[#1a5c48]"
+                >
+                  Checkout now
+                  <ArrowUpRight className="h-5 w-5" aria-hidden="true" />
+                </Link>
+              ) : null}
 
               {/* Calm guarantee line directly under the CTA — buyer sees risk
                   reversal at the moment of click, not buried in the protection
@@ -485,6 +494,14 @@ export function ProductDetail({ product }: { product: Product }) {
               </>
             )}
           </button>
+          {addedToCart ? (
+            <Link
+              href="/checkout"
+              className="flex h-12 shrink-0 items-center justify-center rounded-full bg-[#0f1613] px-5 text-[14px] font-semibold text-white"
+            >
+              Checkout
+            </Link>
+          ) : null}
         </div>
       </div>
     </section>

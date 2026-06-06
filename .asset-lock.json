@@ -56,21 +56,21 @@
     },
     {
       "path": "public/titan-banner-3.png",
-      "sha256": "a888fedb4039733f4eac4512135250ad33c54f4b4fb06956240b9e2f7c5f57ae",
-      "size": 845144,
-      "note": "active og:image — premium typographic forest-green card (Every batch, matched to its own COA); replaces vibe-coded titan-banner-2; -3 filename busts social cache"
+      "sha256": "2bbf2d9b9f3d526a91f8fd4b1cea48b1f00c5e039fb6977b0b6199a35ed99c5d",
+      "size": 624191,
+      "note": "compatibility alias for cached social metadata; byte-copy of approved titan-banner-2.png so stale -3 references resolve while layout stays on -2"
     },
     {
       "path": "public/titan-banner-twitter-3.png",
-      "sha256": "a36c96f60cb71d1010543ee869a01309c321f5b52d1446f017efa5b8a3b9dd93",
-      "size": 845135,
-      "note": "active twitter card — premium typographic card paired with titan-banner-3"
+      "sha256": "7936e65967957dc837e6cfed7d9ee6c5576d155d3acb9a7187828223713fca13",
+      "size": 658433,
+      "note": "compatibility alias for cached Twitter metadata; byte-copy of approved titan-banner-twitter-2.png so stale -3 references resolve while layout stays on -2"
     },
     {
       "path": "public/titan-banner-square-3.png",
-      "sha256": "26a3eb40471c5c79e7acb8f20afce44a14e07fdb36688d66610171a8f75c3a98",
-      "size": 1541132,
-      "note": "square social variant paired with titan-banner-3 (manual-share parity with -2)"
+      "sha256": "e0b387a688df4606c38618a299e55973f3e0f7c432d8134f7e2e3e14848ccbc8",
+      "size": 1092064,
+      "note": "compatibility alias for manual-share parity; byte-copy of approved titan-banner-square-2.png"
     }
   ],
   "rules": [

@@ -2,6 +2,16 @@ import Link from "next/link";
 
 const SEARCH_PATHS = [
   {
+    title: "Where to buy research peptides",
+    href: "/where-to-buy-research-peptides/?ref=seo-home",
+    body: "A buyer path for researchers comparing COAs, HPLC purity, payment networks, and fulfillment before checkout.",
+  },
+  {
+    title: "Peptide supplier checklist",
+    href: "/peptide-supplier-checklist/?ref=seo-home",
+    body: "A six-point due-diligence page for forum visitors and searchers checking whether a supplier is credible.",
+  },
+  {
     title: "Research peptide catalog",
     href: "/products/?ref=seo-home",
     body: "Nasal sprays, vials, and stacks with lot-matched release sheets and HPLC purity targets.",
@@ -10,11 +20,6 @@ const SEARCH_PATHS = [
     title: "How to verify peptide purity",
     href: "/blog/how-to-verify-peptide-purity/?ref=seo-home",
     body: "A plain-English COA checklist for HPLC, mass-spec identity, lot codes, and retest paperwork.",
-  },
-  {
-    title: "Peptide nasal spray buyer guide",
-    href: "/blog/where-to-buy-peptide-nasal-sprays/?ref=seo-home",
-    body: "What researchers should check before sourcing peptide nasal sprays online in the US.",
   },
 ];
 
@@ -34,7 +39,7 @@ export function SearchVisibilitySection() {
           </p>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-3 lg:pt-2">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 lg:pt-2">
           {SEARCH_PATHS.map((path) => (
             <Link
               key={path.href}

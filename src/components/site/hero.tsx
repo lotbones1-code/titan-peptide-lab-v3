@@ -20,7 +20,6 @@ export function Hero() {
     if (!featured) return;
     addItem(featured, 1);
     setAdded(true);
-    window.setTimeout(() => setAdded(false), 1800);
   };
 
   return (
@@ -37,26 +36,26 @@ export function Hero() {
                 <br />
                 without the guesswork.
                 <br />
-                <span className="text-[#1a5c48]">Lot-matched. Crypto. Discreet.</span>
+                <span className="text-[#1a5c48]">Lot-matched. Crypto checkout. Plain parcel labeling.</span>
               </h1>
 
               <p className="mt-6 max-w-[46ch] text-[15px] leading-[1.85] text-[#555b55] lg:text-[16px]">
-                Every order ships with the release sheet for your batch — not a stock document. Pay in BTC, ETH, USDC, or SOL. No bank, no KYC, no shipping label tied to your card. Dispatched within 24 hours, worldwide.
+                Every order ships with the release sheet for your batch — not a stock document. Pay in BTC, ETH, USDC, or SOL through crypto-only checkout. Plain parcel labeling, research-use documentation, and 24h dispatch target worldwide.
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <Link
-                  href="/products"
+                  href="/start/?ref=home"
                   className="inline-flex h-12 items-center justify-center gap-2.5 rounded-full bg-[#0f1110] px-8 text-[13px] font-semibold text-white transition-colors hover:bg-[#1a5c48]"
                 >
-                  Shop sprays — from ${NASAL_SPRAYS.length ? Math.min(...NASAL_SPRAYS.map((p) => p.price)).toFixed(0) : "65"}
+                  Start with 3 recommended paths
                   <ArrowRight className="size-4" />
                 </Link>
                 <Link
-                  href="/lab-testing"
+                  href="/products/?ref=home"
                   className="inline-flex h-12 items-center justify-center rounded-full border border-[#d4d4d4] px-7 text-[13px] font-semibold text-[#0f1110] transition-colors hover:border-[#0f1110]"
                 >
-                  See the COA format
+                  Browse full catalog
                 </Link>
               </div>
 
@@ -85,7 +84,7 @@ export function Hero() {
                 {[
                   ["≥99%", "HPLC purity, verified per lot"],
                   ["24h", "dispatch from payment confirmation"],
-                  ["No KYC", "crypto-only — no bank, no card data"],
+                  ["Crypto", "BTC · ETH · USDC · SOL checkout"],
                   ["Worldwide", "tracked shipping, lot release sheet"],
                 ].map(([value, label]) => (
                   <div
@@ -164,6 +163,15 @@ export function Hero() {
                         {added ? <Check className="size-4" /> : <ShoppingBag className="size-4" />}
                         {added ? "Added to cart" : "Add featured to cart"}
                       </button>
+                      {added ? (
+                        <Link
+                          href="/checkout"
+                          className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#1e6f58] px-6 text-[12px] font-semibold text-white transition-colors hover:bg-[#175946]"
+                        >
+                          Checkout now
+                          <ArrowRight className="size-3.5" />
+                        </Link>
+                      ) : null}
                       <Link
                         href={`/products/${featured.slug}`}
                         className="inline-flex h-11 items-center justify-center rounded-full border border-[#d4d4d4] px-6 text-[12px] font-semibold text-[#0f1110] transition-colors hover:border-[#0f1110]"

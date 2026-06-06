@@ -23,7 +23,6 @@ export function ProductCard({
   const handleAdd = () => {
     addItem(product, 1);
     setAdded(true);
-    window.setTimeout(() => setAdded(false), 1800);
   };
 
   return (
@@ -86,6 +85,9 @@ export function ProductCard({
                 <Globe className="h-3 w-3" />
                 Ships worldwide · Pay with crypto
               </p>
+              <p className="mt-1 text-[10px] text-[#8a9690]">
+                Research use only · Not for human consumption
+              </p>
             </div>
           </div>
 
@@ -108,6 +110,16 @@ export function ProductCard({
               <ArrowRight className="size-3.5" />
             </Link>
           </div>
+
+          {added ? (
+            <Link
+              href="/checkout"
+              className="mt-2 inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full bg-[#1e6f58] text-[11px] font-semibold text-white transition-colors hover:bg-[#175946]"
+            >
+              Checkout now
+              <ArrowRight className="size-3.5" />
+            </Link>
+          ) : null}
         </div>
       </div>
     </article>
