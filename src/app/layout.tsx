@@ -37,16 +37,18 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: `${BRAND.name} — ${BRAND.tagline}`,
-  description: BRAND.description,
+  title: "Research Peptides Online | Titan Peptide Lab",
+  description:
+    "Shop research peptides online with HPLC purity targets, lot-matched COAs, nasal sprays, vials, stacks, crypto checkout, and research-use labeling.",
   metadataBase: new URL(`https://${BRAND.domain}`),
   // Default canonical for the home page; sub-pages override via their own
   // alternates.canonical export. Prevents Google from picking duplicate
   // variants like /index.html or query-string forms (seo-audit §Canonicals).
   alternates: { canonical: "/" },
   openGraph: {
-    title: BRAND.name,
-    description: BRAND.description,
+    title: "Research Peptides Online | Titan Peptide Lab",
+    description:
+      "Shop research peptides online with HPLC purity targets, lot-matched COAs, nasal sprays, vials, stacks, crypto checkout, and research-use labeling.",
     url: `https://${BRAND.domain}`,
     siteName: BRAND.name,
     type: "website",
@@ -65,8 +67,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: BRAND.name,
-    description: BRAND.description,
+    title: "Research Peptides Online | Titan Peptide Lab",
+    description:
+      "Shop research peptides online with HPLC purity targets, lot-matched COAs, nasal sprays, vials, stacks, crypto checkout, and research-use labeling.",
     images: ["/titan-banner-twitter-3.png"],
   },
   robots: { index: true, follow: true },

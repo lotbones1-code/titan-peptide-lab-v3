@@ -39,6 +39,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/`, lastModified: now, changeFrequency: "weekly", priority: 1.0 },
     { url: `${BASE}/start/`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${BASE}/products/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE}/research-peptides/`, lastModified: now, changeFrequency: "weekly", priority: 0.92 },
+    { url: `${BASE}/buy-research-peptides/`, lastModified: now, changeFrequency: "weekly", priority: 0.92 },
     { url: `${BASE}/blog/`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
     { url: `${BASE}/about/`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/lab-testing/`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },

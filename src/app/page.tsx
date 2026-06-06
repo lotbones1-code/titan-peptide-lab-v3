@@ -11,6 +11,7 @@ import { Products } from "@/components/site/products";
 import { QualitySection } from "@/components/site/quality-section";
 import { SocialProof } from "@/components/site/social-proof";
 import { ProductListJsonLd } from "@/components/site/json-ld";
+import { SearchVisibilitySection } from "@/components/site/search-visibility-section";
 
 export default function HomePage() {
   return (
@@ -20,6 +21,7 @@ export default function HomePage() {
       <main className="text-[#0f1110]">
         <Hero />
         <CoaTrustStrip />
+        <SearchVisibilitySection />
         <Products />
         <QualitySection />
         <section className="bg-white px-5 py-14 sm:px-6 lg:px-8">
