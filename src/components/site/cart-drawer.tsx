@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { X, Plus, Minus, ShoppingBag, Trash2, Lock, Tag, CheckCircle, ShieldCheck, Truck, FileText } from "lucide-react";
+import { FreeShippingProgress } from "./free-shipping-progress";
 
 type DiscountEntry = {
   percent: number;
@@ -25,16 +26,18 @@ export function CartDrawer() {
   const [appliedCode, setAppliedCode] = useState<{ code: string; discount: DiscountEntry } | null>(null);
   const [promoError, setPromoError] = useState("");
 
-  const handleApplyPromo = () => {
-    const entry = validateCode(promoInput);
+  const handleApplyPromoCode = (raw: string) => {
+    const entry = validateCode(raw);
     if (entry) {
-      setAppliedCode({ code: promoInput.trim().toUpperCase(), discount: entry });
+      setAppliedCode({ code: raw.trim().toUpperCase(), discount: entry });
       setPromoError("");
       setPromoInput("");
     } else {
       setPromoError("Invalid code. Please check your code and try again.");
     }
   };
+
+  const handleApplyPromo = () => handleApplyPromoCode(promoInput);
 
   const discountAmount = appliedCode
     ? (subtotal * appliedCode.discount.percent) / 100
@@ -158,6 +161,11 @@ export function CartDrawer() {
         {/* Footer */}
         {items.length > 0 && (
           <div className="border-t border-[#e5e5e5] px-6 py-4 space-y-3">
+            {/* Free-shipping progress — drives AOV by showing how close the
+                cart is to the US free-shipping threshold. Uses subtotal to
+                match the actual free-shipping rule applied at checkout. */}
+            <FreeShippingProgress subtotal={subtotal} />
+
             {/* Promo code */}
             {appliedCode ? (
               <div className="flex items-center justify-between rounded-xl bg-[#f0f5f2] px-4 py-2.5">
@@ -175,7 +183,23 @@ export function CartDrawer() {
                 </button>
               </div>
             ) : (
-              <div className="space-y-1.5">
+              <div className="space-y-2">
+                {/* One-tap first-order discount — mirrors the proven checkout
+                    pattern so buyers don't leave to hunt for a code (a known
+                    conversion leak). Manual input stays as the secondary path. */}
+                <button
+                  onClick={() => handleApplyPromoCode("FIRST10")}
+                  className="flex w-full items-center justify-between gap-3 rounded-xl border border-[#1e6f58]/25 bg-[#f3f9f6] px-4 py-2.5 text-left transition-colors hover:border-[#1e6f58]/50"
+                >
+                  <span className="text-[12px] leading-4 text-[#44514b]">
+                    First order? Apply{" "}
+                    <span className="font-semibold text-[#1e6f58]">FIRST10</span>{" "}
+                    for 10% off.
+                  </span>
+                  <span className="shrink-0 rounded-full bg-[#1e6f58] px-3 py-1 text-[11px] font-semibold text-white">
+                    Apply
+                  </span>
+                </button>
                 <div className="flex gap-2">
                   <div className="relative flex-1">
                     <Tag className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[#bbb]" />
@@ -184,7 +208,7 @@ export function CartDrawer() {
                       value={promoInput}
                       onChange={(e) => { setPromoInput(e.target.value); setPromoError(""); }}
                       onKeyDown={(e) => e.key === "Enter" && handleApplyPromo()}
-                      placeholder="Promo code"
+                      placeholder="Have another code?"
                       className="h-9 w-full rounded-full border border-[#e5e5e5] bg-white pl-8 pr-3 text-sm text-[#0f1613] placeholder:text-[#bbb] focus:border-[#1e6f58] focus:outline-none transition-colors"
                     />
                   </div>
@@ -198,9 +222,6 @@ export function CartDrawer() {
                 {promoError && (
                   <p className="text-xs text-red-500 pl-1">{promoError}</p>
                 )}
-                <p className="pl-1 text-[11px] leading-4 text-[#8a9690]">
-                  First order? Try <span className="font-semibold text-[#1e6f58]">FIRST10</span> for 10% off before checkout.
-                </p>
               </div>
             )}
 

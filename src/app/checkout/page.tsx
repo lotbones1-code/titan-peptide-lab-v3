@@ -28,6 +28,7 @@ import {
   Gift,
   Wallet,
 } from "lucide-react";
+import { FreeShippingProgress } from "@/components/site/free-shipping-progress";
 
 // Solana Pay USDC mint (public, well-known) — used to build SPL-token deep-links
 // so Phantom/Solflare/etc. open with the correct token + amount pre-filled.
@@ -650,6 +651,11 @@ export default function CheckoutPage() {
                 discount={appliedDiscount}
                 discountAmount={discountAmount}
               />
+              {country === "US" && subtotal < zone.freeAbove ? (
+                <div className="mt-4">
+                  <FreeShippingProgress subtotal={subtotal} />
+                </div>
+              ) : null}
             </div>
           )}
 
@@ -1036,6 +1042,11 @@ export default function CheckoutPage() {
                     discountAmount={discountAmount}
                   />
                 </div>
+                {country === "US" && subtotal < zone.freeAbove ? (
+                  <div className="mt-4">
+                    <FreeShippingProgress subtotal={subtotal} />
+                  </div>
+                ) : null}
               </div>
             </aside>
 
