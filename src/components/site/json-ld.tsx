@@ -17,6 +17,11 @@ export function OrganizationJsonLd() {
       email: "support@titanpeptidelab.com",
       contactType: "customer service",
     },
+    founder: {
+      "@type": "Person",
+      name: "Shamil Kuchaliyev",
+      jobTitle: "Founder & CEO",
+    },
     sameAs: [
       "https://www.instagram.com/titan.peptidelab/",
     ],
@@ -36,6 +41,38 @@ export function OrganizationJsonLd() {
       "ISO 17025 third-party COA",
     ],
     areaServed: "Worldwide (218 destinations, sanctioned jurisdictions excluded)",
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+export function FounderJsonLd() {
+  // Person entity for Google AI Overview / knowledge-graph enrichment.
+  // Linked to the Organization via worksFor so the entity graph resolves
+  // Shamil Kuchaliyev → Founder & CEO → Titan Peptide Lab.
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Shamil Kuchaliyev",
+    jobTitle: "Founder & CEO",
+    worksFor: {
+      "@type": "Organization",
+      name: BRAND.name,
+      url: `https://${BRAND.domain}`,
+    },
+    description:
+      "Founder and CEO of Titan Peptide Lab, a documentation-first, research-use-only peptide company. Builds the AI systems that run the business.",
+    knowsAbout: [
+      "Research peptides",
+      "Certificate of analysis (COA)",
+      "ISO 17025 third-party testing",
+      "Quality assurance",
+      "AI automation",
+    ],
   };
 
   return (

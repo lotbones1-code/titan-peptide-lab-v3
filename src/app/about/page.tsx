@@ -2,6 +2,7 @@ import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { PageHero } from "@/components/site/page-hero";
 import { NextRead } from "@/components/site/next-read";
+import { FounderJsonLd } from "@/components/site/json-ld";
 
 const MILESTONES = [
   {
@@ -271,6 +272,62 @@ export default function AboutPage() {
                   Reno, NV
                 </div>
               </div>
+
+              <section className="mt-16 border-t border-[rgb(15_22_19/8%)] pt-10">
+                <FounderJsonLd />
+                <div className="flex items-center gap-3">
+                  <div className="h-px w-8 bg-[#1e6f58]" />
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">
+                    Leadership
+                  </span>
+                </div>
+
+                <h2 className="mt-6 font-serif text-[clamp(1.9rem,3vw,2.6rem)] leading-[1.05] tracking-[-0.03em] text-[#0f1613]">
+                  The standard starts at the top.
+                </h2>
+
+                <p className="mt-6 font-serif text-[1.5rem] leading-[1.4] text-[#0f1613]">
+                  Titan was built around a single rule &mdash; the certificate
+                  has to resolve to the lot in the bottle. That rule didn&apos;t
+                  come from a committee. It came from the founder.
+                </p>
+
+                <div className="mt-6 space-y-6 text-[15px] leading-[1.8] text-[#5c6762]">
+                  <p>
+                    Shamil Kuchaliyev founded Titan Peptide Lab to fix the thing
+                    he hated most as a research buyer: not being able to trust
+                    what was actually in the vial. His answer wasn&apos;t a
+                    louder marketing claim &mdash; it was a documentation
+                    discipline. Six tests, two labs, one release rule, and an
+                    independent ISO 17025 retest that decides whether a batch
+                    ever leaves the building.
+                  </p>
+                  <p>
+                    He runs the company the same way he built it: lean,
+                    transparent, and increasingly automated &mdash; using AI
+                    systems he builds himself to handle operations so the team
+                    can stay focused on the one thing that can&apos;t be
+                    automated, which is judgment about quality.
+                  </p>
+                  <p>
+                    Everything Titan sells is for research use only. That
+                    disclaimer isn&apos;t fine print here &mdash; it&apos;s part
+                    of the promise. In a market full of overclaims, refusing to
+                    overclaim is the brand.
+                  </p>
+                </div>
+
+                <figure className="mt-10 border-l-2 border-[#1e6f58] pl-6">
+                  <blockquote className="font-serif text-[1.5rem] leading-[1.35] text-[#0f1613]">
+                    &ldquo;Trust in this category isn&apos;t a logo. It&apos;s
+                    whether the paper matches the product. We built the entire
+                    company around that test.&rdquo;
+                  </blockquote>
+                  <figcaption className="mt-4 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
+                    Shamil Kuchaliyev &middot; Founder &amp; CEO
+                  </figcaption>
+                </figure>
+              </section>
 
               <div className="mt-16 border-t border-[rgb(15_22_19/8%)] pt-10">
                 <div className="flex items-center gap-3">
