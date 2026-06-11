@@ -67,6 +67,10 @@ const FAQS = [
     a: "Yes. Titan Peptide Lab uses crypto-only checkout and supports BTC, ETH, USDC, and SOL. The checkout flow shows the network and wallet details before payment confirmation.",
   },
   {
+    q: "Is it safe to pay a research peptide supplier in crypto before they ship?",
+    a: "Crypto payments can't be reversed, so the right screen is the supplier's paper trail, not chargeback protection. With Titan an order ID is recorded with support before any payment is sent, most new buyers start with a single unit to vet the source, and payment is confirmed on-chain before dispatch. Every order ships with the lot-matched in-house release sheet, and the independent ISO 17025 retest for that same lot code follows by email within 5 business days — documentation an unverifiable source can't reproduce. Unopened items are returnable within 14 days and support replies within 24–48h.",
+  },
+  {
     q: "Are Titan products for human use?",
     a: "No. Titan Peptide Lab products are sold strictly for in-vitro laboratory research. They are not for human or animal consumption, diagnostic, therapeutic, or preventative use.",
   },
