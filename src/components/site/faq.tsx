@@ -26,6 +26,11 @@ const FAQS = [
       "Crypto only — USDC on Solana (recommended; sub-cent fees, $1 = $1), plus SOL, BTC, ETH, and USDC on ERC-20. No cards, no ACH, no wires — privacy and chargeback-immunity by design. The checkout page shows the wallet address, QR, and live-converted amount.",
   },
   {
+    question: "I've never paid a supplier in crypto first — how do I order with confidence?",
+    answer:
+      "Fair question — crypto has no chargebacks, so we let the paper trail do the work. Your order ID is created and recorded with support before any crypto leaves your wallet, so the order exists on our side first. Most new buyers start with a single unit (FIRST10 takes 10% off) to verify the source on a small order before scaling up. After you send payment we confirm it on-chain — usually under 30 minutes — then ship cold-chain within 24h with tracking by email. Every order includes the lot-matched release sheet in the box, and the independent ISO 17025 retest for that same lot code follows by email within 5 business days — documentation a fly-by-night source can't produce. Unopened items are returnable within 14 days, and support@titanpeptidelab.com replies within 24–48h, usually same day.",
+  },
+  {
     question: "Do you ship internationally?",
     answer:
       "Yes — 218 destinations from one warehouse, sanctioned jurisdictions excluded. Pick your country at checkout and you'll see the exact rate (free over the threshold in your zone). If customs needs extra documentation, we'll email you before dispatch.",
