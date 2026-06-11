@@ -233,6 +233,15 @@ export default async function ProductPage({
       },
       {
         "@type": "Question",
+        name: `I've never paid a supplier in crypto first — how do I order ${product.name} with confidence?`,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "Crypto has no chargebacks, so the paper trail does the work. Your order ID is created and recorded with support before any crypto leaves your wallet, so the order exists on our side first. Most new buyers start with a single unit (FIRST10 takes 10% off) to verify the source on a small order before scaling up. Payment is confirmed on-chain — usually under 30 minutes — then orders ship within 24h with tracking by email. Every order includes the lot-matched release sheet in the box, and the independent ISO 17025 retest for that same lot code follows by email within 5 business days. Unopened items are returnable within 14 days, and support@titanpeptidelab.com replies within 24–48h.",
+        },
+      },
+      {
+        "@type": "Question",
         name: `What payment methods are accepted for ${product.name}?`,
         acceptedAnswer: {
           "@type": "Answer",
