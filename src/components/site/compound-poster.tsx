@@ -73,6 +73,11 @@ function formatLabel(category: Product["category"]) {
   return "Research";
 }
 
+function precisionDescriptor(category: Product["category"]) {
+  if (category === "stack") return "Two-compound protocol";
+  return `Precision ${formatLabel(category).toLowerCase()}`;
+}
+
 export function CompoundPoster({
   product,
   variant = "card",
@@ -256,9 +261,7 @@ export function CompoundPoster({
                 {name}
               </h3>
               <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
-                {product.category === "stack"
-                  ? "Two-compound protocol"
-                  : "Precision nasal spray"}
+                {precisionDescriptor(product.category)}
               </p>
             </div>
             <span
@@ -275,7 +278,7 @@ export function CompoundPoster({
           <div className="mt-6 grid grid-cols-3 gap-3 border-t border-[rgb(15_22_19/6%)] pt-4">
             {[
               { label: "Purity", value: "≥99%" },
-              { label: "Format", value: product.category === "stack" ? "Stack" : "Spray" },
+              { label: "Format", value: formatLabel(product.category) },
               { label: "Release", value: "Lot sheet" },
             ].map(({ label, value }) => (
               <div key={label}>
