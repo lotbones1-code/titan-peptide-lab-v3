@@ -41,12 +41,38 @@ export function SocialProof() {
               <p className="mt-5 max-w-[44ch] text-[15px] leading-[1.8] text-[#555b55]">
                 Most peptide vendors carry hundreds of SKUs with recycled documentation. We keep the catalog tight so every compound gets real testing, real research, and real attention.
               </p>
-              <Link
-                href="/about"
-                className="mt-6 inline-flex h-11 items-center rounded-full border border-[#d4d4d4] px-6 text-[13px] font-semibold text-[#0f1110] transition-colors hover:border-[#0f1110]"
-              >
-                About Titan
-              </Link>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link
+                  href="/about"
+                  className="inline-flex h-11 items-center rounded-full border border-[#d4d4d4] px-6 text-[13px] font-semibold text-[#0f1110] transition-colors hover:border-[#0f1110]"
+                >
+                  About Titan
+                </Link>
+                <Link
+                  href="/start/?utm_source=titan_site&utm_medium=trust_surface&utm_campaign=asap_sales_push&utm_content=peptide_alliance_home_card&oc_touch_id=oc-20260613-site-trust-peptidealliance-001"
+                  className="inline-flex h-11 items-center rounded-full border border-[#1a5c48] bg-[#1a5c48] px-6 text-[13px] font-semibold text-white transition-colors hover:bg-[#134434]"
+                >
+                  Start with lot questions
+                </Link>
+              </div>
+
+              <div className="mt-6 rounded-2xl border border-[#d8e7de] bg-white p-5 shadow-[0_18px_60px_rgba(15,17,16,0.06)]">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1a5c48]">
+                  Public identity cross-check
+                </p>
+                <p className="mt-2 text-[14px] leading-[1.7] text-[#555b55]">
+                  Titan&apos;s public profile is live on The Peptide Alliance. Use it as one more
+                  identity check alongside lot-matched COAs, order records, and support readbacks.
+                </p>
+                <a
+                  href="https://peptidealliance.io/online/titan-peptide-lab"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-4 inline-flex text-[13px] font-semibold text-[#1a5c48] underline underline-offset-4"
+                >
+                  View Titan on The Peptide Alliance
+                </a>
+              </div>
 
               <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[#e8e6e1] bg-[#e8e6e1]">
                 {STATS.map(([value, label]) => (
