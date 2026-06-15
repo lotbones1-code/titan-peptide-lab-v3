@@ -40,6 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/start/`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${BASE}/products/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/research-peptides/`, lastModified: now, changeFrequency: "weekly", priority: 0.92 },
+    { url: `${BASE}/best-research-peptides/`, lastModified: now, changeFrequency: "weekly", priority: 0.93 },
     { url: `${BASE}/buy-research-peptides/`, lastModified: now, changeFrequency: "weekly", priority: 0.92 },
     { url: `${BASE}/where-to-buy-research-peptides/`, lastModified: now, changeFrequency: "weekly", priority: 0.91 },
     { url: `${BASE}/coa-verified-peptide-supplier/`, lastModified: now, changeFrequency: "weekly", priority: 0.91 },

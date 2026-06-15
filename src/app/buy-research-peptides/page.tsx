@@ -113,7 +113,7 @@ export default function BuyResearchPeptidesPage() {
 
             <BlogSection id="ranking-angle" title="The ranking angle: answer what buyers actually compare">
               <p>
-                Titan should compete on the terms researchers use when they are close to ordering: <Highlight>research peptides online</Highlight>, <Highlight>buy research peptides</Highlight>, <Highlight>peptide nasal sprays</Highlight>, <Highlight>HPLC peptide COA</Highlight>, and compound-specific searches like BPC-157 nasal spray.
+                Titan should compete on the terms researchers use when they are close to ordering: <Highlight>research peptides online</Highlight>, <Highlight>buy research peptides</Highlight>, <Link className="text-[oklch(0.68_0.17_78)] hover:underline" href="/best-research-peptides/?ref=buy-research-peptides-cluster">best research peptides</Link>, <Highlight>peptide nasal sprays</Highlight>, <Highlight>HPLC peptide COA</Highlight>, and compound-specific searches like BPC-157 nasal spray.
               </p>
               <p>
                 This page strengthens that cluster and internally links the searcher into the catalog, testing proof, and buyer guides instead of relying only on social traffic.
