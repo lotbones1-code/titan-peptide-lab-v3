@@ -2,7 +2,14 @@ import Link from "next/link";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { CompoundPoster } from "@/components/site/compound-poster";
-import { PRODUCTS } from "@/lib/products";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/site/json-ld";
+import { PRODUCTS, BRAND } from "@/lib/products";
 import { ArrowRight, ShieldCheck, Wallet, Truck, FileText } from "lucide-react";
 
 const START_TITLE = "Start here — Titan Peptide Lab";
@@ -54,11 +61,73 @@ const TRUST_ROW = [
   { icon: FileText, label: "Lot release sheet", body: "Batch-matched COA per bottle. Not a stock document." },
 ];
 
+// First-buyer objection handling, answered inline at the decision point.
+// Copy is condensed from the approved site FAQ — no new claims, RUO-safe,
+// lot-matched-COA-honest. Doubles as FAQPage structured data for search.
+const START_FAQS = [
+  {
+    q: "I've never paid a supplier in crypto first — how do I order with confidence?",
+    a: "Fair question — crypto has no chargebacks, so we let the paper trail do the work. Your order ID is created and recorded with support before any crypto leaves your wallet, so the order exists on our side first. Most new buyers start with a single unit (FIRST10 takes 10% off) to verify the source on a small order before scaling up. After you send payment we confirm it on-chain — usually under 30 minutes — then ship within 24h with tracking by email.",
+  },
+  {
+    q: "Is the COA tied to my specific lot, or a generic specimen?",
+    a: "Tied to your specific lot. The release sheet that ships in the box references the same lot code printed on your bottle. A general specimen COA is available to view before you order, but the document with your bottle is always lot-matched.",
+  },
+  {
+    q: "Do you ship internationally, and is it discreet?",
+    a: "Yes — 218 destinations from one warehouse, sanctioned jurisdictions excluded, with discreet labeling. Pick your country at checkout to see the exact rate. If customs needs extra documentation we email you before dispatch — we do not ship blind into a customs hold.",
+  },
+  {
+    q: "What if I change my mind?",
+    a: "Unopened items are returnable within 14 days — email support@titanpeptidelab.com to start a return. Support replies within 24–48h, usually same day.",
+  },
+];
+
+// Three hero products surfaced on this page, for ItemList structured data.
+const START_PRODUCT_IDS = ["bpc157-vial", "tb500-vial", "cjc-ipa", "semax-spray"];
+
 export default function StartPage() {
+  const startProducts = START_PRODUCT_IDS.map(findProduct).filter(
+    (p): p is NonNullable<ReturnType<typeof findProduct>> => Boolean(p)
+  );
+  const itemListData = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Start here — three research peptide paths",
+    numberOfItems: startProducts.length,
+    itemListElement: startProducts.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Product",
+        name: p.name,
+        url: `https://${BRAND.domain}/products/${p.slug}`,
+        description: p.tagline,
+        offers: {
+          "@type": "Offer",
+          price: p.price.toFixed(2),
+          priceCurrency: "USD",
+          availability: "https://schema.org/InStock",
+        },
+      },
+    })),
+  };
+
   return (
     <>
       <Nav />
       <main className="bg-white text-[#0f1613]">
+        <BreadcrumbJsonLd
+          items={[
+            { name: "Home", item: "/" },
+            { name: "Start here", item: "/start/" },
+          ]}
+        />
+        <FAQJsonLd faqs={START_FAQS} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListData) }}
+        />
         {/* Single-column rotation hero — IG visitor lands here, no homepage scan */}
         <section className="border-b border-[rgb(15_22_19/6%)] bg-[#fafbfa] py-14 lg:py-20">
           <div className="mx-auto max-w-2xl px-5 text-center sm:px-6">
@@ -211,6 +280,32 @@ export default function StartPage() {
                 Read the 4-step walkthrough
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* First-buyer objections — answered inline at the decision point */}
+        <section className="border-t border-[rgb(15_22_19/6%)] py-14 lg:py-16">
+          <div className="mx-auto max-w-2xl px-5 sm:px-6">
+            <p className="text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1a5c48]">
+              Before your first order
+            </p>
+            <h2 className="mt-3 text-center font-serif text-[clamp(1.8rem,4vw,2.4rem)] leading-[1.05] tracking-[-0.03em] text-[#0f1613]">
+              The four questions first-time buyers ask.
+            </h2>
+            <div className="mt-8 overflow-hidden rounded-2xl border border-[rgb(15_22_19/8%)] bg-white">
+              <Accordion type="single" collapsible className="divide-y divide-[rgb(15_22_19/8%)]">
+                {START_FAQS.map((item) => (
+                  <AccordionItem key={item.q} value={item.q} className="border-0 px-6">
+                    <AccordionTrigger className="text-left text-[14.5px] font-medium text-[#0f1613]">
+                      {item.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="pb-5 text-[13.5px] leading-[1.75] text-[#5c6762]">
+                      {item.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </div>
           </div>
         </section>
