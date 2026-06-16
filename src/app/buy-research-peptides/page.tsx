@@ -36,6 +36,18 @@ const FAQS = [
     q: "Are Titan peptides for human use?",
     a: "No. Titan Peptide Lab products are sold strictly for in-vitro laboratory research and are not intended for human or animal consumption, diagnostic, therapeutic, or preventative use.",
   },
+  {
+    q: "What should a legitimate research peptide COA actually show?",
+    a: "A usable certificate of analysis shows the HPLC chromatogram with the purity area %, mass-spec identity confirming the molecular weight matches the sequence, the peptide content (how much of the powder is actually peptide), a batch/lot number that matches the vial you received, the test date, and the name of the analytical workflow that produced it. A single '99% pure' line with no chromatogram and no lot match is a logo on a PDF, not a COA.",
+  },
+  {
+    q: "What is the difference between HPLC purity and peptide content?",
+    a: "Purity tells you what fraction of the peptide present is the correct molecule; peptide content tells you how much peptide is actually in the vial versus counter-ions, salts, and water. A vial can read high purity and still be short on content, so both numbers matter when comparing suppliers. Titan documents purity targets and the release workflow on the lab-testing page.",
+  },
+  {
+    q: "How is Titan testing verified?",
+    a: "Every batch is characterized in-house first, then checked against an independent ISO 17025 workflow before release is signed; if the reads disagree beyond method tolerance the batch is held. Researchers who want to confirm a result can review the COA workflow on the lab-testing page and request lot documentation before ordering.",
+  },
 ];
 
 export default function BuyResearchPeptidesPage() {
@@ -111,6 +123,38 @@ export default function BuyResearchPeptidesPage() {
               </ul>
             </BlogSection>
 
+            <BlogSection id="verify-before-order" title="What experienced researchers verify before they order">
+              <p>
+                The buyers who order repeatedly screen on the same short list. Use it on Titan or on any supplier — a page that welcomes the checklist is a different signal than one that avoids it.
+              </p>
+              <ul className="space-y-4">
+                <li>
+                  <Highlight>Batch-matched COA</Highlight> — the certificate has to tie to the lot on the vial you received, with the chromatogram attached. A generic sheet with no lot match is the most common red flag.
+                </li>
+                <li>
+                  <Highlight>Identity by mass spec, not just a purity line</Highlight> — &ldquo;99% pure&rdquo; of the wrong molecule is still useless, so the COA should confirm the molecular weight matches the sequence.
+                </li>
+                <li>
+                  <Highlight>Peptide content, not only HPLC purity</Highlight> — two different numbers; content tells you how much peptide is actually in the vial. See the{" "}
+                  <Link className="text-[oklch(0.68_0.17_78)] hover:underline" href="/blog/how-to-read-peptide-coa/?ref=buy-research-peptides-verify">how to read a peptide COA</Link>{" "}guide.
+                </li>
+                <li>
+                  <Highlight>Reship / return policy in writing</Highlight> — how a supplier handles a bad shipment tells you more than a perfect first order does.
+                </li>
+                <li>
+                  <Highlight>Responsive human support</Highlight> — a real contact path before you send crypto, not a form that disappears.
+                </li>
+                <li>
+                  <Highlight>Discreet packaging and reliable handling</Highlight> — dispatch and shipping terms stated up front.
+                </li>
+              </ul>
+              <p>
+                Titan exposes the lot/COA workflow on the{" "}
+                <Link className="text-[oklch(0.68_0.17_78)] hover:underline" href="/lab-testing/?ref=buy-research-peptides-verify">lab testing</Link>{" "}
+                page and ships research-use labeling on every order, so the checklist is answerable before checkout instead of after.
+              </p>
+            </BlogSection>
+
             <BlogSection id="ranking-angle" title="The ranking angle: answer what buyers actually compare">
               <p>
                 Titan should compete on the terms researchers use when they are close to ordering: <Highlight>research peptides online</Highlight>, <Highlight>buy research peptides</Highlight>, <Link className="text-[oklch(0.68_0.17_78)] hover:underline" href="/best-research-peptides/?ref=buy-research-peptides-cluster">best research peptides</Link>, <Highlight>peptide nasal sprays</Highlight>, <Highlight>HPLC peptide COA</Highlight>, and compound-specific searches like BPC-157 nasal spray.
@@ -118,6 +162,17 @@ export default function BuyResearchPeptidesPage() {
               <p>
                 This page strengthens that cluster and internally links the searcher into the catalog, testing proof, and buyer guides instead of relying only on social traffic.
               </p>
+            </BlogSection>
+
+            <BlogSection id="buy-research-peptides-faq" title="Buying research peptides online — common questions">
+              <dl className="space-y-6">
+                {FAQS.map((faq) => (
+                  <div key={faq.q}>
+                    <dt className="font-serif text-xl leading-snug text-[#13211c]">{faq.q}</dt>
+                    <dd className="mt-2 leading-8 text-[#3f4a45]">{faq.a}</dd>
+                  </div>
+                ))}
+              </dl>
             </BlogSection>
 
             <BlogCTA
