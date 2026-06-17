@@ -27,6 +27,7 @@ export interface Product {
   featured?: boolean;
   bestseller?: boolean;
   newArrival?: boolean;
+  rank?: number;
 }
 
 export const BRAND = BRAND_DATA;

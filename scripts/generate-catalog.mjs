@@ -22,6 +22,12 @@ function loadProducts() {
   const files = fs.readdirSync(dir).filter((f) => f.endsWith(".json")).sort();
   const products = files.map((f) => loadJson(path.join("products", f)));
   return products.sort((a, b) => {
+    // Explicit rank wins (lower = earlier). Products without a rank fall to the
+    // back and keep the legacy featured/bestseller/newArrival + alpha ordering.
+    const rank = (p) =>
+      typeof p.rank === "number" ? p.rank : Number.MAX_SAFE_INTEGER;
+    const r = rank(a) - rank(b);
+    if (r !== 0) return r;
     const score = (p) =>
       (p.featured ? -4 : 0) + (p.bestseller ? -2 : 0) + (p.newArrival ? -1 : 0);
     const d = score(a) - score(b);

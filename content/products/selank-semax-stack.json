@@ -3,7 +3,7 @@
   "slug": "selank-semax-stack",
   "name": "Selank + Semax Stack",
   "category": "stack",
-  "price": 105.0,
+  "price": 105,
   "size": "2 × 15mL",
   "tagline": "Two-spray format for paired CNS-pathway research",
   "description": "Selank and Semax in matched intranasal sprays. Frequently paired in academic literature on anxiolytic-pathway (Selank) and neurotrophic-pathway (Semax) mechanisms. HPLC-verified ≥99% purity on both. For research use only. Not for human consumption.",
@@ -13,5 +13,6 @@
     "Frequently-ordered research stack",
     "HPLC ≥99% purity target, lot release sheets"
   ],
-  "image": "/products/selank-semax-stack.png"
+  "image": "/products/selank-semax-stack.png",
+  "rank": 9
 }

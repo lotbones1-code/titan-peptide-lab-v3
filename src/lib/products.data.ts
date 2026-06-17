@@ -39,23 +39,23 @@ export const DISCOUNT_CODES_DATA = {
 
 export const PRODUCTS_DATA: Product[] = [
   {
-    "id": "oxytocin-spray",
-    "slug": "oxytocin-nasal-spray",
-    "name": "Oxytocin Nasal Spray",
-    "category": "nasal-spray",
-    "price": 74.99,
-    "size": "15mL · 400mcg/spray",
-    "tagline": "Subject of social-cognition and autonomic-pathway research",
-    "description": "Nine-residue neurohypophyseal peptide in a precision intranasal format. Cited in social-cognition, trust-paradigm, and HPA-axis research literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
+    "id": "retatrutide",
+    "slug": "retatrutide",
+    "name": "Retatrutide",
+    "category": "injectable",
+    "price": 199.99,
+    "size": "10mg lyophilized",
+    "tagline": "GLP-1 / GIP / glucagon triple-agonist research compound",
+    "description": "Synthetic triple-incretin agonist active at GLP-1, GIP, and glucagon receptors. Appears in published phase-II/III clinical literature on incretin-pathway pharmacology. For research use only. Not for human consumption.",
     "benefits": [
-      "Cited in social-cognition paradigms",
-      "Investigated in HPA-axis research",
-      "Intranasal research format",
+      "GLP-1/GIP/glucagon triple-agonist",
+      "Investigated in incretin-pathway research",
+      "Lyophilized vial, reconstitute with bacteriostatic water",
       "HPLC ≥99% purity target, lot release sheet"
     ],
-    "image": "/products/oxytocin-spray.png",
-    "featured": true,
-    "newArrival": true
+    "image": "/products/retatrutide.png",
+    "newArrival": true,
+    "rank": 1
   },
   {
     "id": "bpc157-spray",
@@ -73,7 +73,62 @@ export const PRODUCTS_DATA: Product[] = [
       "HPLC ≥99% purity target, lot release sheet"
     ],
     "image": "/products/bpc157-spray.png",
-    "featured": true
+    "featured": true,
+    "rank": 2
+  },
+  {
+    "id": "tb500-vial",
+    "slug": "tb-500-vial",
+    "name": "TB-500 (Injectable Vial)",
+    "category": "injectable",
+    "price": 89.99,
+    "size": "5mg lyophilized",
+    "tagline": "Subject of actin-binding and angiogenesis research",
+    "description": "Thymosin Beta-4 active fragment (TB-500). Cited in actin-sequestration and angiogenesis research literature. Frequently paired with BPC-157 in academic protocol literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
+    "benefits": [
+      "Thymosin β-4 active fragment",
+      "Cited in actin-binding/angiogenesis research",
+      "Often paired with BPC-157 in literature",
+      "HPLC ≥99% purity target, lot release sheet"
+    ],
+    "image": "/products/tb500-vial.png",
+    "rank": 3
+  },
+  {
+    "id": "cjc-ipa",
+    "slug": "cjc-1295-ipamorelin",
+    "name": "CJC-1295 + Ipamorelin Blend",
+    "category": "injectable",
+    "price": 119.99,
+    "size": "5mg / 5mg blend",
+    "tagline": "Pre-blended GH-secretagogue research format",
+    "description": "Pre-blended CJC-1295 (no DAC) with Ipamorelin in a single lyophilized vial. Both compounds appear in GH-secretagogue and GHRH-receptor research literature. Reconstitute with bacteriostatic water. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
+    "benefits": [
+      "Pre-blended single-vial format",
+      "GHRH/GHS-receptor research interest",
+      "Frequently-cited secretagogue pair",
+      "HPLC ≥99% purity target, lot release sheet"
+    ],
+    "image": "/products/cjc-ipa.png",
+    "rank": 4
+  },
+  {
+    "id": "bpc157-vial",
+    "slug": "bpc-157-vial",
+    "name": "BPC-157 (Injectable Vial)",
+    "category": "injectable",
+    "price": 54.99,
+    "size": "5mg lyophilized",
+    "tagline": "Lyophilized format for SC research protocols",
+    "description": "Lyophilized Body Protection Compound 157 in a 5mg vial. Standard format for subcutaneous research protocols. Cited in angiogenesis, tendon-fibroblast, and GI-mucosa research literature. Reconstitute with bacteriostatic water. For research use only. Not for human consumption.",
+    "benefits": [
+      "Lyophilized SC research format",
+      "Higher mg per vial than spray",
+      "HPLC ≥99% purity",
+      "Lot release sheet included"
+    ],
+    "image": "/products/bpc157-vial.png",
+    "rank": 5
   },
   {
     "id": "pt141-spray",
@@ -91,25 +146,8 @@ export const PRODUCTS_DATA: Product[] = [
       "HPLC ≥99% purity target, lot release sheet"
     ],
     "image": "/products/pt141-spray.png",
-    "featured": true
-  },
-  {
-    "id": "selank-spray",
-    "slug": "selank-nasal-spray",
-    "name": "Selank Nasal Spray",
-    "category": "nasal-spray",
-    "price": 59.99,
-    "size": "15mL · 750mcg/spray",
-    "tagline": "Subject of anxiolytic-pathway and attention research",
-    "description": "Heptapeptide derivative of tuftsin originally synthesized in Soviet-era CNS research programs. Cited in academic literature on GABAergic and serotonergic-pathway modulation. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
-    "benefits": [
-      "Cited in anxiolytic-pathway research",
-      "Cited in attention/cognition research",
-      "GABAergic + serotonergic pathway research interest",
-      "HPLC ≥99% purity target, lot release sheet"
-    ],
-    "image": "/products/selank-spray.png",
-    "featured": true
+    "featured": true,
+    "rank": 6
   },
   {
     "id": "semax-spray",
@@ -127,7 +165,45 @@ export const PRODUCTS_DATA: Product[] = [
       "HPLC ≥99% purity target, lot release sheet"
     ],
     "image": "/products/semax-spray.png",
-    "featured": true
+    "featured": true,
+    "rank": 7
+  },
+  {
+    "id": "selank-spray",
+    "slug": "selank-nasal-spray",
+    "name": "Selank Nasal Spray",
+    "category": "nasal-spray",
+    "price": 59.99,
+    "size": "15mL · 750mcg/spray",
+    "tagline": "Subject of anxiolytic-pathway and attention research",
+    "description": "Heptapeptide derivative of tuftsin originally synthesized in Soviet-era CNS research programs. Cited in academic literature on GABAergic and serotonergic-pathway modulation. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
+    "benefits": [
+      "Cited in anxiolytic-pathway research",
+      "Cited in attention/cognition research",
+      "GABAergic + serotonergic pathway research interest",
+      "HPLC ≥99% purity target, lot release sheet"
+    ],
+    "image": "/products/selank-spray.png",
+    "featured": true,
+    "rank": 8
+  },
+  {
+    "id": "selank-semax-stack",
+    "slug": "selank-semax-stack",
+    "name": "Selank + Semax Stack",
+    "category": "stack",
+    "price": 105,
+    "size": "2 × 15mL",
+    "tagline": "Two-spray format for paired CNS-pathway research",
+    "description": "Selank and Semax in matched intranasal sprays. Frequently paired in academic literature on anxiolytic-pathway (Selank) and neurotrophic-pathway (Semax) mechanisms. HPLC-verified ≥99% purity on both. For research use only. Not for human consumption.",
+    "benefits": [
+      "Save $15 vs separate",
+      "Paired CNS-pathway research format",
+      "Frequently-ordered research stack",
+      "HPLC ≥99% purity target, lot release sheets"
+    ],
+    "image": "/products/selank-semax-stack.png",
+    "rank": 9
   },
   {
     "id": "dsip-spray",
@@ -145,93 +221,28 @@ export const PRODUCTS_DATA: Product[] = [
       "HPLC ≥99% purity target, lot release sheet"
     ],
     "image": "/products/dsip-spray.png",
-    "newArrival": true
+    "newArrival": true,
+    "rank": 10
   },
   {
-    "id": "retatrutide",
-    "slug": "retatrutide",
-    "name": "Retatrutide",
-    "category": "injectable",
-    "price": 199.99,
-    "size": "10mg lyophilized",
-    "tagline": "GLP-1 / GIP / glucagon triple-agonist research compound",
-    "description": "Synthetic triple-incretin agonist active at GLP-1, GIP, and glucagon receptors. Appears in published phase-II/III clinical literature on incretin-pathway pharmacology. For research use only. Not for human consumption.",
+    "id": "oxytocin-spray",
+    "slug": "oxytocin-nasal-spray",
+    "name": "Oxytocin Nasal Spray",
+    "category": "nasal-spray",
+    "price": 74.99,
+    "size": "15mL · 400mcg/spray",
+    "tagline": "Subject of social-cognition and autonomic-pathway research",
+    "description": "Nine-residue neurohypophyseal peptide in a precision intranasal format. Cited in social-cognition, trust-paradigm, and HPA-axis research literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
     "benefits": [
-      "GLP-1/GIP/glucagon triple-agonist",
-      "Investigated in incretin-pathway research",
-      "Lyophilized vial, reconstitute with bacteriostatic water",
+      "Cited in social-cognition paradigms",
+      "Investigated in HPA-axis research",
+      "Intranasal research format",
       "HPLC ≥99% purity target, lot release sheet"
     ],
-    "image": "/products/retatrutide.png",
-    "newArrival": true
-  },
-  {
-    "id": "bpc157-vial",
-    "slug": "bpc-157-vial",
-    "name": "BPC-157 (Injectable Vial)",
-    "category": "injectable",
-    "price": 54.99,
-    "size": "5mg lyophilized",
-    "tagline": "Lyophilized format for SC research protocols",
-    "description": "Lyophilized Body Protection Compound 157 in a 5mg vial. Standard format for subcutaneous research protocols. Cited in angiogenesis, tendon-fibroblast, and GI-mucosa research literature. Reconstitute with bacteriostatic water. For research use only. Not for human consumption.",
-    "benefits": [
-      "Lyophilized SC research format",
-      "Higher mg per vial than spray",
-      "HPLC ≥99% purity",
-      "Lot release sheet included"
-    ],
-    "image": "/products/bpc157-vial.png"
-  },
-  {
-    "id": "cjc-ipa",
-    "slug": "cjc-1295-ipamorelin",
-    "name": "CJC-1295 + Ipamorelin Blend",
-    "category": "injectable",
-    "price": 119.99,
-    "size": "5mg / 5mg blend",
-    "tagline": "Pre-blended GH-secretagogue research format",
-    "description": "Pre-blended CJC-1295 (no DAC) with Ipamorelin in a single lyophilized vial. Both compounds appear in GH-secretagogue and GHRH-receptor research literature. Reconstitute with bacteriostatic water. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
-    "benefits": [
-      "Pre-blended single-vial format",
-      "GHRH/GHS-receptor research interest",
-      "Frequently-cited secretagogue pair",
-      "HPLC ≥99% purity target, lot release sheet"
-    ],
-    "image": "/products/cjc-ipa.png"
-  },
-  {
-    "id": "selank-semax-stack",
-    "slug": "selank-semax-stack",
-    "name": "Selank + Semax Stack",
-    "category": "stack",
-    "price": 105,
-    "size": "2 × 15mL",
-    "tagline": "Two-spray format for paired CNS-pathway research",
-    "description": "Selank and Semax in matched intranasal sprays. Frequently paired in academic literature on anxiolytic-pathway (Selank) and neurotrophic-pathway (Semax) mechanisms. HPLC-verified ≥99% purity on both. For research use only. Not for human consumption.",
-    "benefits": [
-      "Save $15 vs separate",
-      "Paired CNS-pathway research format",
-      "Frequently-ordered research stack",
-      "HPLC ≥99% purity target, lot release sheets"
-    ],
-    "image": "/products/selank-semax-stack.png"
-  },
-  {
-    "id": "tb500-vial",
-    "slug": "tb-500-vial",
-    "name": "TB-500 (Injectable Vial)",
-    "category": "injectable",
-    "price": 89.99,
-    "size": "5mg lyophilized",
-    "tagline": "Subject of actin-binding and angiogenesis research",
-    "description": "Thymosin Beta-4 active fragment (TB-500). Cited in actin-sequestration and angiogenesis research literature. Frequently paired with BPC-157 in academic protocol literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
-    "benefits": [
-      "Thymosin β-4 active fragment",
-      "Cited in actin-binding/angiogenesis research",
-      "Often paired with BPC-157 in literature",
-      "HPLC ≥99% purity target, lot release sheet"
-    ],
-    "image": "/products/tb500-vial.png"
+    "image": "/products/oxytocin-spray.png",
+    "featured": true,
+    "newArrival": true,
+    "rank": 11
   }
 ];
 
