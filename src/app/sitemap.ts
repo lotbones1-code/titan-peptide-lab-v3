@@ -1,29 +1,11 @@
 import type { MetadataRoute } from "next";
 import { PRODUCTS } from "@/lib/products";
 import { RESEARCH_ARTICLE_SLUGS } from "@/lib/research-articles";
+import { BLOG_SLUGS } from "@/lib/blog-posts";
 
 export const dynamic = "force-static";
 
 const BASE = "https://www.titanpeptidelab.com";
-
-const BLOG_SLUGS = [
-  "fda-peptide-reclassification-2026",
-  "peptide-nasal-sprays-trending-2026",
-  "peptide-trends-2026-research-compounds",
-  "bpc-157-nasal-spray-complete-guide",
-  "where-to-buy-peptide-nasal-sprays",
-  "semax-vs-selank-neuropeptide-comparison",
-  "how-to-read-peptide-coa",
-  "peptide-nasal-sprays-vs-injections",
-  "pt-141-nasal-spray-research-guide",
-  "dsip-nasal-spray-delta-sleep-peptide",
-  "oxytocin-nasal-spray-research",
-  "best-peptide-stacks-research-guide",
-  "peptide-storage-guide",
-  "peptide-nasal-spray-benefits",
-  "beginners-guide-nootropic-peptides",
-  "how-to-verify-peptide-purity",
-];
 
 // Pull product slugs from the live catalog so the sitemap can never desync
 // from the actual product routes. Previously this was a hand-maintained list
