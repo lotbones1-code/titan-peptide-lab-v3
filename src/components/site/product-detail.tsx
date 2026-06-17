@@ -46,6 +46,7 @@ export function ProductDetail({ product }: { product: Product }) {
   const [qty, setQty] = useState(1);
   const [code, setCode] = useState("");
   const [appliedCode, setAppliedCode] = useState<keyof typeof DISCOUNT_CODES | null>(null);
+  const [codeError, setCodeError] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
   const [stickyVisible, setStickyVisible] = useState(false);
   const primaryCtaRef = useRef<HTMLButtonElement | null>(null);
@@ -77,10 +78,18 @@ export function ProductDetail({ product }: { product: Product }) {
   const shipping = subtotal - discountAmt >= usZone.freeAbove ? 0 : usZone.rate;
   const total = Math.max(0, subtotal - discountAmt + shipping);
 
-  const applyCode = () => {
-    const upper = code.toUpperCase().trim();
-    if (upper in DISCOUNT_CODES) setAppliedCode(upper as keyof typeof DISCOUNT_CODES);
-    else setAppliedCode(null);
+  const applyCode = (raw?: string) => {
+    const upper = (raw ?? code).toUpperCase().trim();
+    if (!upper) return;
+    if (upper in DISCOUNT_CODES) {
+      setAppliedCode(upper as keyof typeof DISCOUNT_CODES);
+      setCode(upper);
+      setCodeError(false);
+    } else {
+      // Don't silently wipe an already-applied valid discount on a typo —
+      // keep it and surface a clear message instead.
+      setCodeError(true);
+    }
   };
 
   const handleAddToCart = () => {
@@ -196,7 +205,15 @@ export function ProductDetail({ product }: { product: Product }) {
                 </p>
                 {!appliedCode && (
                   <p className="mt-1.5 text-[12px] font-medium text-[#1e6f58]">
-                    First order? Use <span className="font-semibold">FIRST10</span> for 10% off — saves ${(product.price * 0.1).toFixed(2)} on this bottle.
+                    First order?{" "}
+                    <button
+                      type="button"
+                      onClick={() => applyCode("FIRST10")}
+                      className="font-semibold underline decoration-dotted underline-offset-2 transition-colors hover:text-[#175946] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1e6f58]/30 rounded"
+                    >
+                      Apply FIRST10
+                    </button>{" "}
+                    for 10% off — saves ${(product.price * 0.1).toFixed(2)} on this bottle.
                   </p>
                 )}
               </div>
@@ -262,17 +279,26 @@ export function ProductDetail({ product }: { product: Product }) {
                 <Input
                   placeholder="Promo code (e.g. FIRST10)"
                   value={code}
-                  onChange={(e) => setCode(e.target.value)}
+                  onChange={(e) => {
+                    setCode(e.target.value);
+                    if (codeError) setCodeError(false);
+                  }}
                   onKeyDown={(e) => e.key === "Enter" && applyCode()}
+                  aria-invalid={codeError}
                   className="border-[rgb(15_22_19/12%)] bg-white"
                 />
-                <Button onClick={applyCode} variant="outline" className="border-[rgb(15_22_19/12%)] bg-white hover:bg-[#f7faf8]">
+                <Button onClick={() => applyCode()} variant="outline" className="border-[rgb(15_22_19/12%)] bg-white hover:bg-[#f7faf8]">
                   Apply
                 </Button>
               </div>
               {appliedCode && (
                 <p className="mt-2 text-xs text-[#1e6f58]">
                   ✓ {DISCOUNT_CODES[appliedCode].label} applied
+                </p>
+              )}
+              {codeError && (
+                <p className="mt-2 text-xs text-[#b4453a]">
+                  That code isn&apos;t valid. New here? Try <span className="font-semibold">FIRST10</span> for 10% off your first order.
                 </p>
               )}
             </div>
