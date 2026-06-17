@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { PRODUCTS } from "@/lib/products";
+import { RESEARCH_ARTICLE_SLUGS } from "@/lib/research-articles";
 
 export const dynamic = "force-static";
 
@@ -73,6 +74,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.7,
+    });
+  }
+
+  // /research/<slug>/ literature articles. These pages are indexable
+  // (robots index:true, canonical set) and linked from the research index's
+  // ItemList JSON-LD, but were previously absent from the sitemap — leaving
+  // the brand's strongest long-form / E-E-A-T content undiscoverable via the
+  // primary crawl signal. Slugs come from the same source the index renders,
+  // so the two can't desync.
+  for (const slug of RESEARCH_ARTICLE_SLUGS) {
+    pages.push({
+      url: `${BASE}/research/${slug}/`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
     });
   }
 

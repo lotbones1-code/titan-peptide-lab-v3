@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
+import { RESEARCH_ARTICLES } from "@/lib/research-articles";
 
 export const metadata: Metadata = {
   title: "Research — Titan Peptide Laboratory",
@@ -18,86 +19,6 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-const ARTICLES = [
-  {
-    slug: "bpc-157-nasal-spray",
-    n: "01",
-    title: "BPC-157 nasal spray",
-    subtitle: "Angiogenic repair peptide — intranasal pharmacokinetics",
-    summary:
-      "A pentadecapeptide fragment of human gastric juice protein, studied for endothelial recovery, tendon repair, and gut-lining cytoprotection. Fourteen studies reviewed; emphasis on bioavailability via transmucosal absorption.",
-    tag: "Repair",
-    readingTime: "12 min",
-    refs: 14,
-  },
-  {
-    slug: "selank-anxiolytic-nootropic",
-    n: "02",
-    title: "Selank",
-    subtitle: "Heptapeptide anxiolytic and GABA-ergic modulator",
-    summary:
-      "A synthetic analogue of tuftsin studied by the Institute of Molecular Genetics (Moscow) for its anxiolytic profile without sedation or dependence. Includes comparative analysis with benzodiazepine class compounds.",
-    tag: "Anxiolytic",
-    readingTime: "11 min",
-    refs: 11,
-  },
-  {
-    slug: "semax-cognition-neuroplasticity",
-    n: "03",
-    title: "Semax",
-    subtitle: "ACTH(4-10) heptapeptide — BDNF and NGF expression",
-    summary:
-      "A melanocortin-derived peptide researched for cognitive enhancement, neuroprotection, and upregulation of brain-derived neurotrophic factor. Reviewed alongside emerging stroke-recovery literature from Eastern European trials.",
-    tag: "Nootropic",
-    readingTime: "12 min",
-    refs: 13,
-  },
-  {
-    slug: "pt-141-research",
-    n: "04",
-    title: "PT-141 (Bremelanotide)",
-    subtitle: "Melanocortin receptor agonist",
-    summary:
-      "A cyclic heptapeptide derivative of α-MSH studied for central nervous system activation of sexual arousal pathways via MC3R/MC4R. Covers FDA-approved clinical trial data alongside broader research applications.",
-    tag: "Melanocortin",
-    readingTime: "11 min",
-    refs: 10,
-  },
-  {
-    slug: "oxytocin-bonding-social",
-    n: "05",
-    title: "Oxytocin",
-    subtitle: "Social-cognition neuropeptide and the intranasal delivery paradigm",
-    summary:
-      "A cyclic nonapeptide synthesized in the hypothalamus, studied for effects on trust, empathic accuracy, and face processing via OXTR and partial V1a cross-reactivity. Reviews both the behavioral findings and the methodological caveats around intranasal central exposure.",
-    tag: "Social",
-    readingTime: "12 min",
-    refs: 9,
-  },
-  {
-    slug: "dsip-sleep-recovery",
-    n: "06",
-    title: "DSIP (Delta Sleep-Inducing Peptide)",
-    subtitle: "Slow-wave sleep modulation and HPA-axis literature",
-    summary:
-      "A nonapeptide originally isolated from rabbit cerebral venous blood during electrically-induced sleep. Reviews four decades of literature on EEG delta-wave facilitation, HPA-axis dampening, withdrawal-syndrome applications, and stress-adaptation findings.",
-    tag: "Sleep",
-    readingTime: "12 min",
-    refs: 9,
-  },
-  {
-    slug: "nasal-stack-protocols",
-    n: "07",
-    title: "Nasal stack protocols",
-    subtitle: "Rationale and separation when combining intranasal peptides",
-    summary:
-      "How researchers separate nasal dosing windows, rotate peptide pairs, and manage receptor downregulation across multi-compound protocols. Includes timing grids for the most common two- and three-compound stacks.",
-    tag: "Protocol",
-    readingTime: "13 min",
-    refs: 8,
-  },
-];
-
 const TAG_PALETTE: Record<string, string> = {
   Repair: "bg-[#e8f2ee] text-[#1e6f58]",
   Anxiolytic: "bg-[#f0ede6] text-[#5a4a2a]",
@@ -109,8 +30,8 @@ const TAG_PALETTE: Record<string, string> = {
 };
 
 export default function ResearchHubPage() {
-  const totalRefs = ARTICLES.reduce((s, a) => s + a.refs, 0);
-  const totalMinutes = ARTICLES.reduce(
+  const totalRefs = RESEARCH_ARTICLES.reduce((s, a) => s + a.refs, 0);
+  const totalMinutes = RESEARCH_ARTICLES.reduce(
     (s, a) => s + parseInt(a.readingTime),
     0
   );
@@ -119,7 +40,7 @@ export default function ResearchHubPage() {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "Titan Peptide Lab Research Index",
-    itemListElement: ARTICLES.map((a, i) => ({
+    itemListElement: RESEARCH_ARTICLES.map((a, i) => ({
       "@type": "ListItem",
       position: i + 1,
       url: `/research/${a.slug}`,
@@ -178,7 +99,7 @@ export default function ResearchHubPage() {
                     Entries
                   </dt>
                   <dd className="font-serif text-4xl leading-none text-[#13211c]">
-                    {ARTICLES.length}
+                    {RESEARCH_ARTICLES.length}
                   </dd>
                 </div>
                 <div className="flex flex-col items-end">
@@ -213,7 +134,7 @@ export default function ResearchHubPage() {
         {/* Article index */}
         <section className="mx-auto max-w-7xl px-6 pb-24 lg:pb-32">
           <ol className="divide-y divide-[#d9dfd5]">
-            {ARTICLES.map((a) => {
+            {RESEARCH_ARTICLES.map((a) => {
               const tagClass =
                 TAG_PALETTE[a.tag] ?? "bg-[#eef2eb] text-[#324030]";
               return (
