@@ -5,12 +5,11 @@ import { CartButton } from "./cart-drawer";
 
 const LINKS = [
   { href: "/products", label: "Products" },
-  { href: "/how-to-pay-with-crypto", label: "How to Pay" },
+  { href: "/research-assistant", label: "Find a Peptide" },
   { href: "/lab-testing", label: "Lab Testing" },
   { href: "/research", label: "Research" },
   { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
 ];
 
 export function Nav() {
