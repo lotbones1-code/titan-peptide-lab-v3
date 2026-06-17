@@ -116,7 +116,10 @@ export default function CheckoutPage() {
     mailtoHref: string;
   }>(null);
   const [copied, setCopied] = useState<"address" | "amount" | "receipt" | null>(null);
-  const [prices, setPrices] = useState<PriceMap>({});
+  // USDC is a 1:1 stablecoin — seed it locally so the default/recommended rail
+  // always shows a real amount even when the live-rate API is unreachable.
+  const [prices, setPrices] = useState<PriceMap>({ "usd-coin": 1 });
+  const [rateError, setRateError] = useState(false);
   const [qrDataUrl, setQrDataUrl] = useState<string>("");
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
   const [cryptoHelpOpen, setCryptoHelpOpen] = useState(true);
@@ -174,7 +177,11 @@ export default function CheckoutPage() {
     )
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
-        if (!data) return;
+        if (!data) {
+          setRateError(true);
+          return;
+        }
+        setRateError(false);
         setPrices({
           bitcoin: data.bitcoin?.usd,
           ethereum: data.ethereum?.usd,
@@ -182,7 +189,11 @@ export default function CheckoutPage() {
           "usd-coin": data["usd-coin"]?.usd ?? 1,
         });
       })
-      .catch(() => {});
+      .catch((err) => {
+        // Ignore the abort fired by cleanup; only a real fetch failure is a
+        // rate error worth surfacing to the buyer.
+        if (err?.name !== "AbortError") setRateError(true);
+      });
     return () => ctrl.abort();
   }, []);
 
@@ -895,6 +906,8 @@ export default function CheckoutPage() {
                               <p className="mt-1 font-medium text-[#0f1613]" aria-live="polite">
                                 {cryptoAmount ? (
                                   <>≈ {cryptoAmount} <span className="text-[#1e6f58]">{wallet.coin.replace("-ERC", "").replace("-SOL", "")}</span></>
+                                ) : rateError ? (
+                                  <>${total.toFixed(2)} <span className="text-[#1e6f58]">worth of {wallet.label}</span></>
                                 ) : (
                                   <span className="text-[#8a9690]">Loading rate…</span>
                                 )}
@@ -908,6 +921,10 @@ export default function CheckoutPage() {
                           {cryptoAmount ? (
                             <p className="mt-2 text-[11px] leading-5 text-[#6b7a73]">
                               Live {wallet.label} rate · Confirm your wallet has at least this amount on {wallet.network} before submitting. Final amount locks on the next screen.
+                            </p>
+                          ) : rateError ? (
+                            <p className="mt-2 text-[11px] leading-5 text-[#6b7a73]">
+                              Live rate is briefly unavailable — send the {wallet.network} equivalent of ${total.toFixed(2)} USD, or switch to USDC for an exact amount. Your order ID is created either way.
                             </p>
                           ) : null}
                           <p className="mt-4 rounded-xl border border-[#f0d6a1] bg-[#fff8e8] px-4 py-3 text-[12px] leading-5 text-[#6d4b14]">
