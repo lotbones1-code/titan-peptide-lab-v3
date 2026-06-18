@@ -468,9 +468,10 @@ export default function HowToVerifyPeptidePurityPage() {
               is the highest available level of analytical assurance.
             </p>
             <p>
-              At Titan Peptide Lab, all products are tested by independent
-              third-party laboratories with batch-matched COAs provided as
-              standard on the{" "}
+              At Titan Peptide Lab, every batch is HPLC-UV tested in-house
+              against a ≥99% main-peak release target and ships with a
+              lot-matched in-house release sheet. No independent third-party
+              lot report is currently published. See the process on the{" "}
               <Link
                 href="/lab-testing"
                 className="text-[oklch(0.68_0.17_78)] underline decoration-stone-300 underline-offset-4 hover:decoration-[oklch(0.68_0.17_78)]"

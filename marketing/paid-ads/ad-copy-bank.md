@@ -12,7 +12,7 @@ no human consumption language. See `compliance-guide.md`.
 **Brand / Trust:**
 ```
 Titan Peptide Lab | Official
-HPLC ≥99% Purity Verified
+In-House HPLC ≥99% Target
 Lot-Matched COA Included
 Cold-Chain Shipped in 24h
 Research-Grade Peptides
@@ -27,7 +27,7 @@ BPC-157 · 500mcg/Spray
 BPC-157 Research Spray 15mL
 No Reconstitution Needed
 Body Protection Compound 157
-BPC-157 · HPLC Verified
+BPC-157 · HPLC ≥99% Target
 ```
 
 **Selank Specific:**
@@ -57,7 +57,7 @@ PT-141 · 1mg/Spray · 10mL
 Bremelanotide Research Spray
 Melanocortin Receptor Agonist
 Non-Hormonal · Fast Onset
-PT-141 · HPLC ≥99%
+PT-141 · HPLC ≥99% Target
 ```
 
 **Oxytocin Specific:**
@@ -77,7 +77,7 @@ DSIP · 500mcg/Spray · 15mL
 Sleep Architecture Research
 Delta Sleep-Inducing Peptide
 Recovery-State Studies
-DSIP · HPLC Verified
+DSIP · HPLC ≥99% Target
 ```
 
 **Stack:**
@@ -104,7 +104,7 @@ The Bottle Is the Dose
 
 **Trust / Process:**
 ```
-Every batch lot-coded, HPLC-screened to ≥99%, and shipped cold-chain with matching COA.
+Every batch lot-coded, HPLC-screened to a ≥99% release target, cold-chain w/ matching COA.
 Six nasal sprays, four injectables, one curated stack. Research-grade from $54.99.
 No representative certificates. Your COA matches your specific bottle's batch.
 Precision nasal atomizer format. No reconstitution, no needles, no dosing math.
@@ -136,14 +136,14 @@ Spend $250+ and get 20% off with code TITAN20. Cold-chain shipping included.
 ### Angle 1: Quality / Process Differentiation
 
 **V1 (Short — Feed):**
-Six nasal peptide sprays. Every batch HPLC-verified ≥99%. Every order ships with a lot-matched COA — not a representative certificate from a different batch. From $59.99.
+Six nasal peptide sprays. Every batch carries an in-house ≥99% HPLC purity release target. Every order ships with a lot-matched COA — not a representative certificate from a different batch. From $59.99.
 
 **V2 (Medium — Feed):**
 Most peptide spray suppliers send a generic COA. Titan sends one that matches the exact lot in your bottle.
 
 Every batch is:
 → Lot-coded at intake
-→ HPLC-screened to ≥99% purity
+→ HPLC-screened to a ≥99% release target
 → Matched to a batch-specific certificate
 → Cold-chain packed and shipped within 24h
 
@@ -154,7 +154,7 @@ From $59.99.
 Here's what happens before a Titan spray ships:
 
 1. The batch gets a lot code — that code follows it from fill to doorstep
-2. HPLC screening. Release threshold: ≥99% purity. Below that, the batch doesn't ship
+2. In-house HPLC screening against a ≥99% main-peak release target, documented on the lot release sheet
 3. The certificate of analysis is tied to that specific lot — no representative COAs swapped across batches
 4. Cold-chain packing. Liquid orders are prepared for temperature control before dispatch
 
@@ -164,10 +164,10 @@ From $59.99. Every order includes the matching COA.
 ### Angle 2: Product-Led (BPC-157 as hero)
 
 **V1:**
-BPC-157 nasal spray. 500mcg per dose, 15mL precision atomizer. No reconstitution, no syringes — the bottle is the dose. HPLC-verified ≥99% purity. $64.99.
+BPC-157 nasal spray. 500mcg per dose, 15mL precision atomizer. No reconstitution, no syringes — the bottle is the dose. In-house ≥99% HPLC purity release target. $64.99.
 
 **V2:**
-Researchers report rapid tissue recovery and systemic anti-inflammatory action with BPC-157. Titan delivers it in a measured nasal spray — 500mcg per dose, HPLC ≥99%, cold-chain shipped with a lot-matched certificate of analysis. $64.99.
+Researchers report rapid tissue recovery and systemic anti-inflammatory action with BPC-157. Titan delivers it in a measured nasal spray — 500mcg per dose, in-house ≥99% HPLC release target, cold-chain shipped with a lot-matched certificate of analysis. $64.99.
 
 ### Angle 3: Product-Led (Selank + Semax Stack)
 
@@ -180,7 +180,7 @@ Selank + Semax — the most popular peptide combination for cognitive-emotional 
 Selank: 750mcg/spray, anxiolytic without sedation
 Semax: 1mg/spray, BDNF upregulation and neuroprotection
 
-Both HPLC ≥99%. Both cold-chain shipped with lot-matched COA. $105 for both (save $15).
+Both under an in-house ≥99% HPLC release target. Both cold-chain shipped with lot-matched COA. $105 for both (save $15).
 
 ### Angle 4: Format Advantage (Nasal vs Injectable)
 
@@ -188,22 +188,22 @@ Both HPLC ≥99%. Both cold-chain shipped with lot-matched COA. $105 for both (s
 Skip the vials, syringes, and reconstitution math. Titan nasal sprays deliver research peptides in a precision atomizer format — measured doses, no prep, no needles. Six compounds from $59.99.
 
 **V2:**
-For research protocols where intranasal delivery is appropriate: six measured peptide sprays with HPLC ≥99% purity and no reconstitution required. BPC-157, Selank, Semax, PT-141, Oxytocin, DSIP. The bottle is the dose.
+For research protocols where intranasal delivery is appropriate: six measured peptide sprays under an in-house ≥99% HPLC purity release target and no reconstitution required. BPC-157, Selank, Semax, PT-141, Oxytocin, DSIP. The bottle is the dose.
 
 ### Angle 5: New Product (Oxytocin)
 
 **V1:**
-New: Oxytocin nasal spray. 400mcg per dose, 15mL. Built for labs studying social cognition, trust, stress response, and autonomic regulation. HPLC ≥99%, lot-matched COA. $74.99.
+New: Oxytocin nasal spray. 400mcg per dose, 15mL. Built for labs studying social cognition, trust, stress response, and autonomic regulation. In-house ≥99% HPLC release target, lot-matched COA. $74.99.
 
 ### Angle 6: New Product (DSIP)
 
 **V1:**
-New: DSIP nasal spray. Delta Sleep-Inducing Peptide in a precision nasal format. 500mcg per dose, 15mL. For sleep architecture and recovery-state research. HPLC ≥99%. $62.99.
+New: DSIP nasal spray. Delta Sleep-Inducing Peptide in a precision nasal format. 500mcg per dose, 15mL. For sleep architecture and recovery-state research. In-house ≥99% HPLC release target. $62.99.
 
 ### Angle 7: Discount / Offer
 
 **V1:**
-10% off your first Titan order. Code: FIRST10. Six research-grade nasal peptide sprays, all HPLC ≥99%, all cold-chain shipped with batch-matched COA. From $53.99 after discount.
+10% off your first Titan order. Code: FIRST10. Six research-grade nasal peptide sprays, all under an in-house ≥99% HPLC release target, all cold-chain shipped with batch-matched COA. From $53.99 after discount.
 
 **V2:**
 Ordering 3+ research compounds? Use BULK15 for 15% off. Or spend $250+ and get 20% off with TITAN20. Every order ships cold-chain with a lot-matched COA.
@@ -216,7 +216,7 @@ Ordering 3+ research compounds? Use BULK15 for 15% off. Or spend $250+ and get 2
 Research-Grade Nasal Peptides
 BPC-157 Nasal Spray — $64.99
 The COA Matches Your Bottle
-HPLC ≥99% — Every Batch
+In-House HPLC ≥99% Target
 Six Nasal Sprays From $59.99
 No Needles. No Reconstitution.
 Selank + Semax Stack — $105
@@ -235,8 +235,8 @@ Save $15 — Cognitive Pair
 
 ```
 Shop all 6 sprays
-View lab results
-HPLC ≥99% purity
+View testing process
+HPLC ≥99% release target
 Ships within 24h
 COA with every order
 From $59.99

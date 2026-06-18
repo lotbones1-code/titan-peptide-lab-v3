@@ -50,11 +50,11 @@ Structure:
 ```
 [Hero]
 Headline: "Six Research-Grade Nasal Peptide Sprays"
-Subhead: "HPLC ≥99% · Lot-matched COA · Cold-chain shipped"
+Subhead: "In-House HPLC ≥99% Target · Lot-matched COA · Cold-chain shipped"
 CTA: "View Catalog" → scrolls to product grid
 
 [Trust Strip]
-≥99% HPLC | Lot-matched COA | Cold-chain 24h | Crypto accepted
+In-house HPLC ≥99% target | Lot-matched COA | Cold-chain 24h | Crypto accepted
 
 [Product Grid]
 All 6 sprays with name, price, key stat, "Shop" button
@@ -77,7 +77,7 @@ Structure:
 ```
 [Hero]
 Headline: "BPC-157 Nasal Spray"
-Subhead: "500mcg/spray · 15mL · HPLC ≥99% · $64.99"
+Subhead: "500mcg/spray · 15mL · HPLC ≥99% Target · $64.99"
 CTA: "Order Now"
 
 [Compound Info]

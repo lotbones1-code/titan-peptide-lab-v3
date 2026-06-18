@@ -47,7 +47,7 @@ systems sometimes flag them. Key triggers:
 ### Ad Copy Patterns That Pass Review
 
 ```
-SAFE: "BPC-157 nasal spray — 500mcg per spray, HPLC ≥99% purity"
+SAFE: "BPC-157 nasal spray — 500mcg per spray, in-house HPLC ≥99% release target"
 RISK: "BPC-157 spray for tissue healing and gut repair"
 
 SAFE: "Research-grade peptide with lot-matched COA"
