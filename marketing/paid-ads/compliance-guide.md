@@ -53,7 +53,8 @@ RISK: "BPC-157 spray for tissue healing and gut repair"
 SAFE: "Research-grade peptide with lot-matched COA"
 RISK: "Peptide supplement for recovery and performance"
 
-SAFE: "Researchers report systemic anti-inflammatory action"
+SAFE: "Cited in angiogenesis, GI-mucosa, and inflammatory-pathway research literature"
+RISK: "Researchers report systemic anti-inflammatory action" (still implies a real effect)
 RISK: "Reduces inflammation and speeds up healing"
 
 SAFE: "Selank — GABA and serotonin pathway research"

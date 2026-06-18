@@ -94,15 +94,15 @@ bpc-157 intranasal
 - H3: Lot-Matched COA Included Free
 - H4: Ships Cold-Chain Within 24 Hours
 - D1: Research-grade BPC-157 nasal spray. 15mL precision atomizer, 500mcg per spray. Every bottle ships with a batch-specific certificate of analysis.
-- D2: Body Protection Compound 157 in a measured nasal format. In-house ≥99% HPLC purity release target. No reconstitution needed — the bottle is the dose.
+- D2: Body Protection Compound 157 in a measured nasal research format. In-house ≥99% HPLC purity release target. Ready-to-log; no vial reconstitution step. For research use only.
 
 **RSA 2:**
 - H1: BPC-157 Nasal Spray | Titan Lab
 - H2: Research-Grade · No Reconstitution
 - H3: 15mL / 500mcg Per Spray
 - H4: In-House HPLC ≥99% Release Target
-- D1: Skip the vials and syringes. BPC-157 in a precision nasal format. In-house HPLC ≥99% release target, cold-chain dispatch, lot-matched certificate of analysis with every order.
-- D2: Researchers report rapid tissue recovery and systemic anti-inflammatory action. In-house HPLC ≥99% release target, tracked shipment, batch-matched COA. Shop now.
+- D1: Skip the vial reconstitution step. BPC-157 in a precision nasal research format. In-house HPLC ≥99% release target, cold-chain dispatch, lot-matched certificate of analysis with every order.
+- D2: BPC-157 is cited in angiogenesis, GI-mucosa, and fibroblast-pathway research literature. In-house HPLC ≥99% release target, tracked shipment, batch-matched COA. For research use only.
 
 ### Ad Group: Selank Spray
 
@@ -117,18 +117,18 @@ bpc-157 intranasal
 "selank nasal"
 "selank research peptide"
 selank nasal spray buy
-selank spray for sale
-selank anxiolytic spray
-selank nootropic spray
+selank research peptide
+selank gaba research peptide
+selank cns research peptide
 ```
 
 **RSA 1:**
 - H1: Selank Nasal Spray — $59.99
-- H2: 750mcg/Spray · Calm Focus
+- H2: 750mcg/Spray · GABA Research
 - H3: HPLC ≥99% Target · COA
-- H4: Non-Sedating Anxiolytic Peptide
-- D1: Selank nasal spray — 750mcg per dose, 15mL precision atomizer. Modulates GABA and serotonin pathways for calm, alert cognition. In-house HPLC-screened, research grade.
-- D2: Russian-developed anxiolytic nootropic peptide. Non-sedating calm focus for research protocols. In-house HPLC-screened, cold-chain shipped with COA.
+- H4: GABAergic-Pathway Research
+- D1: Selank nasal spray — 750mcg per dose, 15mL precision atomizer. Studied in GABAergic and serotonergic pathway research literature. In-house HPLC-screened, research grade.
+- D2: Russian-developed GABAergic research peptide cited in CNS-pathway literature. For research protocols. In-house HPLC-screened, cold-chain shipped with COA.
 
 ### Ad Group: Semax Spray
 
@@ -137,15 +137,15 @@ selank nootropic spray
 [semax nasal spray]
 [buy semax nasal spray]
 [semax spray]
-[semax nootropic spray]
+[semax research peptide]
 "semax nasal spray"
 "buy semax spray"
 "semax peptide"
 "semax nootropic"
 semax nasal spray buy
-semax spray for sale
-semax bdnf spray
-semax cognitive spray
+semax research peptide
+semax bdnf research peptide
+semax cns research peptide
 ```
 
 **RSA 1:**
@@ -153,7 +153,7 @@ semax cognitive spray
 - H2: 1mg/Spray · BDNF Upregulation
 - H3: In-House HPLC ≥99% Target
 - H4: Ships Cold-Chain With COA
-- D1: Semax heptapeptide in measured nasal format. 1mg per spray, 15mL. Upregulates BDNF, supports memory and neural recovery. In-house ≥99% HPLC purity release target.
+- D1: Semax heptapeptide in measured nasal format. 1mg per spray, 15mL. Cited in BDNF/NGF and neurotrophic-pathway research literature. In-house ≥99% HPLC purity release target.
 - D2: Cognitive performance and neuroprotection research peptide. Stacks cleanly with Selank. In-house HPLC-screened, lot-matched COA included with every order.
 
 ### Ad Group: PT-141 Spray
@@ -176,11 +176,11 @@ pt-141 intranasal
 
 **RSA 1:**
 - H1: PT-141 Nasal Spray — $69.99
-- H2: 1mg/Spray · Fast Onset (~45 min)
+- H2: 1mg/Spray · MC3R/MC4R Research
 - H3: Non-Hormonal · HPLC Target
 - H4: Melanocortin Receptor Research
-- D1: Bremelanotide (PT-141) nasal spray. Melanocortin receptor agonist acting on central nervous system pathways. 10mL, 1mg/spray. Cold-chain shipped.
-- D2: PT-141 research peptide in precision nasal format. Fast-onset, non-hormonal compound. In-house ≥99% HPLC purity release target with batch-matched certificate of analysis.
+- D1: Bremelanotide (PT-141) nasal spray. Melanocortin (MC3R/MC4R) receptor research compound cited in CNS-pathway literature. 10mL, 1mg/spray. Cold-chain shipped.
+- D2: PT-141 research peptide in precision nasal format. Non-hormonal melanocortin-pathway research compound. In-house ≥99% HPLC purity release target with batch-matched certificate of analysis.
 
 ### Ad Group: Oxytocin Spray
 
@@ -204,7 +204,7 @@ oxytocin research peptide
 - H2: 400mcg/Spray · 15mL
 - H3: Social Cognition Research Grade
 - H4: Lot-Matched COA Included
-- D1: Intranasal oxytocin peptide for social bonding, stress response, and calm-state research. 400mcg per spray, in-house ≥99% HPLC purity release target.
+- D1: Intranasal oxytocin peptide for social-cognition, trust-paradigm, HPA-axis, and autonomic-pathway research. 400mcg per spray, in-house ≥99% HPLC purity release target.
 - D2: Built for labs studying trust, social cognition, and autonomic regulation. Familiar spray format, lot-matched COA, cold-chain dispatch within 24h.
 
 ### Ad Group: DSIP Spray
@@ -228,8 +228,8 @@ dsip sleep peptide
 - H1: DSIP Nasal Spray — $62.99
 - H2: 500mcg/Spray · Sleep Research
 - H3: HPLC ≥99% Target · Cold-Chain
-- H4: Recovery-State Peptide Format
-- D1: Delta Sleep-Inducing Peptide in precision nasal format. 15mL, 500mcg per spray. Suited to sleep architecture and recovery-state research.
+- H4: Slow-Wave-Sleep Research Format
+- D1: Delta Sleep-Inducing Peptide in precision nasal format. 15mL, 500mcg per spray. Suited to sleep-architecture and slow-wave-sleep research literature.
 - D2: Non-invasive DSIP delivery for downshift-state research. In-house ≥99% HPLC purity release target, lot-matched certificate of analysis. Ships cold-chain within 24h.
 
 ---
@@ -262,10 +262,10 @@ intranasal peptide research
 **RSA 1:**
 - H1: Nasal Peptide Sprays — 6 Compounds
 - H2: HPLC ≥99% Target · From $59.99
-- H3: No Reconstitution · No Needles
+- H3: No Vial Reconstitution Step
 - H4: Lot-Matched COA Every Order
 - D1: Six research-grade nasal peptide sprays: BPC-157, Selank, Semax, PT-141, Oxytocin, DSIP. Every batch under an in-house ≥99% HPLC release target with cold-chain fulfillment.
-- D2: The bottle is the dose. Precision atomizer format — no reconstitution, no dosing math. Batch-matched certificate of analysis ships with every order.
+- D2: Measured-spray research format — no vial reconstitution step. Batch-matched certificate of analysis ships with every order. For research use only.
 
 ### Ad Group: Research Peptide Sprays
 
@@ -324,6 +324,16 @@ best peptide nasal spray
 - D2: Six measured nasal sprays. Every batch lot-coded and purity-screened. No representative COAs — your certificate matches your bottle. From $59.99.
 
 ---
+
+## Keyword Compliance Directive (AE-0007i)
+
+Lead with **research/lab intent**, not consumer self-use or effect intent:
+- Prefer "<compound> research peptide" / "<compound> research compound" / "peptide
+  research supplier" over "buy <compound> nasal spray" and "<compound> for sale".
+- Remove effect-named keywords ("anxiolytic spray", "nootropic spray", "cognitive
+  spray", "recovery spray", "fat loss", "muscle"). Replaced above with pathway/research terms.
+- Every landing page reached by these ads must carry a visible "For research use only —
+  not for human consumption" line (see `landing-pages.md` quick-win #2).
 
 ## Negative Keywords (Account-Level)
 

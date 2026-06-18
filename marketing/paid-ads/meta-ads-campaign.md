@@ -25,8 +25,8 @@ Titan Peptide Lab (Ad Account)
 │
 ├── CONVERSIONS: Prospecting — Interest Targeting
 │   ├── Ad Set: Peptide Research Interest
-│   ├── Ad Set: Nootropics / Biohacking Interest
-│   └── Ad Set: Fitness Recovery / Sports Science
+│   ├── Ad Set: CNS-Pathway Research Interest
+│   └── Ad Set: Peptide / Pharmacology Research Interest
 │
 ├── CONVERSIONS: Prospecting — Lookalike
 │   ├── Ad Set: 1% Lookalike — Purchasers
@@ -163,58 +163,60 @@ Titan Peptide Lab (Ad Account)
 
 **Ad 8 — BPC-157 Lead (Static)**
 - Visual: BPC-157 compound name in large editorial type (matches site poster style)
-- Primary text: BPC-157 nasal spray. 500mcg per dose, 15mL precision atomizer. In-house ≥99% HPLC purity release target. No reconstitution — the bottle is the dose. $64.99 with lot-matched COA and cold-chain dispatch.
+- Primary text: BPC-157 nasal spray. 500mcg per dose, 15mL precision atomizer. In-house ≥99% HPLC purity release target. Measured-spray research format; no vial reconstitution step. $64.99 with lot-matched COA and cold-chain dispatch. For research use only.
 - Headline: BPC-157 Nasal Spray — $64.99
 - CTA: Shop Now
 - Link: titanpeptidelab.com/products/bpc157-spray?utm_source=meta&utm_medium=paid&utm_campaign=prospect-bpc157
 
-### Ad Set: Nootropics / Biohacking Interest
+### Ad Set: CNS-Pathway Research Interest
 
 **Audience:**
-- Interests: Nootropics, Biohacking, Cognitive enhancement, Brain health, Self-optimization
+- Interests: Pharmacology, Neuroscience, Research chemicals, Biochemistry, Life sciences
 - AND behavior: Engaged shoppers
 - Age: 22–45
 - Geo: US
 - Exclude: Website visitors last 30 days, Purchasers last 180 days
+- NOTE (compliance): avoid "Nootropics / Biohacking / Cognitive enhancement / Self-optimization" interests — they imply consumer self-use, not laboratory research.
 
 **Ads:**
 
 **Ad 9 — Selank + Semax Angle (Carousel)**
-- Card 1: "Selank — Calm focus without sedation" — $59.99
-- Card 2: "Semax — Cognitive performance & BDNF" — $59.99
+- Card 1: "Selank — GABAergic-pathway literature" — $59.99
+- Card 2: "Semax — BDNF/NGF-pathway literature" — $59.99
 - Card 3: "Run them together" — Stack $105
 - Card 4: "In-House HPLC ≥99% Target" — lab process
-- Primary text: Two Russian-developed nootropic peptides. Selank modulates GABA for calm, Semax upregulates BDNF for sharp. Run them in tandem for balanced cognitive performance. Save $15 with the stack.
+- Primary text: Two Russian-developed nootropic peptides. Selank and Semax appear in CNS-pathway research literature, including GABAergic/serotonergic and neurotrophic-factor mechanisms. Save $15 with the stack.
 - Headline: The Cognitive-Emotional Pair
 - CTA: Shop Now
 - Link: titanpeptidelab.com/products/selank-semax-stack?utm_source=meta&utm_medium=paid&utm_campaign=prospect-stack
 
 **Ad 10 — Semax Standalone (Static)**
 - Visual: "SEMAX" in large editorial type
-- Primary text: Semax nasal spray. Heptapeptide that upregulates BDNF and supports memory, focus, and neural recovery. 1mg per spray, 15mL. In-house ≥99% HPLC release target. $59.99.
-- Headline: Semax — BDNF Upregulation Research
+- Primary text: Semax nasal spray. Heptapeptide cited in BDNF/NGF and neurotrophic-pathway research literature. 1mg per spray, 15mL. In-house ≥99% HPLC release target. $59.99.
+- Headline: Semax — BDNF/NGF Pathway Research
 - CTA: Learn More
 
-### Ad Set: Fitness Recovery / Sports Science
+### Ad Set: Peptide / Pharmacology Research Interest (Secondary)
 
 **Audience:**
-- Interests: Sports science, Athletic recovery, Tissue repair, Regenerative medicine, Physical therapy
+- Interests: Pharmacology, Research chemicals, Laboratory, Biochemistry, Life sciences
 - AND behavior: Online shoppers
 - Age: 25–50
 - Geo: US
 - Exclude: Website visitors last 30 days, Purchasers last 180 days
+- NOTE (compliance): do NOT use interests tied to recovery, athletic recovery, cognitive enhancement, physical therapy, or regenerative medicine — those imply consumer self-use/treatment intent.
 
 **Ads:**
 
-**Ad 11 — BPC-157 Recovery Angle (Static)**
-- Visual: "BPC-157" large type, "Recovery. Gut support. Systemic repair." subtitle
-- Primary text: Body Protection Compound 157 in a precision nasal spray. Researchers report rapid tissue recovery and systemic anti-inflammatory action. 500mcg per dose, in-house ≥99% HPLC release target, cold-chain shipped. $64.99.
+**Ad 11 — BPC-157 Literature Angle (Static)**
+- Visual: "BPC-157" large type, "Angiogenesis. GI-mucosa. Fibroblast literature." subtitle
+- Primary text: Body Protection Compound 157 in a precision nasal research format. BPC-157 appears in published literature on angiogenesis, tendon-fibroblast, GI-mucosa, and inflammatory-pathway research. 500mcg per dose, in-house ≥99% HPLC release target, cold-chain shipped. $64.99. For laboratory research use only. Not for human or animal consumption.
 - Headline: BPC-157 Nasal Spray — Research Grade
 - CTA: Shop Now
 
 **Ad 12 — TB-500 + BPC-157 Pair (Static)**
 - Visual: Split layout — "BPC-157 Spray + TB-500 Vial"
-- Primary text: The two most-studied recovery peptides. BPC-157 nasal spray ($64.99) pairs with TB-500 injectable ($89.99) for researchers running tissue repair protocols. Both under an in-house ≥99% HPLC release target, both ship with lot-matched COA.
+- Primary text: Two of the most-studied peptides in tissue-pathway research literature. BPC-157 nasal spray ($64.99) pairs with TB-500 injectable ($89.99) for researchers studying angiogenesis, actin-binding, and fibroblast-pathway literature. Both under an in-house ≥99% HPLC release target, both ship with lot-matched COA.
 - Headline: The Recovery Research Pair
 - CTA: Shop Now
 
@@ -266,12 +268,13 @@ Use best-performing ads from Campaign 3.
 
 ### Copy Rules
 
-1. Always include "for research purposes" framing
-2. Never make health claims or imply human therapeutic use
-3. Lead with purity, verification, and process — not effects
-4. Use researcher/laboratory language, not consumer supplement language
-5. Price transparency — always include the price
-6. Mention COA and HPLC in every ad
+1. **Every ad body or landing-page hero MUST carry one explicit research-use line:** "For laboratory research use only." / "Not for human or animal consumption." / "For qualified research use only." For very short RSA headlines that can't fit it, put it in the description or the landing-page hero.
+2. Never make health claims or imply human therapeutic use; describe compounds only via published research literature / pathways ("cited in angiogenesis/BDNF/GABAergic research literature"), never as effects a user will experience.
+3. Lead with purity, verification, and process — not effects.
+4. Use researcher/laboratory language, not consumer supplement language; no "recovery / calm / sharp / fast onset / the bottle is the dose" self-use phrasing.
+5. Price transparency — always include the price.
+6. Mention COA and HPLC in every ad.
+7. Targeting: use research/lab/pharmacology intent. Do NOT target recovery, athletic recovery, cognitive enhancement, biohacking, physical therapy, or regenerative-medicine interests/keywords.
 
 ---
 

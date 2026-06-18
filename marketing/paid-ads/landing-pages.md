@@ -82,7 +82,7 @@ CTA: "Order Now"
 
 [Compound Info]
 What is BPC-157, mechanism of action (research context)
-Key specs: dosage, volume, purity, format
+Key specs: per-spray amount, volume, purity, format
 
 [Why Titan]
 Lot-matched COA, cold-chain, no representative certificates
@@ -109,7 +109,7 @@ Structure:
 ```
 [Hero]
 Headline: "The Cognitive-Emotional Research Pair"
-Subhead: "Selank for calm. Semax for sharp. $105 for both."
+Subhead: "Selank: GABA pathway. Semax: BDNF pathway. $105 for both."
 CTA: "Order Stack"
 
 [Two-Column Compare]
@@ -139,11 +139,12 @@ building new pages:
 When a user arrives with `utm_medium=paid`, show a sticky banner:
 "Welcome — use FIRST10 for 10% off your first order"
 
-### 2. Add "Research Purposes Only" Above Fold
+### 2. Add "Research Use Only" Above Fold (REQUIRED for paid traffic)
 
-Currently in footer only. For ad compliance, add a smaller disclaimer
-text near the hero or product section. This helps with Google Ads
-landing page reviews.
+Currently in footer only. For ad compliance, every landing page that receives
+paid traffic MUST show a visible above-the-fold line: "For laboratory research
+use only. Not for human or animal consumption." This is required by Google/Meta
+review and reduces FTC/FDA exposure — not optional for ad landing pages.
 
 ### 3. Improve Product Page CTAs
 
