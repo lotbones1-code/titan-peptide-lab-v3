@@ -135,14 +135,14 @@ No therapeutic claims, no human-use protocols, no dosing recommendations. All li
 
 Source page: ${url("lab-testing/")}
 
-Released lots are characterized across the following analytical assays:
+Each lot is released against in-house analytical release checks documented on the lot-release sheet:
 
-- **HPLC-UV purity** at 220 nm — release target ≥99% main peak by area.
-- **ESI-MS identity confirmation** — observed monoisotopic mass within tolerance of theoretical for the documented sequence.
-- **USP <71> sterility** on filled containers where applicable.
-- **LAL endotoxin** — bacterial endotoxin limit per release specification.
-- **ICP-MS heavy metals** screen — Pb, As, Cd, Hg.
-- **GC-FID residual solvents** — class 1/2/3 ICH Q3C screen.
+- **HPLC-UV purity check** — release target ≥99% main peak by area, recorded on the lot-release sheet.
+- **Mass-spec identity check** — observed mass recorded against the theoretical value for the documented sequence.
+- **Sterility check (USP <71>-style)** on filled containers where applicable.
+- **Endotoxin (LAL) check** — reference bacterial endotoxin limit per release specification.
+- **Heavy-metals screen** (Pb, As, Cd, Hg) — shown only when a named outside-lab report is available for the lot; not run in-house.
+- **Residual-solvent screen** — class 1/2/3 ICH Q3C reference.
 
 Documents generated per lot:
 

@@ -3,8 +3,8 @@ import { FlaskConical, QrCode, ShieldCheck, Snowflake } from "lucide-react";
 const ITEMS = [
   {
     icon: FlaskConical,
-    value: "≥99% HPLC",
-    label: "Purity threshold used for release decisions",
+    value: "≥99% target",
+    label: "HPLC purity target used for release decisions",
   },
   {
     icon: ShieldCheck,

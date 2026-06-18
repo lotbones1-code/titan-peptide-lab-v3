@@ -13,7 +13,7 @@ const FAQS = [
   {
     question: "How do you verify purity?",
     answer:
-      "Every batch is HPLC-UV tested in-house at 220 nm with ESI-MS identity confirmation. Release target is ≥99% purity. The in-house lot-release sheet ships in the box, referenced to the lot code on your bottle. No independent third-party lot report is currently published for this lot.",
+      "Each lot is released against in-house analytical checks — an HPLC-UV purity read and a mass-spec identity check — documented on the lot-release sheet, with a ≥99% purity release target. The in-house lot-release sheet ships in the box, referenced to the lot code on your bottle. No independent third-party lot report is currently published for this lot.",
   },
   {
     question: "How fast do you ship?",

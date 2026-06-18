@@ -21,7 +21,7 @@ export interface CoaMeta {
   thirdPartyLab: string;
   /** HPLC purity reported on this lot (release target ≥99%). */
   purity: string;
-  /** ESI-MS observed mass confirmation status. */
+  /** Mass-spec observed mass confirmation status. */
   identityMethod: string;
   /** True when coaUrl falls back to the generic specimen PDF (no real per-lot COA yet). */
   isSpecimen: boolean;
@@ -35,8 +35,8 @@ export interface CoaMeta {
 // retest anywhere. This string reports honest status until a verifiable
 // third-party lot report exists; only then name the lab.
 const PARTNER_LAB_PLACEHOLDER = "In-house release — no independent third-party report currently published";
-const HPLC_METHOD = "HPLC-UV at 220 nm";
-const IDENTITY_METHOD = "ESI-MS identity confirmation";
+const HPLC_METHOD = "HPLC-UV purity check";
+const IDENTITY_METHOD = "Mass-spec identity check";
 const ISSUE_DATE_PLACEHOLDER = "2026-04-22";
 
 // Per-SKU PDF availability flag. Flip to `true` per slug after the real

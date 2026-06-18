@@ -159,7 +159,7 @@ export function CompoundPoster({
           style={{ borderColor: `${theme.line}22` }}
         >
           {[
-            { label: "Purity", value: "≥99.0%" },
+            { label: "Purity", value: "≥99% target" },
             { label: "Volume", value: product.size.split("·")[0].trim() },
             { label: "Lot", value: lot },
           ].map(({ label, value }, i) => (
@@ -277,7 +277,7 @@ export function CompoundPoster({
 
           <div className="mt-6 grid grid-cols-3 gap-3 border-t border-[rgb(15_22_19/6%)] pt-4">
             {[
-              { label: "Purity", value: "≥99%" },
+              { label: "Purity", value: "≥99% target" },
               { label: "Format", value: formatLabel(product.category) },
               { label: "Release", value: "Lot sheet" },
             ].map(({ label, value }) => (

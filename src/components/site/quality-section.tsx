@@ -4,7 +4,7 @@ const STANDARDS = [
   {
     n: "01",
     title: "Lot-tested & documented",
-    body: "Every batch is HPLC-UV tested in-house at 220 nm with ESI-MS identity confirmation. Release target is ≥99% purity. The lot-release sheet carries the lot code etched on your bottle — same code, same batch, no rotating a single test result across SKUs.",
+    body: "Each lot is released against in-house analytical checks — an HPLC-UV purity read and a mass-spec identity check — documented on the lot-release sheet. Release target is ≥99% purity; lots below target are held. The sheet carries the lot code etched on your bottle — same code, same batch, no rotating a single result across SKUs.",
     span: "lg:col-span-7",
   },
   {

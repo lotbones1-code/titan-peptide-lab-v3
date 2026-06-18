@@ -195,7 +195,7 @@ export default async function ProductPage({
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "Every lot is HPLC-UV tested at 220 nm with a release target of \u226599% purity, plus ESI-MS identity confirmation against the documented sequence. The in-house lot-release sheet ships in the box, referenced to the lot code on your bottle. No independent third-party lot report is currently published for this lot.",
+            "Each lot is released against in-house analytical checks \u2014 an HPLC-UV purity read (\u226599% main-peak release target) and a mass-spec identity check against the documented sequence \u2014 recorded on the lot-release sheet. The in-house lot-release sheet ships in the box, referenced to the lot code on your bottle. No independent third-party lot report is currently published for this lot.",
         },
       },
       {

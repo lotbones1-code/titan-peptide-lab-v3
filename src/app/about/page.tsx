@@ -13,7 +13,7 @@ const MILESTONES = [
   {
     year: "2021",
     title: "Release discipline locked.",
-    body: "Every batch is characterized in-house with HPLC-UV and ESI-MS; the certificate must resolve to the lot in the bottle before release is signed.",
+    body: "Each lot is released against in-house analytical checks (an HPLC-UV purity read and a mass-spec identity check) documented on the lot-release sheet; the paperwork must resolve to the lot in the bottle before release is signed.",
   },
   {
     year: "2023",

@@ -5,7 +5,7 @@ import { NextRead } from "@/components/site/next-read";
 
 const LAB_TITLE = "Lab Testing — Titan Peptide Lab";
 const LAB_DESCRIPTION =
-  "HPLC purity verification, ESI-MS identity confirmation, endotoxin, heavy metals, and sterility. What every batch is tested for, and how the certificate is produced.";
+  "The in-house analytical release checks documented on each lot-release sheet — identity, purity, sterility, endotoxin, and residue screening — and how the lot documentation is produced.";
 
 export const metadata = {
   title: LAB_TITLE,
@@ -18,29 +18,29 @@ const TESTS = [
   {
     n: "01",
     name: "Identity",
-    method: "ESI-MS (positive mode)",
-    spec: "Observed mass within ±0.5 m/z of theoretical [M+H]",
+    method: "Mass-spectrometry identity check",
+    spec: "Observed mass recorded against the theoretical [M+H] for the labeled compound",
     body: "Confirms the compound in the bottle is the compound on the label. Purity of the wrong molecule is still a failed batch.",
   },
   {
     n: "02",
     name: "Purity",
-    method: "HPLC-UV, 220 nm (C18, 0.1% TFA gradient)",
-    spec: "≥ 98.0% area, internal release threshold 99.0%",
-    body: "The number most buyers look for first. Titan publishes the exact run tied to the lot instead of a generic certificate library file.",
+    method: "HPLC-UV purity check",
+    spec: "Release target ≥ 99% main-peak area; lots below target are held",
+    body: "The number most buyers look for first. The release value is recorded on the lot-release sheet referenced to your bottle's lot code.",
   },
   {
     n: "03",
     name: "Sterility",
-    method: "USP <71> direct inoculation",
-    spec: "No growth, 14 days, TSB + FTM",
-    body: "Applied to nasal sprays and reconstituted liquids. The read is checked independently before release is signed.",
+    method: "Sterility check (USP <71>-style)",
+    spec: "Target: no growth over the documented incubation period",
+    body: "Applied to nasal sprays and reconstituted liquids. The read is recorded on the lot-release sheet before release is signed.",
   },
   {
     n: "04",
     name: "Endotoxin",
-    method: "LAL, kinetic chromogenic",
-    spec: "< 5 EU/mg",
+    method: "Endotoxin (LAL) check",
+    spec: "Reference limit < 5 EU/mg",
     body: "A clean chromatogram on a pyrogenic lot is still a failed batch. This filter separates a real QA operation from a cosmetic one.",
   },
   {
@@ -53,8 +53,8 @@ const TESTS = [
   {
     n: "06",
     name: "Residual solvents",
-    method: "Headspace GC-FID",
-    spec: "ICH Q3C class 2 solvents at report threshold",
+    method: "Residual-solvent screen",
+    spec: "Reference: ICH Q3C class 2 solvents at report threshold",
     body: "DMF, methanol, acetonitrile, and related residue checks are screened and recorded on the retained lot documentation.",
   },
 ];
@@ -77,11 +77,12 @@ export default function LabTestingPage() {
           }
           supporting={
             <>
-              Every batch is characterized in-house first. Assays Titan does
-              not run in-house are described as outside-lab tested only when a
-              named report is available for that lot. If an in-house read fails
-              method tolerance, the batch is held. The point is not to print an
-              impressive certificate — it is to make the certificate believable.
+              Each lot is released against an in-house analytical release
+              sheet. Checks Titan does not run in-house are described as
+              outside-lab tested only when a named report is available for that
+              lot. If a documented release check falls outside its target, the
+              batch is held. The point is not to print an impressive certificate
+              — it is to make the certificate believable.
             </>
           }
           aside={
