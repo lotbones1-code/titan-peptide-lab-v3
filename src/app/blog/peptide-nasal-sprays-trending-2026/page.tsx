@@ -353,7 +353,7 @@ export default function NasalSprayTrendingPage() {
             </p>
             <ul className="ml-6 list-disc space-y-3">
               <li>
-                <strong>HPLC-verified purity ≥99%</strong> — the gold standard
+                <strong>HPLC-tested purity ≥99%</strong> — the gold standard
                 for peptide quality. See our{" "}
                 <Link
                   href="/blog/how-to-read-peptide-coa"

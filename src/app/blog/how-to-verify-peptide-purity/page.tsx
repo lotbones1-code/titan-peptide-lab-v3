@@ -74,7 +74,7 @@ export default function HowToVerifyPeptidePurityPage() {
         name: "What purity level should research-grade peptides have?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Research-grade peptides should have HPLC-verified purity of 99% or higher. Some research applications may tolerate 98%+ for cost reasons, but 99% is the standard for serious research protocols. Anything below 98% introduces too much impurity uncertainty to produce reliable data.",
+          text: "Research-grade peptides should have HPLC-tested purity of 99% or higher. Some research applications may tolerate 98%+ for cost reasons, but 99% is the standard for serious research protocols. Anything below 98% introduces too much impurity uncertainty to produce reliable data.",
         },
       },
       {
@@ -548,7 +548,7 @@ export default function HowToVerifyPeptidePurityPage() {
                   What purity level should research-grade peptides have?
                 </dt>
                 <dd className="mt-3 text-[15px] leading-[1.7] text-[#24332c]">
-                  Research-grade peptides should have HPLC-verified purity of
+                  Research-grade peptides should have HPLC-tested purity of
                   99% or higher. Some research applications may accept 98%+
                   for cost efficiency, but 99% is the standard for
                   reproducible, publication-quality work. Below 98% introduces

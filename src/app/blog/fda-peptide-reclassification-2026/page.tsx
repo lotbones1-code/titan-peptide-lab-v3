@@ -297,7 +297,7 @@ export default function FDAReclassificationPage() {
                 href="/blog/how-to-read-peptide-coa"
                 className="text-[oklch(0.68_0.17_78)] underline decoration-stone-300 underline-offset-4 hover:decoration-[oklch(0.68_0.17_78)]"
               >
-                HPLC-verified COAs with mass spectrometry confirmation
+                HPLC-tested COAs with mass spectrometry confirmation
               </Link>
               .
             </p>

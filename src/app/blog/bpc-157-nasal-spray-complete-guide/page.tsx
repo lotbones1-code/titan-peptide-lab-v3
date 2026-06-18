@@ -79,7 +79,7 @@ export default function BPC157GuidePage() {
         name: "What purity should I look for in BPC-157 nasal spray?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Look for HPLC-verified purity of 99% or higher, with a batch-matched Certificate of Analysis that includes the chromatogram and mass spectrometry confirmation.",
+          text: "Look for HPLC-tested purity of 99% or higher, with a batch-matched Certificate of Analysis that includes the chromatogram and mass spectrometry confirmation.",
         },
       },
     ],
@@ -224,7 +224,7 @@ export default function BPC157GuidePage() {
               <Highlight>BPC-157 nasal spray</Highlight> from products that
               should not be in your lab.
             </p>
-            <BlogH3>HPLC-verified purity above 99%</BlogH3>
+            <BlogH3>HPLC-tested purity above 99%</BlogH3>
             <p>
               The gold standard for peptide purity testing is High-Performance
               Liquid Chromatography (HPLC). Any reputable supplier will provide
@@ -381,7 +381,7 @@ export default function BPC157GuidePage() {
                   What purity should I look for?
                 </dt>
                 <dd className="mt-3 text-[15px] leading-[1.7] text-[#24332c]">
-                  Look for HPLC-verified purity of 99% or higher, confirmed by
+                  Look for HPLC-tested purity of 99% or higher, confirmed by
                   a batch-matched Certificate of Analysis that includes the
                   chromatogram and mass spectrometry data confirming the correct
                   molecular weight (1419.53 Da for BPC-157 free acid).

@@ -413,7 +413,7 @@ export default function PeptideTrends2026Page() {
             </p>
             <BlogH3>Where can I buy research peptides?</BlogH3>
             <p>
-              Prioritize suppliers who provide HPLC-verified purity (≥99%),
+              Prioritize suppliers who provide HPLC-tested purity (≥99%),
               batch-matched COAs with mass spectrometry, cold-chain shipping,
               and for nasal sprays, pharmaceutical-quality atomizer hardware.{" "}
               <Link

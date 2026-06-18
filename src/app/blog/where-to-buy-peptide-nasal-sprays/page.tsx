@@ -350,7 +350,7 @@ export default function WhereToBuyPage() {
             </p>
             <ul className="my-5 ml-6 list-disc space-y-3">
               <li>
-                HPLC-verified purity at 99% or higher — no exceptions
+                HPLC-tested purity at 99% or higher — no exceptions
               </li>
               <li>
                 Batch-matched COA with HPLC chromatogram and mass spec data

@@ -79,7 +79,7 @@ export default function PT141GuidePage() {
         name: "What purity should research-grade PT-141 have?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Research-grade PT-141 should have HPLC-verified purity of 99% or higher, with a batch-matched Certificate of Analysis including mass spectrometry confirmation of the correct molecular weight (1025.2 Da).",
+          text: "Research-grade PT-141 should have HPLC-tested purity of 99% or higher, with a batch-matched Certificate of Analysis including mass spectrometry confirmation of the correct molecular weight (1025.2 Da).",
         },
       },
     ],
@@ -250,7 +250,7 @@ export default function PT141GuidePage() {
             </p>
             <BlogH3>Purity verification</BlogH3>
             <p>
-              Demand HPLC-verified purity at 99% or above. PT-141 is a cyclic
+              Demand HPLC-tested purity at 99% or above. PT-141 is a cyclic
               peptide, which means synthesis is more complex than linear sequences.
               Incomplete cyclization produces linear byproducts that co-elute
               differently on HPLC — a competent COA should show clean separation.
@@ -336,7 +336,7 @@ export default function PT141GuidePage() {
                   What purity should I look for in PT-141?
                 </dt>
                 <dd className="mt-3 text-[15px] leading-[1.7] text-[#24332c]">
-                  Look for HPLC-verified purity of 99% or higher with mass
+                  Look for HPLC-tested purity of 99% or higher with mass
                   spectrometry confirming the correct molecular weight of 1025.2
                   Da. Cyclic peptides require additional synthesis steps, making
                   COA verification especially important.
