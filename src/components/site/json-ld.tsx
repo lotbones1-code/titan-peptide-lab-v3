@@ -1,4 +1,4 @@
-import { BRAND, PRODUCTS } from "@/lib/products";
+import { BRAND, PRODUCTS, PRICE_VALID_UNTIL } from "@/lib/products";
 
 export function OrganizationJsonLd() {
   // Only `@titan.peptidelab` (IG) is currently a live, brand-claimed profile.
@@ -121,6 +121,7 @@ export function ProductListJsonLd() {
           "@type": "Offer",
           price: p.price.toFixed(2),
           priceCurrency: "USD",
+          priceValidUntil: PRICE_VALID_UNTIL,
           availability: "https://schema.org/InStock",
         },
       },

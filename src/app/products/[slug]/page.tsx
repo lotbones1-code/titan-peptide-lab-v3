@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { BRAND, PRODUCTS } from "@/lib/products";
+import { BRAND, PRODUCTS, PRICE_VALID_UNTIL } from "@/lib/products";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { ProductDetail } from "@/components/site/product-detail";
@@ -110,6 +110,7 @@ export default async function ProductPage({
       url: `https://${BRAND.domain}/products/${product.slug}/`,
       price: product.price.toFixed(2),
       priceCurrency: "USD",
+      priceValidUntil: PRICE_VALID_UNTIL,
       availability: "https://schema.org/InStock",
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@type": "Organization", name: "Titan Peptide Lab" },

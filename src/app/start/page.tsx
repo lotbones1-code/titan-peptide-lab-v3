@@ -9,7 +9,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/site/json-ld";
-import { PRODUCTS, BRAND } from "@/lib/products";
+import { PRODUCTS, BRAND, PRICE_VALID_UNTIL } from "@/lib/products";
 import { ArrowRight, ShieldCheck, Wallet, Truck, FileText } from "lucide-react";
 
 const START_TITLE = "Start here — Titan Peptide Lab";
@@ -107,6 +107,7 @@ export default function StartPage() {
           "@type": "Offer",
           price: p.price.toFixed(2),
           priceCurrency: "USD",
+          priceValidUntil: PRICE_VALID_UNTIL,
           availability: "https://schema.org/InStock",
         },
       },

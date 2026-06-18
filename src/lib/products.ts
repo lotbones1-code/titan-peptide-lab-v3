@@ -36,6 +36,15 @@ export const DISCOUNT_CODES = DISCOUNT_CODES_DATA;
 export const PRODUCTS: Product[] = PRODUCTS_DATA;
 export const PROMOS = PROMOS_DATA;
 
+// Google recommends `priceValidUntil` on Offer structured data. Without it the
+// Rich Results Test warns and Google is likelier to drop the price from the
+// SERP rich snippet — a real CTR/visibility loss for product searches. A
+// rolling one-year date keeps every Offer valid across deploys (the site
+// rebuilds on each ship) with zero hand-maintenance.
+export const PRICE_VALID_UNTIL = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000)
+  .toISOString()
+  .slice(0, 10);
+
 export const NASAL_SPRAYS = PRODUCTS.filter((p) => p.category === "nasal-spray");
 export const VIALS = PRODUCTS.filter((p) => p.category === "injectable");
 export const STACKS = PRODUCTS.filter((p) => p.category === "stack");
