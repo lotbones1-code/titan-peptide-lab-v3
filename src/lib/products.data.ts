@@ -6,8 +6,8 @@ import type { Product } from "./products";
 export const BRAND_DATA = {
   "name": "Titan Peptide",
   "domain": "www.titanpeptidelab.com",
-  "tagline": "Research-grade peptides. Batch-verified purity.",
-  "description": "Research-grade peptide formulations with HPLC-verified purity, batch-matched certificates of analysis, and cold-chain fulfillment. Built for laboratories and researchers who require traceable quality."
+  "tagline": "Research-grade peptides. Batch-documented purity.",
+  "description": "Research-grade peptide formulations with in-house HPLC release-target purity, lot-matched release documentation, and cold-chain fulfillment. Built for laboratories and researchers who require traceable quality."
 } as const;
 
 export const WALLETS_DATA = {
@@ -65,7 +65,7 @@ export const PRODUCTS_DATA: Product[] = [
     "price": 64.99,
     "size": "15mL · 500mcg/spray",
     "tagline": "Subject of angiogenesis and GI-mucosa research literature",
-    "description": "Body Protection Compound 157 in a precision intranasal format. Cited across angiogenesis, tendon-fibroblast, and GI-mucosa research literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
+    "description": "Body Protection Compound 157 in a precision intranasal format. Cited across angiogenesis, tendon-fibroblast, and GI-mucosa research literature. In-house HPLC release target of ≥99% main-peak purity. For research use only. Not for human consumption.",
     "benefits": [
       "Cited in tendon-fibroblast research",
       "Cited in GI-mucosa research literature",
@@ -84,7 +84,7 @@ export const PRODUCTS_DATA: Product[] = [
     "price": 89.99,
     "size": "5mg lyophilized",
     "tagline": "Subject of actin-binding and angiogenesis research",
-    "description": "Thymosin Beta-4 active fragment (TB-500). Cited in actin-sequestration and angiogenesis research literature. Frequently paired with BPC-157 in academic protocol literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
+    "description": "Thymosin Beta-4 active fragment (TB-500). Cited in actin-sequestration and angiogenesis research literature. Frequently paired with BPC-157 in academic protocol literature. In-house HPLC release target of ≥99% main-peak purity. For research use only. Not for human consumption.",
     "benefits": [
       "Thymosin β-4 active fragment",
       "Cited in actin-binding/angiogenesis research",
@@ -102,7 +102,7 @@ export const PRODUCTS_DATA: Product[] = [
     "price": 119.99,
     "size": "5mg / 5mg blend",
     "tagline": "Pre-blended GH-secretagogue research format",
-    "description": "Pre-blended CJC-1295 (no DAC) with Ipamorelin in a single lyophilized vial. Both compounds appear in GH-secretagogue and GHRH-receptor research literature. Reconstitute with bacteriostatic water. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
+    "description": "Pre-blended CJC-1295 (no DAC) with Ipamorelin in a single lyophilized vial. Both compounds appear in GH-secretagogue and GHRH-receptor research literature. Reconstitute with bacteriostatic water. In-house HPLC release target of ≥99% main-peak purity. For research use only. Not for human consumption.",
     "benefits": [
       "Pre-blended single-vial format",
       "GHRH/GHS-receptor research interest",
@@ -124,7 +124,7 @@ export const PRODUCTS_DATA: Product[] = [
     "benefits": [
       "Lyophilized SC research format",
       "Higher mg per vial than spray",
-      "HPLC ≥99% purity",
+      "HPLC ≥99% purity target",
       "Lot release sheet included"
     ],
     "image": "/products/bpc157-vial.png",
@@ -138,7 +138,7 @@ export const PRODUCTS_DATA: Product[] = [
     "price": 69.99,
     "size": "10mL · 1mg/spray",
     "tagline": "Melanocortin-receptor (MC3R/MC4R) agonist research compound",
-    "description": "Bremelanotide — synthetic α-MSH analog and melanocortin-receptor (MC3R/MC4R) agonist. Appears in melanocortin-pathway and CNS-receptor research literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
+    "description": "Bremelanotide — synthetic α-MSH analog and melanocortin-receptor (MC3R/MC4R) agonist. Appears in melanocortin-pathway and CNS-receptor research literature. In-house HPLC release target of ≥99% main-peak purity. For research use only. Not for human consumption.",
     "benefits": [
       "Investigated in melanocortin-pathway research",
       "Non-hormonal melanocortin agonist",
@@ -157,7 +157,7 @@ export const PRODUCTS_DATA: Product[] = [
     "price": 59.99,
     "size": "15mL · 1mg/spray",
     "tagline": "Subject of BDNF and neurotrophic-pathway research",
-    "description": "Heptapeptide ACTH(4-10) analog originally developed in Russian CNS research programs. Cited for BDNF/NGF and neurotrophic-pathway research in academic literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
+    "description": "Heptapeptide ACTH(4-10) analog originally developed in Russian CNS research programs. Cited for BDNF/NGF and neurotrophic-pathway research in academic literature. In-house HPLC release target of ≥99% main-peak purity. For research use only. Not for human consumption.",
     "benefits": [
       "Cited in memory/learning research literature",
       "BDNF-pathway research interest",
@@ -176,7 +176,7 @@ export const PRODUCTS_DATA: Product[] = [
     "price": 59.99,
     "size": "15mL · 750mcg/spray",
     "tagline": "Subject of anxiolytic-pathway and attention research",
-    "description": "Heptapeptide derivative of tuftsin originally synthesized in Soviet-era CNS research programs. Cited in academic literature on GABAergic and serotonergic-pathway modulation. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
+    "description": "Heptapeptide derivative of tuftsin originally synthesized in Soviet-era CNS research programs. Cited in academic literature on GABAergic and serotonergic-pathway modulation. In-house HPLC release target of ≥99% main-peak purity. For research use only. Not for human consumption.",
     "benefits": [
       "Cited in anxiolytic-pathway research",
       "Cited in attention/cognition research",
@@ -195,7 +195,7 @@ export const PRODUCTS_DATA: Product[] = [
     "price": 105,
     "size": "2 × 15mL",
     "tagline": "Two-spray format for paired CNS-pathway research",
-    "description": "Selank and Semax in matched intranasal sprays. Frequently paired in academic literature on anxiolytic-pathway (Selank) and neurotrophic-pathway (Semax) mechanisms. HPLC-verified ≥99% purity on both. For research use only. Not for human consumption.",
+    "description": "Selank and Semax in matched intranasal sprays. Frequently paired in academic literature on anxiolytic-pathway (Selank) and neurotrophic-pathway (Semax) mechanisms. In-house HPLC release target of ≥99% main-peak purity on both. For research use only. Not for human consumption.",
     "benefits": [
       "Save $15 vs separate",
       "Paired CNS-pathway research format",
@@ -213,7 +213,7 @@ export const PRODUCTS_DATA: Product[] = [
     "price": 62.99,
     "size": "15mL · 500mcg/spray",
     "tagline": "Subject of EEG sleep-architecture and circadian-pathway research",
-    "description": "Delta Sleep-Inducing Peptide in a precision intranasal format. Appears in EEG sleep-architecture and circadian-pathway research literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
+    "description": "Delta Sleep-Inducing Peptide in a precision intranasal format. Appears in EEG sleep-architecture and circadian-pathway research literature. In-house HPLC release target of ≥99% main-peak purity. For research use only. Not for human consumption.",
     "benefits": [
       "Cited in EEG sleep-architecture research",
       "Circadian-pathway research interest",
@@ -232,7 +232,7 @@ export const PRODUCTS_DATA: Product[] = [
     "price": 74.99,
     "size": "15mL · 400mcg/spray",
     "tagline": "Subject of social-cognition and autonomic-pathway research",
-    "description": "Nine-residue neurohypophyseal peptide in a precision intranasal format. Cited in social-cognition, trust-paradigm, and HPA-axis research literature. HPLC-verified ≥99% purity. For research use only. Not for human consumption.",
+    "description": "Nine-residue neurohypophyseal peptide in a precision intranasal format. Cited in social-cognition, trust-paradigm, and HPA-axis research literature. In-house HPLC release target of ≥99% main-peak purity. For research use only. Not for human consumption.",
     "benefits": [
       "Cited in social-cognition paradigms",
       "Investigated in HPA-axis research",

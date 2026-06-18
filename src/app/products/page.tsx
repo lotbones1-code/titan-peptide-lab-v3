@@ -19,10 +19,10 @@ const FILTERS: { value: Filter; label: string }[] = [
 ];
 
 const TRUST = [
-  "HPLC ≥99% purity on every batch",
+  "In-house HPLC ≥99% purity release target",
   "Lot release sheet with every order",
   "Cold-chain dispatch within 24h",
-  "Mass-spec identity confirmed",
+  "Identity confirmation on the lot-release sheet",
 ];
 
 const FORMAT_GUIDE = [
@@ -193,7 +193,7 @@ export default function ProductsPage() {
           eyebrow="Lab testing"
           title="What each bottle is tested for before it ships."
           href="/lab-testing"
-          blurb="Identity, purity, sterility, endotoxin, heavy metals, residual solvents — with specs, methods, and the independent ISO 17025 crosscheck that decides whether a batch leaves the building."
+          blurb="Identity, purity, sterility, endotoxin, heavy metals, residual solvents — with specs, methods, and the in-house release rule that decides whether a batch leaves the building."
         />
       </main>
       <Footer />

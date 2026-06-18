@@ -65,7 +65,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="mt-4 max-w-xs text-[13px] leading-[1.7] text-white/45">
-              Research-grade peptide nasal sprays with batch-verified purity and cold-chain fulfillment.
+              Research-grade peptide nasal sprays with batch-documented release paperwork and cold-chain fulfillment.
             </p>
           </div>
 

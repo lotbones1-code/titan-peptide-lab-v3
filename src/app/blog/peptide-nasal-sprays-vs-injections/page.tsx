@@ -507,7 +507,7 @@ export default function SprayVsInjectionPage() {
 
           <BlogCTA
             heading="Browse both formats in our catalog"
-            text="Nasal sprays and injectable vials — all with HPLC-verified 99%+ purity, batch-matched COAs, and cold-chain shipping."
+            text="Nasal sprays and injectable vials — all with an in-house ≥99% HPLC purity release target, batch-matched COAs, and cold-chain shipping."
             href="/products"
             label="View full catalog"
           />

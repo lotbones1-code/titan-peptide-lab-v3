@@ -423,7 +423,7 @@ export default function SemaxVsSelankPage() {
             <p>
               Both Semax and Selank are sensitive to degradation in solution.
               When sourcing either peptide in nasal spray format, the same
-              quality criteria apply: HPLC-verified purity at 99%+, batch-matched
+              quality criteria apply: an in-house ≥99% HPLC purity release target, batch-matched
               COA with mass spec confirmation, cold-chain shipping, and
               pharmaceutical-grade atomizer hardware.
             </p>
@@ -448,7 +448,7 @@ export default function SemaxVsSelankPage() {
 
           <BlogCTA
             heading="Ready to start your neuropeptide protocol?"
-            text="Browse Semax, Selank, and the popular stack — all with HPLC-verified 99%+ purity and batch-matched COAs."
+            text="Browse Semax, Selank, and the popular stack — all with an in-house ≥99% HPLC purity release target and batch-matched COAs."
             href="/products"
             label="View neuropeptide sprays"
           />

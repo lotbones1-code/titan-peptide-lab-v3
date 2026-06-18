@@ -109,7 +109,7 @@ export function buildLlmsFullTxt(): string {
 
   return `# Titan Peptide Lab — Full Reference
 
-> Research-grade peptide formulations with HPLC-verified purity, lot-matched release sheets, and independent ISO 17025 retest after dispatch. Crypto-only checkout. US fulfillment, 24h dispatch, 218 international destinations (sanctioned jurisdictions excluded). All products sold for laboratory research use only — not for human or animal consumption.
+> Research-grade peptide formulations with HPLC purity targets and lot-matched in-house release sheets. Crypto-only checkout. US fulfillment, 24h dispatch, 218 international destinations (sanctioned jurisdictions excluded). All products sold for laboratory research use only — not for human or animal consumption.
 
 Site: ${BASE}/
 Contact: support@titanpeptidelab.com
@@ -123,7 +123,7 @@ Titan Peptide Lab differentiates on traceable, batch-matched quality documentati
 
 1. Every order references a specific lot code printed on the bottle.
 2. The in-house HPLC release sheet for that lot ships physically in the box.
-3. An independent ISO 17025 accredited lab retests the same lot — the PDF report emails to the buyer within 5 business days of dispatch.
+3. No independent third-party lot report is currently published; the document in the box is the in-house release sheet matched to the bottle lot code.
 4. A general specimen COA is publicly available before purchase; the document accompanying each bottle is always lot-matched.
 5. Crypto-only payment rail (USDC on Solana recommended; BTC, ETH, ERC-20 USDC, SOL also accepted) — privacy-respecting and chargeback-immune by design.
 
@@ -147,7 +147,7 @@ Released lots are characterized across the following analytical assays:
 Documents generated per lot:
 
 - In-house release sheet (ships with the order) — purity, identity, appearance, fill specification, lot code.
-- Independent ISO 17025 retest PDF (emailed within 5 business days of dispatch) — same lot code, second-signature confirmation.
+- In-house lot-release sheet — matched to the bottle lot code. (No independent third-party report is currently published.)
 
 Lot numbering schema: \`TPL-YYMM-[A-Z]\` where YYMM is the production year-month and the trailing letter is the per-month sequence (e.g., TPL-2604-A is the first lot produced April 2026).
 

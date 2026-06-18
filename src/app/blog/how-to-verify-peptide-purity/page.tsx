@@ -604,7 +604,7 @@ export default function HowToVerifyPeptidePurityPage() {
 
           <BlogCTA
             heading="See our lab testing documentation"
-            text="Every Titan Peptide product ships with a batch-matched COA including HPLC chromatogram, 99%+ purity verification, and mass spec identity confirmation from an independent third-party laboratory."
+            text="Every Titan Peptide product ships with an in-house lot-release sheet referenced to the lot code on the bottle — listing the purity release target (≥99% main-peak) and release status. No independent third-party lot report is currently published."
             href="/lab-testing"
             label="View Lab Testing & COAs"
           />

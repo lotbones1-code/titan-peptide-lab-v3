@@ -364,7 +364,7 @@ export default function PT141GuidePage() {
 
           <BlogCTA
             heading="Source research-grade PT-141"
-            text="Titan Peptide PT-141 nasal spray: HPLC-verified 99%+ purity, batch-matched COA with mass spec confirmation, metered-dose actuator, cold-chain shipped."
+            text="Titan Peptide PT-141 nasal spray: an in-house ≥99% HPLC purity release target, batch-matched COA with mass spec confirmation, metered-dose actuator, cold-chain shipped."
             href="/products/pt-141-nasal-spray"
             label="View PT-141 Nasal Spray"
           />

@@ -232,7 +232,7 @@ export function CartDrawer() {
               <div className="mt-3 space-y-2.5 text-[12px] text-[#44514b]">
                 <div className="flex items-start gap-2.5">
                   <FileText className="mt-0.5 h-3.5 w-3.5 text-[#1e6f58]" />
-                  <span>Every order is paired with the lot&apos;s in-house release sheet; the independent retest follows by email.</span>
+                  <span>Every order is paired with the lot&apos;s in-house release sheet, matched to the lot code on the bottle.</span>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <Truck className="mt-0.5 h-3.5 w-3.5 text-[#1e6f58]" />

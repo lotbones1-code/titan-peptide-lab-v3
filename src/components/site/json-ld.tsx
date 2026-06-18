@@ -38,7 +38,7 @@ export function OrganizationJsonLd() {
       "Retatrutide",
       "Research peptides",
       "HPLC purity testing",
-      "ISO 17025 third-party COA",
+      "Batch-matched certificate of analysis",
     ],
     areaServed: "Worldwide (218 destinations, sanctioned jurisdictions excluded)",
   };
@@ -69,7 +69,7 @@ export function FounderJsonLd() {
     knowsAbout: [
       "Research peptides",
       "Certificate of analysis (COA)",
-      "ISO 17025 third-party testing",
+      "Lot-matched COA documentation",
       "Quality assurance",
       "AI automation",
     ],

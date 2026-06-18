@@ -21,7 +21,7 @@ export async function generateMetadata({
   const product = PRODUCTS.find((p) => p.slug === slug);
   if (!product) return {};
   const title = `${product.name} — ${product.size} | Titan Peptide Lab`;
-  const description = `${product.tagline}. ${product.size}. HPLC ≥99% purity target, lot release sheet, independent retest by email, 24h dispatch. Crypto-only checkout. Research use only.`;
+  const description = `${product.tagline}. ${product.size}. HPLC ≥99% purity target, lot-matched in-house release sheet, 24h dispatch. Crypto-only checkout. Research use only.`;
   const url = `https://${BRAND.domain}/products/${product.slug}/`;
   return {
     title,
@@ -88,7 +88,7 @@ export default async function ProductPage({
       },
       {
         "@type": "PropertyValue",
-        name: "Third-party retest lab",
+        name: "Lab report status",
         value: coa.thirdPartyLab,
       },
       {
@@ -99,7 +99,9 @@ export default async function ProductPage({
     ],
     subjectOf: {
       "@type": "CreativeWork",
-      name: `Certificate of Analysis — ${product.name} (lot ${lot})`,
+      name: coa.isSpecimen
+        ? `Specimen lot-release-sheet format (sample) — ${product.name}`
+        : `Certificate of Analysis — ${product.name} (lot ${lot})`,
       url: coaAbsoluteUrl,
       encodingFormat: "application/pdf",
     },
@@ -193,7 +195,7 @@ export default async function ProductPage({
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "Every lot is HPLC-UV tested at 220 nm with a release target of \u226599% purity, plus ESI-MS identity confirmation against the documented sequence. An independent ISO 17025 accredited laboratory retests the same lot and emails the COA within 5 business days of dispatch \u2014 same lot code on both documents.",
+            "Every lot is HPLC-UV tested at 220 nm with a release target of \u226599% purity, plus ESI-MS identity confirmation against the documented sequence. The in-house lot-release sheet ships in the box, referenced to the lot code on your bottle. No independent third-party lot report is currently published for this lot.",
         },
       },
       {
@@ -201,7 +203,7 @@ export default async function ProductPage({
         name: `Is the COA tied to the specific lot I receive?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Yes. The in-house release sheet for lot ${lot} ships inside the order and references the lot code printed on your bottle. The independent ISO 17025 retest PDF references the same lot code and arrives by email within 5 business days of dispatch.`,
+          text: `Yes. The in-house release sheet for lot ${lot} ships inside the order and references the lot code printed on your bottle. Any future independent third-party report would be checked against that same lot code before Titan names it.`,
         },
       },
       {
@@ -237,7 +239,7 @@ export default async function ProductPage({
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "Crypto has no chargebacks, so the paper trail does the work. Your order ID is created and recorded with support before any crypto leaves your wallet, so the order exists on our side first. Most new buyers start with a single unit (FIRST10 takes 10% off) to verify the source on a small order before scaling up. Payment is confirmed on-chain — usually under 30 minutes — then orders ship within 24h with tracking by email. Every order includes the lot-matched release sheet in the box, and the independent ISO 17025 retest for that same lot code follows by email within 5 business days. Unopened items are returnable within 14 days, and support@titanpeptidelab.com replies within 24–48h.",
+            "Crypto has no chargebacks, so the paper trail does the work. Your order ID is created and recorded with support before any crypto leaves your wallet, so the order exists on our side first. Most new buyers start with a single unit (FIRST10 takes 10% off) to verify the source on a small order before scaling up. Payment is confirmed on-chain — usually under 30 minutes — then orders ship within 24h with tracking by email. Every order includes the lot-matched in-house release sheet in the box, referenced to the lot code on your bottle. Unopened items are returnable within 14 days, and support@titanpeptidelab.com replies within 24–48h.",
         },
       },
       {

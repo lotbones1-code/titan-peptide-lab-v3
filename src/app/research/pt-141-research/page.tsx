@@ -265,7 +265,7 @@ export default function PT141Page() {
               the developer shifted to subcutaneous for approval.
             </p>
             <p>
-              Research-grade PT-141 under HPLC-verified purity is
+              Research-grade PT-141 under a documented in-house HPLC purity release target is
               catalog-listed at{" "}
               <Link
                 href="/products/pt-141-nasal-spray"

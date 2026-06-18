@@ -412,7 +412,7 @@ export function ProductDetail({ product }: { product: Product }) {
                 </a>
               </div>
               <p className="mt-2 text-[10px] leading-4 text-[#8a9690]">
-                The in-house release sheet for lot {lot} ships with the order; the independent ISO 17025 retest PDF follows by email within 5 business days.
+                The in-house release sheet for lot {lot} ships with the order, referenced to the lot code on your bottle.
               </p>
             </div>
           </div>
@@ -445,8 +445,7 @@ export function ProductDetail({ product }: { product: Product }) {
               <p className="mt-3 text-[13px] leading-[1.7] text-[#5c6762]">
                 We don&apos;t fabricate reviews — and we don&apos;t need to.
                 Every bottle ships with the in-house release sheet for the
-                lot on the label. The independent ISO 17025 retest follows
-                by email within 5 business days of dispatch.
+                lot on the label, referenced to the lot code on your bottle.
               </p>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
@@ -460,11 +459,11 @@ export function ProductDetail({ product }: { product: Product }) {
               </div>
               <div className="rounded-2xl border border-[#e8e6e1] bg-white p-5">
                 <FlaskConical className="h-4 w-4 text-[#1e6f58]" />
-                <p className="mt-3 text-[13px] font-semibold text-[#0f1613]">Independent ISO 17025 retest</p>
+                <p className="mt-3 text-[13px] font-semibold text-[#0f1613]">Third-party report status</p>
                 <p className="mt-1.5 text-[12px] leading-[1.7] text-[#5c6762]">
-                  A separate accredited lab retests the same lot. PDF
-                  emailed within 5 business days — same lot code, second
-                  signature.
+                  No independent third-party lot report is currently published
+                  for this lot. Titan will not name a third-party report unless it
+                  can be verified against the same lot code.
                 </p>
               </div>
               <div className="rounded-2xl border border-[#e8e6e1] bg-white p-5">

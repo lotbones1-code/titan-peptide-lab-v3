@@ -46,7 +46,7 @@ const FAQS = [
   },
   {
     q: "How is Titan testing verified?",
-    a: "Every batch is characterized in-house first, then checked against an independent ISO 17025 workflow before release is signed; if the reads disagree beyond method tolerance the batch is held. Researchers who want to confirm a result can review the COA workflow on the lab-testing page and request lot documentation before ordering.",
+    a: "Every batch is characterized in-house first, then crosschecked before release is signed; if the reads disagree beyond method tolerance the batch is held. Researchers who want to confirm a result can review the COA workflow on the lab-testing page and request lot documentation before ordering.",
   },
 ];
 
@@ -118,7 +118,7 @@ export default function BuyResearchPeptidesPage() {
                 </li>
                 <li>
                   <Link className="text-[oklch(0.68_0.17_78)] hover:underline" href="/lab-testing/?ref=buy-research-peptides-testing">Lab testing</Link>{" "}
-                  — identity, purity, sterility, endotoxin, heavy metals, residual solvents, and third-party retest workflow.
+                  — identity, purity, sterility, endotoxin, heavy metals, residual solvents, and the in-house lot-release workflow.
                 </li>
               </ul>
             </BlogSection>

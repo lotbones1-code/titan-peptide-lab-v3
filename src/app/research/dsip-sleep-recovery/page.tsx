@@ -302,7 +302,7 @@ export default function DSIPPage() {
               post-administration change.
             </p>
             <p>
-              Research-grade DSIP under HPLC-verified purity is
+              Research-grade DSIP under a documented in-house HPLC purity release target is
               catalog-listed at{" "}
               <Link
                 href="/products/dsip-nasal-spray"

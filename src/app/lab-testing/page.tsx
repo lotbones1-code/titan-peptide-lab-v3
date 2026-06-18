@@ -5,7 +5,7 @@ import { NextRead } from "@/components/site/next-read";
 
 const LAB_TITLE = "Lab Testing — Titan Peptide Lab";
 const LAB_DESCRIPTION =
-  "HPLC purity verification, ISO 17025 third-party retesting, endotoxin, heavy metals, and sterility. What every batch is tested for, and how the certificate is produced.";
+  "HPLC purity verification, ESI-MS identity confirmation, endotoxin, heavy metals, and sterility. What every batch is tested for, and how the certificate is produced.";
 
 export const metadata = {
   title: LAB_TITLE,
@@ -48,7 +48,7 @@ const TESTS = [
     name: "Heavy metals",
     method: "ICP-MS (Pb, Cd, As, Hg)",
     spec: "Within ICH Q3D Option 1 limits",
-    body: "Handled with an independent ISO 17025 partner. Titan does not fake owning instrumentation it does not operate in-house.",
+    body: "Not run in-house. Heavy-metals results are shown only when a named outside-lab report is available for the lot — Titan does not claim instrumentation it does not operate.",
   },
   {
     n: "06",
@@ -68,7 +68,7 @@ export default function LabTestingPage() {
           eyebrow="Lab testing"
           title={
             <>
-              Six tests, two laboratories,{" "}
+              Every lot documented,{" "}
               <em className="not-italic text-[#1e6f58]">
                 one release standard
               </em>
@@ -77,8 +77,9 @@ export default function LabTestingPage() {
           }
           supporting={
             <>
-              Every batch is characterized in-house first, then checked against
-              an independent ISO 17025 workflow. If the reads disagree beyond
+              Every batch is characterized in-house first. Assays Titan does
+              not run in-house are described as outside-lab tested only when a
+              named report is available for that lot. If an in-house read fails
               method tolerance, the batch is held. The point is not to print an
               impressive certificate — it is to make the certificate believable.
             </>
@@ -119,7 +120,7 @@ export default function LabTestingPage() {
                     Released by
                   </span>
                   <p className="mt-2 font-serif text-lg text-[#0f1613]">
-                    Independent third-party analytical lab
+                    Titan Peptide Lab — in-house release (specimen)
                   </p>
                 </div>
 

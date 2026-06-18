@@ -375,7 +375,7 @@ export default function DSIPGuidePage() {
 
           <BlogCTA
             heading="Source research-grade DSIP"
-            text="Titan Peptide DSIP nasal spray: 99%+ HPLC purity, batch-matched COA, cold-chain shipped to preserve this enzymatically sensitive peptide."
+            text="Titan Peptide DSIP nasal spray: an in-house ≥99% HPLC purity release target, lot-matched release sheet, cold-chain shipped to preserve this enzymatically sensitive peptide."
             href="/products/dsip-nasal-spray"
             label="View DSIP Nasal Spray"
           />

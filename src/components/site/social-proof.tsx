@@ -6,7 +6,7 @@ import { Reveal } from "./reveal";
 const REASONS = [
   {
     title: "Verify the lot, not the brand",
-    body: "Most vendors ship a generic spec sheet. Titan ships a lot release sheet tied to the number on your bottle, then follows with the independent retest PDF by email. Check the paperwork before reconstitution.",
+    body: "Most vendors ship a generic spec sheet. Titan ships a lot release sheet tied to the number on your bottle — the document matches the lot, not a stock sheet. Check the paperwork before relying on the lot documentation.",
   },
   {
     title: "Crypto-only, by design",

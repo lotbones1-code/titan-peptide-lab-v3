@@ -27,7 +27,7 @@ export function Products() {
                 <span className="text-[#1a5c48]">Every lot documented.</span>
               </h2>
               <p className="mt-4 max-w-[44rem] text-[14px] leading-[1.8] text-[#59665f]">
-                Six ship as precision intranasal sprays, four as injectable vials, one as a paired nootropic stack. Each ships with the in-house release sheet for the lot on your bottle; the independent ISO 17025 retest report follows by email within 5 business days.
+                Six ship as precision intranasal sprays, four as injectable vials, one as a paired nootropic stack. Each ships with the in-house release sheet for the lot on your bottle, referenced to the lot code printed on it.
               </p>
             </div>
 

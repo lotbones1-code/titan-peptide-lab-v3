@@ -261,7 +261,7 @@ export default function SelankPage() {
               protocols.
             </p>
             <p>
-              For sourcing research-grade Selank under HPLC-verified
+              For sourcing research-grade Selank under a documented in-house HPLC purity release target
               purity with batch-matched certificates, the catalog entry
               is at{" "}
               <Link

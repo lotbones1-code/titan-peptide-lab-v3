@@ -3,14 +3,14 @@ import { Reveal } from "./reveal";
 const STANDARDS = [
   {
     n: "01",
-    title: "Independently retested",
-    body: "Every batch is HPLC tested in-house, then sent to an independent ISO 17025 lab for retest. Release target is ≥99% purity. Both reports carry the lot code etched on your bottle — same code, same batch, no rotating a single test result across SKUs.",
+    title: "Lot-tested & documented",
+    body: "Every batch is HPLC-UV tested in-house at 220 nm with ESI-MS identity confirmation. Release target is ≥99% purity. The lot-release sheet carries the lot code etched on your bottle — same code, same batch, no rotating a single test result across SKUs.",
     span: "lg:col-span-7",
   },
   {
     n: "02",
     title: "Lot-matched documentation",
-    body: "The in-house release sheet for your lot ships in the box. The independent retest report follows by email within 5 business days — same lot code on both. If the third-party result disagrees with the in-house release beyond method tolerance, the batch is recalled and you are refunded.",
+    body: "The in-house release sheet for your lot ships in the box, referenced to the lot code on your bottle. If a release read fails the threshold the batch is held — not shipped. No independent third-party lot report is currently published for this lot.",
     span: "lg:col-span-5",
   },
   {
@@ -44,7 +44,7 @@ export function QualitySection() {
                 Quality standard / 04 commitments
               </span>
               <h2 className="mt-4 font-serif text-[clamp(2.2rem,4.5vw,3.6rem)] leading-[1] tracking-[-0.03em] text-white">
-                Every bottle tested.<br />Every batch documented.
+                Every lot documented.<br />Every claim tied to paperwork.
               </h2>
             </div>
             <p className="text-[15px] leading-[1.8] text-white/60 lg:col-span-4 lg:col-start-9">

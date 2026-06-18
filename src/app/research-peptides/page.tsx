@@ -34,7 +34,7 @@ const FAQS = [
   },
   {
     q: "Does Titan provide lot-matched COAs?",
-    a: "Every Titan order ships with a lot-matched release sheet and the independent retest path is tied to the same lot code for traceability.",
+    a: "Every Titan order ships with a lot-matched release sheet and every document is tied to the same lot code for traceability.",
   },
 ];
 

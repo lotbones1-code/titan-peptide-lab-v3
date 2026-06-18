@@ -377,7 +377,7 @@ export default function WhereToBuyPage() {
 
           <BlogCTA
             heading="Browse research-grade peptide nasal sprays"
-            text="HPLC-verified purity. Batch-matched COAs. Cold-chain shipping on every order. See what's in stock."
+            text="An in-house ≥99% HPLC purity release target. Lot-matched release sheets. Cold-chain shipping on every order. See what's in stock."
             href="/products"
             label="View full catalog"
           />

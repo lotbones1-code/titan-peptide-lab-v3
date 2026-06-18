@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 const QUALITY_TITLE = "Quality, Testing & Lot Release — Titan Peptide Lab";
 const QUALITY_DESCRIPTION =
-  "How Titan Peptide Lab handles HPLC purity targets, lot release sheets, third-party retesting, and quality incident routing.";
+  "How Titan Peptide Lab handles HPLC purity targets, lot release sheets, release documentation, and quality incident routing.";
 
 // /quality is a client-side redirect page, so metadata lives in this co-located
 // layout instead of page.tsx. Keep the route self-canonical so Google no longer

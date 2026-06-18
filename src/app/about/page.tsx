@@ -12,8 +12,8 @@ const MILESTONES = [
   },
   {
     year: "2021",
-    title: "ISO 17025 partner locked.",
-    body: "Every batch gets a matched third-party re-test. In-house reads are crosschecked, not just published.",
+    title: "Release discipline locked.",
+    body: "Every batch is characterized in-house with HPLC-UV and ESI-MS; the certificate must resolve to the lot in the bottle before release is signed.",
   },
   {
     year: "2023",
@@ -83,7 +83,7 @@ export default function AboutPage() {
                   />
                   <Row k="Release rule" v="Batch-matched COA" />
                   <Row k="Audit cycle" v="Twice per year" />
-                  <Row k="Independent retest" v="ISO 17025 partner" />
+                  <Row k="Documentation" v="Lot-matched release sheet" />
                   <Row k="Funding" v="Customer-backed" />
                 </dl>
 
@@ -298,8 +298,8 @@ export default function AboutPage() {
                     he hated most as a research buyer: not being able to trust
                     what was actually in the vial. His answer wasn&apos;t a
                     louder marketing claim &mdash; it was a documentation
-                    discipline. Six tests, two labs, one release rule, and an
-                    independent ISO 17025 retest that decides whether a batch
+                    discipline. Six checks, one release rule, and an
+                    in-house crosscheck that decides whether a batch
                     ever leaves the building.
                   </p>
                   <p>
@@ -364,9 +364,9 @@ export default function AboutPage() {
 
         <NextRead
           eyebrow="Lab testing"
-          title="See the six tests, two labs, one release rule."
+          title="See the six checks and one release rule."
           href="/lab-testing"
-          blurb="Identity, purity, sterility, endotoxin, heavy metals, residual solvents — with specs, methods, and the independent ISO 17025 crosscheck that decides whether a batch leaves the building."
+          blurb="Identity, purity, sterility, endotoxin, heavy metals, residual solvents — with specs, methods, and the in-house release rule that decides whether a batch leaves the building."
         />
       </main>
       <Footer />

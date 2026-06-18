@@ -8,7 +8,7 @@ const TRUST_ITEMS = [
   },
   {
     icon: FlaskConical,
-    label: "Independent retest path",
+    label: "Retained-lot documentation",
     body: "Titan explains what is checked, how the retained lot is handled, and where the specimen COA fits.",
   },
   {

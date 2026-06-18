@@ -390,7 +390,7 @@ export default function PeptideStacksGuidePage() {
 
           <BlogCTA
             heading="Build your research stack"
-            text="Every Titan Peptide product ships with batch-matched COA, 99%+ HPLC purity, and cold-chain packaging — the consistency your stacking protocol requires."
+            text="Every Titan Peptide product ships with a lot-matched release sheet, an in-house ≥99% HPLC purity release target, and cold-chain packaging — the consistency your stacking protocol requires."
             href="/products"
             label="Browse All Products"
           />

@@ -383,7 +383,7 @@ export default function OxytocinGuidePage() {
 
           <BlogCTA
             heading="Source research-grade oxytocin"
-            text="Titan Peptide oxytocin nasal spray: HPLC-verified 99%+ purity, disulfide-bond-intact formulation, batch-matched COA, metered-dose actuator, cold-chain shipped."
+            text="Titan Peptide oxytocin nasal spray: an in-house ≥99% HPLC purity release target, disulfide-bond-intact formulation, batch-matched COA, metered-dose actuator, cold-chain shipped."
             href="/products/oxytocin-nasal-spray"
             label="View Oxytocin Nasal Spray"
           />

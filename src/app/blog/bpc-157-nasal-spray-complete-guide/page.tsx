@@ -266,8 +266,8 @@ export default function BPC157GuidePage() {
 
             <Callout>
               At Titan Peptide Lab, every BPC-157 nasal spray ships with a
-              batch-matched COA, HPLC verification at 99%+ purity, mass spec
-              confirmation, and cold-chain packaging as standard.
+              a lot-matched release sheet, an in-house ≥99% HPLC purity release
+              target, identity confirmation, and cold-chain packaging as standard.
             </Callout>
           </BlogSection>
 
@@ -412,7 +412,7 @@ export default function BPC157GuidePage() {
 
           <BlogCTA
             heading="Ready to source research-grade BPC-157?"
-            text="Every Titan Peptide BPC-157 nasal spray ships with HPLC-verified 99%+ purity, batch-matched COA, and cold-chain packaging. No middlemen, no fillers."
+            text="Every Titan Peptide BPC-157 nasal spray ships with an in-house ≥99% HPLC purity release target, batch-matched COA, and cold-chain packaging. No middlemen, no fillers."
             href="/products/bpc-157-nasal-spray"
             label="View BPC-157 Nasal Spray"
           />

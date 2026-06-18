@@ -13,7 +13,7 @@ const FAQS = [
   {
     question: "How do you verify purity?",
     answer:
-      "Every batch is HPLC tested in-house, then sent to an independent ISO 17025 lab for retest. Release target is ≥99% purity. The in-house release sheet for your lot ships in the box; the independent retest report follows by email within 5 business days of dispatch — same lot code on both.",
+      "Every batch is HPLC-UV tested in-house at 220 nm with ESI-MS identity confirmation. Release target is ≥99% purity. The in-house lot-release sheet ships in the box, referenced to the lot code on your bottle. No independent third-party lot report is currently published for this lot.",
   },
   {
     question: "How fast do you ship?",
@@ -28,7 +28,7 @@ const FAQS = [
   {
     question: "I've never paid a supplier in crypto first — how do I order with confidence?",
     answer:
-      "Fair question — crypto has no chargebacks, so we let the paper trail do the work. Your order ID is created and recorded with support before any crypto leaves your wallet, so the order exists on our side first. Most new buyers start with a single unit (FIRST10 takes 10% off) to verify the source on a small order before scaling up. After you send payment we confirm it on-chain — usually under 30 minutes — then ship cold-chain within 24h with tracking by email. Every order includes the lot-matched release sheet in the box, and the independent ISO 17025 retest for that same lot code follows by email within 5 business days — documentation a fly-by-night source can't produce. Unopened items are returnable within 14 days, and support@titanpeptidelab.com replies within 24–48h, usually same day.",
+      "Fair question — crypto has no chargebacks, so we let the paper trail do the work. Your order ID is created and recorded with support before any crypto leaves your wallet, so the order exists on our side first. Most new buyers start with a single unit (FIRST10 takes 10% off) to verify the source on a small order before scaling up. After you send payment we confirm it on-chain — usually under 30 minutes — then ship cold-chain within 24h with tracking by email. Every order includes the lot-matched in-house release sheet in the box, referenced to the lot code on your bottle — a clearer paper trail than a generic stock spec sheet. Unopened items are returnable within 14 days, and support@titanpeptidelab.com replies within 24–48h, usually same day.",
   },
   {
     question: "Do you ship internationally?",
@@ -53,7 +53,7 @@ const FAQS = [
   {
     question: "Is the COA tied to my specific lot, or a generic specimen?",
     answer:
-      "Tied to your specific lot. The release sheet that ships in the box references the same lot code printed on your bottle. The independent ISO 17025 retest report — which follows by email within 5 business days of dispatch — references that same lot code. A general specimen COA is available on request before you order, but the document with your bottle is always lot-matched.",
+      "Tied to your specific lot. The release sheet that ships in the box references the same lot code printed on your bottle. Any future independent third-party report would be checked against that same lot code before Titan names it. A specimen release-sheet sample is available on request before you order — the document with your bottle is always lot-matched.",
   },
   {
     question: "Intranasal spray vs lyophilized vial — how do I choose?",

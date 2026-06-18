@@ -24,7 +24,7 @@ export const metadata = {
 const TRUST = [
   "Every citation links to PubMed",
   "Research-framed, never diagnostic",
-  "Maps to HPLC-verified compounds",
+  "Maps to lot-release-documented compounds",
 ];
 
 export default function ResearchAssistantPage() {

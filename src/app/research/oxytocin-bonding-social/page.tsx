@@ -323,7 +323,7 @@ export default function OxytocinPage() {
               effectively mandatory reading for protocol design [9].
             </p>
             <p>
-              Research-grade oxytocin under HPLC-verified purity is
+              Research-grade oxytocin under a documented in-house HPLC purity release target is
               catalog-listed at{" "}
               <Link
                 href="/products/oxytocin-nasal-spray"

@@ -562,7 +562,7 @@ export default function BeginnerGuideNootropicPeptidesPage() {
 
           <BlogCTA
             heading="Research-grade Selank and Semax — individually or as a stack"
-            text="Both compounds ship with HPLC-verified 99%+ purity, batch-matched COA, mass spec confirmation, and cold-chain packaging. The Selank + Semax stack is priced to remove the dual-bottle penalty."
+            text="Both compounds ship with an in-house ≥99% HPLC purity release target, batch-matched COA, mass spec confirmation, and cold-chain packaging. The Selank + Semax stack is priced to remove the dual-bottle penalty."
             href="/products/selank-semax-stack"
             label="View Selank + Semax Stack"
           />

@@ -162,7 +162,7 @@ export function EmailCapture() {
             FIRST10 — 10% off your first lot
           </h3>
           <p className="mt-2 text-[14px] text-white/80 leading-relaxed">
-            We email when a new lot drops, with release-sheet notes and retest status.
+            We email when a new lot drops, with release-sheet notes.
             No drip sequences, no upsells — just batch releases and restocks.
           </p>
         </div>

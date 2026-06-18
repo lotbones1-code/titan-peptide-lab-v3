@@ -523,7 +523,7 @@ export default function PeptideNasalSprayBenefitsPage() {
 
           <BlogCTA
             heading="Browse research-grade peptide nasal sprays"
-            text="Every Titan Peptide nasal spray ships with HPLC-verified 99%+ purity, batch-matched COA, pharmaceutical-grade pump hardware, and cold-chain packaging."
+            text="Every Titan Peptide nasal spray ships with an in-house ≥99% HPLC purity release target, batch-matched COA, pharmaceutical-grade pump hardware, and cold-chain packaging."
             href="/products"
             label="View All Nasal Sprays"
           />

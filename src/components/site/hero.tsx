@@ -82,7 +82,7 @@ export function Hero() {
 
               <div className="mt-10 grid gap-3 sm:grid-cols-2">
                 {[
-                  ["≥99%", "HPLC purity, verified per lot"],
+                  ["≥99%", "HPLC purity, in-house release target"],
                   ["24h", "dispatch from payment confirmation"],
                   ["Crypto", "BTC · ETH · USDC · SOL checkout"],
                   ["Worldwide", "tracked shipping, lot release sheet"],
@@ -116,7 +116,7 @@ export function Hero() {
                       </p>
                     </div>
                     <p className="mt-3 max-w-[44ch] text-[13px] leading-[1.75] text-[#66736d]">
-                      {featured.tagline} Lot ships with its own release sheet — independent retest follows by email.
+                      {featured.tagline} Lot ships with its own release sheet, referenced to the lot code on the bottle.
                     </p>
                     <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#f0f7f4] px-3 py-1 text-[11px] font-medium text-[#1a5c48]">
                       <span className="size-1.5 rounded-full bg-[#1a5c48]"></span>
