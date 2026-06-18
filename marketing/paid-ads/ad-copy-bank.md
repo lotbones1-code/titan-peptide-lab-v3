@@ -45,7 +45,7 @@ Selank Spray · 15mL
 Semax Nasal Spray — $59.99
 Semax · 1mg/Spray · 15mL
 BDNF Upregulation Research
-Cognitive Performance Peptide
+BDNF Pathway Research Peptide
 Semax Research Peptide
 Heptapeptide Research Peptide
 ```
@@ -83,11 +83,11 @@ DSIP · HPLC ≥99% Target
 **Stack:**
 ```
 Selank + Semax Stack $105
-Save $15 — Cognitive Pair
-The Nootropic Research Duo
+Save $15 — CNS Research Pair
+The CNS-Pathway Research Duo
 Two Sprays, One Protocol
 Most Popular Peptide Combo
-Balanced Cognitive Stack
+CNS-Pathway Research Stack
 ```
 
 **Category:**
@@ -164,10 +164,10 @@ From $59.99. Every order includes the matching COA.
 ### Angle 2: Product-Led (BPC-157 as hero)
 
 **V1:**
-BPC-157 nasal spray. 500mcg per dose, 15mL precision atomizer. Ready-to-log intranasal research format; no vial reconstitution step. In-house ≥99% HPLC purity release target. $64.99.
+BPC-157 nasal spray. 500mcg per spray, 15mL precision atomizer. Ready-to-log intranasal research format; no vial reconstitution step. In-house ≥99% HPLC purity release target. $64.99.
 
 **V2:**
-BPC-157 appears in published literature on angiogenesis, tendon-fibroblast, GI-mucosa, and inflammatory-pathway research. Titan delivers it in a measured nasal research format — 500mcg per dose, in-house ≥99% HPLC release target, cold-chain shipped with a lot-matched certificate of analysis. $64.99.
+BPC-157 appears in published literature on angiogenesis, tendon-fibroblast, GI-mucosa, and inflammatory-pathway research. Titan delivers it in a measured nasal research format — 500mcg per spray, in-house ≥99% HPLC release target, cold-chain shipped with a lot-matched certificate of analysis. $64.99.
 
 ### Angle 3: Product-Led (Selank + Semax Stack)
 
@@ -193,12 +193,12 @@ For research protocols where intranasal delivery is appropriate: six measured pe
 ### Angle 5: New Product (Oxytocin)
 
 **V1:**
-New: Oxytocin nasal spray. 400mcg per dose, 15mL. Built for labs studying social-cognition, trust-paradigm, HPA-axis, and autonomic-pathway research. In-house ≥99% HPLC release target, lot-matched COA. $74.99.
+New: Oxytocin nasal spray. 400mcg per spray, 15mL. Built for labs studying social-cognition, trust-paradigm, HPA-axis, and autonomic-pathway research. In-house ≥99% HPLC release target, lot-matched COA. $74.99.
 
 ### Angle 6: New Product (DSIP)
 
 **V1:**
-New: DSIP nasal spray. Delta Sleep-Inducing Peptide in a precision nasal format. 500mcg per dose, 15mL. For sleep-architecture and slow-wave-sleep research literature. In-house ≥99% HPLC release target. $62.99.
+New: DSIP nasal spray. Delta Sleep-Inducing Peptide in a precision nasal format. 500mcg per spray, 15mL. For sleep-architecture and slow-wave-sleep research literature. In-house ≥99% HPLC release target. $62.99.
 
 ### Angle 7: Discount / Offer
 

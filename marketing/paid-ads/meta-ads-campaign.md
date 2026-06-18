@@ -145,7 +145,7 @@ Titan Peptide Lab (Ad Account)
 ### Ad Set: Peptide Research Interest
 
 **Audience:**
-- Interests: Peptides, Research chemicals, Nootropics, Pharmacology
+- Interests: Peptides, Research chemicals, Pharmacology, Biochemistry
 - AND behavior: Online shoppers
 - Age: 25–55
 - Gender: All
@@ -163,7 +163,7 @@ Titan Peptide Lab (Ad Account)
 
 **Ad 8 — BPC-157 Lead (Static)**
 - Visual: BPC-157 compound name in large editorial type (matches site poster style)
-- Primary text: BPC-157 nasal spray. 500mcg per dose, 15mL precision atomizer. In-house ≥99% HPLC purity release target. Measured-spray research format; no vial reconstitution step. $64.99 with lot-matched COA and cold-chain dispatch. For research use only.
+- Primary text: BPC-157 nasal spray. 500mcg per spray, 15mL precision atomizer. In-house ≥99% HPLC purity release target. Measured-spray research format; no vial reconstitution step. $64.99 with lot-matched COA and cold-chain dispatch. For research use only.
 - Headline: BPC-157 Nasal Spray — $64.99
 - CTA: Shop Now
 - Link: titanpeptidelab.com/products/bpc157-spray?utm_source=meta&utm_medium=paid&utm_campaign=prospect-bpc157
@@ -185,8 +185,8 @@ Titan Peptide Lab (Ad Account)
 - Card 2: "Semax — BDNF/NGF-pathway literature" — $59.99
 - Card 3: "Run them together" — Stack $105
 - Card 4: "In-House HPLC ≥99% Target" — lab process
-- Primary text: Two Russian-developed nootropic peptides. Selank and Semax appear in CNS-pathway research literature, including GABAergic/serotonergic and neurotrophic-factor mechanisms. Save $15 with the stack.
-- Headline: The Cognitive-Emotional Pair
+- Primary text: Two Russian-developed CNS-pathway research peptides. Selank and Semax appear in CNS-pathway research literature, including GABAergic/serotonergic and neurotrophic-factor mechanisms. Save $15 with the stack.
+- Headline: The CNS-Pathway Research Pair
 - CTA: Shop Now
 - Link: titanpeptidelab.com/products/selank-semax-stack?utm_source=meta&utm_medium=paid&utm_campaign=prospect-stack
 
@@ -210,14 +210,14 @@ Titan Peptide Lab (Ad Account)
 
 **Ad 11 — BPC-157 Literature Angle (Static)**
 - Visual: "BPC-157" large type, "Angiogenesis. GI-mucosa. Fibroblast literature." subtitle
-- Primary text: Body Protection Compound 157 in a precision nasal research format. BPC-157 appears in published literature on angiogenesis, tendon-fibroblast, GI-mucosa, and inflammatory-pathway research. 500mcg per dose, in-house ≥99% HPLC release target, cold-chain shipped. $64.99. For laboratory research use only. Not for human or animal consumption.
+- Primary text: Body Protection Compound 157 in a precision nasal research format. BPC-157 appears in published literature on angiogenesis, tendon-fibroblast, GI-mucosa, and inflammatory-pathway research. 500mcg per spray, in-house ≥99% HPLC release target, cold-chain shipped. $64.99. For laboratory research use only. Not for human or animal consumption.
 - Headline: BPC-157 Nasal Spray — Research Grade
 - CTA: Shop Now
 
 **Ad 12 — TB-500 + BPC-157 Pair (Static)**
 - Visual: Split layout — "BPC-157 Spray + TB-500 Vial"
 - Primary text: Two of the most-studied peptides in tissue-pathway research literature. BPC-157 nasal spray ($64.99) pairs with TB-500 injectable ($89.99) for researchers studying angiogenesis, actin-binding, and fibroblast-pathway literature. Both under an in-house ≥99% HPLC release target, both ship with lot-matched COA.
-- Headline: The Recovery Research Pair
+- Headline: The Tissue-Pathway Research Pair
 - CTA: Shop Now
 
 ---

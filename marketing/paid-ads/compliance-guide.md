@@ -197,10 +197,10 @@ Peptide sprays can trigger automated review under "unsafe supplements."
 
 If Google/Meta prove too restrictive for peptide ads:
 
-1. **Reddit Ads** — r/nootropics, r/peptides audiences, more permissive policies
+1. **Reddit Ads** — research/lab-oriented communities (e.g. r/peptides) with research-use framing; avoid self-use/biohacking audiences.
 2. **Programmatic Display** — via platforms like StackAdapt, AdRoll
-3. **Newsletter Sponsorships** — nootropics and biohacking newsletters
-4. **Podcast Ads** — biohacking and longevity podcasts
+3. **Newsletter Sponsorships** — research-chemistry / lab-supply newsletters; avoid biohacking/self-optimization lists.
+4. **Trade/Science Channels** — research-supply directories and lab-procurement contexts.
 5. **SEO + Content** — long-term organic strategy (most sustainable)
 6. **Affiliate/Referral** — partner with researchers and review sites
 7. **Twitter/X Ads** — generally more permissive on research chemicals

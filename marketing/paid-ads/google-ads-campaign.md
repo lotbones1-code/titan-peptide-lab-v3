@@ -127,7 +127,7 @@ selank cns research peptide
 - H2: 750mcg/Spray · GABA Research
 - H3: HPLC ≥99% Target · COA
 - H4: GABAergic-Pathway Research
-- D1: Selank nasal spray — 750mcg per dose, 15mL precision atomizer. Studied in GABAergic and serotonergic pathway research literature. In-house HPLC-screened, research grade.
+- D1: Selank nasal spray — 750mcg per spray, 15mL precision atomizer. Studied in GABAergic and serotonergic pathway research literature. In-house HPLC-screened, research grade.
 - D2: Russian-developed GABAergic research peptide cited in CNS-pathway literature. For research protocols. In-house HPLC-screened, cold-chain shipped with COA.
 
 ### Ad Group: Semax Spray
@@ -141,7 +141,7 @@ selank cns research peptide
 "semax nasal spray"
 "buy semax spray"
 "semax peptide"
-"semax nootropic"
+"semax research peptide"
 semax nasal spray buy
 semax research peptide
 semax bdnf research peptide
@@ -150,11 +150,11 @@ semax cns research peptide
 
 **RSA 1:**
 - H1: Semax Nasal Spray — $59.99
-- H2: 1mg/Spray · BDNF Upregulation
+- H2: 1mg/Spray · BDNF/NGF Research
 - H3: In-House HPLC ≥99% Target
 - H4: Ships Cold-Chain With COA
 - D1: Semax heptapeptide in measured nasal format. 1mg per spray, 15mL. Cited in BDNF/NGF and neurotrophic-pathway research literature. In-house ≥99% HPLC purity release target.
-- D2: Cognitive performance and neuroprotection research peptide. Stacks cleanly with Selank. In-house HPLC-screened, lot-matched COA included with every order.
+- D2: Cited in BDNF/NGF and neurotrophic-pathway research literature. Stacks cleanly with Selank. In-house HPLC-screened, lot-matched COA included with every order.
 
 ### Ad Group: PT-141 Spray
 

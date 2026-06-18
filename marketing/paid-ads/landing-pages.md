@@ -51,6 +51,7 @@ Structure:
 [Hero]
 Headline: "Six Research-Grade Nasal Peptide Sprays"
 Subhead: "In-House HPLC ≥99% Target · Lot-matched COA · Cold-chain shipped"
+Above-fold disclaimer (REQUIRED): "For laboratory research use only. Not for human or animal consumption."
 CTA: "View Catalog" → scrolls to product grid
 
 [Trust Strip]
@@ -78,6 +79,7 @@ Structure:
 [Hero]
 Headline: "BPC-157 Nasal Spray"
 Subhead: "500mcg/spray · 15mL · HPLC ≥99% Target · $64.99"
+Above-fold disclaimer (REQUIRED): "For laboratory research use only. Not for human or animal consumption."
 CTA: "Order Now"
 
 [Compound Info]
@@ -103,13 +105,14 @@ Discount reminder: FIRST10 for 10% off
 
 **3. `/lp/cognitive-stack` — Selank + Semax Landing Page**
 
-Purpose: Nootropics/biohacking audience from Meta.
+Purpose: CNS-pathway / pharmacology research audience from Meta (NOT nootropics/biohacking interests).
 
 Structure:
 ```
 [Hero]
-Headline: "The Cognitive-Emotional Research Pair"
-Subhead: "Selank: GABA pathway. Semax: BDNF pathway. $105 for both."
+Headline: "The Selank + Semax Research Pair"
+Subhead: "Selank: GABAergic-pathway literature. Semax: BDNF/NGF-pathway literature. $105 for both."
+Above-fold disclaimer (REQUIRED): "For laboratory research use only. Not for human or animal consumption."
 CTA: "Order Stack"
 
 [Two-Column Compare]
@@ -186,4 +189,4 @@ See `tracking-plan.md` for implementation details.
 2. **Week 2:** Apply quick-win site modifications
 3. **Month 2:** Build `/lp/nasal-sprays` category landing page
 4. **Month 2:** Build `/lp/bpc-157` if BPC-157 is top performer
-5. **Month 3:** Build `/lp/cognitive-stack` if nootropic Meta audience converts
+5. **Month 3:** Build `/lp/cognitive-stack` if the CNS-pathway research Meta audience converts
