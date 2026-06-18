@@ -1,0 +1,38 @@
+# codexclaw (GPT-5.5/Codex) AE-0007g review — genuine findings+verdict extracted from raw log
+# full raw log (596KB incl. git-status dump): .tmp/ae0007g/codexclaw_out.txt
+
+**Findings**
+
+1. The commit is not actually complete as staged. `.gitignore` has `/out.noindex/` at [.gitignore](/Users/shamil/openclawv2/titan-peptide-lab-v3/.gitignore:19), but it is unstaged (` M .gitignore`). The index only has the 347 `out.noindex` deletions. Fix before commit: `git add .gitignore`.
+
+2. No real repo reference to `out.noindex` exists outside the new ignore rule. A repo grep excluding `out.noindex/`, `out/`, `.next/`, `node_modules/`, `.git/`, and `.tmp/` returned only [.gitignore](/Users/shamil/openclawv2/titan-peptide-lab-v3/.gitignore:19). There is no `.github/` directory in this checkout, so no local workflow dependency.
+
+3. `ship.mjs` deploys only `out/`: it runs Next build at [scripts/ship.mjs](/Users/shamil/openclawv2/titan-peptide-lab-v3/scripts/ship.mjs:74), sets `outDir = ROOT/out` at [scripts/ship.mjs](/Users/shamil/openclawv2/titan-peptide-lab-v3/scripts/ship.mjs:76), then copies `outDir` into `~/titanpeptidelab-source` at [scripts/ship.mjs](/Users/shamil/openclawv2/titan-peptide-lab-v3/scripts/ship.mjs:82). GitHub Pages needs `.nojekyll`, which the script writes at [scripts/ship.mjs](/Users/shamil/openclawv2/titan-peptide-lab-v3/scripts/ship.mjs:85).
+
+4. GitHub Pages should not depend on `out.noindex`. The `.noindex` suffix and empty `.metadata_never_index` file are macOS Spotlight/metadata indexing signals, not Next/GitHub Pages deploy inputs. I also found no tracked `out.noindex`/`.metadata_never_index` in `~/titanpeptidelab-source`.
+
+5. Scope caveat: if the goal is “remove all HPLC-verified phrasing from source,” this change is incomplete. `out.noindex` has 148 matching files, but source still has matches, e.g. [src/app/blog/bpc-157-nasal-spray-complete-guide/page.tsx](/Users/shamil/openclawv2/titan-peptide-lab-v3/src/app/blog/bpc-157-nasal-spray-complete-guide/page.tsx:82), [src/app/blog/pt-141-nasal-spray-research-guide/page.tsx](/Users/shamil/openclawv2/titan-peptide-lab-v3/src/app/blog/pt-141-nasal-spray-research-guide/page.tsx:82), and [src/app/blog/how-to-verify-peptide-purity/page.tsx](/Users/shamil/openclawv2/titan-peptide-lab-v3/src/app/blog/how-to-verify-peptide-purity/page.tsx:77). That is not a blocker to untracking `out.noindex`, but it contradicts the literal “removed from source” premise.
+
+`git rm --cached -r out.noindex` plus a committed ignore rule is the right minimal reversible fix. Next is configured for static export at [next.config.ts](/Users/shamil/openclawv2/titan-peptide-lab-v3/next.config.ts:8), which produces `out/`, not `out.noindex`; Git will not retrack ignored untracked files unless forced.
+
+VERDICT: NEEDS-FIX: stage `.gitignore` before committing; separately audit remaining `HPLC-verified` source/live text if the honesty sweep requires repo-wide phrase removal.
+MODEL: GPT-5.5/Codex
+tokens used
+148,193
+**Findings**
+
+1. The commit is not actually complete as staged. `.gitignore` has `/out.noindex/` at [.gitignore](/Users/shamil/openclawv2/titan-peptide-lab-v3/.gitignore:19), but it is unstaged (` M .gitignore`). The index only has the 347 `out.noindex` deletions. Fix before commit: `git add .gitignore`.
+
+2. No real repo reference to `out.noindex` exists outside the new ignore rule. A repo grep excluding `out.noindex/`, `out/`, `.next/`, `node_modules/`, `.git/`, and `.tmp/` returned only [.gitignore](/Users/shamil/openclawv2/titan-peptide-lab-v3/.gitignore:19). There is no `.github/` directory in this checkout, so no local workflow dependency.
+
+3. `ship.mjs` deploys only `out/`: it runs Next build at [scripts/ship.mjs](/Users/shamil/openclawv2/titan-peptide-lab-v3/scripts/ship.mjs:74), sets `outDir = ROOT/out` at [scripts/ship.mjs](/Users/shamil/openclawv2/titan-peptide-lab-v3/scripts/ship.mjs:76), then copies `outDir` into `~/titanpeptidelab-source` at [scripts/ship.mjs](/Users/shamil/openclawv2/titan-peptide-lab-v3/scripts/ship.mjs:82). GitHub Pages needs `.nojekyll`, which the script writes at [scripts/ship.mjs](/Users/shamil/openclawv2/titan-peptide-lab-v3/scripts/ship.mjs:85).
+
+4. GitHub Pages should not depend on `out.noindex`. The `.noindex` suffix and empty `.metadata_never_index` file are macOS Spotlight/metadata indexing signals, not Next/GitHub Pages deploy inputs. I also found no tracked `out.noindex`/`.metadata_never_index` in `~/titanpeptidelab-source`.
+
+5. Scope caveat: if the goal is “remove all HPLC-verified phrasing from source,” this change is incomplete. `out.noindex` has 148 matching files, but source still has matches, e.g. [src/app/blog/bpc-157-nasal-spray-complete-guide/page.tsx](/Users/shamil/openclawv2/titan-peptide-lab-v3/src/app/blog/bpc-157-nasal-spray-complete-guide/page.tsx:82), [src/app/blog/pt-141-nasal-spray-research-guide/page.tsx](/Users/shamil/openclawv2/titan-peptide-lab-v3/src/app/blog/pt-141-nasal-spray-research-guide/page.tsx:82), and [src/app/blog/how-to-verify-peptide-purity/page.tsx](/Users/shamil/openclawv2/titan-peptide-lab-v3/src/app/blog/how-to-verify-peptide-purity/page.tsx:77). That is not a blocker to untracking `out.noindex`, but it contradicts the literal “removed from source” premise.
+
+`git rm --cached -r out.noindex` plus a committed ignore rule is the right minimal reversible fix. Next is configured for static export at [next.config.ts](/Users/shamil/openclawv2/titan-peptide-lab-v3/next.config.ts:8), which produces `out/`, not `out.noindex`; Git will not retrack ignored untracked files unless forced.
+
+VERDICT: NEEDS-FIX: stage `.gitignore` before committing; separately audit remaining `HPLC-verified` source/live text if the honesty sweep requires repo-wide phrase removal.
+MODEL: GPT-5.5/Codex
+CODEX_DONE_EXIT=0

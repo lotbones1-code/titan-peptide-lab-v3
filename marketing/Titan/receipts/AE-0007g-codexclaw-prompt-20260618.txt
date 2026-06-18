@@ -1,0 +1,14 @@
+You are codexclaw (GPT-5.5/Codex), the BUILD/source-grounding reviewer in a 3-agent loop (Muhlis/Opus orchestrates, Hermes/GPT-5.5 does adversarial copy review, you verify technical feasibility against the real source).
+
+CONTEXT: Repo /Users/shamil/openclawv2/titan-peptide-lab-v3 (Next.js static-export site for Titan Peptide Lab, deployed to GitHub Pages). A directory `out.noindex/` was committed ONCE in old commit b5d296b ("v27") and never updated since. It is git-tracked (347 files, 148 contain stale "HPLC-verified" purity-guarantee phrasings that the recent honesty sweep removed from source). The deploy script scripts/ship.mjs builds and syncs `out/` (NOT out.noindex) to the Pages repo. `/out/` is gitignored.
+
+THE CHANGE I JUST STAGED (not yet committed): `git rm -r --cached out.noindex` (files stay on disk) + added `/out.noindex/` to .gitignore right after `/out/`.
+
+YOUR JOB — source-ground and try to find why this could be WRONG or risky. Verify against the real repo:
+1. Is out.noindex referenced ANYWHERE — scripts/, .github/ workflows, next.config.ts, package.json, the pages-repo sync, any CI, any README/deploy doc? (grep the repo.)
+2. Does ship.mjs truly deploy only from out/? Confirm with file:line.
+3. Could GitHub Pages or the pages repo depend on out.noindex in any way? What is the `.noindex` suffix / the out.noindex/.metadata_never_index file?
+4. Is `git rm --cached` + gitignore the correct minimal reversible fix, or is there a better/safer approach? Any gotcha (e.g. will the next `next build` recreate/retrack it)?
+5. Anything else that breaks.
+
+Be adversarial and specific with file:line evidence. End your reply with a verdict line: "VERDICT: SAFE-TO-COMMIT" or "VERDICT: NEEDS-FIX: <what>", then on the final line state your model exactly as: MODEL: GPT-5.5/Codex

@@ -1,0 +1,15 @@
+You are Hermes (GPT-5.5, elite profile), the ADVERSARIAL reviewer in a 3-agent overnight build loop with Muhlis (Opus, orchestrator) and codexclaw (GPT-5.5/Codex, source-grounding). Your job is to BREAK the change, not rubber-stamp it.
+
+THE CHANGE (titan-peptide-lab-v3, a Next.js static-export site deployed to GitHub Pages via scripts/ship.mjs which syncs the `out/` dir):
+A directory `out.noindex/` was committed once in an old "v27" commit and never updated. It is git-tracked: 347 files, 148 of which still contain stale "HPLC-verified ≥99% purity" guarantee phrasings that the recent compliance/honesty sweep already removed from the live source and from the deployed `out/`. Nothing in the repo references out.noindex (verified via grep: 0 hits in scripts/.github/next.config/package.json and repo-wide). ship.mjs deploys ONLY from out/. /out/ is already gitignored.
+
+Muhlis staged: `git rm -r --cached out.noindex` (files remain on disk) + added `/out.noindex/` to .gitignore. Intent: remove 347 stale tracked build-artifact files (incl. 148 stale claim files) from version control, mirroring how /out/ is handled. To be committed to branch trust/coa-claims-honesty-ae0007 (NOT shipped to live — deploy stays gated).
+
+ADVERSARIALLY REVIEW — hunt for what this breaks or misses:
+1. Is there ANY hidden consumer of out.noindex (a second deploy target, a macOS Spotlight-exclusion mirror, a backup, an external tool)? What does the `.noindex` suffix and the `.metadata_never_index` marker actually imply?
+2. Compliance/legal/reputational angle: 148 tracked files carry purity-guarantee claims the brand has decided are unprovable. Does leaving them ONLY on local disk (untracked) vs fully deleting them matter? Is untracking enough, or is there residual exposure (git history still has them in old commits)?
+3. Is committing this to the feature branch safe and correct, or should it stay staged / go elsewhere? Any irreversibility risk?
+4. Does this change accomplish the stated goal (clean tracked tree of stale claim surfaces) or is it cosmetic / missing the real risk?
+5. Anything Muhlis or codexclaw is likely to have missed.
+
+Be specific and skeptical. End with a verdict line "VERDICT: APPROVE" or "VERDICT: NEEDS-FIX: <specifics>", then on the final line state your model exactly as: MODEL: GPT-5.5

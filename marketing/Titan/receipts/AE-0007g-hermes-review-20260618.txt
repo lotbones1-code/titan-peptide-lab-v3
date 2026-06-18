@@ -1,0 +1,61 @@
+Adversarial review findings:
+
+1. Hidden consumer / .noindex semantics
+- I found no repo consumer of out.noindex outside itself. Checks covered scripts, .github, package.json, next.config.ts, hooks, and worktree text search excluding out.noindex.
+- scripts/ship.mjs only builds/copies ROOT/out into ~/titanpeptidelab-source. It never reads out.noindex.
+- next.config.ts uses output: "export"; build target is out.
+- .noindex suffix and .metadata_never_index are macOS Spotlight indexing controls. They do not imply “alternate deploy target”, “robots noindex”, or “safe/public/private site mirror”. They just tell macOS metadata indexing not to index the directory/volume. They have no GitHub Pages or Next.js deploy meaning.
+- Caveat: repo search cannot disprove external shell aliases/cron/backup tooling outside the repo. But inside this repo, there is no consumer.
+
+2. Immediate breakage / staging issue
+- The intended .gitignore addition is NOT staged right now.
+- Current status shows:
+  - staged: 347 deletions under out.noindex
+  - unstaged: .gitignore modified
+  - untracked: .tmp/
+- Evidence: git diff -- .gitignore shows +/out.noindex/, but git diff --cached -- .gitignore is empty.
+- If committed now, the repo stops tracking out.noindex, but does not add the ignore rule. That means future generated/local out.noindex can reappear as untracked noise and be accidentally re-added.
+
+3. Compliance/legal/reputational exposure
+- Untracking helps the current tracked tree, but it is not a purge.
+- The stale files still exist locally: find out.noindex -type f shows 347 files remain on disk; grep found 149 local out.noindex files with HPLC-verified / ≥99% purity hits.
+- Git history still contains them. Anyone with repo history can recover the old committed artifact unless history is rewritten/purged. A normal deletion commit only says “not in HEAD anymore.”
+- If the concern is only “don’t ship or review stale generated artifacts in HEAD,” untracking is enough after .gitignore is staged.
+- If the concern is “remove unprovable claims from any discoverable/public repository history,” this does not solve it. That requires a deliberate history-rewrite/legal decision, plus remote purge/caches. That is higher-risk and should not be done casually.
+- Leaving them only on local disk is lower public exposure, but still not zero: local backups, grep/search tools, future rsync/copy mistakes, and accidental recommit remain possible. Since .metadata_never_index/.noindex only suppress Spotlight indexing, it is not a security boundary. I would delete local out.noindex after committing, unless someone explicitly needs the old build artifact for forensic comparison.
+
+4. Bigger miss: out.noindex is not the only current claim surface
+- The premise says the recent sweep removed the live/source/deployed claims, but my checks contradict that.
+- Current tracked index outside out.noindex still has 60 HPLC-verified / ≥99% purity hits.
+- Examples:
+  - content/products/*.json still has “HPLC ≥99% purity target, lot release sheet”
+  - src/app/products/[slug]/page.tsx has “HPLC ≥99% purity target...”
+  - src/components/site/faq.tsx and quality-section.tsx still say release target is ≥99% purity
+  - marketing/paid-ads files still include “HPLC-verified ≥99% purity” and similar ad copy
+- Current out/ on disk has 90 matching files.
+- Local Pages repo ~/titanpeptidelab-source has 297 matching files.
+- Live URL spot checks also returned hits:
+  - /products/bpc-157-nasal-spray/ returned HPLC-verified / HPLC ≥99% purity / ≥99% purity matches
+  - /lab-testing/ returned HPLC-verified matches
+  - /products/ returned HPLC-verified and HPLC ≥99% purity matches
+- Some current wording is softened as “target” or “in-house release target,” but if the legal decision is “these purity-guarantee claims are unprovable,” then this change is cosmetic relative to the real public/source risk.
+
+5. .tmp risk
+- There is an untracked .tmp/ directory with 62 files; grep found 39 files with stale HPLC-verified / ≥99% purity hits.
+- This is not part of the staged deletion, but it is an accidental-commit hazard. Either delete it, ignore it, or move it outside the repo.
+
+6. Safety / irreversibility
+- The staged out.noindex deletion itself is safe and reversible pre-commit with git restore --staged out.noindex, and post-commit from Git history.
+- It is appropriate for the feature branch and not a live deploy by itself.
+- But committing as-is is incomplete because .gitignore is unstaged and .tmp is loose.
+- No build/test is strictly needed for deleting an unused generated artifact, but a post-commit verification should at least run git ls-files out.noindex returns 0 and git status has no accidental .tmp/.gitignore omissions.
+
+Required fixes before I’d approve:
+- Stage .gitignore with /out.noindex/.
+- Delete or ignore/move .tmp/ so stale claim snapshots cannot be accidentally committed.
+- Decide whether to delete local out.noindex after untracking; I recommend deleting it unless explicitly needed.
+- Do not represent this as “compliance sweep complete.” Current source/out/live still contain HPLC-verified / ≥99% purity language. Either fix those surfaces or narrow the commit message to “remove stale tracked out.noindex build artifact” only.
+
+VERDICT: NEEDS-FIX: stage .gitignore, handle untracked .tmp/local out.noindex residue, and address or explicitly scope out the still-live/current HPLC-verified/≥99% claim surfaces.
+MODEL: GPT-5.5
+HERMES_DONE_EXIT=0
