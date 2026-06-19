@@ -14,6 +14,14 @@ import { BRAND } from "@/lib/products";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || "";
 
+// Search-engine ownership verification. These let us claim the site in Google
+// Search Console and Bing Webmaster Tools — the prerequisite for submitting the
+// sitemap, monitoring which "peptide" queries we rank for, and requesting faster
+// indexing. Env-driven so tokens never live in source; set them in .env.local
+// (build-time inlined into the static export). Empty token → tag omitted.
+const GOOGLE_SITE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "";
+const BING_SITE_VERIFICATION = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || "";
+
 const barlow = Barlow({
   variable: "--font-geist-sans",
   weight: ["300", "400", "500", "600"],
@@ -73,6 +81,16 @@ export const metadata: Metadata = {
     images: ["/titan-banner-twitter-3.png"],
   },
   robots: { index: true, follow: true },
+  // Rendered into <head> only when the env token is present. `google` emits
+  // <meta name="google-site-verification">; `other` emits Bing's
+  // <meta name="msvalidate.01">. Both are inert until Search Console / Bing
+  // Webmaster issue real tokens (owner step — see SEARCH-CONSOLE-SETUP.md).
+  verification: {
+    ...(GOOGLE_SITE_VERIFICATION ? { google: GOOGLE_SITE_VERIFICATION } : {}),
+    ...(BING_SITE_VERIFICATION
+      ? { other: { "msvalidate.01": BING_SITE_VERIFICATION } }
+      : {}),
+  },
 };
 
 export default function RootLayout({
