@@ -110,8 +110,22 @@ export default function RootLayout({
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
               strategy="afterInteractive"
             />
+            {/*
+              Internal-traffic tagging. The raw GA4 session count is polluted by
+              our own Playwright/headless QA + buyer-walk runs (they execute JS,
+              so they register as real sessions — this is why "31 visitors" reads
+              as "probably all us", and why engagedSessions=0). Before configuring
+              GA4 we stamp a session-scoped `traffic_type` param: 'internal' when
+              the visit is automation (`navigator.webdriver`) or carries our
+              `?oc_internal=1` flag (persisted to localStorage so the whole walk
+              is tagged), else 'external'. `gtag('set', …)` applies it to the
+              page_view and every custom event, so a GA4 Admin → Data Filters →
+              Internal Traffic rule (match `traffic_type` = `internal`) can
+              exclude all of it and leave only real demand. Fails open: any error
+              defaults to 'external' so tracking never breaks navigation.
+            */}
             <Script id="ga4-init" strategy="afterInteractive">
-              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_ID}',{send_page_view:true});`}
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());(function(){var i=false;try{if(navigator.webdriver===true)i=true;var p=new URLSearchParams(location.search);try{if(p.get('oc_internal')==='1')localStorage.setItem('tpl_internal','1');if(p.get('oc_internal')==='0')localStorage.removeItem('tpl_internal');}catch(e){}try{if(localStorage.getItem('tpl_internal')==='1')i=true;}catch(e){}}catch(e){}window.__tplInternal=i;gtag('set',{traffic_type:i?'internal':'external'});}());gtag('config','${GA_ID}',{send_page_view:true});`}
             </Script>
           </>
         )}
