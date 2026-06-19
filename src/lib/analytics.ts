@@ -209,3 +209,44 @@ export function trackOrderIntent({
     source,
   });
 }
+
+// GA4-standard `purchase` event. `order_intent` above is a custom event GA4 does
+// not treat as revenue or a key conversion — without this `purchase` event, GA4
+// Monetization reports show $0 and conversion/ROAS-by-source cannot be measured.
+// Crypto checkout has no server-side payment callback, so the order-placed moment
+// (confirmation/QR screen) is the conversion point we record. `transaction_id`
+// lets GA4 de-duplicate if the screen re-renders; attribution (utm/ref/session)
+// is merged automatically by compactParams so revenue-by-source works.
+export function trackPurchase({
+  orderId,
+  valueUsd,
+  shippingUsd,
+  coupon,
+  items,
+}: {
+  orderId: string;
+  valueUsd: number;
+  shippingUsd: number;
+  coupon?: string | null;
+  items: { product: Product; quantity: number }[];
+}) {
+  if (typeof window === "undefined") return;
+
+  const base = compactParams({
+    transaction_id: orderId,
+    value: safeNumber(valueUsd),
+    currency: "USD",
+    shipping: safeNumber(shippingUsd),
+    coupon: coupon || undefined,
+  });
+
+  const ga4Items = items.map((i) => ({
+    item_id: i.product.id,
+    item_name: i.product.name,
+    item_category: i.product.category,
+    price: safeNumber(i.product.price),
+    quantity: i.quantity,
+  }));
+
+  window.gtag?.("event", "purchase", { ...base, items: ga4Items });
+}

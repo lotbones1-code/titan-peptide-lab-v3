@@ -4,6 +4,7 @@ import { useCart } from "@/lib/cart-context";
 import {
   getAttributionContext,
   trackOrderIntent,
+  trackPurchase,
   type AttributionContext,
 } from "@/lib/analytics";
 import { WALLETS, DISCOUNT_CODES } from "@/lib/products";
@@ -392,6 +393,22 @@ export default function CheckoutPage() {
     // is down. The intake POSTs below are best-effort, fire-and-forget.
     const mailtoHref = completeOrder(orderId, attribution);
     setSubmitting(false);
+
+    // Record the GA4 `purchase` conversion at the order-placed moment. Uses the
+    // pre-clear `items` snapshot from this render (completeOrder's clearCart only
+    // schedules a re-render; this closure still holds the items). Tracking must
+    // never break checkout, so this is best-effort.
+    try {
+      trackPurchase({
+        orderId,
+        valueUsd: total,
+        shippingUsd: shipping,
+        coupon: appliedDiscount?.code,
+        items,
+      });
+    } catch {
+      /* tracking failure must not affect the order */
+    }
 
     // Order details are captured automatically by the Formsubmit POST below,
     // so we no longer hijack the buyer's mail app at the payment moment. The
