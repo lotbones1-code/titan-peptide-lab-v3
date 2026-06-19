@@ -101,6 +101,7 @@ export default function SelankPage() {
       />
       <main>
         <ArticleLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           eyebrow="Selank"
           title={
             <>

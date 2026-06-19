@@ -99,6 +99,7 @@ export default function PeptideTrends2026Page() {
       />
       <main>
         <BlogLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           category="Market Analysis"
           title={
             <>

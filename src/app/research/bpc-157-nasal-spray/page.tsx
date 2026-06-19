@@ -101,6 +101,7 @@ export default function BPC157Page() {
       />
       <main>
         <ArticleLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           eyebrow="BPC-157"
           title={
             <>

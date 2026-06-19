@@ -98,6 +98,7 @@ export default function DSIPGuidePage() {
       />
       <main>
         <BlogLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           category="Guide"
           title={
             <>

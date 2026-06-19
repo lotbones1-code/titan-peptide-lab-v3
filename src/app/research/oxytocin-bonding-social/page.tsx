@@ -112,6 +112,7 @@ export default function OxytocinPage() {
       />
       <main>
         <ArticleLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           eyebrow="Oxytocin / OXT"
           title={
             <>

@@ -98,6 +98,7 @@ export default function NasalSprayTrendingPage() {
       />
       <main>
         <BlogLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           category="Trend Analysis"
           title={
             <>

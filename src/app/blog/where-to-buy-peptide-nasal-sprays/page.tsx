@@ -62,6 +62,7 @@ export default function WhereToBuyPage() {
       />
       <main>
         <BlogLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           category="Buying Guide"
           title={
             <>

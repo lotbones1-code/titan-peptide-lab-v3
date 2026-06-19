@@ -91,6 +91,7 @@ export default function SprayVsInjectionPage() {
       />
       <main>
         <BlogLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           category="Comparison"
           title={
             <>

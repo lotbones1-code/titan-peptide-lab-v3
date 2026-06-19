@@ -101,6 +101,7 @@ export default function PT141Page() {
       />
       <main>
         <ArticleLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           eyebrow="PT-141 / Bremelanotide"
           title={
             <>

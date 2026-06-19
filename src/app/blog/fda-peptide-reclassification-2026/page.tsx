@@ -98,6 +98,7 @@ export default function FDAReclassificationPage() {
       />
       <main>
         <BlogLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           category="Regulatory Update"
           title={
             <>

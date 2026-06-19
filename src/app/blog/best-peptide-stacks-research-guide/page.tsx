@@ -98,6 +98,7 @@ export default function PeptideStacksGuidePage() {
       />
       <main>
         <BlogLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           category="Guide"
           title={
             <>

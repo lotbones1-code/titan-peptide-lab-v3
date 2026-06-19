@@ -101,6 +101,7 @@ export default function SemaxPage() {
       />
       <main>
         <ArticleLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           eyebrow="Semax"
           title={
             <>

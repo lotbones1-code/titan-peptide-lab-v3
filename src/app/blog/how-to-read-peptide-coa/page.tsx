@@ -90,6 +90,7 @@ export default function HowToReadCOAPage() {
       />
       <main>
         <BlogLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           category="Education"
           title={
             <>

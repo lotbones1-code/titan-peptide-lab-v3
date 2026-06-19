@@ -109,6 +109,7 @@ export default function HowToVerifyPeptidePurityPage() {
       />
       <main>
         <BlogLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           category="Education"
           title={
             <>

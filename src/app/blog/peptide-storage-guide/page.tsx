@@ -98,6 +98,7 @@ export default function PeptideStorageGuidePage() {
       />
       <main>
         <BlogLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           category="Education"
           title={
             <>

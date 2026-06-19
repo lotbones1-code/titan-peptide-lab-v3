@@ -108,6 +108,7 @@ export default function PeptideNasalSprayBenefitsPage() {
       />
       <main>
         <BlogLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           category="Comparison"
           title={
             <>

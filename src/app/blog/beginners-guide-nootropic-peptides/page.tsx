@@ -108,6 +108,7 @@ export default function BeginnerGuideNootropicPeptidesPage() {
       />
       <main>
         <BlogLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           category="Guide"
           title={
             <>

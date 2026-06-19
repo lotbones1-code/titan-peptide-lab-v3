@@ -101,6 +101,7 @@ export default function StackPage() {
       />
       <main>
         <ArticleLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           eyebrow="Stack protocols"
           title={
             <>

@@ -90,6 +90,7 @@ export default function SemaxVsSelankPage() {
       />
       <main>
         <BlogLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           category="Comparison"
           title={
             <>

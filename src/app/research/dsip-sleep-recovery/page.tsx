@@ -112,6 +112,7 @@ export default function DSIPPage() {
       />
       <main>
         <ArticleLayout
+          breadcrumb={{ name: TITLE, path: URL }}
           eyebrow="DSIP / Delta Sleep-Inducing Peptide"
           title={
             <>

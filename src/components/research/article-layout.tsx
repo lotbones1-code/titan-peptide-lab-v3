@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { BreadcrumbJsonLd } from "@/components/site/json-ld";
 
 export interface TocItem {
   id: string;
@@ -14,6 +15,13 @@ export interface ArticleLayoutProps {
   updated: string;
   toc: TocItem[];
   children: ReactNode;
+  /**
+   * Optional breadcrumb for BreadcrumbList structured data. `name` is the
+   * article's plain-text title, `path` its canonical URL path. Emits
+   * Home › Research › {name} so the visible trail is mirrored in schema and
+   * the page becomes eligible for breadcrumb rich results.
+   */
+  breadcrumb?: { name: string; path: string };
 }
 
 export function ArticleLayout({
@@ -24,9 +32,19 @@ export function ArticleLayout({
   updated,
   toc,
   children,
+  breadcrumb,
 }: ArticleLayoutProps) {
   return (
     <article className="bg-[#fbf8f2] text-[#13211c]">
+      {breadcrumb ? (
+        <BreadcrumbJsonLd
+          items={[
+            { name: "Home", item: "/" },
+            { name: "Research", item: "/research" },
+            { name: breadcrumb.name, item: breadcrumb.path },
+          ]}
+        />
+      ) : null}
       {/* Masthead */}
       <header className="border-b border-[#13211c]/12">
         <div className="mx-auto max-w-5xl px-6 py-20 lg:py-28">
