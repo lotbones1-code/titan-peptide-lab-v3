@@ -139,6 +139,10 @@ export default function CheckoutPage() {
   const [discountCode, setDiscountCode] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState<{ code: string; percent: number } | null>(null);
   const [discountError, setDiscountError] = useState("");
+  // When a required shipping field is empty, the submit button used to go
+  // silently grey with no explanation — a dead end at the final step. We now
+  // keep the button live and surface exactly which field is missing on submit.
+  const [formError, setFormError] = useState<string | null>(null);
 
   // Generate QR for the wallet deep-link once the order is finalized. Browser-
   // side base64 PNG; closes the QR promise the checkout copy makes in 5 places.
@@ -325,17 +329,35 @@ export default function CheckoutPage() {
     );
   }
 
-  const canSubmit =
-    name.trim() &&
-    email.trim() &&
-    street.trim() &&
-    city.trim() &&
-    postal.trim() &&
-    items.length > 0;
+  // Required shipping fields, in the order they appear on the page, so we can
+  // point the buyer at the first one they missed instead of a silent grey CTA.
+  const requiredFields: { id: string; value: string; label: string }[] = [
+    { id: "name", value: name, label: "full name" },
+    { id: "email", value: email, label: "email" },
+    { id: "street", value: street, label: "street address" },
+    { id: "city", value: city, label: "city" },
+    { id: "postal", value: postal, label: "postal code" },
+  ];
+  const firstMissing = requiredFields.find((f) => !f.value.trim());
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!canSubmit || submitting) return;
+    if (submitting) return;
+
+    // Don't dead-end the buyer: if something's missing, name it and jump to it.
+    if (firstMissing) {
+      setFormError(`Add your ${firstMissing.label} to create your order ID.`);
+      const el =
+        typeof document !== "undefined"
+          ? (document.getElementById(firstMissing.id) as HTMLElement | null)
+          : null;
+      el?.scrollIntoView({ behavior: "smooth", block: "center" });
+      el?.focus({ preventScroll: true });
+      return;
+    }
+    if (items.length === 0) return;
+
+    setFormError(null);
     setSubmitting(true);
 
     const fullAddress = [street, apt, city, region, postal, country].filter(Boolean).join(", ");
@@ -703,7 +725,7 @@ export default function CheckoutPage() {
                       required
                       autoComplete="name"
                       value={name}
-                      onChange={setName}
+                      onChange={(v) => { setName(v); if (formError) setFormError(null); }}
                       placeholder="Jane Doe"
                     />
                     <Field
@@ -713,7 +735,7 @@ export default function CheckoutPage() {
                       required
                       autoComplete="email"
                       value={email}
-                      onChange={setEmail}
+                      onChange={(v) => { setEmail(v); if (formError) setFormError(null); }}
                       placeholder="jane@example.com"
                     />
                   </div>
@@ -724,7 +746,7 @@ export default function CheckoutPage() {
                       required
                       autoComplete="address-line1"
                       value={street}
-                      onChange={setStreet}
+                      onChange={(v) => { setStreet(v); if (formError) setFormError(null); }}
                       placeholder="123 Research Blvd"
                     />
                     <Field
@@ -742,7 +764,7 @@ export default function CheckoutPage() {
                       required
                       autoComplete="address-level2"
                       value={city}
-                      onChange={setCity}
+                      onChange={(v) => { setCity(v); if (formError) setFormError(null); }}
                     />
                     <Field
                       id="region"
@@ -757,7 +779,7 @@ export default function CheckoutPage() {
                       required
                       autoComplete="postal-code"
                       value={postal}
-                      onChange={setPostal}
+                      onChange={(v) => { setPostal(v); if (formError) setFormError(null); }}
                     />
                   </div>
                   <div>
@@ -1037,23 +1059,35 @@ export default function CheckoutPage() {
               </p>
 
               {/* Desktop CTA */}
-              <button
-                type="submit"
-                disabled={!canSubmit || submitting}
-                className="hidden h-14 w-full items-center justify-center gap-2.5 rounded-xl bg-[#1e6f58] text-[15px] font-semibold text-white transition-colors hover:bg-[#175946] disabled:cursor-not-allowed disabled:opacity-50 lg:flex"
-              >
-                {submitting ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Placing order…
-                  </>
-                ) : (
-                  <>
-                    <Lock className="h-4 w-4" />
-                    Create order ID · ${total.toFixed(2)}
-                  </>
+              <div className="hidden lg:block">
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  aria-describedby={formError ? "checkout-form-error" : undefined}
+                  className="flex h-14 w-full items-center justify-center gap-2.5 rounded-xl bg-[#1e6f58] text-[15px] font-semibold text-white transition-colors hover:bg-[#175946] disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {submitting ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Placing order…
+                    </>
+                  ) : (
+                    <>
+                      <Lock className="h-4 w-4" />
+                      Create order ID · ${total.toFixed(2)}
+                    </>
+                  )}
+                </button>
+                {formError && (
+                  <p
+                    id="checkout-form-error"
+                    role="alert"
+                    className="mt-2.5 text-center text-[12.5px] font-medium text-[#c0392b]"
+                  >
+                    {formError}
+                  </p>
                 )}
-              </button>
+              </div>
             </div>
 
             {/* Desktop order summary */}
@@ -1086,9 +1120,14 @@ export default function CheckoutPage() {
 
             {/* Mobile sticky CTA */}
             <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#e7ece9] bg-white/95 px-4 py-3 backdrop-blur lg:hidden">
+              {formError && (
+                <p role="alert" className="mb-2 text-center text-[12px] font-medium text-[#c0392b]">
+                  {formError}
+                </p>
+              )}
               <button
                 type="submit"
-                disabled={!canSubmit || submitting}
+                disabled={submitting}
                 className="flex h-13 w-full items-center justify-center gap-2 rounded-xl bg-[#1e6f58] text-[15px] font-semibold text-white transition-colors hover:bg-[#175946] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {submitting ? (
