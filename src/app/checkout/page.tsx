@@ -28,6 +28,8 @@ import {
   Globe,
   Gift,
   Wallet,
+  Clock,
+  X,
 } from "lucide-react";
 import { FreeShippingProgress } from "@/components/site/free-shipping-progress";
 
@@ -102,20 +104,33 @@ function makeOrderId() {
 
 type PriceMap = Partial<Record<WalletOption["priceKey"], number>>;
 
+// A placed-but-unpaid order, persisted to this device so a buyer who creates an
+// order ID and closes the tab can return to their exact amount + address + QR
+// instead of losing the payment instructions forever (crypto has no
+// server-side "pay later" link). Every field is a plain scalar so it
+// round-trips through JSON cleanly.
+type OrderState = {
+  orderId: string;
+  coin: Coin;
+  total: number;
+  paymentLabel: string;
+  paymentNetwork: string;
+  paymentAddress: string;
+  cryptoAmount: string | null;
+  receipt: string;
+  mailtoHref: string;
+};
+
+const PENDING_ORDER_KEY = "titan_pending_order_v1";
+
 export default function CheckoutPage() {
   const { items, subtotal, clearCart, hydrated } = useCart();
   const [submitting, setSubmitting] = useState(false);
-  const [done, setDone] = useState<null | {
-    orderId: string;
-    coin: Coin;
-    total: number;
-    paymentLabel: string;
-    paymentNetwork: string;
-    paymentAddress: string;
-    cryptoAmount: string | null;
-    receipt: string;
-    mailtoHref: string;
-  }>(null);
+  const [done, setDone] = useState<OrderState | null>(null);
+  // A prior unpaid order found on this device (loaded on mount). Surfaced as a
+  // "resume your unpaid order" banner so the buyer can jump straight back to
+  // their payment screen.
+  const [pendingOrder, setPendingOrder] = useState<OrderState | null>(null);
   const [copied, setCopied] = useState<"address" | "amount" | "receipt" | null>(null);
   // USDC is a 1:1 stablecoin — seed it locally so the default/recommended rail
   // always shows a real amount even when the live-rate API is unreachable.
@@ -173,6 +188,32 @@ export default function CheckoutPage() {
       cancelled = true;
     };
   }, [done]);
+
+  // On mount, recover any unpaid order saved on this device. Wrapped in
+  // try/catch because localStorage can be unavailable (private mode) or hold a
+  // stale shape from an older build.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(PENDING_ORDER_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as OrderState;
+        if (parsed && parsed.orderId && parsed.paymentAddress) {
+          setPendingOrder(parsed);
+        }
+      }
+    } catch {
+      /* ignore unavailable or malformed storage */
+    }
+  }, []);
+
+  const clearPendingOrder = () => {
+    try {
+      localStorage.removeItem(PENDING_ORDER_KEY);
+    } catch {
+      /* ignore */
+    }
+    setPendingOrder(null);
+  };
 
   useEffect(() => {
     const ctrl = new AbortController();
@@ -275,7 +316,7 @@ export default function CheckoutPage() {
     const receipt = receiptLines.join("\n");
     const subject = `Order ${orderId} — $${total.toFixed(2)} via ${wallet.label}`;
     const mailtoHref = `mailto:${ORDER_INBOX}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(receipt)}`;
-    setDone({
+    const order: OrderState = {
       orderId,
       coin: selectedCoin,
       total,
@@ -285,10 +326,61 @@ export default function CheckoutPage() {
       cryptoAmount,
       receipt,
       mailtoHref,
-    });
+    };
+    setDone(order);
+    // Persist so the buyer can return to this exact payment screen if they
+    // close the tab before sending crypto. Newest order replaces any prior one.
+    setPendingOrder(order);
+    try {
+      localStorage.setItem(PENDING_ORDER_KEY, JSON.stringify(order));
+    } catch {
+      /* non-fatal — confirmation screen still shows this order in-memory */
+    }
     clearCart();
     return mailtoHref;
   };
+
+  // "Resume your unpaid order" banner — shown when a saved unpaid order exists
+  // and we're not already on its confirmation screen. This is the recovery path
+  // for the single biggest crypto-store leak: order created, tab closed,
+  // payment instructions lost.
+  const resumeBanner =
+    pendingOrder && !done ? (
+      <div className="rounded-2xl border border-[#f0d6a1] bg-[#fff8e8] p-4 sm:p-5">
+        <div className="flex items-start gap-3">
+          <Clock className="mt-0.5 h-5 w-5 shrink-0 text-[#b6851f]" />
+          <div className="min-w-0 flex-1">
+            <p className="text-[14px] font-semibold text-[#0f1613]">
+              You have an unpaid order
+            </p>
+            <p className="mt-1 text-[13px] leading-5 text-[#6d4b14]">
+              Order{" "}
+              <span className="font-mono text-[#0f1613]">{pendingOrder.orderId}</span>{" "}
+              is saved on this device — pick up where you left off and send your
+              payment. Nothing was charged.
+            </p>
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setDone(pendingOrder)}
+                className="inline-flex h-9 items-center gap-2 rounded-lg bg-[#1e6f58] px-4 text-[13px] font-medium text-white transition-colors hover:bg-[#175946]"
+              >
+                <Wallet className="h-3.5 w-3.5" />
+                View payment details
+              </button>
+              <button
+                type="button"
+                onClick={clearPendingOrder}
+                className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#e7ece9] bg-white px-3 text-[12px] font-medium text-[#8a9690] transition-colors hover:text-[#0f1613]"
+              >
+                <X className="h-3.5 w-3.5" />
+                Dismiss
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    ) : null;
 
   if (!hydrated) {
     return (
@@ -314,7 +406,8 @@ export default function CheckoutPage() {
       <>
         <Nav />
         <main className="min-h-screen bg-white">
-          <div className="mx-auto max-w-lg px-6 py-32 text-center">
+          <div className="mx-auto max-w-lg px-6 py-24 text-center">
+            {resumeBanner ? <div className="mb-8 text-left">{resumeBanner}</div> : null}
             <p className="text-[15px] text-[#999]">Your cart is empty.</p>
             <Link
               href="/products"
@@ -519,6 +612,10 @@ export default function CheckoutPage() {
             <p className="mt-2 text-[13px] text-[#8a9690]">
               Your order details were sent to Titan automatically. Save this order ID, send the exact amount below, and we&apos;ll match your transfer on-chain.
             </p>
+            <p className="mt-2 inline-flex items-center gap-1.5 text-[12px] text-[#6b7a73]">
+              <Clock className="h-3.5 w-3.5 text-[#1e6f58]" />
+              Saved on this device — you can close this page and return to finish paying.
+            </p>
             <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#d9e7e0] bg-[#f3f9f6] p-5 text-left">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">Payment reference</p>
               <p className="mt-2 font-serif text-[1.5rem] leading-none text-[#0f1613]">
@@ -642,6 +739,15 @@ export default function CheckoutPage() {
               >
                 Questions about order {done.orderId}? Email support.
               </a>
+              {pendingOrder?.orderId === done.orderId ? (
+                <button
+                  type="button"
+                  onClick={clearPendingOrder}
+                  className="text-[11px] text-[#b8c0bb] underline decoration-[#b8c0bb]/30 underline-offset-4 transition-colors hover:text-[#8a9690]"
+                >
+                  Already sent payment? Remove this saved order from this device.
+                </button>
+              ) : null}
             </div>
           </div>
         </main>
@@ -662,6 +768,8 @@ export default function CheckoutPage() {
             <ArrowLeft className="h-3.5 w-3.5" />
             Back to catalog
           </Link>
+
+          {resumeBanner ? <div className="mt-6">{resumeBanner}</div> : null}
 
           <div className="mt-6 flex items-end justify-between gap-4">
             <h1 className="font-serif text-[2rem] leading-[1.05] tracking-[-0.02em] text-[#0f1613] sm:text-[2.5rem]">
