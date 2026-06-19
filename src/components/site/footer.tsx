@@ -3,6 +3,7 @@ import { BRAND, NASAL_SPRAYS, PRODUCTS, VIALS } from "@/lib/products";
 
 const RESEARCH_LINKS = [
   ["Reconstitution calculator", "/peptide-reconstitution-calculator"],
+  ["Reconstitution guides", "/reconstitution"],
   ["BPC-157 nasal spray", "/research/bpc-157-nasal-spray"],
   ["Selank anxiolytic profile", "/research/selank-anxiolytic-nootropic"],
   ["Semax cognition", "/research/semax-cognition-neuroplasticity"],

@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { PRODUCTS } from "@/lib/products";
 import { RESEARCH_ARTICLE_SLUGS } from "@/lib/research-articles";
 import { BLOG_SLUGS } from "@/lib/blog-posts";
+import { RECONSTITUTION_SLUGS } from "@/lib/reconstitution-compounds";
 
 export const dynamic = "force-static";
 
@@ -25,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/research-assistant/`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },
     { url: `${BASE}/research-peptides/`, lastModified: now, changeFrequency: "weekly", priority: 0.92 },
     { url: `${BASE}/peptide-reconstitution-calculator/`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/reconstitution/`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },
     { url: `${BASE}/best-research-peptides/`, lastModified: now, changeFrequency: "weekly", priority: 0.93 },
     { url: `${BASE}/buy-research-peptides/`, lastModified: now, changeFrequency: "weekly", priority: 0.92 },
     { url: `${BASE}/where-to-buy-research-peptides/`, lastModified: now, changeFrequency: "weekly", priority: 0.91 },
@@ -73,6 +75,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,
+    });
+  }
+
+  // /reconstitution/<slug>/ programmatic per-compound calculator+guide cluster.
+  // Highest-volume / lowest-competition long-tail asset in the niche
+  // ("{compound} reconstitution calculator", "how much bac water for X").
+  // Slugs come from lib/reconstitution-compounds.ts — the same single source the
+  // hub page and dynamic route render, so the sitemap can never advertise a 404.
+  for (const slug of RECONSTITUTION_SLUGS) {
+    pages.push({
+      url: `${BASE}/reconstitution/${slug}/`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.78,
     });
   }
 

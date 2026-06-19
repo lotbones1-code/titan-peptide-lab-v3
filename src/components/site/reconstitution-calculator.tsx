@@ -13,10 +13,21 @@ import { FlaskConical, Syringe, Calculator } from "lucide-react";
 const COMMON_VIAL_MG = [2, 5, 10, 15, 20, 30];
 const COMMON_BAC_WATER_VOLUMES = [1, 2, 2.5, 3, 5];
 
-export function ReconstitutionCalculator() {
-  const [mgPerVial, setMgPerVial] = useState<number>(5);
-  const [bacWaterMl, setBacWaterMl] = useState<number>(2);
-  const [doseMcg, setDoseMcg] = useState<number>(250);
+export function ReconstitutionCalculator({
+  initialMgPerVial = 5,
+  initialBacWaterMl = 2,
+  initialDoseMcg = 250,
+}: {
+  // Optional presets so per-compound /reconstitution/<slug>/ pages can open
+  // the tool already filled to that compound's typical research vial size.
+  // Defaults preserve the standalone /peptide-reconstitution-calculator/ page.
+  initialMgPerVial?: number;
+  initialBacWaterMl?: number;
+  initialDoseMcg?: number;
+} = {}) {
+  const [mgPerVial, setMgPerVial] = useState<number>(initialMgPerVial);
+  const [bacWaterMl, setBacWaterMl] = useState<number>(initialBacWaterMl);
+  const [doseMcg, setDoseMcg] = useState<number>(initialDoseMcg);
 
   const concentrationMgPerMl = useMemo(
     () => (bacWaterMl > 0 ? mgPerVial / bacWaterMl : 0),
