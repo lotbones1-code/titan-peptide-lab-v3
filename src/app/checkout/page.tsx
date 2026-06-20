@@ -3,6 +3,7 @@
 import { useCart } from "@/lib/cart-context";
 import {
   getAttributionContext,
+  trackEvent,
   trackOrderIntent,
   trackPurchase,
   type AttributionContext,
@@ -30,6 +31,7 @@ import {
   Wallet,
   Clock,
   X,
+  CreditCard,
 } from "lucide-react";
 import { FreeShippingProgress } from "@/components/site/free-shipping-progress";
 
@@ -107,6 +109,35 @@ const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/support@titanpeptidelab.
 // email send from any inbox.) After support@ is restored, either endpoint can be
 // removed without affecting the other.
 const FORMSUBMIT_FALLBACK_ENDPOINT = "https://formsubmit.co/ajax/shamilbones1@gmail.com";
+
+// ── Card checkout (Helio / MoonPay Commerce) — STAGED, env-gated ──────────────
+// The hosted card Pay Link is blocked on an owner gate (MoonPay Ramps API keys
+// for the separate onramp account — see the helio-post-restart receipt). Rather
+// than ship a fake/disabled "Pay with card" button, the entire card panel is
+// gated behind ONE env var. When empty (current prod state) NOTHING card-related
+// renders, so the live site makes no false card-payment claim and crypto is the
+// only advertised rail. The instant the real Pay Link exists, going live is a
+// one-line build-env update:
+//     NEXT_PUBLIC_HELIO_PAY_LINK="https://app.hel.io/pay/<id>"
+// then `npm run build && npm run ship`. No code change required.
+const HELIO_PAY_LINK = (process.env.NEXT_PUBLIC_HELIO_PAY_LINK || "").trim();
+
+// Build the outbound card-checkout URL. The order total and an on-site reference
+// are appended as query params; a flexible Helio Pay Link reads `amount`, and
+// `clientReference` ties the hosted payment back to our order ID for support.
+// Unknown params are harmless (ignored by the hosted page), so this is safe even
+// if the eventual link is fixed-price.
+function buildHelioCheckoutUrl(total: number, reference: string): string {
+  if (!HELIO_PAY_LINK) return "";
+  try {
+    const url = new URL(HELIO_PAY_LINK);
+    if (total > 0) url.searchParams.set("amount", total.toFixed(2));
+    if (reference) url.searchParams.set("clientReference", reference);
+    return url.toString();
+  } catch {
+    return HELIO_PAY_LINK;
+  }
+}
 
 function makeOrderId() {
   const ts = Date.now().toString(36);
@@ -1018,6 +1049,61 @@ export default function CheckoutPage() {
                   <Lock className="h-4 w-4 text-[#1e6f58]" />
                   Payment
                 </h2>
+
+                {/* ─── Card payment (Helio / MoonPay) — only renders when a live
+                       Pay Link is configured via NEXT_PUBLIC_HELIO_PAY_LINK ─── */}
+                {HELIO_PAY_LINK && (
+                  <>
+                    <div className="mt-4 overflow-hidden rounded-2xl border border-[#1e6f58]/30 bg-gradient-to-b from-[#f3f9f6] to-white shadow-[0_1px_0_rgba(30,111,88,0.06)]">
+                      <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:gap-5 sm:p-6">
+                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#d9e7e0] bg-white text-[#1e6f58]">
+                          <CreditCard className="h-6 w-6" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <h3 className="font-serif text-[1.3rem] leading-tight text-[#0f1613]">
+                              Pay with card
+                            </h3>
+                            <span className="rounded-full bg-[#1e6f58] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-white">
+                              Fastest
+                            </span>
+                          </div>
+                          <p className="mt-1.5 text-[13px] leading-6 text-[#44514b]">
+                            Checkout securely with any debit or credit card — no wallet or crypto needed. You&apos;ll be taken to our secure card processor and your order total of <span className="font-medium text-[#0f1613]">${total.toFixed(2)} USD</span> is carried over automatically.
+                          </p>
+                        </div>
+                        <a
+                          href={buildHelioCheckoutUrl(total, "")}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={() =>
+                            trackEvent("checkout_card_click", {
+                              cart_value_usd: Number(total.toFixed(2)),
+                              item_count: items.reduce((n, i) => n + i.quantity, 0),
+                              provider: "helio_moonpay",
+                            })
+                          }
+                          className="inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-[#1e6f58] px-6 text-[14px] font-semibold text-white transition-colors hover:bg-[#185a48] sm:w-auto"
+                        >
+                          <CreditCard className="h-4 w-4" />
+                          Pay ${total.toFixed(2)} with card
+                        </a>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-[#d9e7e0] bg-white/60 px-5 py-3 text-[11px] text-[#6b7a73] sm:px-6">
+                        <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5 text-[#1e6f58]" /> Secure card processing</span>
+                        <span className="inline-flex items-center gap-1.5"><Lock className="h-3.5 w-3.5 text-[#1e6f58]" /> Card details never touch Titan</span>
+                        <span className="inline-flex items-center gap-1.5"><Globe className="h-3.5 w-3.5 text-[#1e6f58]" /> Most countries supported</span>
+                      </div>
+                    </div>
+
+                    {/* Divider into the crypto fallback */}
+                    <div className="mt-5 flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.14em] text-[#8a9690]">
+                      <span className="h-px flex-1 bg-[#e7ece9]" />
+                      Or pay with crypto
+                      <span className="h-px flex-1 bg-[#e7ece9]" />
+                    </div>
+                  </>
+                )}
 
                 {/* ─── Crypto payment section ─── */}
                 {paymentMethod === "crypto" && (
