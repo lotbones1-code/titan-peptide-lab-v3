@@ -54,13 +54,13 @@ const TOC = [
 export default function BeginnerGuideNootropicPeptidesPage() {
   const articleLd = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     headline: TITLE,
     description: DESCRIPTION,
     datePublished: PUBLISHED,
     dateModified: PUBLISHED,
-    author: { "@type": "Organization", name: "Titan Peptide Laboratory" },
-    publisher: { "@type": "Organization", name: "Titan Peptide Laboratory" },
+    author: { "@id": "https://www.titanpeptidelab.com/#organization", name: "Titan Peptide Lab" },
+    publisher: { "@id": "https://www.titanpeptidelab.com/#organization", name: "Titan Peptide Lab" },
     mainEntityOfPage: `https://www.titanpeptidelab.com${URL}`,
   };
 

@@ -273,7 +273,7 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              <section className="mt-16 border-t border-[rgb(15_22_19/8%)] pt-10">
+              <section id="founder" className="mt-16 border-t border-[rgb(15_22_19/8%)] pt-10">
                 <FounderJsonLd />
                 <div className="flex items-center gap-3">
                   <div className="h-px w-8 bg-[#1e6f58]" />

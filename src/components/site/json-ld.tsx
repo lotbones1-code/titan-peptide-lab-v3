@@ -1,30 +1,59 @@
-import { BRAND, PRODUCTS, PRICE_VALID_UNTIL } from "@/lib/products";
+import { BRAND, PRODUCTS } from "@/lib/products";
+
+const SITE_URL = `https://${BRAND.domain}`;
+const ORGANIZATION_ID = `${SITE_URL}/#organization`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
+const LOGO_ID = `${SITE_URL}/#logo`;
+const FOUNDER_ID = `${SITE_URL}/about/#founder`;
+const PUBLIC_PROFILES = [
+  "https://peptidealliance.io/online/titan-peptide-lab",
+] as const;
 
 export function OrganizationJsonLd() {
-  // Only `@titan.peptidelab` (IG) is currently a live, brand-claimed profile.
-  // Per audit guidance, false `sameAs` entries hurt entity-graph trust — add
-  // X / LinkedIn / Reddit handles only when they are claimed and brand-consistent.
+  // Keep sameAs limited to verified, live public profiles/listings.
   const data = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: BRAND.name,
-    url: `https://${BRAND.domain}`,
+    "@id": ORGANIZATION_ID,
+    name: "Titan Peptide Lab",
+    legalName: BRAND.legalName,
+    alternateName: ["Titan Peptide", "Titan Peptide Lab Research", "TitanPeptideLab"],
+    identifier: BRAND.legalName,
+    url: SITE_URL,
     description: BRAND.description,
-    logo: `https://${BRAND.domain}/titan-icon.png`,
+    disambiguatingDescription:
+      "Titan Peptide Lab (legal name: The Titan Peptide Company) is a documentation-first, research-use-only peptide brand operating solely at www.titanpeptidelab.com. It is a separate entity from similarly named vendors on other domains.",
+    logo: {
+      "@type": "ImageObject",
+      "@id": LOGO_ID,
+      url: `${SITE_URL}/titan-icon.png`,
+      contentUrl: `${SITE_URL}/titan-icon.png`,
+      width: 1200,
+      height: 803,
+      caption: "Titan Peptide Lab logo",
+    },
+    image: `${SITE_URL}/titan-banner-3.png`,
     slogan: BRAND.tagline,
+    brand: {
+      "@type": "Brand",
+      name: "Titan Peptide Lab",
+      logo: { "@id": LOGO_ID },
+    },
     contactPoint: {
       "@type": "ContactPoint",
       email: "support@titanpeptidelab.com",
       contactType: "customer service",
     },
     founder: {
-      "@type": "Person",
+      "@id": FOUNDER_ID,
       name: "Shamil Kuchaliyev",
       jobTitle: "Founder & CEO",
     },
-    sameAs: [
-      "https://www.instagram.com/titan.peptidelab/",
-    ],
+    foundingLocation: {
+      "@type": "Place",
+      name: "Reno, NV",
+    },
+    sameAs: PUBLIC_PROFILES,
     knowsAbout: [
       "BPC-157",
       "TB-500",
@@ -38,9 +67,9 @@ export function OrganizationJsonLd() {
       "Retatrutide",
       "Research peptides",
       "HPLC purity testing",
-      "Batch-matched certificate of analysis",
+      "Lot-matched release documentation",
     ],
-    areaServed: "Worldwide (218 destinations, sanctioned jurisdictions excluded)",
+    areaServed: "Worldwide (sanctioned jurisdictions excluded)",
   };
 
   return (
@@ -51,25 +80,24 @@ export function OrganizationJsonLd() {
   );
 }
 export function FounderJsonLd() {
-  // Person entity for Google AI Overview / knowledge-graph enrichment.
-  // Linked to the Organization via worksFor so the entity graph resolves
-  // Shamil Kuchaliyev → Founder & CEO → Titan Peptide Lab.
   const data = {
     "@context": "https://schema.org",
     "@type": "Person",
+    "@id": FOUNDER_ID,
     name: "Shamil Kuchaliyev",
     jobTitle: "Founder & CEO",
+    url: `${SITE_URL}/about/#founder`,
     worksFor: {
-      "@type": "Organization",
-      name: BRAND.name,
-      url: `https://${BRAND.domain}`,
+      "@id": ORGANIZATION_ID,
+      name: "Titan Peptide Lab",
     },
+    mainEntityOfPage: `${SITE_URL}/about/`,
     description:
       "Founder and CEO of Titan Peptide Lab, a documentation-first, research-use-only peptide company. Builds the AI systems that run the business.",
     knowsAbout: [
       "Research peptides",
       "Certificate of analysis (COA)",
-      "Lot-matched COA documentation",
+      "Lot-matched release documentation",
       "Quality assurance",
       "AI automation",
     ],
@@ -86,12 +114,15 @@ export function WebsiteJsonLd() {
   const data = {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": WEBSITE_ID,
     name: BRAND.name,
-    url: `https://${BRAND.domain}`,
+    alternateName: "Titan Peptide Lab",
+    url: SITE_URL,
     description: BRAND.description,
+    publisher: { "@id": ORGANIZATION_ID },
     potentialAction: {
       "@type": "SearchAction",
-      target: `https://${BRAND.domain}/products?q={search_term_string}`,
+      target: `${SITE_URL}/products?q={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
   };
@@ -112,19 +143,8 @@ export function ProductListJsonLd() {
     itemListElement: PRODUCTS.map((p, i) => ({
       "@type": "ListItem",
       position: i + 1,
-      item: {
-        "@type": "Product",
-        name: p.name,
-        url: `https://${BRAND.domain}/products/${p.slug}`,
-        description: p.tagline,
-        offers: {
-          "@type": "Offer",
-          price: p.price.toFixed(2),
-          priceCurrency: "USD",
-          priceValidUntil: PRICE_VALID_UNTIL,
-          availability: "https://schema.org/InStock",
-        },
-      },
+      name: p.name,
+      url: `${SITE_URL}/products/${p.slug}/`,
     })),
   };
 
@@ -148,9 +168,7 @@ export function BreadcrumbJsonLd({
       "@type": "ListItem",
       position: index + 1,
       name: entry.name,
-      item: entry.item.startsWith("http")
-        ? entry.item
-        : `https://${BRAND.domain}${entry.item}`,
+      item: entry.item.startsWith("http") ? entry.item : `${SITE_URL}${entry.item}`,
     })),
   };
 

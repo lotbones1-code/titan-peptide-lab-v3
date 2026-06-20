@@ -98,9 +98,9 @@ export default function DSIPPage() {
     description: DESCRIPTION,
     datePublished: UPDATED,
     dateModified: UPDATED,
-    author: { "@type": "Organization", name: "Titan Peptide Laboratory" },
-    publisher: { "@type": "Organization", name: "Titan Peptide Laboratory" },
-    mainEntityOfPage: URL,
+    author: { "@id": "https://www.titanpeptidelab.com/#organization", name: "Titan Peptide Lab" },
+    publisher: { "@id": "https://www.titanpeptidelab.com/#organization", name: "Titan Peptide Lab" },
+    mainEntityOfPage: `https://www.titanpeptidelab.com${URL}`,
   };
 
   return (

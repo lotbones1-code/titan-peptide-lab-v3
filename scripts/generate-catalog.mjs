@@ -55,6 +55,7 @@ const body = `${banner}import type { Product } from "./products";
 export const BRAND_DATA = ${JSON.stringify(
   {
     name: brand.name,
+    legalName: brand.legalName,
     domain: brand.domain,
     tagline: brand.tagline,
     description: brand.description,

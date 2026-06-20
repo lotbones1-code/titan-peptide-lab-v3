@@ -5,6 +5,7 @@ import type { Product } from "./products";
 
 export const BRAND_DATA = {
   "name": "Titan Peptide",
+  "legalName": "The Titan Peptide Company",
   "domain": "www.titanpeptidelab.com",
   "tagline": "Research-grade peptides. Batch-documented purity.",
   "description": "Research-grade peptide formulations with in-house HPLC release-target purity, lot-matched release documentation, and cold-chain fulfillment. Built for laboratories and researchers who require traceable quality."

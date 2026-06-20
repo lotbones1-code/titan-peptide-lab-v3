@@ -80,6 +80,10 @@ export const metadata: Metadata = {
       "Shop research peptides online with HPLC purity targets, lot-matched COAs, nasal sprays, vials, stacks, crypto checkout, and research-use labeling.",
     images: ["/titan-banner-twitter-3.png"],
   },
+  icons: {
+    icon: "/titan-mark.svg",
+    apple: "/titan-icon.png",
+  },
   robots: { index: true, follow: true },
   // Rendered into <head> only when the env token is present. `google` emits
   // <meta name="google-site-verification">; `other` emits Bing's

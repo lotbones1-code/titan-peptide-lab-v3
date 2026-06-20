@@ -22,9 +22,12 @@ export function Nav() {
           className="group outline-none"
         >
           <div className="flex items-center gap-3">
-            <div className="flex size-8 items-center justify-center rounded-md bg-[#0f1110] shadow-[0_8px_24px_rgba(15,17,16,0.12)]">
-              <span className="font-serif text-[0.8rem] leading-none text-white">T</span>
-            </div>
+            <img
+              src="/titan-mark.svg"
+              alt=""
+              aria-hidden="true"
+              className="size-8 rounded-md shadow-[0_8px_24px_rgba(15,17,16,0.12)]"
+            />
             <div className="leading-none">
               <span className="block text-[0.94rem] font-semibold tracking-[-0.02em] text-[#0a0a0a] transition-opacity group-hover:opacity-70">
                 Titan Peptide
