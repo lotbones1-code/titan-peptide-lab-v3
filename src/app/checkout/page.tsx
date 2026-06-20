@@ -95,6 +95,18 @@ const ORDER_INBOX = "support@titanpeptidelab.com";
 // without any server. Zero signup; first inbound triggers a one-click activation
 // email. Keeps the customer on-site instead of bouncing to mailto.
 const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/support@titanpeptidelab.com";
+// Redundant order-capture inbox. The support@ Google Workspace mailbox is at risk
+// of suspension, and the live site is a static export (the /api/order Node route
+// never runs in prod), so Formsubmit→support@ is the ONLY automatic order
+// notification. If that mailbox lapses, a real crypto order's notification would
+// vanish silently while the payment still lands on-chain. We POST the same order
+// payload to a second, independent Formsubmit endpoint addressed to the operator's
+// always-live inbox so no order is ever lost. Both POSTs are independent and
+// best-effort — neither depends on the other's mailbox or activation state.
+// (This is Formsubmit DELIVERING a notification to the operator, not an outbound
+// email send from any inbox.) After support@ is restored, either endpoint can be
+// removed without affecting the other.
+const FORMSUBMIT_FALLBACK_ENDPOINT = "https://formsubmit.co/ajax/shamilbones1@gmail.com";
 
 function makeOrderId() {
   const ts = Date.now().toString(36);
@@ -578,17 +590,26 @@ export default function CheckoutPage() {
         });
         clearTimeout(tid);
       } catch { /* ignore */ }
-      try {
-        const fctrl = new AbortController();
-        const ftid = setTimeout(() => fctrl.abort(), 4000);
-        await fetch(FORMSUBMIT_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify(formPayload),
-          signal: fctrl.signal,
-        });
-        clearTimeout(ftid);
-      } catch { /* ignore */ }
+      // Notify both order inboxes independently so a lapse or activation gap on
+      // either mailbox cannot silently drop a real order. Each POST has its own
+      // controller/timeout and swallows its own error.
+      const notifyInbox = async (endpoint: string) => {
+        try {
+          const fctrl = new AbortController();
+          const ftid = setTimeout(() => fctrl.abort(), 4000);
+          await fetch(endpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify(formPayload),
+            signal: fctrl.signal,
+          });
+          clearTimeout(ftid);
+        } catch { /* ignore */ }
+      };
+      await Promise.allSettled([
+        notifyInbox(FORMSUBMIT_ENDPOINT),
+        notifyInbox(FORMSUBMIT_FALLBACK_ENDPOINT),
+      ]);
     };
     void fireForget();
   };
