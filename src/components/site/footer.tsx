@@ -29,6 +29,10 @@ const COMPARE_LINKS = [
   ["BPC-157 spray vs vial", "/bpc-157-nasal-spray-vs-vial"],
   ["TB-500 vs BPC-157", "/tb-500-vs-bpc-157"],
   ["Retatrutide vs tirzepatide", "/retatrutide-vs-tirzepatide-vs-semaglutide"],
+  ["Where to buy retatrutide", "/where-to-buy-retatrutide"],
+  ["Where to buy TB-500", "/where-to-buy-tb-500"],
+  ["Where to buy CJC-1295 + Ipamorelin", "/where-to-buy-cjc-1295-ipamorelin"],
+  ["Where to buy Semax spray", "/where-to-buy-semax-nasal-spray"],
   ["CJC-1295 + Ipamorelin guide", "/cjc-1295-ipamorelin-research-guide"],
   ["COA-verified supplier", "/coa-verified-peptide-supplier"],
 ];
