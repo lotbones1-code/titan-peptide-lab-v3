@@ -46,6 +46,9 @@ const COMPARE_LINKS = [
   ["Where to buy Semax + Selank stack", "/where-to-buy-semax-selank-stack"],
   ["BPC-157 + TB-500 stack", "/bpc-157-tb-500-stack"],
   ["CJC-1295 vs Ipamorelin", "/cjc-1295-vs-ipamorelin"],
+  ["Ipamorelin vs Sermorelin", "/ipamorelin-vs-sermorelin"],
+  ["Where to buy semaglutide (research)", "/where-to-buy-semaglutide-research"],
+  ["Buy PT-141 with crypto", "/buy-pt-141-with-crypto"],
   ["CJC-1295 + Ipamorelin guide", "/cjc-1295-ipamorelin-research-guide"],
   ["COA-verified supplier", "/coa-verified-peptide-supplier"],
 ];
