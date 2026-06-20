@@ -48,6 +48,8 @@ const COMPARE_LINKS = [
   ["CJC-1295 vs Ipamorelin", "/cjc-1295-vs-ipamorelin"],
   ["Ipamorelin vs Sermorelin", "/ipamorelin-vs-sermorelin"],
   ["Where to buy semaglutide (research)", "/where-to-buy-semaglutide-research"],
+  ["Where to buy tirzepatide (research)", "/where-to-buy-tirzepatide"],
+  ["Buy tirzepatide with crypto", "/buy-tirzepatide-with-crypto"],
   ["Buy PT-141 with crypto", "/buy-pt-141-with-crypto"],
   ["CJC-1295 + Ipamorelin guide", "/cjc-1295-ipamorelin-research-guide"],
   ["COA-verified supplier", "/coa-verified-peptide-supplier"],

@@ -65,6 +65,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/pay-for-peptides-with-usdc-crypto/`, lastModified: now, changeFrequency: "weekly", priority: 0.89 },
     { url: `${BASE}/buy-pt-141-with-crypto/`, lastModified: now, changeFrequency: "weekly", priority: 0.89 },
     { url: `${BASE}/where-to-buy-semaglutide-research/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE}/where-to-buy-tirzepatide/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE}/buy-tirzepatide-with-crypto/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/ipamorelin-vs-sermorelin/`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },
     { url: `${BASE}/research/`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE}/contact/`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
