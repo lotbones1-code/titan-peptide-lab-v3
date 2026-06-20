@@ -7,7 +7,7 @@ import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/site/json-ld";
 
 const TITLE = "Buy Retatrutide with Crypto | Research Use | Titan Peptide Lab";
 const DESCRIPTION =
-  "Buy retatrutide (LY3437943) with crypto for laboratory research. Crypto-only checkout — USDC, BTC, ETH, SOL — with lot-matched COAs, HPLC purity targets, and discreet shipping. Retatrutide is an investigational triple agonist supplied strictly for research use, not for human use.";
+  "Buy retatrutide (LY3437943) with crypto for laboratory research. Crypto-only checkout — USDC, BTC, SOL — with lot-matched COAs, HPLC purity targets, and discreet shipping. Retatrutide is an investigational triple agonist supplied strictly for research use, not for human use.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -40,7 +40,7 @@ const STEPS = [
   {
     icon: Network,
     title: "Lock the total with a stablecoin",
-    body: "Retatrutide sits at the higher end of the catalog, so a few percent of BTC drift between cart and confirmation is real money. USDC on Solana keeps the order total exactly what Titan quotes, with sub-cent network fees and sub-minute confirmation. BTC, ETH, USDC, and SOL are all accepted on the same order.",
+    body: "Retatrutide sits at the higher end of the catalog, so a few percent of BTC drift between cart and confirmation is real money. USDC on Solana keeps the order total exactly what Titan quotes, with sub-cent network fees and sub-minute confirmation. BTC, USDC, and SOL are all accepted on the same order.",
     href: "/pay-for-peptides-with-usdc-crypto/?ref=buy-reta-crypto",
     cta: "Pay with USDC",
   },
@@ -56,7 +56,7 @@ const STEPS = [
 const FAQS = [
   {
     q: "Can I buy retatrutide with crypto?",
-    a: "Yes. Titan Peptide Lab is crypto-only, so research-use retatrutide (LY3437943) is paid for in cryptocurrency by default — USDC, BTC, ETH, or SOL. The wallet address, network, QR code, and exact amount are shown before payment, and an order ID is recorded with support first. Retatrutide is supplied strictly for in-vitro laboratory research and is not for human use.",
+    a: "Yes. Titan Peptide Lab is crypto-only, so research-use retatrutide (LY3437943) is paid for in cryptocurrency by default — USDC, BTC, or SOL. The wallet address, network, QR code, and exact amount are shown before payment, and an order ID is recorded with support first. Retatrutide is supplied strictly for in-vitro laboratory research and is not for human use.",
   },
   {
     q: "Should I pay for retatrutide in Bitcoin or a stablecoin?",
@@ -163,7 +163,7 @@ export default function BuyRetatrutideWithCryptoPage() {
                 ["Format", "Lyophilized powder; reconstitute before in-vitro use."],
                 ["COA path", "Lot-matched release sheet tied to the code on the vial."],
                 ["Purity target", "HPLC ≥99% internal release target, identity confirmation by MS."],
-                ["Payment", "Crypto-only: USDC, BTC, ETH, SOL — network shown before you send."],
+                ["Payment", "Crypto-only: USDC, BTC, SOL — network shown before you send."],
               ].map(([term, desc]) => (
                 <div key={term} className="rounded-[1.25rem] border border-[#dde6e1] bg-white p-5">
                   <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">{term}</dt>

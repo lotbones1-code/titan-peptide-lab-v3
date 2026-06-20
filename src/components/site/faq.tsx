@@ -23,7 +23,7 @@ const FAQS = [
   {
     question: "What payment methods do you accept?",
     answer:
-      "Crypto only — USDC on Solana (recommended; sub-cent fees, $1 = $1), plus SOL, BTC, ETH, and USDC on ERC-20. No cards, no ACH, no wires — privacy and chargeback-immunity by design. The checkout page shows the wallet address, QR, and live-converted amount.",
+      "Crypto only — USDC on Solana (recommended; sub-cent fees, $1 = $1), plus SOL and BTC. No cards, no ACH, no wires — privacy and chargeback-immunity by design. The checkout page shows the wallet address, QR, and live-converted amount.",
   },
   {
     question: "I've never paid a supplier in crypto first — how do I order with confidence?",

@@ -9,7 +9,7 @@ const STEPS = [
   {
     n: "02",
     title: "Pay with crypto",
-    text: "We accept BTC, ETH, USDC, and SOL. The exact wallet address and network are shown at checkout — no guessing.",
+    text: "We accept BTC, USDC, and SOL. The exact wallet address and network are shown at checkout — no guessing.",
   },
   {
     n: "03",

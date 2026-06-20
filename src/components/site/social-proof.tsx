@@ -10,7 +10,7 @@ const REASONS = [
   },
   {
     title: "Crypto-only, by design",
-    body: "Pay in BTC, ETH, USDC, or SOL. Your card never touches the order. No bank coding, no merchant flags, no shipping label cross-referenced to a Visa statement. The order desk sees a wallet, not a name.",
+    body: "Pay in BTC, USDC, or SOL. Your card never touches the order. No bank coding, no merchant flags, no shipping label cross-referenced to a Visa statement. The order desk sees a wallet, not a name.",
   },
   {
     title: "A tight catalog beats a long one",

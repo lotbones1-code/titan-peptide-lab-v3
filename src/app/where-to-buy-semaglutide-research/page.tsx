@@ -40,7 +40,7 @@ const STEPS = [
   {
     icon: CreditCard,
     title: "Know the checkout terms",
-    body: "Titan uses crypto-only checkout (BTC, ETH, USDC, SOL). The network and wallet are shown before payment, and an order ID is recorded with support before any payment is sent.",
+    body: "Titan uses crypto-only checkout (BTC, USDC, SOL). The network and wallet are shown before payment, and an order ID is recorded with support before any payment is sent.",
     href: "/how-to-pay-with-crypto/?ref=buy-sema",
     cta: "See crypto checkout",
   },

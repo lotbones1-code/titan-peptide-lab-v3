@@ -198,7 +198,7 @@ export function EmailCapture() {
                 Send my FIRST10 code
               </button>
               <p className="text-center text-[11px] text-[#888]">
-                Crypto only at checkout (BTC · ETH · SOL · USDC).{" "}
+                Crypto only at checkout (BTC · SOL · USDC).{" "}
                 <a
                   href="/guide"
                   className="font-medium text-[#1e6f58] underline-offset-2 hover:underline"

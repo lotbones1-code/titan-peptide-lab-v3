@@ -56,7 +56,7 @@ const PAIRS = [
 
 const TRUST_ROW = [
   { icon: ShieldCheck, label: "HPLC ≥99% target", body: "Release workflow visible before checkout." },
-  { icon: Wallet, label: "Crypto-only", body: "BTC · ETH · USDC · SOL." },
+  { icon: Wallet, label: "Crypto-only", body: "BTC · USDC · SOL." },
   { icon: Truck, label: "24h dispatch", body: "Tracked shipping. Worldwide, including discreet labeling." },
   { icon: FileText, label: "Lot release sheet", body: "Batch-matched COA per bottle. Not a stock document." },
 ];

@@ -40,7 +40,7 @@ const STEPS = [
   {
     icon: CreditCard,
     title: "Know the checkout terms up front",
-    body: "Titan is crypto-only (BTC, ETH, USDC, SOL). The network and wallet address are shown before payment, and an order ID is recorded with support before anything is sent. A stablecoin like USDC holds the order total at exactly the quoted figure, which matters on higher-ticket metabolic compounds.",
+    body: "Titan is crypto-only (BTC, USDC, SOL). The network and wallet address are shown before payment, and an order ID is recorded with support before anything is sent. A stablecoin like USDC holds the order total at exactly the quoted figure, which matters on higher-ticket metabolic compounds.",
     href: "/how-to-pay-with-crypto/?ref=buy-tirz",
     cta: "See crypto checkout",
   },

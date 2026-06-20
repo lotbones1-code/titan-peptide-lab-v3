@@ -40,7 +40,7 @@ export function Hero() {
               </h1>
 
               <p className="mt-6 max-w-[46ch] text-[15px] leading-[1.85] text-[#555b55] lg:text-[16px]">
-                Every order ships with the release sheet for your batch — not a stock document. Pay in BTC, ETH, USDC, or SOL through crypto-only checkout. Plain parcel labeling, research-use documentation, and 24h dispatch target worldwide.
+                Every order ships with the release sheet for your batch — not a stock document. Pay in BTC, USDC, or SOL through crypto-only checkout. Plain parcel labeling, research-use documentation, and 24h dispatch target worldwide.
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -69,7 +69,7 @@ export function Hero() {
                     Crypto checkout preview
                   </p>
                   <p className="mt-2 max-w-[48ch] text-[12px] leading-6 text-[#44514b]">
-                    USDC on Solana is the lowest-friction rail. Checkout still supports BTC, ETH, USDC, and SOL with the exact network and wallet shown before payment.
+                    USDC on Solana is the lowest-friction rail. Checkout still supports BTC, USDC, and SOL with the exact network and wallet shown before payment.
                   </p>
                 </div>
                 <Link
@@ -84,7 +84,7 @@ export function Hero() {
                 {[
                   ["≥99%", "HPLC purity, in-house release target"],
                   ["24h", "dispatch from payment confirmation"],
-                  ["Crypto", "BTC · ETH · USDC · SOL checkout"],
+                  ["Crypto", "BTC · USDC · SOL checkout"],
                   ["Worldwide", "tracked shipping, lot release sheet"],
                 ].map(([value, label]) => (
                   <div

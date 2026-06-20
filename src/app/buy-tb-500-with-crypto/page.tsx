@@ -7,7 +7,7 @@ import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/site/json-ld";
 
 const TITLE = "Buy TB-500 with Crypto | Research Use | Titan Peptide Lab";
 const DESCRIPTION =
-  "Buy TB-500 with crypto for laboratory research. Crypto-only checkout (BTC, ETH, USDC, SOL), lot-matched COAs, HPLC purity targets, and discreet shipping on a 5mg lyophilized vial. TB-500 is supplied strictly for research use — not for human use.";
+  "Buy TB-500 with crypto for laboratory research. Crypto-only checkout (BTC, USDC, SOL), lot-matched COAs, HPLC purity targets, and discreet shipping on a 5mg lyophilized vial. TB-500 is supplied strictly for research use — not for human use.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -56,7 +56,7 @@ const STEPS = [
 const FAQS = [
   {
     q: "Can I buy TB-500 with crypto?",
-    a: "Yes. Titan Peptide Lab is crypto-only, so research-use TB-500 is paid for in cryptocurrency — BTC, ETH, USDC, or SOL. The wallet address, network, QR code, and exact amount are shown before payment, and an order ID is recorded with support first. TB-500 is supplied strictly for in-vitro laboratory research and is not for human use.",
+    a: "Yes. Titan Peptide Lab is crypto-only, so research-use TB-500 is paid for in cryptocurrency — BTC, USDC, or SOL. The wallet address, network, QR code, and exact amount are shown before payment, and an order ID is recorded with support first. TB-500 is supplied strictly for in-vitro laboratory research and is not for human use.",
   },
   {
     q: "How do I prove I paid for a TB-500 order in crypto?",
@@ -163,7 +163,7 @@ export default function BuyTb500WithCryptoPage() {
                 ["Format", "5mg lyophilized vial; reconstitute before in-vitro use."],
                 ["COA path", "Lot-matched release sheet tied to the code on the vial."],
                 ["Purity target", "HPLC ≥99% internal release target, identity confirmation by MS."],
-                ["Payment", "Crypto-only: BTC, ETH, USDC, SOL — public hash as your receipt."],
+                ["Payment", "Crypto-only: BTC, USDC, SOL — public hash as your receipt."],
               ].map(([term, desc]) => (
                 <div key={term} className="rounded-[1.25rem] border border-[#dde6e1] bg-white p-5">
                   <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">{term}</dt>

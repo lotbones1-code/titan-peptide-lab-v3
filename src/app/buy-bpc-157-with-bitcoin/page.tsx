@@ -7,7 +7,7 @@ import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/site/json-ld";
 
 const TITLE = "Buy BPC-157 with Bitcoin | Research Use | Titan Peptide Lab";
 const DESCRIPTION =
-  "Buy BPC-157 with Bitcoin for research use. Crypto-only checkout (BTC, ETH, USDC, SOL), lot-matched COAs, HPLC purity targets, and discreet shipping. Titan stocks a 15mL · 500mcg/actuation nasal spray and a lyophilized vial.";
+  "Buy BPC-157 with Bitcoin for research use. Crypto-only checkout (BTC, USDC, SOL), lot-matched COAs, HPLC purity targets, and discreet shipping. Titan stocks a 15mL · 500mcg/actuation nasal spray and a lyophilized vial.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -40,7 +40,7 @@ const STEPS = [
   {
     icon: Bitcoin,
     title: "Prefer a stable amount? Use USDC or SOL",
-    body: "BTC price moves between cart and confirmation. If you'd rather lock a USD figure, USDC on Solana keeps the total stable with sub-cent fees. BTC, ETH, USDC-ERC, and SOL are all accepted on the same order.",
+    body: "BTC price moves between cart and confirmation. If you'd rather lock a USD figure, USDC on Solana keeps the total stable with sub-cent fees. BTC, USDC, and SOL are all accepted on the same order.",
     href: "/pay-for-peptides-with-usdc-crypto/?ref=buy-bpc-btc",
     cta: "Pay with USDC",
   },
@@ -56,7 +56,7 @@ const STEPS = [
 const FAQS = [
   {
     q: "Can I buy BPC-157 with Bitcoin?",
-    a: "Yes. Titan Peptide Lab accepts Bitcoin (BTC) at checkout for research-use BPC-157, alongside Ethereum, USDC, and SOL. The BTC wallet address, network, QR code, and exact amount are shown before payment, and an order ID is recorded with support first. BPC-157 is sold strictly for in-vitro laboratory research and is not for human use.",
+    a: "Yes. Titan Peptide Lab accepts Bitcoin (BTC) at checkout for research-use BPC-157, alongside USDC and SOL. The BTC wallet address, network, QR code, and exact amount are shown before payment, and an order ID is recorded with support first. BPC-157 is sold strictly for in-vitro laboratory research and is not for human use.",
   },
   {
     q: "Should I pay in Bitcoin or a stablecoin for BPC-157?",
@@ -163,7 +163,7 @@ export default function BuyBpc157WithBitcoinPage() {
                 ["Formats", "Ready-to-use nasal spray (15mL · 500mcg/actuation) or lyophilized vial."],
                 ["COA path", "Lot-matched release sheet tied to the code on the bottle."],
                 ["Purity target", "HPLC ≥99% internal release target, identity confirmation by MS."],
-                ["Payment", "Crypto-only: BTC, ETH, USDC, SOL — wallet and network shown before you send."],
+                ["Payment", "Crypto-only: BTC, USDC, SOL — wallet and network shown before you send."],
               ].map(([term, desc]) => (
                 <div key={term} className="rounded-[1.25rem] border border-[#dde6e1] bg-white p-5">
                   <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">{term}</dt>

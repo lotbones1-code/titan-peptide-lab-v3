@@ -64,7 +64,7 @@ const FAQS = [
   },
   {
     q: "Can I buy research peptides with crypto?",
-    a: "Yes. Titan Peptide Lab uses crypto-only checkout and supports BTC, ETH, USDC, and SOL. The checkout flow shows the network and wallet details before payment confirmation.",
+    a: "Yes. Titan Peptide Lab uses crypto-only checkout and supports BTC, USDC, and SOL. The checkout flow shows the network and wallet details before payment confirmation.",
   },
   {
     q: "Is it safe to pay a research peptide supplier in crypto before they ship?",
@@ -156,7 +156,7 @@ export default function WhereToBuyResearchPeptidesPage() {
               {[
                 ["COA path", "Specimen release sheet and lot-matched documentation workflow."],
                 ["Purity target", "HPLC ≥99% internal release target, identity confirmation by MS."],
-                ["Payment", "BTC, ETH, USDC, and SOL with crypto-only checkout."],
+                ["Payment", "BTC, USDC, and SOL with crypto-only checkout."],
                 ["Fulfillment", "Plain parcel labeling, dispatch target, tracking after packout."],
               ].map(([term, desc]) => (
                 <div key={term} className="rounded-[1.25rem] border border-[#dde6e1] bg-white p-5">

@@ -44,23 +44,16 @@ const WALLETS_FOR_PAGE = [
     address: WALLETS.btc,
     bestFor: "Use only when your wallet app is sending on the Bitcoin network.",
   },
-  {
-    id: "eth",
-    label: "Ethereum",
-    network: "ERC-20",
-    address: WALLETS.eth,
-    bestFor: "Use for ETH or ERC-20 USDC when your wallet confirms the ERC-20 network.",
-  },
 ] as const;
 
 const PAY_FAQS: ReadonlyArray<{ q: string; a: string }> = [
   {
     q: "I have never sent crypto before. Where do I start?",
-    a: "Install a self-custody wallet that supports the network you want to use — Phantom for Solana (USDC-SOL or SOL), MetaMask for Ethereum (ETH or USDC-ERC), and any Bitcoin wallet for BTC. Buy the coin on a centralized exchange or directly inside the wallet, then withdraw to your own wallet before paying Titan. Titan checkout always shows the exact wallet, network, amount, and QR code, so you only need to copy and confirm.",
+    a: "Install a self-custody wallet that supports the network you want to use — Phantom for Solana (USDC-SOL or SOL) and any Bitcoin wallet for BTC. Buy the coin on a centralized exchange or directly inside the wallet, then withdraw to your own wallet before paying Titan. Titan checkout always shows the exact wallet, network, amount, and QR code, so you only need to copy and confirm.",
   },
   {
     q: "Which coin and network should I pick?",
-    a: "USDC on Solana is the lowest-friction option for most first-time buyers — the order total is already in USD, Solana fees are typically under a cent, and confirmation is usually under a minute. SOL, BTC, ETH, and USDC-ERC are all accepted; pick the one your wallet already holds and use the matching network shown at checkout.",
+    a: "USDC on Solana is the lowest-friction option for most first-time buyers — the order total is already in USD, Solana fees are typically under a cent, and confirmation is usually under a minute. SOL and BTC are also accepted; pick the one your wallet already holds and use the matching network shown at checkout.",
   },
   {
     q: "What happens if I send the wrong amount?",
@@ -68,11 +61,11 @@ const PAY_FAQS: ReadonlyArray<{ q: string; a: string }> = [
   },
   {
     q: "What if I send on the wrong network?",
-    a: "Network mismatch is the only payment mistake that can be irreversible — for example, USDC sent on Ethereum to a Solana-only address will not arrive in either wallet. Always match three things before sending: coin, network, and address. Titan checkout shows all three side-by-side; if your wallet shows a different network, switch before pressing send.",
+    a: "Network mismatch is the only payment mistake that can be irreversible — for example, USDC sent on the wrong network to a single-network address will not arrive in either wallet. Always match three things before sending: coin, network, and address. Titan checkout shows all three side-by-side; if your wallet shows a different network, switch before pressing send.",
   },
   {
     q: "How long until my order is confirmed?",
-    a: "Solana settles in seconds, Ethereum and Bitcoin typically settle in a few minutes. Titan matches the on-chain transfer to your order ID, usually under 30 minutes during business hours, then dispatch begins from Reno inside 24 to 48 hours per the shipping policy.",
+    a: "Solana settles in seconds, Bitcoin typically settles in a few minutes. Titan matches the on-chain transfer to your order ID, usually under 30 minutes during business hours, then dispatch begins from Reno inside 24 to 48 hours per the shipping policy.",
   },
   {
     q: "What if I lose my order ID or close the checkout page?",
@@ -121,8 +114,8 @@ export default function HowToPayWithCryptoPage() {
     description: PAY_DESCRIPTION,
     totalTime: "PT5M",
     supply: [
-      { "@type": "HowToSupply", name: "A crypto wallet (Phantom, MetaMask, or any wallet that supports USDC, SOL, BTC, or ETH)" },
-      { "@type": "HowToSupply", name: "Funded balance matching the order total in USDC, SOL, BTC, or ETH" },
+      { "@type": "HowToSupply", name: "A crypto wallet (Phantom or any wallet that supports USDC, SOL, or BTC)" },
+      { "@type": "HowToSupply", name: "Funded balance matching the order total in USDC, SOL, or BTC" },
     ],
     tool: [
       { "@type": "HowToTool", name: "Titan Peptide Lab checkout page" },

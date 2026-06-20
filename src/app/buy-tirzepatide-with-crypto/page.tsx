@@ -7,7 +7,7 @@ import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/site/json-ld";
 
 const TITLE = "Buy Tirzepatide-Class Peptides with Crypto | Research Use | Titan Peptide Lab";
 const DESCRIPTION =
-  "Pay with crypto for GLP-1/GIP research peptides. Crypto-only checkout — USDC, BTC, ETH, SOL — with lot-matched COAs, HPLC purity targets, and discreet shipping. Titan stocks the triple-agonist research compound retatrutide (LY3437943); tirzepatide is not stocked. Research use only, not for human use.";
+  "Pay with crypto for GLP-1/GIP research peptides. Crypto-only checkout — USDC, BTC, SOL — with lot-matched COAs, HPLC purity targets, and discreet shipping. Titan stocks the triple-agonist research compound retatrutide (LY3437943); tirzepatide is not stocked. Research use only, not for human use.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -40,7 +40,7 @@ const STEPS = [
   {
     icon: Network,
     title: "Lock the total with a stablecoin",
-    body: "Metabolic compounds sit at the higher end of the catalog, so a few percent of BTC drift between cart and confirmation is real money. USDC on Solana holds the order at exactly the quoted USD figure, with sub-cent network fees and sub-minute confirmation. BTC, ETH, USDC, and SOL are all accepted on the same order.",
+    body: "Metabolic compounds sit at the higher end of the catalog, so a few percent of BTC drift between cart and confirmation is real money. USDC on Solana holds the order at exactly the quoted USD figure, with sub-cent network fees and sub-minute confirmation. BTC, USDC, and SOL are all accepted on the same order.",
     href: "/pay-for-peptides-with-usdc-crypto/?ref=buy-tirz-crypto",
     cta: "Pay with USDC",
   },
@@ -56,7 +56,7 @@ const STEPS = [
 const FAQS = [
   {
     q: "Can I buy tirzepatide-class research peptides with crypto?",
-    a: "Titan Peptide Lab is crypto-only, so GLP-1-class research material is paid for in cryptocurrency by default — USDC, BTC, ETH, or SOL. Note that Titan stocks retatrutide (LY3437943), a GLP-1 / GIP / glucagon triple agonist, and does not stock tirzepatide itself. The wallet address, network, QR code, and exact amount are shown before payment, and an order ID is recorded with support first. Supplied strictly for in-vitro laboratory research, not for human use.",
+    a: "Titan Peptide Lab is crypto-only, so GLP-1-class research material is paid for in cryptocurrency by default — USDC, BTC, or SOL. Note that Titan stocks retatrutide (LY3437943), a GLP-1 / GIP / glucagon triple agonist, and does not stock tirzepatide itself. The wallet address, network, QR code, and exact amount are shown before payment, and an order ID is recorded with support first. Supplied strictly for in-vitro laboratory research, not for human use.",
   },
   {
     q: "Does Titan sell tirzepatide?",
@@ -163,7 +163,7 @@ export default function BuyTirzepatideWithCryptoPage() {
                 ["Compound", "Retatrutide (LY3437943) — GLP-1/GIP/glucagon triple agonist."],
                 ["Format", "Lyophilized powder; reconstitute before in-vitro use."],
                 ["COA path", "Lot-matched release sheet tied to the code on the vial."],
-                ["Payment", "Crypto-only: USDC, BTC, ETH, SOL — network shown before you send."],
+                ["Payment", "Crypto-only: USDC, BTC, SOL — network shown before you send."],
               ].map(([term, desc]) => (
                 <div key={term} className="rounded-[1.25rem] border border-[#dde6e1] bg-white p-5">
                   <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">{term}</dt>

@@ -43,8 +43,7 @@ export default function TermsPage() {
                 </h2>
                 <p className="mt-4">
                   Orders are processed after manual review of payment
-                  confirmation. Checkout is crypto-only (BTC, ETH, USDC ERC-20,
-                  SOL, USDC SPL). Orders will not be fulfilled until payment is
+                  confirmation. Checkout is crypto-only (BTC, USDC, SOL, USDC SPL). Orders will not be fulfilled until payment is
                   verified on-chain.
                 </p>
               </div>

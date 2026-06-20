@@ -7,7 +7,7 @@ import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/site/json-ld";
 
 const TITLE = "Pay for Peptides with USDC | Stablecoin Checkout | Titan Peptide Lab";
 const DESCRIPTION =
-  "Pay for research peptides with USDC. A stable USD amount, sub-cent fees on Solana, and sub-minute confirmation — no card, no account. Titan accepts USDC (Solana or ERC-20), plus BTC, ETH, and SOL. For research use only.";
+  "Pay for research peptides with USDC. A stable USD amount, sub-cent fees on Solana, and sub-minute confirmation — no card, no account. Titan accepts USDC on Solana, plus BTC and SOL. For research use only.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -35,8 +35,8 @@ const REASONS = [
   },
   {
     icon: Network,
-    title: "Two networks — pick the one your wallet uses",
-    body: "Titan accepts USDC on Solana (Phantom and similar) and USDC on Ethereum (ERC-20, via MetaMask and similar). Match the network shown at checkout; sending ERC-20 USDC to a Solana address — or the reverse — is the one mistake that can't be undone.",
+    title: "Pay USDC on Solana — fast and sub-cent",
+    body: "Titan accepts USDC on Solana (Phantom and similar wallets). Match the network shown at checkout; sending USDC on a different network to a Solana address is the one mistake that can't be undone, so confirm Solana before you send.",
   },
   {
     icon: Wallet,
@@ -48,15 +48,15 @@ const REASONS = [
 const FAQS = [
   {
     q: "Can I pay for peptides with USDC?",
-    a: "Yes. Titan Peptide Lab accepts USDC at checkout — both USDC on Solana and USDC on Ethereum (ERC-20) — alongside BTC, ETH, and native SOL. The wallet address, network, QR code, and exact USDC amount are shown before payment, and an order ID is recorded with support first. All products are for in-vitro laboratory research use only.",
+    a: "Yes. Titan Peptide Lab accepts USDC on Solana at checkout, alongside BTC and native SOL. The wallet address, network, QR code, and exact USDC amount are shown before payment, and an order ID is recorded with support first. All products are for in-vitro laboratory research use only.",
   },
   {
     q: "Is USDC the best crypto for buying peptides?",
-    a: "For most buyers, yes. USDC is a dollar-pegged stablecoin, so the order total stays exactly what Titan quotes — no price movement between cart and confirmation. On Solana it also has sub-cent fees and sub-minute confirmation, making it the lowest-friction option. BTC, ETH, and SOL are accepted too if that's what your wallet holds.",
+    a: "For most buyers, yes. USDC is a dollar-pegged stablecoin, so the order total stays exactly what Titan quotes — no price movement between cart and confirmation. On Solana it also has sub-cent fees and sub-minute confirmation, making it the lowest-friction option. BTC and SOL are accepted too if that's what your wallet holds.",
   },
   {
-    q: "Should I send USDC on Solana or Ethereum?",
-    a: "Use whichever network your wallet already holds USDC on. Solana (USDC-SOL) is cheaper and faster for most buyers; Ethereum (USDC-ERC-20) is fine if your USDC is already there. The critical rule is to match the network Titan shows at checkout — USDC sent on the wrong network to a single-network address will not arrive and the transfer cannot be reversed.",
+    q: "Which network does Titan accept USDC on?",
+    a: "USDC is accepted on Solana (USDC-SOL) — it's cheaper and faster than most networks, with sub-cent fees and sub-minute confirmation. The critical rule is to match the network Titan shows at checkout — USDC sent on the wrong network to a single-network address will not arrive and the transfer cannot be reversed. If your USDC is on another network, swap or bridge it to Solana first, or pay in BTC or SOL instead.",
   },
   {
     q: "What if I send the wrong USDC amount?",
@@ -64,7 +64,7 @@ const FAQS = [
   },
   {
     q: "How fast does a USDC order ship?",
-    a: "USDC on Solana confirms in under a minute; ERC-20 USDC in a few minutes. Titan matches the transfer to your order ID — usually within 30 minutes during business hours — and dispatch begins inside 24 to 48 hours per the shipping policy, in plain unbranded parcels.",
+    a: "USDC on Solana confirms in under a minute. Titan matches the transfer to your order ID — usually within 30 minutes during business hours — and dispatch begins inside 24 to 48 hours per the shipping policy, in plain unbranded parcels.",
   },
   {
     q: "Are these peptides for human use?",
@@ -94,7 +94,7 @@ export default function PayForPeptidesWithUsdcPage() {
                 Pay for peptides with USDC — a stable amount, no card.
               </h1>
               <p className="mt-6 max-w-2xl text-[15px] leading-[1.85] text-[#5c6762]">
-                If you want the order total to stay exactly what Titan quotes, USDC is the steadiest way to pay. It&apos;s pegged to the dollar, costs a fraction of a cent on Solana, and confirms in under a minute. Titan is crypto-only — USDC on Solana or Ethereum, plus BTC, ETH, and SOL — with the wallet, network, and amount shown before you send.
+                If you want the order total to stay exactly what Titan quotes, USDC is the steadiest way to pay. It&apos;s pegged to the dollar, costs a fraction of a cent on Solana, and confirms in under a minute. Titan is crypto-only — USDC on Solana, plus BTC and SOL — with the wallet, network, and amount shown before you send.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
@@ -150,10 +150,10 @@ export default function PayForPeptidesWithUsdcPage() {
             </div>
             <dl className="grid gap-4 sm:grid-cols-2">
               {[
-                ["Networks", "USDC on Solana (USDC-SOL) and Ethereum (USDC-ERC-20)."],
-                ["Fees", "Typically under a cent on Solana; standard gas on Ethereum."],
-                ["Confirmation", "Under a minute on Solana; a few minutes on Ethereum."],
-                ["Also accepted", "BTC, ETH, and native SOL on the same checkout."],
+                ["Networks", "USDC on Solana (USDC-SOL)."],
+                ["Fees", "Typically under a cent on Solana."],
+                ["Confirmation", "Usually under a minute on Solana."],
+                ["Also accepted", "BTC and native SOL on the same checkout."],
               ].map(([term, desc]) => (
                 <div key={term} className="rounded-[1.25rem] border border-[#dde6e1] bg-white p-5">
                   <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">{term}</dt>

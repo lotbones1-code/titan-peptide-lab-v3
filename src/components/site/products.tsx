@@ -38,7 +38,7 @@ export function Products() {
               <div className="mt-4 space-y-3 text-[13px] leading-7 text-[#44514b]">
                 <p><span className="font-semibold text-[#0f1110]">01.</span> Add any spray or stack to your cart.</p>
                 <p><span className="font-semibold text-[#0f1110]">02.</span> Enter your shipping address — 218 destinations supported, exact rate at checkout.</p>
-                <p><span className="font-semibold text-[#0f1110]">03.</span> Pay with BTC, ETH, SOL, or USDC. We verify on-chain and ship within 24h.</p>
+                <p><span className="font-semibold text-[#0f1110]">03.</span> Pay with BTC, SOL, or USDC. We verify on-chain and ship within 24h.</p>
               </div>
             </div>
           </div>

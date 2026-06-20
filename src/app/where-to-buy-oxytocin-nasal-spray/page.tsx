@@ -40,7 +40,7 @@ const STEPS = [
   {
     icon: CreditCard,
     title: "Know the checkout terms",
-    body: "Titan uses crypto-only checkout (BTC, ETH, USDC, SOL). The network and wallet are shown before payment, and an order ID is recorded with support before any payment is sent. For a small first order, USDC keeps the total stable.",
+    body: "Titan uses crypto-only checkout (BTC, USDC, SOL). The network and wallet are shown before payment, and an order ID is recorded with support before any payment is sent. For a small first order, USDC keeps the total stable.",
     href: "/how-to-pay-with-crypto/?ref=buy-oxytocin",
     cta: "See crypto checkout",
   },
@@ -160,7 +160,7 @@ export default function WhereToBuyOxytocinNasalSprayPage() {
                 ["Format", "Ready-to-use nasal spray at fixed concentration; no reconstitution."],
                 ["COA path", "Lot-matched release sheet tied to the code on the unit."],
                 ["Purity target", "HPLC ≥99% internal release target, identity confirmation by MS."],
-                ["Payment", "Crypto-only checkout: BTC, ETH, USDC, SOL."],
+                ["Payment", "Crypto-only checkout: BTC, USDC, SOL."],
               ].map(([term, desc]) => (
                 <div key={term} className="rounded-[1.25rem] border border-[#dde6e1] bg-white p-5">
                   <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">{term}</dt>

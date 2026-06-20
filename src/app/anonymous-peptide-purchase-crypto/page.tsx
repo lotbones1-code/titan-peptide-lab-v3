@@ -40,7 +40,7 @@ const POINTS = [
   {
     icon: EyeOff,
     title: "Where crypto is — and isn't — anonymous",
-    body: "Be precise: public-chain transactions (BTC, ETH, SOL, USDC) are recorded on a ledger anyone can read, so crypto is pseudonymous, not invisible. What it does is decouple the purchase from your card identity and bank. If on-chain privacy matters to your threshold, a fresh wallet and a stablecoin keep the footprint minimal.",
+    body: "Be precise: public-chain transactions (BTC, SOL, USDC) are recorded on a ledger anyone can read, so crypto is pseudonymous, not invisible. What it does is decouple the purchase from your card identity and bank. If on-chain privacy matters to your threshold, a fresh wallet and a stablecoin keep the footprint minimal.",
     href: "/pay-for-peptides-with-usdc-crypto/?ref=anon-crypto",
     cta: "Pay with USDC",
   },
@@ -64,11 +64,11 @@ const FAQS = [
   },
   {
     q: "Is crypto truly untraceable?",
-    a: "No, and any supplier claiming otherwise is overstating it. Bitcoin, Ethereum, SOL, and USDC settle on public ledgers that anyone can inspect, so they are pseudonymous: a transaction isn't labeled with your name, but it is permanently recorded. The practical privacy benefit is removing the card and bank from the purchase. If you want to minimize the on-chain footprint, use a fresh wallet and a stablecoin.",
+    a: "No, and any supplier claiming otherwise is overstating it. Bitcoin, SOL, and USDC settle on public ledgers that anyone can inspect, so they are pseudonymous: a transaction isn't labeled with your name, but it is permanently recorded. The practical privacy benefit is removing the card and bank from the purchase. If you want to minimize the on-chain footprint, use a fresh wallet and a stablecoin.",
   },
   {
     q: "Which coins keep a purchase most private and stable?",
-    a: "A stablecoin such as USDC on Solana keeps the order total fixed at the quoted USD amount with sub-cent fees, and using a wallet you don't reuse for other identifiable activity keeps the footprint minimal. BTC and ETH are also accepted. The wallet address and network are shown before you send, and an order ID is recorded with support first.",
+    a: "A stablecoin such as USDC on Solana keeps the order total fixed at the quoted USD amount with sub-cent fees, and using a wallet you don't reuse for other identifiable activity keeps the footprint minimal. BTC and SOL are also accepted. The wallet address and network are shown before you send, and an order ID is recorded with support first.",
   },
   {
     q: "Do I still need to verify quality if I'm buying privately?",

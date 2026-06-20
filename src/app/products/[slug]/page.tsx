@@ -249,7 +249,7 @@ export default async function ProductPage({
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "Crypto only. USDC on Solana is recommended for the lowest fees; BTC, ETH, USDC on ERC-20, and SOL are also accepted. The checkout page shows the wallet address, QR, network, and live-converted amount before payment. No cards, no ACH, no wires.",
+            "Crypto only. USDC on Solana is recommended for the lowest fees; BTC, USDC, and SOL are also accepted. The checkout page shows the wallet address, QR, network, and live-converted amount before payment. No cards, no ACH, no wires.",
         },
       },
     ],

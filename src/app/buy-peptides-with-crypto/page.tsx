@@ -5,9 +5,9 @@ import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/site/json-ld";
 
-const TITLE = "Buy Peptides with Crypto — Bitcoin, USDC, ETH & SOL | Titan Peptide Lab";
+const TITLE = "Buy Peptides with Crypto — Bitcoin, USDC & SOL | Titan Peptide Lab";
 const DESCRIPTION =
-  "A crypto-only research peptide store. Buy peptides with Bitcoin, USDC, ETH, or SOL — no card processor, no account required, lot-matched COAs, and discreet plain-parcel shipping. For research use only.";
+  "A crypto-only research peptide store. Buy peptides with Bitcoin, USDC, or SOL — no card processor, no account required, lot-matched COAs, and discreet plain-parcel shipping. For research use only.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -26,7 +26,7 @@ const REASONS = [
   {
     icon: Bitcoin,
     title: "Crypto is the checkout, not an afterthought",
-    body: "Most research-peptide sites bolt crypto onto a card-first cart and still drop orders when the processor flags the category. Titan is crypto-only by design — BTC, ETH, USDC, and SOL clear on-chain in seconds to minutes, so an order never depends on a card network that won't bank the category.",
+    body: "Most research-peptide sites bolt crypto onto a card-first cart and still drop orders when the processor flags the category. Titan is crypto-only by design — BTC, USDC, and SOL clear on-chain in seconds to minutes, so an order never depends on a card network that won't bank the category.",
   },
   {
     icon: Lock,
@@ -41,25 +41,24 @@ const REASONS = [
   {
     icon: Wallet,
     title: "Pick the coin you already hold",
-    body: "USDC on Solana is the lowest-friction option (the total is already in USD, fees are typically under a cent). But BTC, ETH, USDC-ERC, and SOL are all first-class at checkout — the wallet, network, QR, and amount are shown side by side so there's no network guesswork.",
+    body: "USDC on Solana is the lowest-friction option (the total is already in USD, fees are typically under a cent). BTC and SOL are also first-class at checkout — the wallet, network, QR, and amount are shown side by side so there's no network guesswork.",
   },
 ];
 
 const COINS = [
   ["USDC (Solana)", "Stable USD amount, sub-cent fees, confirms in under a minute. The default for most first-time buyers."],
   ["Bitcoin (BTC)", "The most widely held coin. Settles in a few minutes; use when your wallet is on the Bitcoin network."],
-  ["Ethereum (ETH)", "ETH or ERC-20 USDC. Confirm the ERC-20 network in your wallet before sending."],
   ["Solana (SOL)", "Native SOL on the same Solana address shown at checkout. Fast and cheap."],
 ];
 
 const FAQS = [
   {
     q: "Can I buy peptides with crypto on Titan Peptide Lab?",
-    a: "Yes. Titan Peptide Lab is a crypto-only research peptide store. Checkout accepts Bitcoin (BTC), Ethereum (ETH or ERC-20 USDC), USDC on Solana, and SOL. There is no card option — the wallet address, network, QR code, and exact amount are shown at checkout, and an order ID is recorded with support before payment is sent. All products are sold strictly for in-vitro laboratory research use.",
+    a: "Yes. Titan Peptide Lab is a crypto-only research peptide store. Checkout accepts Bitcoin (BTC), USDC on Solana, and SOL. There is no card option — the wallet address, network, QR code, and exact amount are shown at checkout, and an order ID is recorded with support before payment is sent. All products are sold strictly for in-vitro laboratory research use.",
   },
   {
     q: "Which crypto is best for buying peptides?",
-    a: "USDC on Solana is the lowest-friction choice for most buyers: the order total is already in USD, Solana network fees are usually under a cent, and confirmation typically takes under a minute. Bitcoin, Ethereum, ERC-20 USDC, and SOL are all accepted — the practical answer is to use whichever coin and network your wallet already holds, matching the network shown at checkout.",
+    a: "USDC on Solana is the lowest-friction choice for most buyers: the order total is already in USD, Solana network fees are usually under a cent, and confirmation typically takes under a minute. Bitcoin and SOL are also accepted — the practical answer is to use whichever coin and network your wallet already holds, matching the network shown at checkout.",
   },
   {
     q: "Is buying peptides with crypto anonymous or private?",
@@ -71,11 +70,11 @@ const FAQS = [
   },
   {
     q: "What if I send the wrong amount or the wrong network?",
-    a: "Under- and overpayments are reconciled manually — email support@titanpeptidelab.com with your order ID and transaction hash and the order is held until the balance is corrected or refunded. Network mismatch (for example USDC sent on Ethereum to a Solana-only address) is the one mistake that can be irreversible, so always match coin, network, and address before sending. Titan checkout shows all three together.",
+    a: "Under- and overpayments are reconciled manually — email support@titanpeptidelab.com with your order ID and transaction hash and the order is held until the balance is corrected or refunded. Network mismatch (for example USDC sent on the wrong network to a single-network address) is the one mistake that can be irreversible, so always match coin, network, and address before sending. Titan checkout shows all three together.",
   },
   {
     q: "How fast does a crypto order ship?",
-    a: "Solana settles in seconds and Bitcoin/Ethereum in a few minutes. Titan matches the on-chain transfer to your order ID — usually within 30 minutes during business hours — and dispatch begins inside 24 to 48 hours per the shipping policy, in plain parcels.",
+    a: "Solana settles in seconds and Bitcoin in a few minutes. Titan matches the on-chain transfer to your order ID — usually within 30 minutes during business hours — and dispatch begins inside 24 to 48 hours per the shipping policy, in plain parcels.",
   },
   {
     q: "Are these peptides for human use?",
@@ -105,7 +104,7 @@ export default function BuyPeptidesWithCryptoPage() {
                 Buy research peptides with crypto — no card, no account.
               </h1>
               <p className="mt-6 max-w-2xl text-[15px] leading-[1.85] text-[#5c6762]">
-                Titan Peptide Lab is crypto-only on purpose. Pay with Bitcoin, USDC, ETH, or SOL; skip the card processor that won&apos;t reliably bank this category; and get a lot-matched release sheet with every order. The wallet, network, QR, and exact amount are shown before you send — so the only thing left to do is confirm.
+                Titan Peptide Lab is crypto-only on purpose. Pay with Bitcoin, USDC, or SOL; skip the card processor that won&apos;t reliably bank this category; and get a lot-matched release sheet with every order. The wallet, network, QR, and exact amount are shown before you send — so the only thing left to do is confirm.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link

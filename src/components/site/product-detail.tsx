@@ -235,7 +235,7 @@ export function ProductDetail({ product }: { product: Product }) {
                     Crypto checkout preview
                   </p>
                   <p className="mt-2 max-w-[56ch] text-[12px] leading-6 text-[#44514b]">
-                    Add the bottle first; checkout shows the exact wallet and network before payment. USDC on Solana is recommended for lowest fees; BTC, ETH, ERC-20 USDC, and SOL remain available.
+                    Add the bottle first; checkout shows the exact wallet and network before payment. USDC on Solana is recommended for lowest fees; BTC and SOL remain available.
                   </p>
                   <p className="mt-2 max-w-[56ch] text-[12px] leading-6 text-[#44514b]">
                     First time paying a source in crypto? Your order ID is recorded with support before any crypto leaves your wallet, so the order exists on our side first. Most new buyers start with one unit — <span className="font-semibold text-[#1a5c48]">FIRST10</span> takes 10% off — verify the source, then scale up. Payment is confirmed on-chain, usually within 30 minutes.

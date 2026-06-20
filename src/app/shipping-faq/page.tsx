@@ -48,7 +48,7 @@ const SECTIONS = [
     items: [
       {
         q: "Which cryptocurrencies do you accept?",
-        a: "BTC, ETH, USDC ERC-20, SOL, and USDC SPL. Use the wallet string or QR code shown at checkout.",
+        a: "BTC, SOL, and USDC SPL. Use the wallet string or QR code shown at checkout.",
       },
       {
         q: "Why crypto only?",

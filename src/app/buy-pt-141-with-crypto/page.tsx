@@ -5,9 +5,9 @@ import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/site/json-ld";
 
-const TITLE = "Buy PT-141 with Crypto | BTC, ETH, USDC, SOL | Titan Peptide Lab";
+const TITLE = "Buy PT-141 with Crypto | BTC, USDC, SOL | Titan Peptide Lab";
 const DESCRIPTION =
-  "Buy research-use PT-141 (bremelanotide) nasal spray with crypto — BTC, ETH, USDC, or SOL. Wallet and network shown before payment, order ID recorded with support, lot-matched COA, discreet shipping. Research use only — not for human use.";
+  "Buy research-use PT-141 (bremelanotide) nasal spray with crypto — BTC, USDC, or SOL. Wallet and network shown before payment, order ID recorded with support, lot-matched COA, discreet shipping. Research use only — not for human use.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -26,7 +26,7 @@ const STEPS = [
   {
     icon: Bitcoin,
     title: "Pick your network",
-    body: "Titan checkout accepts Bitcoin (BTC), Ethereum (ETH), USDC (on Ethereum or Solana), and Solana (SOL). The exact wallet address and network are displayed on the checkout screen before you send anything — confirm the network matches the asset you're sending so funds aren't lost to a wrong-chain transfer.",
+    body: "Titan checkout accepts Bitcoin (BTC), USDC on Solana, and Solana (SOL). The exact wallet address and network are displayed on the checkout screen before you send anything — confirm the network matches the asset you're sending so funds aren't lost to a wrong-chain transfer.",
     href: "/how-to-pay-with-crypto/?ref=buy-pt141-crypto",
     cta: "How crypto checkout works",
   },
@@ -56,11 +56,11 @@ const STEPS = [
 const FAQS = [
   {
     q: "Can I buy PT-141 with cryptocurrency?",
-    a: "Yes. Titan Peptide Lab uses crypto-only checkout for research-use PT-141 (bremelanotide) nasal spray, accepting BTC, ETH, USDC, and SOL. The wallet address and network are shown before payment, an order ID is recorded with support, and payment is confirmed on-chain before the order ships with a lot-matched COA. PT-141 is supplied strictly for in-vitro laboratory research, not for human use.",
+    a: "Yes. Titan Peptide Lab uses crypto-only checkout for research-use PT-141 (bremelanotide) nasal spray, accepting BTC, USDC, and SOL. The wallet address and network are shown before payment, an order ID is recorded with support, and payment is confirmed on-chain before the order ships with a lot-matched COA. PT-141 is supplied strictly for in-vitro laboratory research, not for human use.",
   },
   {
     q: "Which cryptocurrencies does Titan accept?",
-    a: "Titan accepts Bitcoin (BTC), Ethereum (ETH), USDC (on the Ethereum or Solana networks), and Solana (SOL). USDC and SOL settle fastest and with the lowest network fees. The exact address and network for each are displayed on the checkout screen before payment.",
+    a: "Titan accepts Bitcoin (BTC), USDC on Solana, and Solana (SOL). USDC and SOL settle fastest and with the lowest network fees. The exact address and network for each are displayed on the checkout screen before payment.",
   },
   {
     q: "Is buying peptides with crypto anonymous?",
@@ -98,7 +98,7 @@ export default function BuyPt141WithCryptoPage() {
                 Buy PT-141 with crypto, with the paperwork up front.
               </h1>
               <p className="mt-6 max-w-2xl text-[15px] leading-[1.85] text-[#5c6762]">
-                Titan runs a crypto-only checkout — BTC, ETH, USDC, or SOL — for research-use PT-141 (bremelanotide) nasal spray. No card, no bank entry, plain-parcel shipping. Because crypto can&apos;t be charged back, the buyer&apos;s real protection is the supplier&apos;s documentation: a lot-matched release sheet, a stated HPLC purity target, and an order ID recorded before payment. Here&apos;s exactly how it works.
+                Titan runs a crypto-only checkout — BTC, USDC, or SOL — for research-use PT-141 (bremelanotide) nasal spray. No card, no bank entry, plain-parcel shipping. Because crypto can&apos;t be charged back, the buyer&apos;s real protection is the supplier&apos;s documentation: a lot-matched release sheet, a stated HPLC purity target, and an order ID recorded before payment. Here&apos;s exactly how it works.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
@@ -157,7 +157,7 @@ export default function BuyPt141WithCryptoPage() {
             </div>
             <dl className="grid gap-4 sm:grid-cols-2">
               {[
-                ["Networks", "BTC, ETH, USDC (ERC-20 / SPL), SOL — shown before payment."],
+                ["Networks", "BTC, USDC (SPL), SOL — shown before payment."],
                 ["Format", "PT-141 (bremelanotide) research-use nasal spray."],
                 ["COA path", "Lot-matched release sheet tied to the code on the vial."],
                 ["Order match", "Order ID recorded with support; payment confirmed on-chain."],

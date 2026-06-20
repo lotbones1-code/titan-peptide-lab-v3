@@ -83,8 +83,11 @@ const WALLET_OPTIONS: WalletOption[] = [
   { coin: "USDC-SOL", label: "USDC", network: "Solana", address: WALLETS.usdcSol, priceKey: "usd-coin", icon: "💲", deepLinkPrefix: "solana:" },
   { coin: "SOL", label: "Solana", network: "SOL", address: WALLETS.sol, priceKey: "solana", icon: "◎", deepLinkPrefix: "solana:" },
   { coin: "BTC", label: "Bitcoin", network: "BTC", address: WALLETS.btc, priceKey: "bitcoin", icon: "₿", deepLinkPrefix: "bitcoin:" },
-  { coin: "ETH", label: "Ethereum", network: "ERC-20", address: WALLETS.eth, priceKey: "ethereum", icon: "⟠" },
-  { coin: "USDC-ERC", label: "USDC", network: "ERC-20", address: WALLETS.usdcErc, priceKey: "usd-coin", icon: "💲" },
+  // ERC-20 rails (ETH + USDC-ERC) were removed 2026-06-20: their shared address
+  // routed customer funds into a wallet excluded from the paid-signal detector,
+  // so an ETH/USDC-ERC sale would (a) never fire the order alert and (b) land in
+  // a wallet that isn't a clean order-receiving wallet. The remaining rails
+  // (USDC-SOL default, SOL, BTC) all route to detector-monitored wallets.
 ];
 
 // Orders go through our own /api/order route when running with a Node host.
@@ -694,7 +697,7 @@ export default function CheckoutPage() {
                     Open in wallet app
                   </a>
                   <p className="text-center text-[11px] leading-4 text-[#6b7a73] sm:hidden">
-                    Tap to open Phantom, MetaMask, or your wallet with the amount pre-filled.
+                    Tap to open Phantom or your wallet with the amount pre-filled.
                   </p>
                 </div>
               ) : null}
@@ -1221,7 +1224,7 @@ export default function CheckoutPage() {
                             <div>
                               <p className="font-medium text-[#0f1613]">Get a wallet app</p>
                               <p className="mt-0.5 text-[12px] text-[#8a9690]">
-                                Download <a href="https://phantom.app" target="_blank" rel="noreferrer" className="text-[#1e6f58] underline">Phantom</a> (easiest, works on phone) or <a href="https://metamask.io" target="_blank" rel="noreferrer" className="text-[#1e6f58] underline">MetaMask</a>. Takes 60 seconds.
+                                Download <a href="https://phantom.app" target="_blank" rel="noreferrer" className="text-[#1e6f58] underline">Phantom</a> (easiest, works on phone, supports SOL, USDC, and BTC). Takes 60 seconds.
                               </p>
                             </div>
                           </li>

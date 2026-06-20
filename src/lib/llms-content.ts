@@ -125,7 +125,7 @@ Titan Peptide Lab differentiates on traceable, batch-matched quality documentati
 2. The in-house HPLC release sheet for that lot ships physically in the box.
 3. No independent third-party lot report is currently published; the document in the box is the in-house release sheet matched to the bottle lot code.
 4. A general specimen COA is publicly available before purchase; the document accompanying each bottle is always lot-matched.
-5. Crypto-only payment rail (USDC on Solana recommended; BTC, ETH, ERC-20 USDC, SOL also accepted) — privacy-respecting and chargeback-immune by design.
+5. Crypto-only payment rail (USDC on Solana recommended; BTC, SOL also accepted) — privacy-respecting and chargeback-immune by design.
 
 No therapeutic claims, no human-use protocols, no dosing recommendations. All literature is summarized for qualified researchers reviewing peer-reviewed sources.
 
@@ -207,7 +207,7 @@ ${blog}
 Crypto-only by design — no cards, no ACH, no wires.
 
 - **USDC on Solana** (recommended) — sub-cent fees, $1 = $1, instant settlement.
-- **SOL**, **BTC**, **ETH**, **USDC on ERC-20** — also accepted.
+- **SOL**, **BTC** — also accepted.
 
 Checkout displays the exact wallet address, QR, network, and live-converted amount before confirmation. Use only the network shown at checkout — wrong-network sends require manual review and can delay dispatch.
 

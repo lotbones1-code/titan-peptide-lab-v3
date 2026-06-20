@@ -17,20 +17,8 @@ const CHAINS: Chain[] = [
     address: WALLETS.btc,
     qrData: `bitcoin:${WALLETS.btc}`,
   },
-  {
-    key: "eth",
-    label: "Ethereum",
-    asset: "ETH",
-    address: WALLETS.eth,
-    qrData: WALLETS.eth,
-  },
-  {
-    key: "usdcErc",
-    label: "USDC (ERC-20)",
-    asset: "USDC",
-    address: WALLETS.usdcErc,
-    qrData: WALLETS.usdcErc,
-  },
+  // ERC-20 rails removed 2026-06-20 — their address was not a clean
+  // order-receiving wallet and was excluded from the paid-signal detector.
   {
     key: "usdcSol",
     label: "USDC / SOL (Solana)",
@@ -53,7 +41,7 @@ export function PaymentMethods() {
               Crypto-only.<br />No bank, no KYC, no card data.
             </h2>
             <p className="mt-4 text-[15px] leading-[1.8] text-[#555b55]">
-              Your card statement stays clean. The order desk sees a wallet, not a name. Pay in BTC, ETH, USDC, or SOL — the same flow whether you&apos;re in Denver or Dubai.
+              Your card statement stays clean. The order desk sees a wallet, not a name. Pay in BTC, USDC, or SOL — the same flow whether you&apos;re in Denver or Dubai.
             </p>
             <ul className="mt-5 grid gap-2 text-[13px] text-[#44514b] sm:grid-cols-2">
               <li className="flex items-start gap-2"><span className="mt-1 size-1.5 shrink-0 rounded-full bg-[#1a5c48]"></span>No 3rd-party processor — funds confirm direct on-chain</li>
@@ -69,7 +57,7 @@ export function PaymentMethods() {
             <div className="grid gap-4 lg:grid-cols-3">
               {[
                 ["1", "Place the order with your shipping destination."],
-                ["2", "Use BTC, ETH, USDC, or SOL on the listed rail."],
+                ["2", "Use BTC, USDC, or SOL on the listed rail."],
                 ["3", "Titan verifies payment and sends dispatch confirmation."],
               ].map(([step, copy]) => (
                 <div key={step} className="rounded-[1rem] border border-[#e5e1d7] bg-white px-4 py-4">
@@ -123,21 +111,6 @@ function ChainLogo({ chain }: { chain: string }) {
 
   if (chain === "btc") {
     return <span className={`${base} bg-[#F7931A] text-white`}>BTC</span>;
-  }
-
-  if (chain === "eth") {
-    return (
-      <span className={`${base} bg-[#627EEA]/10`}>
-        <svg viewBox="0 0 32 32" aria-hidden className="size-6">
-          <path d="M16 2 7 16.4 16 21l9-4.6L16 2Z" fill="#627EEA" />
-          <path d="M7 18.1 16 30l9-11.9-9 4.6-9-4.6Z" fill="#3C3C3D" />
-        </svg>
-      </span>
-    );
-  }
-
-  if (chain === "usdcErc") {
-    return <span className={`${base} bg-[#2775CA] text-white text-[10px]`}>USDC</span>;
   }
 
   return (
