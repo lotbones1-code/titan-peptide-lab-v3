@@ -61,6 +61,7 @@ const COMPARE_LINKS = [
   ["Semax vs Selank", "/semax-vs-selank"],
   ["CJC-1295 + Ipamorelin guide", "/cjc-1295-ipamorelin-research-guide"],
   ["COA-verified supplier", "/coa-verified-peptide-supplier"],
+  ["How to verify a COA", "/how-to-verify-peptide-quality-coa"],
 ];
 
 const COMPANY_LINKS = [

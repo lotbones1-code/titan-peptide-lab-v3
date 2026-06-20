@@ -41,6 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/where-to-buy-semax-nasal-spray/`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },
     { url: `${BASE}/cjc-1295-ipamorelin-research-guide/`, lastModified: now, changeFrequency: "weekly", priority: 0.89 },
     { url: `${BASE}/coa-verified-peptide-supplier/`, lastModified: now, changeFrequency: "weekly", priority: 0.91 },
+    { url: `${BASE}/how-to-verify-peptide-quality-coa/`, lastModified: now, changeFrequency: "weekly", priority: 0.91 },
     { url: `${BASE}/titan-peptide-lab-reviews/`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },
     { url: `${BASE}/peptide-nasal-spray-supplier/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/peptide-supplier-checklist/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
