@@ -24,6 +24,9 @@ const BLOG_LINKS = [
 ];
 
 const COMPARE_LINKS = [
+  ["Buy peptides with crypto", "/buy-peptides-with-crypto"],
+  ["Buy BPC-157 with Bitcoin", "/buy-bpc-157-with-bitcoin"],
+  ["Pay for peptides with USDC", "/pay-for-peptides-with-usdc-crypto"],
   ["Where to buy BPC-157 spray", "/where-to-buy-bpc-157-nasal-spray"],
   ["Where to buy PT-141 spray", "/where-to-buy-pt-141-nasal-spray"],
   ["BPC-157 spray vs vial", "/bpc-157-nasal-spray-vs-vial"],
