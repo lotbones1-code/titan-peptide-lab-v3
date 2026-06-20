@@ -47,6 +47,7 @@ const COMPARE_LINKS = [
   ["BPC-157 + TB-500 stack", "/bpc-157-tb-500-stack"],
   ["CJC-1295 vs Ipamorelin", "/cjc-1295-vs-ipamorelin"],
   ["Ipamorelin vs Sermorelin", "/ipamorelin-vs-sermorelin"],
+  ["PT-141 vs Oxytocin spray", "/pt-141-vs-oxytocin-nasal-spray"],
   ["Where to buy semaglutide (research)", "/where-to-buy-semaglutide-research"],
   ["Where to buy tirzepatide (research)", "/where-to-buy-tirzepatide"],
   ["Buy tirzepatide with crypto", "/buy-tirzepatide-with-crypto"],
