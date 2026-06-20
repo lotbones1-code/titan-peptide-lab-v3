@@ -26,6 +26,9 @@ const BLOG_LINKS = [
 const COMPARE_LINKS = [
   ["Buy peptides with crypto", "/buy-peptides-with-crypto"],
   ["Buy BPC-157 with Bitcoin", "/buy-bpc-157-with-bitcoin"],
+  ["Buy retatrutide with crypto", "/buy-retatrutide-with-crypto"],
+  ["Buy TB-500 with crypto", "/buy-tb-500-with-crypto"],
+  ["Anonymous purchase with crypto", "/anonymous-peptide-purchase-crypto"],
   ["Pay for peptides with USDC", "/pay-for-peptides-with-usdc-crypto"],
   ["Where to buy BPC-157 spray", "/where-to-buy-bpc-157-nasal-spray"],
   ["Where to buy PT-141 spray", "/where-to-buy-pt-141-nasal-spray"],
@@ -36,6 +39,8 @@ const COMPARE_LINKS = [
   ["Where to buy TB-500", "/where-to-buy-tb-500"],
   ["Where to buy CJC-1295 + Ipamorelin", "/where-to-buy-cjc-1295-ipamorelin"],
   ["Where to buy Semax spray", "/where-to-buy-semax-nasal-spray"],
+  ["Where to buy Selank", "/where-to-buy-selank"],
+  ["CJC-1295 vs Ipamorelin", "/cjc-1295-vs-ipamorelin"],
   ["CJC-1295 + Ipamorelin guide", "/cjc-1295-ipamorelin-research-guide"],
   ["COA-verified supplier", "/coa-verified-peptide-supplier"],
 ];
