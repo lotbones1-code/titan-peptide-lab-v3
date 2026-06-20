@@ -75,6 +75,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/buy-peptides-with-bitcoin/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/semaglutide-vs-tirzepatide/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/mk-677-vs-ipamorelin/`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },
+    { url: `${BASE}/semax-vs-selank/`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },
     { url: `${BASE}/research/`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE}/contact/`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE}/guide/`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },

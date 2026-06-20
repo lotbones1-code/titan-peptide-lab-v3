@@ -57,6 +57,7 @@ const COMPARE_LINKS = [
   ["Buy peptides with Bitcoin", "/buy-peptides-with-bitcoin"],
   ["Semaglutide vs tirzepatide", "/semaglutide-vs-tirzepatide"],
   ["MK-677 vs Ipamorelin", "/mk-677-vs-ipamorelin"],
+  ["Semax vs Selank", "/semax-vs-selank"],
   ["CJC-1295 + Ipamorelin guide", "/cjc-1295-ipamorelin-research-guide"],
   ["COA-verified supplier", "/coa-verified-peptide-supplier"],
 ];
