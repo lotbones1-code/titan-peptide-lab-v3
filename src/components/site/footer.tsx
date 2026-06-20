@@ -23,6 +23,14 @@ const BLOG_LINKS = [
   ["Peptide storage guide", "/blog/peptide-storage-guide"],
 ];
 
+const COMPARE_LINKS = [
+  ["Where to buy BPC-157 spray", "/where-to-buy-bpc-157-nasal-spray"],
+  ["BPC-157 spray vs vial", "/bpc-157-nasal-spray-vs-vial"],
+  ["TB-500 vs BPC-157", "/tb-500-vs-bpc-157"],
+  ["Where to buy peptides", "/where-to-buy-research-peptides"],
+  ["COA-verified supplier", "/coa-verified-peptide-supplier"],
+];
+
 const COMPANY_LINKS = [
   ["About", "/about"],
   ["Lab testing", "/lab-testing"],
@@ -71,8 +79,9 @@ export function Footer() {
             </p>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-6">
             <FooterColumn title="Products" links={productLinks} />
+            <FooterColumn title="Compare" links={COMPARE_LINKS} />
             <FooterColumn title="Research" links={RESEARCH_LINKS} />
             <FooterColumn title="Blog" links={BLOG_LINKS} />
             <FooterColumn title="Company" links={COMPANY_LINKS} />
