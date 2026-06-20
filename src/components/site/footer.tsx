@@ -25,9 +25,11 @@ const BLOG_LINKS = [
 
 const COMPARE_LINKS = [
   ["Where to buy BPC-157 spray", "/where-to-buy-bpc-157-nasal-spray"],
+  ["Where to buy PT-141 spray", "/where-to-buy-pt-141-nasal-spray"],
   ["BPC-157 spray vs vial", "/bpc-157-nasal-spray-vs-vial"],
   ["TB-500 vs BPC-157", "/tb-500-vs-bpc-157"],
-  ["Where to buy peptides", "/where-to-buy-research-peptides"],
+  ["Retatrutide vs tirzepatide", "/retatrutide-vs-tirzepatide-vs-semaglutide"],
+  ["CJC-1295 + Ipamorelin guide", "/cjc-1295-ipamorelin-research-guide"],
   ["COA-verified supplier", "/coa-verified-peptide-supplier"],
 ];
 
