@@ -55,6 +55,7 @@ const COMPARE_LINKS = [
   ["BPC-157 + TB-500 stack", "/bpc-157-tb-500-stack"],
   ["CJC-1295 vs Ipamorelin", "/cjc-1295-vs-ipamorelin"],
   ["Ipamorelin vs Sermorelin", "/ipamorelin-vs-sermorelin"],
+  ["Selank vs Oxytocin spray", "/selank-vs-oxytocin-nasal-spray"],
   ["PT-141 vs Oxytocin spray", "/pt-141-vs-oxytocin-nasal-spray"],
   ["DSIP vs Oxytocin spray", "/dsip-vs-oxytocin-nasal-spray"],
   ["DSIP vs Selank spray", "/dsip-vs-selank-nasal-spray"],
