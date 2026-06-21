@@ -177,6 +177,7 @@ export default function Tb500VsBpcPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">Related reading</p>
             <h2 className="mt-4 font-serif text-[clamp(1.9rem,4vw,3rem)] leading-[1.02] tracking-[-0.035em]">Keep comparing before you commit.</h2>
             <ul className="mt-7 space-y-3 text-[14px] leading-7 text-[#1e6f58]">
+              <li><Link className="hover:underline" href="/ghk-cu-vs-bpc-157/?ref=tb500-vs-bpc">GHK-Cu vs BPC-157 →</Link></li>
               <li><Link className="hover:underline" href="/bpc-157-nasal-spray-vs-vial/?ref=tb500-vs-bpc">BPC-157 nasal spray vs vial →</Link></li>
               <li><Link className="hover:underline" href="/blog/bpc-157-nasal-spray-complete-guide/?ref=tb500-vs-bpc">BPC-157 nasal spray complete guide →</Link></li>
               <li><Link className="hover:underline" href="/best-research-peptides/?ref=tb500-vs-bpc">Best research peptides by category →</Link></li>
