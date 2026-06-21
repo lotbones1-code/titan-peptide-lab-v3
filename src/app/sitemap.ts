@@ -36,6 +36,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/retatrutide-vs-tirzepatide-vs-semaglutide/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/where-to-buy-pt-141-nasal-spray/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/where-to-buy-retatrutide/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE}/retatrutide-for-sale/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/where-to-buy-tb-500/`, lastModified: now, changeFrequency: "weekly", priority: 0.89 },
     { url: `${BASE}/where-to-buy-cjc-1295-ipamorelin/`, lastModified: now, changeFrequency: "weekly", priority: 0.89 },
     { url: `${BASE}/where-to-buy-semax-nasal-spray/`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },

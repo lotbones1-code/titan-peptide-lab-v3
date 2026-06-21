@@ -176,6 +176,7 @@ export default function WhereToBuyRetatrutidePage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">Related reading</p>
             <h2 className="mt-4 font-serif text-[clamp(1.9rem,4vw,3rem)] leading-[1.02] tracking-[-0.035em]">Before you check out.</h2>
             <ul className="mt-7 space-y-3 text-[14px] leading-7 text-[#1e6f58]">
+              <li><Link className="hover:underline" href="/retatrutide-for-sale/?ref=buy-reta">Retatrutide for sale — price &amp; discount tiers →</Link></li>
               <li><Link className="hover:underline" href="/retatrutide-vs-tirzepatide-vs-semaglutide/?ref=buy-reta">Retatrutide vs tirzepatide vs semaglutide →</Link></li>
               <li><Link className="hover:underline" href="/peptide-reconstitution-calculator/?ref=buy-reta">Peptide reconstitution calculator →</Link></li>
               <li><Link className="hover:underline" href="/coa-verified-peptide-supplier/?ref=buy-reta">COA-verified peptide supplier →</Link></li>
