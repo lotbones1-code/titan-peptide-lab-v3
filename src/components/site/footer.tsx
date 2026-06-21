@@ -70,6 +70,7 @@ const COMPARE_LINKS = [
   ["Semax vs Selank", "/semax-vs-selank"],
   ["Nootropic & nasal peptides", "/nootropic-nasal-peptides"],
   ["Nasal spray storage & shelf life", "/peptide-nasal-spray-storage-shelf-life"],
+  ["Lyophilized peptide shipping (room temp)", "/lyophilized-peptide-shipping-room-temperature"],
   ["CJC-1295 + Ipamorelin guide", "/cjc-1295-ipamorelin-research-guide"],
   ["CJC + Ipamorelin COA red flags", "/cjc-1295-ipamorelin-coa-red-flags"],
   ["COA-verified supplier", "/coa-verified-peptide-supplier"],
