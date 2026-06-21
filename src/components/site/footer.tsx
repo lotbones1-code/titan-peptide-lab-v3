@@ -51,6 +51,7 @@ const COMPARE_LINKS = [
   ["PT-141 vs Oxytocin spray", "/pt-141-vs-oxytocin-nasal-spray"],
   ["DSIP vs Oxytocin spray", "/dsip-vs-oxytocin-nasal-spray"],
   ["DSIP vs Selank spray", "/dsip-vs-selank-nasal-spray"],
+  ["DSIP vs PT-141 spray", "/dsip-vs-pt-141-nasal-spray"],
   ["Where to buy semaglutide (research)", "/where-to-buy-semaglutide-research"],
   ["Where to buy tirzepatide (research)", "/where-to-buy-tirzepatide"],
   ["Buy tirzepatide with crypto", "/buy-tirzepatide-with-crypto"],

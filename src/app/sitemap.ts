@@ -75,6 +75,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/pt-141-vs-oxytocin-nasal-spray/`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },
     { url: `${BASE}/dsip-vs-oxytocin-nasal-spray/`, lastModified: now, changeFrequency: "weekly", priority: 0.87 },
     { url: `${BASE}/dsip-vs-selank-nasal-spray/`, lastModified: now, changeFrequency: "weekly", priority: 0.87 },
+    { url: `${BASE}/dsip-vs-pt-141-nasal-spray/`, lastModified: now, changeFrequency: "weekly", priority: 0.87 },
     { url: `${BASE}/buy-peptides-with-bitcoin/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/semaglutide-vs-tirzepatide/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/mk-677-vs-ipamorelin/`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },
