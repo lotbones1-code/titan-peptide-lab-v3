@@ -35,6 +35,31 @@ const BUYER_PATHS = [
     href: "/retatrutide-vs-tirzepatide-vs-semaglutide/?ref=seo-home-hub",
     body: "A side-by-side comparison of the three GLP-1 research compounds before you choose a path.",
   },
+  {
+    title: "Retatrutide for sale",
+    href: "/retatrutide-for-sale/?ref=seo-home-hub",
+    body: "Pricing, lyophilized vial size, bulk tiers, and crypto checkout for the triple-agonist research compound.",
+  },
+  {
+    title: "BPC-157 for sale",
+    href: "/bpc-157-for-sale/?ref=seo-home-hub",
+    body: "BPC-157 in vial and nasal-spray formats with lot-matched COA and research-use labeling.",
+  },
+  {
+    title: "TB-500 for sale",
+    href: "/tb-500-for-sale/?ref=seo-home-hub",
+    body: "TB-500 (Thymosin β-4) 5mg vials with HPLC purity documentation and the BPC-157 pairing context.",
+  },
+  {
+    title: "Buy peptides with crypto",
+    href: "/buy-peptides-with-crypto/?ref=seo-home-hub",
+    body: "Which coins we accept, how checkout works, confirmation times, and why crypto-only keeps prices lower.",
+  },
+  {
+    title: "How to verify peptide quality (COA)",
+    href: "/how-to-verify-peptide-quality-coa/?ref=seo-home-hub",
+    body: "How to read a Certificate of Analysis — identity before purity, the chromatogram, and lot-matching the vial.",
+  },
 ];
 
 export function WhereToBuyHub() {
@@ -48,9 +73,9 @@ export function WhereToBuyHub() {
           Where to buy research peptides, by compound
         </h2>
         <p className="mt-5 max-w-[60ch] text-[15px] leading-[1.85] text-[#555b55]">
-          Jump straight to the most-searched research compounds. Each page covers
-          the COA, HPLC purity target, payment networks, and what to verify
-          before you order.
+          Jump straight to the most-searched research compounds — where to buy
+          them, current pricing, how crypto checkout works, and how to verify a
+          Certificate of Analysis before you order.
         </p>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
