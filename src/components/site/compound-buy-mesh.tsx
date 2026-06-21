@@ -37,6 +37,7 @@ const GROUPS: { heading: string; items: Compound[] }[] = [
     heading: "Neuropeptide & nootropic research",
     items: [
       { slug: "where-to-buy-selank", label: "Selank" },
+      { slug: "where-to-buy-selank-nasal-spray", label: "Selank Nasal Spray" },
       { slug: "where-to-buy-semax-nasal-spray", label: "Semax Nasal Spray" },
       { slug: "where-to-buy-semax-selank-stack", label: "Semax + Selank Stack" },
     ],

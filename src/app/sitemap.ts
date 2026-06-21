@@ -63,6 +63,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/anonymous-peptide-purchase-crypto/`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },
     { url: `${BASE}/cjc-1295-vs-ipamorelin/`, lastModified: now, changeFrequency: "weekly", priority: 0.89 },
     { url: `${BASE}/where-to-buy-selank/`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },
+    { url: `${BASE}/where-to-buy-selank-nasal-spray/`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },
     { url: `${BASE}/where-to-buy-dsip-nasal-spray/`, lastModified: now, changeFrequency: "weekly", priority: 0.87 },
     { url: `${BASE}/where-to-buy-oxytocin-nasal-spray/`, lastModified: now, changeFrequency: "weekly", priority: 0.87 },
     { url: `${BASE}/where-to-buy-bpc-157/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },

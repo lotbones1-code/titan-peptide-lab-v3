@@ -178,6 +178,7 @@ export default function WhereToBuySelankPage() {
             <h2 className="mt-4 font-serif text-[clamp(1.9rem,4vw,3rem)] leading-[1.02] tracking-[-0.035em]">Before you check out.</h2>
             <ul className="mt-7 space-y-3 text-[14px] leading-7 text-[#1e6f58]">
               <li><Link className="hover:underline" href="/blog/semax-vs-selank-neuropeptide-comparison/?ref=buy-selank">Semax vs Selank comparison →</Link></li>
+              <li><Link className="hover:underline" href="/where-to-buy-selank-nasal-spray/?ref=buy-selank">Where to buy Selank nasal spray →</Link></li>
               <li><Link className="hover:underline" href="/where-to-buy-semax-nasal-spray/?ref=buy-selank">Where to buy Semax nasal spray →</Link></li>
               <li><Link className="hover:underline" href="/coa-verified-peptide-supplier/?ref=buy-selank">COA-verified peptide supplier →</Link></li>
               <li><Link className="hover:underline" href="/peptide-supplier-checklist/?ref=buy-selank">Research peptide supplier checklist →</Link></li>

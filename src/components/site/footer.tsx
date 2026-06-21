@@ -45,6 +45,7 @@ const COMPARE_LINKS = [
   ["Where to buy CJC-1295 + Ipamorelin", "/where-to-buy-cjc-1295-ipamorelin"],
   ["Where to buy Semax spray", "/where-to-buy-semax-nasal-spray"],
   ["Where to buy Selank", "/where-to-buy-selank"],
+  ["Where to buy Selank spray", "/where-to-buy-selank-nasal-spray"],
   ["Where to buy DSIP spray", "/where-to-buy-dsip-nasal-spray"],
   ["Where to buy oxytocin spray", "/where-to-buy-oxytocin-nasal-spray"],
   ["Where to buy BPC-157", "/where-to-buy-bpc-157"],
