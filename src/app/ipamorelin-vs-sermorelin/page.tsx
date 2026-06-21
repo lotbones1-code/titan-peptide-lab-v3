@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Activity, FlaskConical, GitCompare, Timer } from "lucide-react";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
+import { CompareMesh } from "@/components/site/compare-mesh";
 import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/site/json-ld";
 
 const TITLE = "Ipamorelin vs Sermorelin | Research Comparison | Titan Peptide Lab";
@@ -192,6 +193,7 @@ export default function IpamorelinVsSermorelinPage() {
             </div>
           </div>
         </section>
+        <CompareMesh current="ipamorelin-vs-sermorelin" />
       </main>
       <Footer />
     </>

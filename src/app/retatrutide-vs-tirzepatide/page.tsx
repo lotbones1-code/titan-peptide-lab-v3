@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, FileSearch, FlaskConical, GitMerge, ShieldCheck } from "lucide-react";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
+import { CompareMesh } from "@/components/site/compare-mesh";
 import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/site/json-ld";
 
 const TITLE = "Retatrutide vs Tirzepatide | Research Compound Comparison | Titan Peptide Lab";
@@ -209,6 +210,7 @@ export default function RetatrutideVsTirzepatidePage() {
             </div>
           </div>
         </section>
+        <CompareMesh current="retatrutide-vs-tirzepatide" />
       </main>
       <Footer />
     </>

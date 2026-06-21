@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, FlaskConical, GitCompareArrows, FileSearch, Scale } from "lucide-react";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
+import { CompareMesh } from "@/components/site/compare-mesh";
 import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/site/json-ld";
 
 const TITLE = "Semaglutide vs Tirzepatide | GLP-1 Single vs Dual Agonist (Research) | Titan Peptide Lab";
@@ -208,6 +209,7 @@ export default function SemaglutideVsTirzepatidePage() {
             </div>
           </div>
         </section>
+        <CompareMesh current="semaglutide-vs-tirzepatide" />
       </main>
       <Footer />
     </>

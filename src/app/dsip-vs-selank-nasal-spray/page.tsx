@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, FileSearch, FlaskConical, GitMerge, ShieldCheck } from "lucide-react";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
+import { CompareMesh } from "@/components/site/compare-mesh";
 import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/site/json-ld";
 
 const TITLE = "DSIP vs Selank Nasal Spray | Research Compound Comparison | Titan Peptide Lab";
@@ -206,6 +207,7 @@ export default function DsipVsSelankPage() {
             </div>
           </div>
         </section>
+        <CompareMesh current="dsip-vs-selank-nasal-spray" />
       </main>
       <Footer />
     </>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, FileSearch, FlaskConical, Layers, ShieldCheck } from "lucide-react";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
+import { CompareMesh } from "@/components/site/compare-mesh";
 import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/site/json-ld";
 
 const TITLE = "GHK-Cu vs BPC-157 | Research Compound Comparison | Titan Peptide Lab";
@@ -205,6 +206,7 @@ export default function GhkCuVsBpcPage() {
             </div>
           </div>
         </section>
+        <CompareMesh current="ghk-cu-vs-bpc-157" />
       </main>
       <Footer />
     </>

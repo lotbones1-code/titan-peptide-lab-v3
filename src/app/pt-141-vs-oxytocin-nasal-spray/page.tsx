@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, FileSearch, FlaskConical, GitMerge, ShieldCheck } from "lucide-react";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
+import { CompareMesh } from "@/components/site/compare-mesh";
 import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/site/json-ld";
 
 const TITLE = "PT-141 vs Oxytocin Nasal Spray | Research Compound Comparison | Titan Peptide Lab";
@@ -205,6 +206,7 @@ export default function Pt141VsOxytocinPage() {
             </div>
           </div>
         </section>
+        <CompareMesh current="pt-141-vs-oxytocin-nasal-spray" />
       </main>
       <Footer />
     </>

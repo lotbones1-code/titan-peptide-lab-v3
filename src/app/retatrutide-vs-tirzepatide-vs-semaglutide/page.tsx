@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, FlaskConical, FileSearch, Microscope, Beaker } from "lucide-react";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
+import { CompareMesh } from "@/components/site/compare-mesh";
 import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/site/json-ld";
 
 const TITLE =
@@ -243,6 +244,7 @@ export default function RetaVsTirzVsSemaPage() {
             </div>
           </div>
         </section>
+        <CompareMesh current="retatrutide-vs-tirzepatide-vs-semaglutide" />
       </main>
       <Footer />
     </>
