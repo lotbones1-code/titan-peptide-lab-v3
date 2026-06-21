@@ -40,6 +40,7 @@ const COMPARE_LINKS = [
   ["TB-500 vs BPC-157", "/tb-500-vs-bpc-157"],
   ["GLP-1 research peptides", "/glp-1-research-peptides"],
   ["Retatrutide vs tirzepatide", "/retatrutide-vs-tirzepatide"],
+  ["Retatrutide vs semaglutide", "/retatrutide-vs-semaglutide"],
   ["Reta vs tirz vs sema", "/retatrutide-vs-tirzepatide-vs-semaglutide"],
   ["Where to buy retatrutide", "/where-to-buy-retatrutide"],
   ["Where to buy TB-500", "/where-to-buy-tb-500"],

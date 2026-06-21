@@ -178,6 +178,7 @@ export default function RetatrutideVsTirzepatidePage() {
             <h2 className="mt-4 font-serif text-[clamp(1.9rem,4vw,3rem)] leading-[1.02] tracking-[-0.035em]">Keep comparing before you commit.</h2>
             <ul className="mt-7 space-y-3 text-[14px] leading-7 text-[#1e6f58]">
               <li><Link className="hover:underline" href="/retatrutide-vs-tirzepatide-vs-semaglutide/?ref=reta-vs-tirz">Retatrutide vs tirzepatide vs semaglutide (all three) →</Link></li>
+              <li><Link className="hover:underline" href="/retatrutide-vs-semaglutide/?ref=reta-vs-tirz">Retatrutide vs semaglutide (single vs triple) →</Link></li>
               <li><Link className="hover:underline" href="/semaglutide-vs-tirzepatide/?ref=reta-vs-tirz">Semaglutide vs tirzepatide →</Link></li>
               <li><Link className="hover:underline" href="/where-to-buy-retatrutide/?ref=reta-vs-tirz">Where to buy retatrutide →</Link></li>
               <li><Link className="hover:underline" href="/where-to-buy-tirzepatide/?ref=reta-vs-tirz">Where to buy tirzepatide →</Link></li>
