@@ -1,0 +1,215 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowRight, FileSearch, FlaskConical, GitMerge, ShieldCheck } from "lucide-react";
+import { Nav } from "@/components/site/nav";
+import { Footer } from "@/components/site/footer";
+import { BreadcrumbJsonLd, FAQJsonLd } from "@/components/site/json-ld";
+
+const TITLE = "Retatrutide vs Tirzepatide | Research Compound Comparison | Titan Peptide Lab";
+const DESCRIPTION =
+  "Retatrutide vs tirzepatide: a research-use comparison of two incretin receptor-agonist peptides studied in metabolic research. Tirzepatide is a dual GIP/GLP-1 receptor agonist; retatrutide is a triple GIP/GLP-1/glucagon receptor agonist. What each is, the receptor pathways studied, available research formats, and purity documentation. Research use only, not for human use.";
+
+export const metadata: Metadata = {
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: "/retatrutide-vs-tirzepatide/" },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: "/retatrutide-vs-tirzepatide/",
+    type: "article",
+  },
+  robots: { index: true, follow: true },
+};
+
+const ROWS = [
+  ["Class", "Triple incretin receptor agonist (research peptide)", "Dual incretin receptor agonist (research peptide)"],
+  ["Receptor pathways studied", "GIP, GLP-1, and glucagon receptor signaling", "GIP and GLP-1 receptor signaling"],
+  ["Mechanistic distinction", "Adds a third receptor arm (glucagon) on top of the dual-agonist framework studied in metabolic-research models", "Dual-incretin framework — the two-receptor baseline that the triple agonist is most often contrasted against"],
+  ["Why they're compared", "Both appear in incretin / metabolic receptor-agonist research and are cross-searched as the dual-vs-triple question", "Same — they are the canonical 'two receptors vs three receptors' pairing in this research area"],
+  ["Titan format", "Retatrutide research vial, lyophilized for reconstitution", "Sourced as a research compound; see the tirzepatide buyer page for current format"],
+  ["Documentation", "Lot-matched release sheet, HPLC purity target with identity confirmation", "Lot-matched release sheet, HPLC purity target with identity confirmation"],
+];
+
+const POINTS = [
+  {
+    icon: GitMerge,
+    title: "Dual agonist vs triple agonist",
+    body: "The single distinction researchers care about: tirzepatide is studied as a dual GIP/GLP-1 receptor agonist, while retatrutide adds a third arm — glucagon-receptor signaling — making it a triple GIP/GLP-1/glucagon agonist. That extra receptor pathway is the entire reason the two are cross-searched. Both are handled by Titan strictly as research compounds, never as substitutes for one another or for any approved medication.",
+    href: "/products/retatrutide/?ref=reta-vs-tirz",
+    cta: "View retatrutide",
+  },
+  {
+    icon: FlaskConical,
+    title: "Retatrutide is the triple-agonist research peptide",
+    body: "If your study design is built around three-receptor incretin signaling — GIP, GLP-1, and glucagon together — retatrutide, not tirzepatide, is the relevant compound. Titan supplies retatrutide as a lyophilized research vial with lot documentation referenced to the lot code on the unit, so the material in front of you matches the paperwork.",
+    href: "/where-to-buy-retatrutide/?ref=reta-vs-tirz",
+    cta: "Where to buy retatrutide",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Same documentation standard for both",
+    body: "Whichever receptor framework you're studying, the paper-trail standard does not change: a lot-matched in-house release sheet referenced to the lot code on the unit, against an HPLC purity target with identity confirmation. That consistency is what separates a documented supplier from a blind one — and it is the only claim Titan makes about these compounds.",
+    href: "/coa-verified-peptide-supplier/?ref=reta-vs-tirz",
+    cta: "How to verify a COA",
+  },
+  {
+    icon: FileSearch,
+    title: "Choose by the receptor framework you're studying",
+    body: "Pick by the number of receptor arms your research model targets: two (GIP/GLP-1) points to tirzepatide, three (GIP/GLP-1/glucagon) points to retatrutide. They are not interchangeable. Avoid any supplier that attaches weight-loss, dosing, or human-use claims to either — that marketing language is a compliance red flag, not science. For all three side by side, see the full GLP-1 comparison.",
+    href: "/retatrutide-vs-tirzepatide-vs-semaglutide/?ref=reta-vs-tirz",
+    cta: "Add semaglutide to the comparison",
+  },
+];
+
+const FAQS = [
+  {
+    q: "What is the difference between retatrutide and tirzepatide?",
+    a: "In research terms they differ by one receptor pathway. Tirzepatide is studied as a dual incretin receptor agonist acting on GIP and GLP-1 receptors; retatrutide is studied as a triple incretin receptor agonist that adds a third arm — glucagon-receptor signaling — on top of GIP and GLP-1. That extra receptor is the core distinction. Both are supplied strictly for in-vitro laboratory research.",
+  },
+  {
+    q: "Is retatrutide a triple agonist and tirzepatide a dual agonist?",
+    a: "Yes. Tirzepatide is characterized in the research literature as a dual GIP/GLP-1 receptor agonist, and retatrutide as a triple GIP/GLP-1/glucagon receptor agonist. Titan provides these descriptions as mechanistic research context only — no protocols, dosing, efficacy, or human-use guidance is offered.",
+  },
+  {
+    q: "Which format does Titan offer for retatrutide and tirzepatide?",
+    a: "Titan supplies retatrutide as a lyophilized research vial for reconstitution with lot-matched documentation. For tirzepatide format and availability, see the dedicated where-to-buy-tirzepatide page. Each product page lists size, the lot release sheet, and the testing workflow.",
+  },
+  {
+    q: "How do I verify the purity of either compound?",
+    a: "Both ship with a lot-matched in-house release sheet referenced to the lot code on the unit, against an HPLC purity target with identity confirmation. The COA verification guide explains how to read an HPLC/MS release sheet and what to check before trusting any supplier's documentation.",
+  },
+  {
+    q: "Are these products for human use?",
+    a: "No. Retatrutide and tirzepatide from Titan Peptide Lab are sold strictly for in-vitro laboratory research. They are not for human or animal consumption, diagnostic, therapeutic, or preventative use, and no weight-loss or metabolic outcome is claimed.",
+  },
+];
+
+export default function RetatrutideVsTirzepatidePage() {
+  return (
+    <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", item: "/" },
+          { name: "Retatrutide vs Tirzepatide", item: "/retatrutide-vs-tirzepatide/" },
+        ]}
+      />
+      <FAQJsonLd faqs={FAQS} />
+      <Nav />
+      <main className="bg-white text-[#0f1613]">
+        <section className="border-b border-[rgb(15_22_19/6%)] bg-[#fbfcfb] py-16 lg:py-24">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <div className="max-w-4xl">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">
+                Research compound comparison · research use
+              </p>
+              <h1 className="mt-5 font-serif text-[clamp(2.65rem,6vw,5.4rem)] leading-[0.94] tracking-[-0.05em] text-[#0f1613] text-balance">
+                Retatrutide vs tirzepatide: dual agonist vs triple agonist.
+              </h1>
+              <p className="mt-6 max-w-2xl text-[15px] leading-[1.85] text-[#5c6762]">
+                Retatrutide and tirzepatide are both incretin receptor-agonist research peptides, so they get cross-searched — but they aren&apos;t the same compound. Tirzepatide is studied as a dual GIP/GLP-1 receptor agonist; retatrutide is studied as a triple GIP/GLP-1/glucagon receptor agonist, adding a third receptor arm. That one mechanistic difference is the whole comparison. This page lays out what each is, the receptor pathways each engages in research, available formats, and the documentation standard behind both.
+              </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href="/products/retatrutide/?ref=reta-vs-tirz-hero"
+                  className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#0f1613] px-7 text-[13px] font-semibold text-white transition hover:bg-[#1e6f58]"
+                >
+                  View retatrutide
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  href="/where-to-buy-tirzepatide/?ref=reta-vs-tirz-hero"
+                  className="inline-flex h-12 items-center justify-center rounded-full border border-[rgb(15_22_19/12%)] px-7 text-[13px] font-semibold text-[#0f1613] transition hover:border-[#0f1613]"
+                >
+                  Where to buy tirzepatide
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 lg:py-24">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <div className="overflow-hidden rounded-[1.5rem] border border-[#dde6e1]">
+              <table className="w-full border-collapse text-left text-[13.5px]">
+                <thead>
+                  <tr className="bg-[#fafbfa] text-[11px] font-semibold uppercase tracking-[0.12em] text-[#1e6f58]">
+                    <th className="px-5 py-4">Attribute</th>
+                    <th className="px-5 py-4">Retatrutide</th>
+                    <th className="px-5 py-4">Tirzepatide</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ROWS.map(([attr, reta, tirz]) => (
+                    <tr key={attr} className="border-t border-[#eef2f0] align-top">
+                      <td className="px-5 py-4 font-semibold text-[#0f1613]">{attr}</td>
+                      <td className="px-5 py-4 leading-7 text-[#5c6762]">{reta}</td>
+                      <td className="px-5 py-4 leading-7 text-[#5c6762]">{tirz}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section className="border-y border-[rgb(15_22_19/6%)] bg-[#fafbfa] py-16 lg:py-24">
+          <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+              {POINTS.map(({ icon: Icon, title, body, href, cta }) => (
+                <Link key={title} href={href} className="group flex h-full flex-col rounded-[1.5rem] border border-[#dde6e1] bg-white p-6 transition hover:-translate-y-0.5 hover:border-[#1e6f58] hover:shadow-[0_18px_60px_-42px_rgb(15_22_19/45%)]">
+                  <Icon className="h-5 w-5 text-[#1e6f58]" />
+                  <h2 className="mt-5 font-serif text-[1.45rem] leading-tight tracking-[-0.02em] group-hover:text-[#1e6f58]">
+                    {title}
+                  </h2>
+                  <p className="mt-3 flex-1 text-[13.5px] leading-7 text-[#5c6762]">{body}</p>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#1e6f58]">
+                    {cta} →
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 lg:py-24">
+          <div className="mx-auto max-w-3xl px-5 sm:px-6">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">Related reading</p>
+            <h2 className="mt-4 font-serif text-[clamp(1.9rem,4vw,3rem)] leading-[1.02] tracking-[-0.035em]">Keep comparing before you commit.</h2>
+            <ul className="mt-7 space-y-3 text-[14px] leading-7 text-[#1e6f58]">
+              <li><Link className="hover:underline" href="/retatrutide-vs-tirzepatide-vs-semaglutide/?ref=reta-vs-tirz">Retatrutide vs tirzepatide vs semaglutide (all three) →</Link></li>
+              <li><Link className="hover:underline" href="/semaglutide-vs-tirzepatide/?ref=reta-vs-tirz">Semaglutide vs tirzepatide →</Link></li>
+              <li><Link className="hover:underline" href="/where-to-buy-retatrutide/?ref=reta-vs-tirz">Where to buy retatrutide →</Link></li>
+              <li><Link className="hover:underline" href="/where-to-buy-tirzepatide/?ref=reta-vs-tirz">Where to buy tirzepatide →</Link></li>
+              <li><Link className="hover:underline" href="/glp-1-research-peptides/?ref=reta-vs-tirz">GLP-1 research peptides overview →</Link></li>
+              <li><Link className="hover:underline" href="/retatrutide-for-sale/?ref=reta-vs-tirz">Retatrutide for sale →</Link></li>
+              <li><Link className="hover:underline" href="/peptide-supplier-checklist/?ref=reta-vs-tirz">Supplier checklist →</Link></li>
+              <li><Link className="hover:underline" href="/lab-testing/?ref=reta-vs-tirz">Lab-testing & COA workflow →</Link></li>
+            </ul>
+          </div>
+        </section>
+
+        <section className="border-t border-[rgb(15_22_19/6%)] bg-[#fbfcfb] py-16 text-center lg:py-20">
+          <div className="mx-auto max-w-3xl px-5 sm:px-6">
+            <h2 className="font-serif text-[clamp(2rem,4vw,3.4rem)] leading-[1] tracking-[-0.035em]">
+              See the product pages.
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-[14px] leading-8 text-[#5c6762]">
+              Open the retatrutide research vial for size, lot documentation, and crypto checkout, check the tirzepatide buyer page, or browse the full research catalog.
+            </p>
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <Link href="/products/retatrutide/?ref=reta-vs-tirz-bottom" className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#0f1613] px-7 text-[13px] font-semibold text-white transition hover:bg-[#1e6f58]">
+                Retatrutide vial
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link href="/products/?ref=reta-vs-tirz-bottom" className="inline-flex h-12 items-center justify-center rounded-full border border-[rgb(15_22_19/12%)] px-7 text-[13px] font-semibold text-[#0f1613] transition hover:border-[#0f1613]">
+                Browse catalog
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </>
+  );
+}

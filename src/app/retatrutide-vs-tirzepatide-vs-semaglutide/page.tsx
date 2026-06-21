@@ -184,6 +184,11 @@ export default function RetaVsTirzVsSemaPage() {
             </h2>
             <ul className="mt-7 space-y-3 text-[14px] leading-7 text-[#1e6f58]">
               <li>
+                <Link className="hover:underline" href="/retatrutide-vs-tirzepatide/?ref=reta-tirz-sema">
+                  Retatrutide vs tirzepatide (dual vs triple agonist) →
+                </Link>
+              </li>
+              <li>
                 <Link className="hover:underline" href="/products/retatrutide/?ref=reta-tirz-sema">
                   Retatrutide 10mg lyophilized — product page →
                 </Link>

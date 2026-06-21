@@ -34,6 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/bpc-157-nasal-spray-vs-vial/`, lastModified: now, changeFrequency: "weekly", priority: 0.89 },
     { url: `${BASE}/tb-500-vs-bpc-157/`, lastModified: now, changeFrequency: "weekly", priority: 0.89 },
     { url: `${BASE}/retatrutide-vs-tirzepatide-vs-semaglutide/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE}/retatrutide-vs-tirzepatide/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/where-to-buy-pt-141-nasal-spray/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/where-to-buy-retatrutide/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/retatrutide-for-sale/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
