@@ -1053,8 +1053,9 @@ export default function CheckoutPage() {
                   Payment
                 </h2>
 
-                {/* ─── Card payment (Helio / MoonPay) — only renders when a live
-                       Pay Link is configured via NEXT_PUBLIC_HELIO_PAY_LINK ─── */}
+                {/* ─── Hosted MoonPay/Helio checkout — only renders when a live
+                       Pay Link is configured via NEXT_PUBLIC_HELIO_PAY_LINK.
+                       Current link is crypto-hosted; fiat card remains gated on MoonPay Ramps. ─── */}
                 {HELIO_PAY_LINK && (
                   <>
                     <div className="mt-4 overflow-hidden rounded-2xl border border-[#1e6f58]/30 bg-gradient-to-b from-[#f3f9f6] to-white shadow-[0_1px_0_rgba(30,111,88,0.06)]">
@@ -1065,14 +1066,14 @@ export default function CheckoutPage() {
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-2">
                             <h3 className="font-serif text-[1.3rem] leading-tight text-[#0f1613]">
-                              Pay with card
+                              Hosted crypto checkout
                             </h3>
                             <span className="rounded-full bg-[#1e6f58] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-white">
-                              Fastest
+                              Fastest crypto option
                             </span>
                           </div>
                           <p className="mt-1.5 text-[13px] leading-6 text-[#44514b]">
-                            Checkout securely with any debit or credit card — no wallet or crypto needed. You&apos;ll be taken to our secure card processor and your order total of <span className="font-medium text-[#0f1613]">${total.toFixed(2)} USD</span> is carried over automatically.
+                            Checkout through MoonPay Commerce / Helio with a hosted crypto payment page. Your order total of <span className="font-medium text-[#0f1613]">${total.toFixed(2)} USD</span> is carried over automatically, and manual wallet payment stays available below as a fallback.
                           </p>
                         </div>
                         <a
@@ -1080,29 +1081,29 @@ export default function CheckoutPage() {
                           target="_blank"
                           rel="noreferrer"
                           onClick={() =>
-                            trackEvent("checkout_card_click", {
+                            trackEvent("checkout_hosted_crypto_click", {
                               cart_value_usd: Number(total.toFixed(2)),
                               item_count: items.reduce((n, i) => n + i.quantity, 0),
-                              provider: "helio_moonpay",
+                              provider: "moonpay_helio_crypto",
                             })
                           }
                           className="inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-[#1e6f58] px-6 text-[14px] font-semibold text-white transition-colors hover:bg-[#185a48] sm:w-auto"
                         >
                           <CreditCard className="h-4 w-4" />
-                          Pay ${total.toFixed(2)} with card
+                          Pay ${total.toFixed(2)} with hosted crypto
                         </a>
                       </div>
                       <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-[#d9e7e0] bg-white/60 px-5 py-3 text-[11px] text-[#6b7a73] sm:px-6">
-                        <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5 text-[#1e6f58]" /> Secure card processing</span>
-                        <span className="inline-flex items-center gap-1.5"><Lock className="h-3.5 w-3.5 text-[#1e6f58]" /> Card details never touch Titan</span>
-                        <span className="inline-flex items-center gap-1.5"><Globe className="h-3.5 w-3.5 text-[#1e6f58]" /> Most countries supported</span>
+                        <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5 text-[#1e6f58]" /> Hosted MoonPay/Helio checkout</span>
+                        <span className="inline-flex items-center gap-1.5"><Lock className="h-3.5 w-3.5 text-[#1e6f58]" /> Wallet details stay off Titan</span>
+                        <span className="inline-flex items-center gap-1.5"><Globe className="h-3.5 w-3.5 text-[#1e6f58]" /> Fiat card remains pending Ramps approval</span>
                       </div>
                     </div>
 
-                    {/* Divider into the crypto fallback */}
+                    {/* Divider into the manual wallet fallback */}
                     <div className="mt-5 flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.14em] text-[#8a9690]">
                       <span className="h-px flex-1 bg-[#e7ece9]" />
-                      Or pay with crypto
+                      Or use manual wallet payment
                       <span className="h-px flex-1 bg-[#e7ece9]" />
                     </div>
                   </>
