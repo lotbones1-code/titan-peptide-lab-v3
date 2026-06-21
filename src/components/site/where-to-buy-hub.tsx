@@ -60,6 +60,11 @@ const BUYER_PATHS = [
     href: "/how-to-verify-peptide-quality-coa/?ref=seo-home-hub",
     body: "How to read a Certificate of Analysis — identity before purity, the chromatogram, and lot-matching the vial.",
   },
+  {
+    title: "Best research peptides",
+    href: "/best-research-peptides/?ref=seo-home-hub",
+    body: "What actually separates a good research-peptide supplier — lot-matched COAs, HPLC purity targets, identity checks, and checkout clarity.",
+  },
 ];
 
 export function WhereToBuyHub() {
