@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CompoundBuyMesh } from "@/components/site/compound-buy-mesh";
 import { ArrowRight, CreditCard, FileSearch, FlaskConical, Truck } from "lucide-react";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
@@ -200,6 +201,7 @@ export default function WhereToBuyBpcSprayPage() {
             </div>
           </div>
         </section>
+        <CompoundBuyMesh current="where-to-buy-bpc-157-nasal-spray" />
       </main>
       <Footer />
     </>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CompoundBuyMesh } from "@/components/site/compound-buy-mesh";
 import { ArrowRight, CreditCard, FileSearch, FlaskConical, Truck } from "lucide-react";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
@@ -204,6 +205,7 @@ export default function WhereToBuyTb500Page() {
             </div>
           </div>
         </section>
+        <CompoundBuyMesh current="where-to-buy-tb-500" />
       </main>
       <Footer />
     </>

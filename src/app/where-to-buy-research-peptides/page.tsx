@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CompoundBuyMesh } from "@/components/site/compound-buy-mesh";
 import { ArrowRight, FileSearch, FlaskConical, ShieldCheck, Truck } from "lucide-react";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
@@ -187,6 +188,7 @@ export default function WhereToBuyResearchPeptidesPage() {
             </div>
           </div>
         </section>
+        <CompoundBuyMesh current="where-to-buy-research-peptides" />
       </main>
       <Footer />
     </>
