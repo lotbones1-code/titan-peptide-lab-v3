@@ -51,6 +51,20 @@ const COINS = [
   ["Solana (SOL)", "Native SOL on the same Solana address shown at checkout. Fast and cheap."],
 ];
 
+// Crypto-cluster spoke directory — the hub distributes crawl equity to every
+// per-page crypto checkout guide so each is reachable in one hop from this page.
+const CRYPTO_PAGES = [
+  ["/buy-retatrutide-with-crypto/", "Buy Retatrutide with crypto", "Triple-agonist flagship — stablecoin checkout for a higher-ticket lot."],
+  ["/buy-tirzepatide-with-crypto/", "Buy Tirzepatide with crypto", "GLP-1/GIP research term — crypto checkout, honest in-catalog routing."],
+  ["/buy-tb-500-with-crypto/", "Buy TB-500 with crypto", "Thymosin β-4 fragment — pay on-chain, lot-matched COA."],
+  ["/buy-pt-141-with-crypto/", "Buy PT-141 with crypto", "Bremelanotide research peptide — discreet crypto-only checkout."],
+  ["/buy-cjc-1295-ipamorelin-with-crypto/", "Buy CJC-1295 / Ipamorelin with crypto", "2-peptide blend — COA confirms both components before you pay."],
+  ["/buy-bpc-157-with-bitcoin/", "Buy BPC-157 with Bitcoin", "Gastric pentadecapeptide — BTC checkout walkthrough + confirmations."],
+  ["/buy-peptides-with-bitcoin/", "Buy any peptide with Bitcoin", "BTC payment flow, confirmation times, and BTC-vs-USDC tradeoffs."],
+  ["/pay-for-peptides-with-usdc-crypto/", "Pay for peptides with USDC", "Stablecoin = no slippage between cart and confirmation."],
+  ["/anonymous-peptide-purchase-crypto/", "Anonymous peptide purchase (crypto)", "Low-data, no-account checkout — what crypto privacy does and doesn't mean."],
+];
+
 const FAQS = [
   {
     q: "Can I buy peptides with crypto on Titan Peptide Lab?",
@@ -170,17 +184,36 @@ export default function BuyPeptidesWithCryptoPage() {
         </section>
 
         <section className="py-16 lg:py-24">
-          <div className="mx-auto max-w-3xl px-5 sm:px-6">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">Popular research compounds</p>
-            <h2 className="mt-4 font-serif text-[clamp(1.9rem,4vw,3rem)] leading-[1.02] tracking-[-0.035em]">Buy with crypto, ship in 24–48h.</h2>
-            <ul className="mt-7 space-y-3 text-[14px] leading-7 text-[#1e6f58]">
+          <div className="mx-auto max-w-5xl px-5 sm:px-6 lg:px-8">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">Buy a specific peptide with crypto</p>
+            <h2 className="mt-4 font-serif text-[clamp(1.9rem,4vw,3rem)] leading-[1.02] tracking-[-0.035em]">Per-compound crypto checkout guides.</h2>
+            <p className="mt-5 max-w-2xl text-[14px] leading-8 text-[#5c6762]">
+              Every page below is a crypto checkout walkthrough for one research compound or coin — which network to use, how the on-chain confirmation maps to your order, and what COA documentation ships with it.
+            </p>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {CRYPTO_PAGES.map(([href, title, desc]) => (
+                <Link
+                  key={href}
+                  href={`${href}?ref=buy-crypto-hub`}
+                  className="group flex flex-col rounded-[1.25rem] border border-[#dde6e1] bg-white p-5 transition hover:border-[#0f1613]"
+                >
+                  <span className="flex items-center gap-1.5 text-[14px] font-semibold text-[#1e6f58]">
+                    {title}
+                    <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
+                  </span>
+                  <span className="mt-2 text-[13px] leading-6 text-[#5c6762]">{desc}</span>
+                </Link>
+              ))}
+            </div>
+
+            <p className="mt-12 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">Shop the catalog directly</p>
+            <ul className="mt-5 grid gap-3 text-[14px] leading-7 text-[#1e6f58] sm:grid-cols-2">
               <li><Link className="hover:underline" href="/products/bpc-157-nasal-spray/?ref=buy-crypto">BPC-157 nasal spray →</Link></li>
               <li><Link className="hover:underline" href="/products/tb-500-vial/?ref=buy-crypto">TB-500 vial →</Link></li>
               <li><Link className="hover:underline" href="/products/retatrutide/?ref=buy-crypto">Retatrutide →</Link></li>
               <li><Link className="hover:underline" href="/products/pt-141-nasal-spray/?ref=buy-crypto">PT-141 nasal spray →</Link></li>
-              <li><Link className="hover:underline" href="/buy-bpc-157-with-bitcoin/?ref=buy-crypto">Buy BPC-157 with Bitcoin →</Link></li>
-              <li><Link className="hover:underline" href="/pay-for-peptides-with-usdc-crypto/?ref=buy-crypto">Pay for peptides with USDC →</Link></li>
               <li><Link className="hover:underline" href="/coa-verified-peptide-supplier/?ref=buy-crypto">COA-verified supplier →</Link></li>
+              <li><Link className="hover:underline" href="/how-to-verify-peptide-quality-coa/?ref=buy-crypto">How to verify peptide quality (COA) →</Link></li>
             </ul>
           </div>
         </section>
