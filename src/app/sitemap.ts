@@ -84,6 +84,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/mk-677-vs-ipamorelin/`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },
     { url: `${BASE}/semax-vs-selank/`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },
     { url: `${BASE}/nootropic-nasal-peptides/`, lastModified: now, changeFrequency: "weekly", priority: 0.91 },
+    { url: `${BASE}/peptide-nasal-spray-storage-shelf-life/`, lastModified: now, changeFrequency: "monthly", priority: 0.86 },
     { url: `${BASE}/research/`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE}/contact/`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE}/guide/`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },

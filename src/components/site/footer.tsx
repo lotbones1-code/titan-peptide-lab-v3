@@ -65,6 +65,7 @@ const COMPARE_LINKS = [
   ["MK-677 vs Ipamorelin", "/mk-677-vs-ipamorelin"],
   ["Semax vs Selank", "/semax-vs-selank"],
   ["Nootropic & nasal peptides", "/nootropic-nasal-peptides"],
+  ["Nasal spray storage & shelf life", "/peptide-nasal-spray-storage-shelf-life"],
   ["CJC-1295 + Ipamorelin guide", "/cjc-1295-ipamorelin-research-guide"],
   ["COA-verified supplier", "/coa-verified-peptide-supplier"],
   ["How to verify a COA", "/how-to-verify-peptide-quality-coa"],
