@@ -107,7 +107,7 @@ export default function RootLayout({
       style={{ colorScheme: "light" }}
     >
 
-      <head>
+      <body className="min-h-full bg-background text-foreground font-sans">
         {GA_ID && (
           <>
             <Script
@@ -133,8 +133,6 @@ export default function RootLayout({
             </Script>
           </>
         )}
-      </head>
-      <body className="min-h-full bg-background text-foreground font-sans">
         <OrganizationJsonLd />
         <WebsiteJsonLd />
         <Grain />
