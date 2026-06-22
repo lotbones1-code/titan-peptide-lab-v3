@@ -24,6 +24,7 @@ const BLOG_LINKS = [
 ];
 
 const COMPARE_LINKS = [
+  ["Research peptide supplier", "/research-peptide-supplier"],
   ["Buy peptides with crypto", "/buy-peptides-with-crypto"],
   ["Buy BPC-157 with Bitcoin", "/buy-bpc-157-with-bitcoin"],
   ["Buy retatrutide with crypto", "/buy-retatrutide-with-crypto"],

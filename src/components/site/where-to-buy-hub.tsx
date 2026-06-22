@@ -6,9 +6,19 @@ import Link from "next/link";
 // footer boilerplate. Anchors are descriptive and match each page's primary query.
 const BUYER_PATHS = [
   {
+    title: "Research peptide supplier",
+    href: "/research-peptide-supplier/?ref=seo-home-hub",
+    body: "The exact-answer supplier screen: lot matching, HPLC purity targets, identity checks, RUO boundaries, and checkout clarity.",
+  },
+  {
     title: "Where to buy research peptides",
     href: "/where-to-buy-research-peptides/?ref=seo-home-hub",
     body: "The documentation-first checklist for choosing a supplier — what a real COA shows, how to lot-match the vial, and why identity testing comes before purity.",
+  },
+  {
+    title: "COA-verified peptide supplier",
+    href: "/coa-verified-peptide-supplier/?ref=seo-home-hub",
+    body: "A proof-first supplier page for buyers comparing lot-matched documents, HPLC targets, identity confirmation, and RUO language.",
   },
   {
     title: "Where to buy retatrutide",
@@ -64,6 +74,16 @@ const BUYER_PATHS = [
     title: "How to verify peptide quality (COA)",
     href: "/how-to-verify-peptide-quality-coa/?ref=seo-home-hub",
     body: "How to read a Certificate of Analysis — identity before purity, the chromatogram, and lot-matching the vial.",
+  },
+  {
+    title: "Peptide reconstitution guides",
+    href: "/reconstitution/?ref=seo-home-hub",
+    body: "Compound-by-compound concentration calculators for BAC-water reconstitution math, kept strictly in the research-preparation lane.",
+  },
+  {
+    title: "Retatrutide shelf life after BAC water",
+    href: "/retatrutide-reconstituted-shelf-life-bac-water/?ref=seo-home-hub",
+    body: "A storage-focused exact-answer page for retatrutide, bacteriostatic water, cold handling, and days-since-mixing tracking.",
   },
   {
     title: "Best research peptides",

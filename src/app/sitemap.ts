@@ -24,6 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/start/`, lastModified: now, changeFrequency: "weekly", priority: 0.85 },
     { url: `${BASE}/products/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/research-assistant/`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },
+    { url: `${BASE}/research-peptide-supplier/`, lastModified: now, changeFrequency: "weekly", priority: 0.93 },
     { url: `${BASE}/research-peptides/`, lastModified: now, changeFrequency: "weekly", priority: 0.92 },
     { url: `${BASE}/peptide-reconstitution-calculator/`, lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/reconstitution/`, lastModified: now, changeFrequency: "weekly", priority: 0.88 },

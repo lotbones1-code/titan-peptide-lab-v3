@@ -2,6 +2,11 @@ import Link from "next/link";
 
 const SEARCH_PATHS = [
   {
+    title: "Research peptide supplier",
+    href: "/research-peptide-supplier/?ref=seo-home",
+    body: "The exact-answer supplier screen: lot paperwork, HPLC purity, identity confirmation, RUO language, and checkout clarity.",
+  },
+  {
     title: "Where to buy research peptides",
     href: "/where-to-buy-research-peptides/?ref=seo-home",
     body: "A buyer path for researchers comparing COAs, HPLC purity, payment networks, and fulfillment before checkout.",
@@ -21,6 +26,11 @@ const SEARCH_PATHS = [
     href: "/blog/how-to-verify-peptide-purity/?ref=seo-home",
     body: "A plain-English COA checklist for HPLC, mass-spec identity, lot codes, and retest paperwork.",
   },
+  {
+    title: "COA-verified peptide supplier",
+    href: "/coa-verified-peptide-supplier/?ref=seo-home",
+    body: "A proof-first supplier page for researchers comparing lot-matched documentation before they buy.",
+  },
 ];
 
 export function SearchVisibilitySection() {
@@ -39,7 +49,7 @@ export function SearchVisibilitySection() {
           </p>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 lg:pt-2">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:pt-2">
           {SEARCH_PATHS.map((path) => (
             <Link
               key={path.href}
