@@ -74,9 +74,9 @@ export function CartDrawer() {
         onClick={() => setIsOpen(false)}
       />
 
-      <div className="fixed right-0 top-0 z-[71] flex h-full w-full max-w-md flex-col bg-white shadow-2xl">
+      <div className="fixed right-0 top-0 z-[71] flex h-[100dvh] max-h-[100dvh] w-full max-w-md flex-col overflow-hidden bg-white shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-[#e5e5e5] px-6 py-4">
+        <div className="flex shrink-0 items-center justify-between border-b border-[#e5e5e5] px-6 py-4">
           <div className="flex items-center gap-2">
             <ShoppingBag className="h-5 w-5 text-[#1e6f58]" />
             <h2 className="text-lg font-semibold text-[#0f1613]">
@@ -91,8 +91,8 @@ export function CartDrawer() {
           </button>
         </div>
 
-        {/* Items */}
-        <div className="flex-1 overflow-y-auto px-6 py-4">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 py-4 [-webkit-overflow-scrolling:touch]">
+          {/* Items */}
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 text-center">
               <ShoppingBag className="h-12 w-12 text-[#ddd]" />
@@ -156,11 +156,10 @@ export function CartDrawer() {
               ))}
             </div>
           )}
-        </div>
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="border-t border-[#e5e5e5] px-6 py-4 space-y-3">
+          <div className="mt-4 space-y-3 border-t border-[#e5e5e5] pt-4 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
             {/* Free-shipping progress — drives AOV by showing how close the
                 cart is to the US free-shipping threshold. Uses subtotal to
                 match the actual free-shipping rule applied at checkout. */}
@@ -319,6 +318,7 @@ export function CartDrawer() {
             </button>
           </div>
         )}
+        </div>
       </div>
     </>
   );
