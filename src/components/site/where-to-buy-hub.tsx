@@ -6,6 +6,11 @@ import Link from "next/link";
 // footer boilerplate. Anchors are descriptive and match each page's primary query.
 const BUYER_PATHS = [
   {
+    title: "Where to buy research peptides",
+    href: "/where-to-buy-research-peptides/?ref=seo-home-hub",
+    body: "The documentation-first checklist for choosing a supplier — what a real COA shows, how to lot-match the vial, and why identity testing comes before purity.",
+  },
+  {
     title: "Where to buy retatrutide",
     href: "/where-to-buy-retatrutide/?ref=seo-home-hub",
     body: "Lot-matched COA, HPLC purity target, and crypto checkout for retatrutide research material.",
@@ -64,6 +69,16 @@ const BUYER_PATHS = [
     title: "Best research peptides",
     href: "/best-research-peptides/?ref=seo-home-hub",
     body: "What actually separates a good research-peptide supplier — lot-matched COAs, HPLC purity targets, identity checks, and checkout clarity.",
+  },
+  {
+    title: "GHK-Cu vs BPC-157",
+    href: "/ghk-cu-vs-bpc-157/?ref=seo-home-hub",
+    body: "Two different molecules, not variants — how the copper peptide and the pentadecapeptide differ in research context, format, and documentation.",
+  },
+  {
+    title: "Nasal stack protocols (research)",
+    href: "/research/nasal-stack-protocols/?ref=seo-home-hub",
+    body: "Separation, rotation, and receptor-management considerations when researching more than one nasal-spray peptide at a time.",
   },
 ];
 
