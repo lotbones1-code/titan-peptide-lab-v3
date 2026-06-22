@@ -5,9 +5,15 @@ const ORGANIZATION_ID = `${SITE_URL}/#organization`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 const LOGO_ID = `${SITE_URL}/#logo`;
 const FOUNDER_ID = `${SITE_URL}/about/#founder`;
-const PUBLIC_PROFILES = [
-  "https://peptidealliance.io/online/titan-peptide-lab",
+const VERIFIED_PUBLIC_LISTINGS = [
+  {
+    name: "Titan Peptide Lab - Online, US | The Peptide Alliance",
+    url: "https://peptidealliance.io/online/titan-peptide-lab",
+    publisher: "The Peptide Alliance",
+  },
 ] as const;
+
+const PUBLIC_PROFILES = VERIFIED_PUBLIC_LISTINGS.map((listing) => listing.url);
 
 export function OrganizationJsonLd() {
   // Keep sameAs limited to verified, live public profiles/listings.
@@ -54,6 +60,21 @@ export function OrganizationJsonLd() {
       name: "Reno, NV",
     },
     sameAs: PUBLIC_PROFILES,
+    citation: PUBLIC_PROFILES,
+    subjectOf: VERIFIED_PUBLIC_LISTINGS.map((listing) => ({
+      "@type": "WebPage",
+      name: listing.name,
+      url: listing.url,
+      publisher: {
+        "@type": "Organization",
+        name: listing.publisher,
+      },
+    })),
+    mentions: VERIFIED_PUBLIC_LISTINGS.map((listing) => ({
+      "@type": "WebPage",
+      name: listing.name,
+      url: listing.url,
+    })),
     knowsAbout: [
       "BPC-157",
       "TB-500",
@@ -66,6 +87,8 @@ export function OrganizationJsonLd() {
       "DSIP",
       "Retatrutide",
       "Research peptides",
+      "Research-use-only peptide supplier verification",
+      "Peptide supplier directory listings",
       "HPLC purity testing",
       "Lot-matched release documentation",
     ],
