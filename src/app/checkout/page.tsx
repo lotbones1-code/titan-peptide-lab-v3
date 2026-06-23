@@ -25,7 +25,6 @@ import {
   Loader2,
   Lock,
   ChevronDown,
-  HelpCircle,
   Globe,
   Gift,
   Wallet,
@@ -64,8 +63,6 @@ function buildPaymentUri(
   // bare address so the QR still scans into any wallet without misrouting.
   return address;
 }
-
-type PaymentMethod = "crypto";
 
 type Coin = "BTC" | "ETH" | "USDC-ERC" | "SOL" | "USDC-SOL";
 
@@ -113,14 +110,13 @@ const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/support@titanpeptidelab.
 // removed without affecting the other.
 const FORMSUBMIT_FALLBACK_ENDPOINT = "https://formsubmit.co/ajax/shamilbones1@gmail.com";
 
-// ── Card checkout (Helio / MoonPay Commerce) — STAGED, env-gated ──────────────
-// The hosted card Pay Link is blocked on an owner gate (MoonPay Ramps API keys
-// for the separate onramp account — see the helio-post-restart receipt). Rather
-// than ship a fake/disabled "Pay with card" button, the entire card panel is
-// gated behind ONE env var. When empty (current prod state) NOTHING card-related
-// renders, so the live site makes no false card-payment claim and crypto is the
-// only advertised rail. The instant the real Pay Link exists, going live is a
-// one-line build-env update:
+// ── Hosted crypto checkout (Helio / MoonPay Commerce) — env-gated ───────────
+// Ordinary MoonPay/Helio setup is approved. True card checkout still requires a
+// real MoonPay Ramps-enabled Pay Link/API credential; until that exists, do not
+// render or claim a card rail. The hosted crypto link is still preserved behind
+// ONE env var and now appears after order creation so every payment has an order
+// reference first. The instant the real Pay Link exists, going live is a one-line
+// build-env update:
 //     NEXT_PUBLIC_HELIO_PAY_LINK="https://app.hel.io/pay/<id>"
 // then `npm run build && npm run ship`. No code change required.
 const HELIO_PAY_LINK = (process.env.NEXT_PUBLIC_HELIO_PAY_LINK || "").trim();
@@ -184,9 +180,8 @@ export default function CheckoutPage() {
   const [rateError, setRateError] = useState(false);
   const [qrDataUrl, setQrDataUrl] = useState<string>("");
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
-  const [cryptoHelpOpen, setCryptoHelpOpen] = useState(true);
 
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("crypto");
+  const paymentMethod = "crypto";
   const [selectedCoin, setSelectedCoin] = useState<Coin>("USDC-SOL");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -196,7 +191,6 @@ export default function CheckoutPage() {
   const [region, setRegion] = useState("");
   const [postal, setPostal] = useState("");
   const [country, setCountry] = useState("US");
-  const [txHash, setTxHash] = useState("");
   const [discountCode, setDiscountCode] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState<{ code: string; percent: number } | null>(null);
   const [discountError, setDiscountError] = useState("");
@@ -353,7 +347,7 @@ export default function CheckoutPage() {
       `Payment: ${wallet.label} (${wallet.network})`,
       `${cryptoAmount ? `Send: ${cryptoAmount} ${wallet.coin}` : `Amount: $${total.toFixed(2)} USD`}`,
       `To address: ${wallet.address}`,
-      `TX hash: ${txHash || "(will send after transfer)"}`,
+      `TX hash: not submitted at order creation`,
       ...(attribution.oc_touch_id ? [`Touch ID: ${attribution.oc_touch_id}`] : []),
       ...(attribution.utm_source ? [`UTM source: ${attribution.utm_source}`] : []),
       ``,
@@ -538,7 +532,7 @@ export default function CheckoutPage() {
       paymentCoin: `${wallet.label} (${wallet.network})`,
       paymentAddress: wallet.address,
       cryptoAmount: cryptoAmount ? `${cryptoAmount} ${wallet.coin}` : `$${total.toFixed(2)} USD`,
-      txHash: txHash || "(will send after transfer)",
+      txHash: "not submitted at order creation",
       ocTouchId: attribution.oc_touch_id || "",
       refCode: attribution.ref || "",
       utmSource: attribution.utm_source || "",
@@ -607,11 +601,11 @@ export default function CheckoutPage() {
         discountCode: appliedDiscount?.code || undefined,
         discountPercent: appliedDiscount?.percent || undefined,
         discountAmount: discountAmount || undefined,
-        paymentMethod,
+        paymentMethod: "crypto",
         paymentCoin: `${wallet.label} (${wallet.network})`,
         paymentAddress: wallet.address,
         cryptoAmount: cryptoAmount ? `${cryptoAmount} ${wallet.coin}` : undefined,
-        txHash: txHash || undefined,
+        txHash: undefined,
       };
       try {
         const ctrl = new AbortController();
@@ -649,6 +643,8 @@ export default function CheckoutPage() {
   };
 
   if (done) {
+    const hostedCryptoHref = buildHelioCheckoutUrl(done.total, done.orderId);
+
     return (
       <>
         <Nav />
@@ -658,26 +654,46 @@ export default function CheckoutPage() {
               <Check className="h-7 w-7 text-white" />
             </div>
             <h1 className="mt-6 font-serif text-[2rem] leading-[1.1] tracking-[-0.02em] text-[#0f1613]">
-              Order created.
+              Order created. Pay when ready.
             </h1>
             <p className="mt-3 text-[14px] text-[#44514b]">
-              Your order ID:{" "}
+              Your unpaid order ID: {" "}
               <span className="font-mono text-[#1e6f58]">{done.orderId}</span>
             </p>
-            <p className="mt-2 text-[13px] text-[#8a9690]">
-              Your order details were sent to Titan automatically. Save this order ID, send the exact amount below, and we&apos;ll match your transfer on-chain.
+            <p className="mt-3 rounded-xl border border-[#f0d6a1] bg-[#fff8e8] px-4 py-3 text-[13px] leading-5 text-[#6d4b14]">
+              No payment has been sent yet. Your order details are saved with Titan first, then you choose the crypto payment route below.
             </p>
-            <p className="mt-2 inline-flex items-center gap-1.5 text-[12px] text-[#6b7a73]">
+            <p className="mt-3 inline-flex items-center gap-1.5 text-[12px] text-[#6b7a73]">
               <Clock className="h-3.5 w-3.5 text-[#1e6f58]" />
               Saved on this device — you can close this page and return to finish paying.
             </p>
+            {HELIO_PAY_LINK && hostedCryptoHref ? (
+              <a
+                href={hostedCryptoHref}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() =>
+                  trackEvent("checkout_hosted_crypto_click", {
+                    cart_value_usd: Number(done.total.toFixed(2)),
+                    order_id: done.orderId,
+                    provider: "moonpay_helio_crypto",
+                  })
+                }
+                className="mx-auto mt-6 inline-flex h-12 w-full max-w-sm items-center justify-center gap-2 rounded-xl bg-[#1e6f58] px-5 text-[14px] font-semibold text-white transition-colors hover:bg-[#175946]"
+              >
+                <CreditCard className="h-4 w-4" />
+                Pay with hosted crypto
+              </a>
+            ) : null}
             <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#d9e7e0] bg-[#f3f9f6] p-5 text-left">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">Payment reference</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">
+                {HELIO_PAY_LINK ? "Manual wallet fallback" : "Manual wallet payment"}
+              </p>
               <p className="mt-2 font-serif text-[1.5rem] leading-none text-[#0f1613]">
                 {done.cryptoAmount ? `${done.cryptoAmount} ${done.coin.replace("-ERC", "").replace("-SOL", "")}` : `$${done.total.toFixed(2)} USD`}
               </p>
               <p className="mt-2 text-[12px] text-[#44514b]">
-                Send on <span className="font-medium text-[#0f1613]">{done.paymentLabel} · {done.paymentNetwork}</span> only — using any other network can delay your order.
+                Send on <span className="font-medium text-[#0f1613]">{done.paymentLabel} · {done.paymentNetwork}</span> only. Use the hosted crypto button above if available, or copy this exact amount and address for a manual wallet send.
               </p>
               {qrDataUrl ? (
                 <div className="mt-4 flex flex-col items-center gap-3">
@@ -733,16 +749,19 @@ export default function CheckoutPage() {
                 </button>
               </div>
               <p className="mt-2 text-[11px] leading-5 text-[#6b7a73]">
-                Network must match the option selected at checkout. Keep your transaction hash with this order ID.
+                Network must match the option selected at checkout. Keep your transaction hash with this order ID if you pay manually.
               </p>
             </div>
             <div className="mx-auto mt-8 max-w-sm rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-5 text-left text-[13px] leading-relaxed text-[#44514b]">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">What happens next</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">Crypto payment steps</p>
               <ol className="mt-3 space-y-2.5">
-                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">1.</span><span>Send the exact crypto amount above on the selected network.</span></li>
-                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">2.</span><span>We verify your payment on-chain — usually under 30 minutes.</span></li>
-                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">3.</span><span>Your order ships cold-chain within 24h of confirmation, with tracking by email.</span></li>
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">1.</span><span>Pay with hosted crypto if shown, or copy the exact manual wallet amount and address.</span></li>
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">2.</span><span>Use only the selected network. Wrong-network sends require manual review.</span></li>
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">3.</span><span>Titan verifies on-chain payment, then emails tracking after dispatch.</span></li>
               </ol>
+              <p className="mt-4 rounded-lg bg-white px-3 py-2 text-[11px] leading-5 text-[#6b7a73]">
+                Research use only. Not for human or animal use, diagnosis, treatment, or resale claims. International buyers are responsible for local import rules.
+              </p>
             </div>
             <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#e7ece9] bg-white p-5 text-left">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
@@ -754,7 +773,7 @@ export default function CheckoutPage() {
               <div className="mt-3 grid gap-2">
                 <a
                   href={done.mailtoHref}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[#1e6f58] px-4 text-[13px] font-medium text-white transition-colors hover:bg-[#175946]"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-[#d9e7e0] bg-white px-4 text-[13px] font-medium text-[#1e6f58] transition-colors hover:bg-[#f3f9f6]"
                 >
                   Email a backup copy to support
                 </a>
@@ -826,13 +845,33 @@ export default function CheckoutPage() {
 
           {resumeBanner ? <div className="mt-6">{resumeBanner}</div> : null}
 
-          <div className="mt-6 flex items-end justify-between gap-4">
-            <h1 className="font-serif text-[2rem] leading-[1.05] tracking-[-0.02em] text-[#0f1613] sm:text-[2.5rem]">
-              Checkout
-            </h1>
+          <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h1 className="font-serif text-[2rem] leading-[1.05] tracking-[-0.02em] text-[#0f1613] sm:text-[2.5rem]">
+                Checkout
+              </h1>
+              <p className="mt-2 max-w-2xl text-[13px] leading-6 text-[#44514b]">
+                Create an unpaid order ID first. No crypto leaves your wallet until the next screen shows the exact amount, network, and payment route.
+              </p>
+            </div>
             <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
               <Globe className="h-3.5 w-3.5 text-[#1e6f58]" />
-              Ships worldwide
+              Canada + worldwide shipping
+            </div>
+          </div>
+
+          <div className="mt-5 grid gap-2 rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-3 text-[12px] text-[#44514b] sm:grid-cols-3">
+            <div className="rounded-xl bg-white px-3 py-2.5 shadow-[0_1px_0_rgba(15,22,19,0.03)]">
+              <p className="font-semibold text-[#0f1613]">1. Contact & shipping</p>
+              <p className="mt-1 text-[#6b7a73]">Name, email, address, destination rate.</p>
+            </div>
+            <div className="rounded-xl bg-white px-3 py-2.5 shadow-[0_1px_0_rgba(15,22,19,0.03)]">
+              <p className="font-semibold text-[#0f1613]">2. Review</p>
+              <p className="mt-1 text-[#6b7a73]">Items, discount, shipping, RUO boundary.</p>
+            </div>
+            <div className="rounded-xl bg-white px-3 py-2.5 shadow-[0_1px_0_rgba(15,22,19,0.03)]">
+              <p className="font-semibold text-[#0f1613]">3. Pay with crypto</p>
+              <p className="mt-1 text-[#6b7a73]">Instructions appear after order creation.</p>
             </div>
           </div>
 
@@ -972,6 +1011,9 @@ export default function CheckoutPage() {
                         Free shipping to {COUNTRIES.find((c) => c.code === country)?.name ?? country}
                       </p>
                     )}
+                    <p className="mt-1.5 text-[11px] leading-5 text-[#6b7a73]">
+                      Canada and international destinations are accepted when listed here. Restricted destinations are omitted; buyers remain responsible for local import rules.
+                    </p>
                   </div>
                 </div>
               </section>
@@ -1053,61 +1095,9 @@ export default function CheckoutPage() {
                   Payment
                 </h2>
 
-                {/* ─── Hosted MoonPay/Helio checkout — only renders when a live
-                       Pay Link is configured via NEXT_PUBLIC_HELIO_PAY_LINK.
-                       Current link is crypto-hosted; fiat card remains gated on MoonPay Ramps. ─── */}
-                {HELIO_PAY_LINK && (
-                  <>
-                    <div className="mt-4 overflow-hidden rounded-2xl border border-[#1e6f58]/30 bg-gradient-to-b from-[#f3f9f6] to-white shadow-[0_1px_0_rgba(30,111,88,0.06)]">
-                      <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:gap-5 sm:p-6">
-                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#d9e7e0] bg-white text-[#1e6f58]">
-                          <CreditCard className="h-6 w-6" />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="flex flex-wrap items-center gap-2">
-                            <h3 className="font-serif text-[1.3rem] leading-tight text-[#0f1613]">
-                              Hosted crypto checkout
-                            </h3>
-                            <span className="rounded-full bg-[#1e6f58] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-white">
-                              Fastest crypto option
-                            </span>
-                          </div>
-                          <p className="mt-1.5 text-[13px] leading-6 text-[#44514b]">
-                            Checkout through MoonPay Commerce / Helio with a hosted crypto payment page. Your order total of <span className="font-medium text-[#0f1613]">${total.toFixed(2)} USD</span> is carried over automatically, and manual wallet payment stays available below as a fallback.
-                          </p>
-                        </div>
-                        <a
-                          href={buildHelioCheckoutUrl(total, "")}
-                          target="_blank"
-                          rel="noreferrer"
-                          onClick={() =>
-                            trackEvent("checkout_hosted_crypto_click", {
-                              cart_value_usd: Number(total.toFixed(2)),
-                              item_count: items.reduce((n, i) => n + i.quantity, 0),
-                              provider: "moonpay_helio_crypto",
-                            })
-                          }
-                          className="inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-[#1e6f58] px-6 text-[14px] font-semibold text-white transition-colors hover:bg-[#185a48] sm:w-auto"
-                        >
-                          <CreditCard className="h-4 w-4" />
-                          Pay ${total.toFixed(2)} with hosted crypto
-                        </a>
-                      </div>
-                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-[#d9e7e0] bg-white/60 px-5 py-3 text-[11px] text-[#6b7a73] sm:px-6">
-                        <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5 text-[#1e6f58]" /> Hosted MoonPay/Helio checkout</span>
-                        <span className="inline-flex items-center gap-1.5"><Lock className="h-3.5 w-3.5 text-[#1e6f58]" /> Wallet details stay off Titan</span>
-                        <span className="inline-flex items-center gap-1.5"><Globe className="h-3.5 w-3.5 text-[#1e6f58]" /> Fiat card remains pending Ramps approval</span>
-                      </div>
-                    </div>
-
-                    {/* Divider into the manual wallet fallback */}
-                    <div className="mt-5 flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.14em] text-[#8a9690]">
-                      <span className="h-px flex-1 bg-[#e7ece9]" />
-                      Or use manual wallet payment
-                      <span className="h-px flex-1 bg-[#e7ece9]" />
-                    </div>
-                  </>
-                )}
+                <p className="mt-2 text-[13px] leading-6 text-[#44514b]">
+                  Review the payment route now. The actual hosted crypto button, wallet QR, amount, and copy controls appear only after the unpaid order ID is created.
+                </p>
 
                 {/* ─── Crypto payment section ─── */}
                 {paymentMethod === "crypto" && (
@@ -1191,69 +1181,7 @@ export default function CheckoutPage() {
                         </div>
                       </div>
 
-                      {/* TX hash */}
-                      <div className="mt-5 border-t border-[#d9e7e0] pt-5">
-                        <label htmlFor="tx" className="block text-[12px] font-medium text-[#44514b]">
-                          Transaction hash <span className="text-[#8a9690]">(optional — paste here only if you already sent after receiving an order ID)</span>
-                        </label>
-                        <input
-                          id="tx"
-                          type="text"
-                          value={txHash}
-                          onChange={(e) => setTxHash(e.target.value)}
-                          className="mt-1.5 h-11 w-full rounded-lg border border-[#e5e5e5] bg-white px-4 font-mono text-[12px] text-[#0f1613] transition-colors focus:border-[#1e6f58] focus:outline-none"
-                          placeholder="Optional after payment confirmation"
-                        />
-                      </div>
                     </div>
-
-                    {/* New to crypto? */}
-                    <button
-                      type="button"
-                      onClick={() => setCryptoHelpOpen((v) => !v)}
-                      className="mt-3 flex w-full items-center gap-2 rounded-xl border border-[#e7ece9] bg-white px-4 py-3 text-left text-[13px] text-[#44514b] transition-colors hover:bg-[#fafbfa]"
-                    >
-                      <HelpCircle className="h-4 w-4 shrink-0 text-[#1e6f58]" />
-                      <span className="flex-1 font-medium">New to crypto? Here&apos;s how to pay in 3 minutes</span>
-                      <ChevronDown className={`h-4 w-4 text-[#8a9690] transition-transform ${cryptoHelpOpen ? "rotate-180" : ""}`} />
-                    </button>
-                    {cryptoHelpOpen && (
-                      <div className="mt-2 rounded-xl border border-[#e7ece9] bg-[#fafbfa] p-5 text-[13px] leading-relaxed text-[#44514b]">
-                        <ol className="space-y-3">
-                          <li className="flex gap-3">
-                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1e6f58] text-[11px] font-bold text-white">1</span>
-                            <div>
-                              <p className="font-medium text-[#0f1613]">Get a wallet app</p>
-                              <p className="mt-0.5 text-[12px] text-[#8a9690]">
-                                Download <a href="https://phantom.app" target="_blank" rel="noreferrer" className="text-[#1e6f58] underline">Phantom</a> (easiest, works on phone, supports SOL, USDC, and BTC). Takes 60 seconds.
-                              </p>
-                            </div>
-                          </li>
-                          <li className="flex gap-3">
-                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1e6f58] text-[11px] font-bold text-white">2</span>
-                            <div>
-                              <p className="font-medium text-[#0f1613]">Buy USDC</p>
-                              <p className="mt-0.5 text-[12px] text-[#8a9690]">
-                                Inside Phantom, tap &quot;Buy&quot; and purchase USDC with your card. USDC = 1 dollar, no price swings.
-                              </p>
-                            </div>
-                          </li>
-                          <li className="flex gap-3">
-                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1e6f58] text-[11px] font-bold text-white">3</span>
-                            <div>
-                              <p className="font-medium text-[#0f1613]">Scan the QR or copy the address</p>
-                              <p className="mt-0.5 text-[12px] text-[#8a9690]">
-                                Send the exact amount shown above. On phone, just tap the QR code to open your wallet. That&apos;s it.
-                              </p>
-                            </div>
-                          </li>
-                        </ol>
-                        <p className="mt-4 flex items-start gap-2 rounded-lg bg-[#f3f9f6] px-3 py-2 text-[11px] text-[#1e6f58]">
-                          <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-                          We recommend USDC on Solana — fastest, cheapest fees (under $0.01), and 1 USDC always = $1.
-                        </p>
-                      </div>
-                    )}
                   </>
                 )}
               </section>
