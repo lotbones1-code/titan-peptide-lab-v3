@@ -44,16 +44,30 @@ const WALLETS_FOR_PAGE = [
     address: WALLETS.btc,
     bestFor: "Use only when your wallet app is sending on the Bitcoin network.",
   },
+  {
+    id: "eth",
+    label: "ETH / USDC-ERC",
+    network: "Ethereum / EVM",
+    address: WALLETS.eth,
+    bestFor: "Use only when your wallet app is sending native ETH or ERC-20 tokens on Ethereum or a confirmed EVM network.",
+  },
+  {
+    id: "usdt-tron",
+    label: "USDT",
+    network: "TRON / TRC20",
+    address: WALLETS.usdtTron,
+    bestFor: "Use only when your wallet app is sending USDT on TRON/TRC20.",
+  },
 ] as const;
 
 const PAY_FAQS: ReadonlyArray<{ q: string; a: string }> = [
   {
     q: "I have never sent crypto before. Where do I start?",
-    a: "Install a self-custody wallet that supports the network you want to use — Phantom for Solana (USDC-SOL or SOL) and any Bitcoin wallet for BTC. Buy the coin on a centralized exchange or directly inside the wallet, then withdraw to your own wallet before paying Titan. Titan checkout always shows the exact wallet, network, amount, and QR code, so you only need to copy and confirm.",
+    a: "Install a self-custody wallet that supports the network you want to use — Phantom for Solana (USDC-SOL or SOL), MetaMask for Ethereum/EVM, TronLink for TRON/TRC20, or any Bitcoin wallet for BTC. Buy the coin on a centralized exchange or directly inside the wallet, then withdraw to your own wallet before paying Titan. Titan checkout always shows the exact wallet, network, amount, and QR code, so you only need to copy and confirm.",
   },
   {
     q: "Which coin and network should I pick?",
-    a: "USDC on Solana is the lowest-friction option for most first-time buyers — the order total is already in USD, Solana fees are typically under a cent, and confirmation is usually under a minute. SOL and BTC are also accepted; pick the one your wallet already holds and use the matching network shown at checkout.",
+    a: "USDC on Solana is the lowest-friction option for most first-time buyers — the order total is already in USD, Solana fees are typically under a cent, and confirmation is usually under a minute. SOL, BTC, ETH/EVM, and TRON/TRC20 are also accepted; pick the one your wallet already holds and use the matching network shown at checkout.",
   },
   {
     q: "What happens if I send the wrong amount?",
@@ -65,7 +79,7 @@ const PAY_FAQS: ReadonlyArray<{ q: string; a: string }> = [
   },
   {
     q: "How long until my order is confirmed?",
-    a: "Solana settles in seconds, Bitcoin typically settles in a few minutes. Titan matches the on-chain transfer to your order ID, usually under 30 minutes during business hours, then dispatch begins from Reno inside 24 to 48 hours per the shipping policy.",
+    a: "Solana and TRON typically settle quickly; Bitcoin and Ethereum timing depends on current network conditions. Titan matches the on-chain transfer to your order ID, usually under 30 minutes during business hours, then dispatch begins from Reno inside 24 to 48 hours per the shipping policy.",
   },
   {
     q: "What if I lose my order ID or close the checkout page?",
@@ -114,8 +128,8 @@ export default function HowToPayWithCryptoPage() {
     description: PAY_DESCRIPTION,
     totalTime: "PT5M",
     supply: [
-      { "@type": "HowToSupply", name: "A crypto wallet (Phantom or any wallet that supports USDC, SOL, or BTC)" },
-      { "@type": "HowToSupply", name: "Funded balance matching the order total in USDC, SOL, or BTC" },
+      { "@type": "HowToSupply", name: "A crypto wallet that supports USDC, SOL, BTC, ETH/EVM, or TRON/TRC20" },
+      { "@type": "HowToSupply", name: "Funded balance matching the order total in USDC, SOL, BTC, ETH/EVM, or TRON/TRC20" },
     ],
     tool: [
       { "@type": "HowToTool", name: "Titan Peptide Lab checkout page" },

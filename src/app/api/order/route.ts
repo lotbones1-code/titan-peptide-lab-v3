@@ -63,6 +63,8 @@ function customerConfirmationHtml(order: OrderPayload): string {
       <div style="font-size:13px;color:#555;line-height:1.7;">
         <p style="margin:0 0 8px;">Send <strong>$${order.total} USD</strong> in crypto to one of these wallets:</p>
         <p style="margin:0 0 4px;"><strong>BTC:</strong> <span style="font-family:monospace;font-size:11px;word-break:break-all;">bc1qkshtp26f3qjkcgfdr2275wed2e8wkw25tr7vsd</span></p>
+        <p style="margin:0 0 4px;"><strong>ETH/EVM:</strong> <span style="font-family:monospace;font-size:11px;word-break:break-all;">0x05b828a8cd9480b923B8c58a03B66Fe4005FebD8</span></p>
+        <p style="margin:0 0 4px;"><strong>TRON/TRC20:</strong> <span style="font-family:monospace;font-size:11px;word-break:break-all;">TQQitFc8qZfYiT8JKFnmZQWxhdwa9UMjQp</span></p>
         <p style="margin:0 0 12px;"><strong>SOL/USDC:</strong> <span style="font-family:monospace;font-size:11px;word-break:break-all;">7eLiph9vAA6DPeaHJASCstjbM6eVg9PyQAoYcBk3Bg3o</span></p>
         <p style="margin:0;">Reply to this email with your <strong>transaction hash</strong> once sent. We'll verify and ship within 24 hours.</p>
       </div>

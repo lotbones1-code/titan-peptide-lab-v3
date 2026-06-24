@@ -13,10 +13,12 @@ export const BRAND_DATA = {
 
 export const WALLETS_DATA = {
   "btc": "bc1qkshtp26f3qjkcgfdr2275wed2e8wkw25tr7vsd",
-  "eth": "0x24c5Fe40f83ae20De82ae3637b66DE8B0e5Cd362",
-  "usdcErc": "0x24c5Fe40f83ae20De82ae3637b66DE8B0e5Cd362",
+  "eth": "0x05b828a8cd9480b923B8c58a03B66Fe4005FebD8",
+  "usdcErc": "0x05b828a8cd9480b923B8c58a03B66Fe4005FebD8",
   "sol": "7eLiph9vAA6DPeaHJASCstjbM6eVg9PyQAoYcBk3Bg3o",
-  "usdcSol": "7eLiph9vAA6DPeaHJASCstjbM6eVg9PyQAoYcBk3Bg3o"
+  "usdcSol": "7eLiph9vAA6DPeaHJASCstjbM6eVg9PyQAoYcBk3Bg3o",
+  "tron": "TQQitFc8qZfYiT8JKFnmZQWxhdwa9UMjQp",
+  "usdtTron": "TQQitFc8qZfYiT8JKFnmZQWxhdwa9UMjQp"
 } as const;
 
 export const DISCOUNT_CODES_DATA = {

@@ -38,8 +38,6 @@ import { FreeShippingProgress } from "@/components/site/free-shipping-progress";
 // Solana Pay USDC mint (public, well-known) — used to build SPL-token deep-links
 // so Phantom/Solflare/etc. open with the correct token + amount pre-filled.
 const USDC_SOL_MINT = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
-const ETH_EVM_RECEIVING_ADDRESS = "0x05b828a8cd9480b923B8c58a03B66Fe4005FebD8";
-const TRON_TRC20_RECEIVING_ADDRESS = "TQQitFc8qZfYiT8JKFnmZQWxhdwa9UMjQp";
 
 function buildPaymentUri(
   coin: Coin,
@@ -124,7 +122,7 @@ const WALLET_OPTIONS: WalletOption[] = [
     coin: "ETH",
     label: "ETH / EVM",
     network: "Ethereum + major EVM L2s",
-    address: ETH_EVM_RECEIVING_ADDRESS,
+    address: WALLETS.eth,
     priceKey: "ethereum",
     icon: "ETH",
     enabled: true,
@@ -136,7 +134,7 @@ const WALLET_OPTIONS: WalletOption[] = [
     coin: "USDT-TRC20",
     label: "USDT",
     network: "TRON TRC20",
-    address: TRON_TRC20_RECEIVING_ADDRESS,
+    address: WALLETS.usdtTron,
     priceKey: "usd-coin",
     icon: "TRON",
     enabled: true,
