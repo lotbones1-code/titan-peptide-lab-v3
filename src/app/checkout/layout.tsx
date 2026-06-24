@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 const TITLE = "Checkout — Titan Peptide Lab";
 const DESCRIPTION =
-  "Pay with BTC, SOL, or USDC on Solana. Wallet addresses, exact amounts, and order ID issued after payment confirmation. Cold-chain dispatch within 24h.";
+  "Pay with USDC on Solana first: wallet address, QR code, exact amount, and order reference are visible immediately. Submit shipping after payment for 24h dispatch.";
 
 export const metadata: Metadata = {
   title: TITLE,

@@ -206,31 +206,69 @@ export function trackOrderIntent({
     cart_value_usd: safeNumber(cartValueUsd),
     item_count: itemCount,
     unit_skus: unitSkus.slice(0, 12),
+    payment_status: "awaiting_payment",
+    revenue_status: "not_revenue",
     source,
   });
 }
 
-// GA4-standard `purchase` event. `order_intent` above is a custom event GA4 does
-// not treat as revenue or a key conversion — without this `purchase` event, GA4
-// Monetization reports show $0 and conversion/ROAS-by-source cannot be measured.
-// Crypto checkout has no server-side payment callback, so the order-placed moment
-// (confirmation/QR screen) is the conversion point we record. `transaction_id`
-// lets GA4 de-duplicate if the screen re-renders; attribution (utm/ref/session)
-// is merged automatically by compactParams so revenue-by-source works.
+export function trackCheckoutOrderCreatedUnpaid({
+  orderId,
+  cartValueUsd,
+  shippingUsd,
+  coupon,
+  itemCount,
+  unitSkus,
+  paymentCoin,
+}: {
+  orderId: string;
+  cartValueUsd: number;
+  shippingUsd: number;
+  coupon?: string | null;
+  itemCount: number;
+  unitSkus: string[];
+  paymentCoin: string;
+}) {
+  trackEvent("checkout_order_created_unpaid", {
+    order_id: orderId,
+    cart_value_usd: safeNumber(cartValueUsd),
+    shipping_usd: safeNumber(shippingUsd),
+    coupon: coupon || undefined,
+    item_count: itemCount,
+    unit_skus: unitSkus.slice(0, 12),
+    payment_coin: paymentCoin,
+    payment_status: "awaiting_payment",
+    revenue_status: "not_revenue",
+  });
+}
+
+// GA4-standard `purchase` event. This must only be called after payment is
+// actually verified by a payment webhook, on-chain detector, or manual admin
+// reconciliation. Unpaid/test/order-created checkout paths must use
+// `order_intent` / `checkout_order_created_unpaid` instead.
 export function trackPurchase({
   orderId,
   valueUsd,
   shippingUsd,
   coupon,
   items,
+  paymentStatus,
+  verifiedAt,
+  verificationSource,
+  txHash,
 }: {
   orderId: string;
   valueUsd: number;
   shippingUsd: number;
   coupon?: string | null;
   items: { product: Product; quantity: number }[];
+  paymentStatus: "paid_verified";
+  verifiedAt: string;
+  verificationSource: "onchain_detector" | "payment_webhook" | "manual_admin";
+  txHash?: string;
 }) {
   if (typeof window === "undefined") return;
+  if (paymentStatus !== "paid_verified") return;
 
   const base = compactParams({
     transaction_id: orderId,
@@ -238,6 +276,10 @@ export function trackPurchase({
     currency: "USD",
     shipping: safeNumber(shippingUsd),
     coupon: coupon || undefined,
+    payment_status: paymentStatus,
+    verified_at: verifiedAt,
+    verification_source: verificationSource,
+    tx_hash: txHash,
   });
 
   const ga4Items = items.map((i) => ({

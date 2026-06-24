@@ -3,9 +3,9 @@
 import { useCart } from "@/lib/cart-context";
 import {
   getAttributionContext,
+  trackCheckoutOrderCreatedUnpaid,
   trackEvent,
   trackOrderIntent,
-  trackPurchase,
   type AttributionContext,
 } from "@/lib/analytics";
 import { WALLETS, DISCOUNT_CODES } from "@/lib/products";
@@ -25,6 +25,7 @@ import {
   Loader2,
   Lock,
   ChevronDown,
+  HelpCircle,
   Globe,
   Gift,
   Wallet,
@@ -64,7 +65,9 @@ function buildPaymentUri(
   return address;
 }
 
-type Coin = "BTC" | "ETH" | "USDC-ERC" | "SOL" | "USDC-SOL";
+type PaymentMethod = "crypto";
+
+type Coin = "BTC" | "ETH" | "USDC-ERC" | "SOL" | "USDC-SOL" | "USDT-TRC20";
 
 type WalletOption = {
   coin: Coin;
@@ -74,17 +77,70 @@ type WalletOption = {
   priceKey: "bitcoin" | "ethereum" | "solana" | "usd-coin";
   icon: string;
   deepLinkPrefix?: string;
+  enabled?: boolean;
+  approvalGate?: string;
+  networkWarning?: string;
 };
 
 const WALLET_OPTIONS: WalletOption[] = [
-  { coin: "USDC-SOL", label: "USDC", network: "Solana", address: WALLETS.usdcSol, priceKey: "usd-coin", icon: "💲", deepLinkPrefix: "solana:" },
-  { coin: "SOL", label: "Solana", network: "SOL", address: WALLETS.sol, priceKey: "solana", icon: "◎", deepLinkPrefix: "solana:" },
-  { coin: "BTC", label: "Bitcoin", network: "BTC", address: WALLETS.btc, priceKey: "bitcoin", icon: "₿", deepLinkPrefix: "bitcoin:" },
-  // ERC-20 rails (ETH + USDC-ERC) were removed 2026-06-20: their shared address
-  // routed customer funds into a wallet excluded from the paid-signal detector,
-  // so an ETH/USDC-ERC sale would (a) never fire the order alert and (b) land in
-  // a wallet that isn't a clean order-receiving wallet. The remaining rails
-  // (USDC-SOL default, SOL, BTC) all route to detector-monitored wallets.
+  {
+    coin: "USDC-SOL",
+    label: "USDC",
+    network: "Solana",
+    address: WALLETS.usdcSol,
+    priceKey: "usd-coin",
+    icon: "USDC",
+    deepLinkPrefix: "solana:",
+    enabled: true,
+    networkWarning: "Send USDC on Solana only. ERC-20/TRC20 USDC sent here will not arrive.",
+  },
+  {
+    coin: "SOL",
+    label: "Solana",
+    network: "SOL",
+    address: WALLETS.sol,
+    priceKey: "solana",
+    icon: "SOL",
+    deepLinkPrefix: "solana:",
+    enabled: true,
+    networkWarning: "Send native SOL only. SPL tokens should use the USDC option unless Titan confirms otherwise.",
+  },
+  {
+    coin: "BTC",
+    label: "Bitcoin",
+    network: "BTC",
+    address: WALLETS.btc,
+    priceKey: "bitcoin",
+    icon: "BTC",
+    deepLinkPrefix: "bitcoin:",
+    enabled: true,
+    networkWarning: "Send native Bitcoin only. Do not send wrapped BTC or BTC on another chain.",
+  },
+  // Staged only: Shamil asked for easier ETH/TRON options, but these cannot be
+  // enabled until there are dedicated order-receiving addresses and the paid
+  // detector/admin workflow monitors them. No live address is displayed here.
+  {
+    coin: "ETH",
+    label: "ETH",
+    network: "Ethereum",
+    address: "",
+    priceKey: "ethereum",
+    icon: "ETH",
+    enabled: false,
+    approvalGate: "Needs dedicated Titan ETH receiving wallet + on-chain paid detector before activation.",
+    networkWarning: "ETH and ERC-20 stablecoins must use Ethereum only when enabled.",
+  },
+  {
+    coin: "USDT-TRC20",
+    label: "USDT",
+    network: "TRON TRC20",
+    address: "",
+    priceKey: "usd-coin",
+    icon: "TRON",
+    enabled: false,
+    approvalGate: "Needs dedicated Titan TRON/TRC20 receiving address + TRC20 monitor before activation.",
+    networkWarning: "TRC20 means TRON only. ERC-20/BEP-20 USDT sent to a TRON address will not arrive.",
+  },
 ];
 
 // Orders go through our own /api/order route when running with a Node host.
@@ -110,13 +166,13 @@ const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/support@titanpeptidelab.
 // removed without affecting the other.
 const FORMSUBMIT_FALLBACK_ENDPOINT = "https://formsubmit.co/ajax/shamilbones1@gmail.com";
 
-// ── Hosted crypto checkout (Helio / MoonPay Commerce) — env-gated ───────────
+// ── Card checkout (Helio / MoonPay Commerce) — STAGED, env-gated ──────────────
 // Ordinary MoonPay/Helio setup is approved. True card checkout still requires a
-// real MoonPay Ramps-enabled Pay Link/API credential; until that exists, do not
-// render or claim a card rail. The hosted crypto link is still preserved behind
-// ONE env var and now appears after order creation so every payment has an order
-// reference first. The instant the real Pay Link exists, going live is a one-line
-// build-env update:
+// real MoonPay Ramps-enabled Pay Link/API credential; until that exists, keep the
+// panel behind ONE env var rather than shipping a fake/disabled card button.
+// When empty, NOTHING card-related renders, so the live site makes no false
+// card-payment claim and crypto remains the advertised rail. The instant the
+// real Pay Link exists, going live is a one-line build-env update:
 //     NEXT_PUBLIC_HELIO_PAY_LINK="https://app.hel.io/pay/<id>"
 // then `npm run build && npm run ship`. No code change required.
 const HELIO_PAY_LINK = (process.env.NEXT_PUBLIC_HELIO_PAY_LINK || "").trim();
@@ -179,9 +235,12 @@ export default function CheckoutPage() {
   const [prices, setPrices] = useState<PriceMap>({ "usd-coin": 1 });
   const [rateError, setRateError] = useState(false);
   const [qrDataUrl, setQrDataUrl] = useState<string>("");
+  const [paymentQrDataUrl, setPaymentQrDataUrl] = useState<string>("");
+  const [draftOrderId, setDraftOrderId] = useState("");
   const [orderSummaryOpen, setOrderSummaryOpen] = useState(false);
+  const [cryptoHelpOpen, setCryptoHelpOpen] = useState(false);
 
-  const paymentMethod = "crypto";
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("crypto");
   const [selectedCoin, setSelectedCoin] = useState<Coin>("USDC-SOL");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -191,6 +250,7 @@ export default function CheckoutPage() {
   const [region, setRegion] = useState("");
   const [postal, setPostal] = useState("");
   const [country, setCountry] = useState("US");
+  const [txHash, setTxHash] = useState("");
   const [discountCode, setDiscountCode] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState<{ code: string; percent: number } | null>(null);
   const [discountError, setDiscountError] = useState("");
@@ -198,6 +258,12 @@ export default function CheckoutPage() {
   // silently grey with no explanation — a dead end at the final step. We now
   // keep the button live and surface exactly which field is missing on submit.
   const [formError, setFormError] = useState<string | null>(null);
+
+  // Quietly create the reference up front so payment instructions can appear
+  // immediately without asking the buyer to click through an ID ceremony.
+  useEffect(() => {
+    setDraftOrderId((current) => current || makeOrderId());
+  }, []);
 
   // Generate QR for the wallet deep-link once the order is finalized. Browser-
   // side base64 PNG; closes the QR promise the checkout copy makes in 5 places.
@@ -326,6 +392,36 @@ export default function CheckoutPage() {
     return amt.toFixed(4);
   }, [prices, wallet.priceKey, total]);
 
+  const paymentUri = useMemo(
+    () => buildPaymentUri(selectedCoin, wallet.address, cryptoAmount),
+    [cryptoAmount, selectedCoin, wallet.address],
+  );
+
+  // Generate the QR for the selected wallet immediately on checkout load. The
+  // amount updates if shipping country, discount, or coin changes.
+  useEffect(() => {
+    if (!paymentUri) {
+      setPaymentQrDataUrl("");
+      return;
+    }
+    let cancelled = false;
+    QRCode.toDataURL(paymentUri, {
+      errorCorrectionLevel: "M",
+      margin: 2,
+      scale: 6,
+      color: { dark: "#0f1613", light: "#ffffff" },
+    })
+      .then((url) => {
+        if (!cancelled) setPaymentQrDataUrl(url);
+      })
+      .catch(() => {
+        if (!cancelled) setPaymentQrDataUrl("");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [paymentUri]);
+
   const completeOrder = (orderId: string, attribution: AttributionContext = {}) => {
     const fullAddress = [street, apt, city, region, postal, country].filter(Boolean).join(", ");
     const receiptLines = [
@@ -347,7 +443,7 @@ export default function CheckoutPage() {
       `Payment: ${wallet.label} (${wallet.network})`,
       `${cryptoAmount ? `Send: ${cryptoAmount} ${wallet.coin}` : `Amount: $${total.toFixed(2)} USD`}`,
       `To address: ${wallet.address}`,
-      `TX hash: not submitted at order creation`,
+      `TX hash: ${txHash || "(will send after transfer)"}`,
       ...(attribution.oc_touch_id ? [`Touch ID: ${attribution.oc_touch_id}`] : []),
       ...(attribution.utm_source ? [`UTM source: ${attribution.utm_source}`] : []),
       ``,
@@ -479,7 +575,7 @@ export default function CheckoutPage() {
 
     // Don't dead-end the buyer: if something's missing, name it and jump to it.
     if (firstMissing) {
-      setFormError(`Add your ${firstMissing.label} to create your order ID.`);
+      setFormError(`Add your ${firstMissing.label} so we can send your order.`);
       const el =
         typeof document !== "undefined"
           ? (document.getElementById(firstMissing.id) as HTMLElement | null)
@@ -494,7 +590,8 @@ export default function CheckoutPage() {
     setSubmitting(true);
 
     const fullAddress = [street, apt, city, region, postal, country].filter(Boolean).join(", ");
-    const orderId = makeOrderId();
+    const orderId = draftOrderId || makeOrderId();
+    if (!draftOrderId) setDraftOrderId(orderId);
     let attribution: AttributionContext = {};
 
     // checkout must still work even when tracking/session storage fails.
@@ -532,7 +629,7 @@ export default function CheckoutPage() {
       paymentCoin: `${wallet.label} (${wallet.network})`,
       paymentAddress: wallet.address,
       cryptoAmount: cryptoAmount ? `${cryptoAmount} ${wallet.coin}` : `$${total.toFixed(2)} USD`,
-      txHash: "not submitted at order creation",
+      txHash: txHash || "(will send after transfer)",
       ocTouchId: attribution.oc_touch_id || "",
       refCode: attribution.ref || "",
       utmSource: attribution.utm_source || "",
@@ -549,17 +646,17 @@ export default function CheckoutPage() {
     const mailtoHref = completeOrder(orderId, attribution);
     setSubmitting(false);
 
-    // Record the GA4 `purchase` conversion at the order-placed moment. Uses the
-    // pre-clear `items` snapshot from this render (completeOrder's clearCart only
-    // schedules a re-render; this closure still holds the items). Tracking must
-    // never break checkout, so this is best-effort.
+    // This is an unpaid/static checkout order. Keep it out of GA4 ecommerce
+    // revenue; real `purchase` belongs only after on-chain/payment verification.
     try {
-      trackPurchase({
+      trackCheckoutOrderCreatedUnpaid({
         orderId,
-        valueUsd: total,
+        cartValueUsd: total,
         shippingUsd: shipping,
         coupon: appliedDiscount?.code,
-        items,
+        itemCount: items.reduce((sum, item) => sum + item.quantity, 0),
+        unitSkus: items.map((item) => item.product.id),
+        paymentCoin: `${wallet.label} (${wallet.network})`,
       });
     } catch {
       /* tracking failure must not affect the order */
@@ -601,11 +698,11 @@ export default function CheckoutPage() {
         discountCode: appliedDiscount?.code || undefined,
         discountPercent: appliedDiscount?.percent || undefined,
         discountAmount: discountAmount || undefined,
-        paymentMethod: "crypto",
+        paymentMethod,
         paymentCoin: `${wallet.label} (${wallet.network})`,
         paymentAddress: wallet.address,
         cryptoAmount: cryptoAmount ? `${cryptoAmount} ${wallet.coin}` : undefined,
-        txHash: undefined,
+        txHash: txHash || undefined,
       };
       try {
         const ctrl = new AbortController();
@@ -643,8 +740,6 @@ export default function CheckoutPage() {
   };
 
   if (done) {
-    const hostedCryptoHref = buildHelioCheckoutUrl(done.total, done.orderId);
-
     return (
       <>
         <Nav />
@@ -654,46 +749,26 @@ export default function CheckoutPage() {
               <Check className="h-7 w-7 text-white" />
             </div>
             <h1 className="mt-6 font-serif text-[2rem] leading-[1.1] tracking-[-0.02em] text-[#0f1613]">
-              Order created. Pay when ready.
+              Order submitted.
             </h1>
             <p className="mt-3 text-[14px] text-[#44514b]">
-              Your unpaid order ID: {" "}
+              Your order ID:{" "}
               <span className="font-mono text-[#1e6f58]">{done.orderId}</span>
             </p>
-            <p className="mt-3 rounded-xl border border-[#f0d6a1] bg-[#fff8e8] px-4 py-3 text-[13px] leading-5 text-[#6d4b14]">
-              No payment has been sent yet. Your order details are saved with Titan first, then you choose the crypto payment route below.
+            <p className="mt-2 text-[13px] text-[#8a9690]">
+              Your order details were sent to Titan automatically. Save this order ID, send the exact amount below, and we&apos;ll match your transfer on-chain.
             </p>
-            <p className="mt-3 inline-flex items-center gap-1.5 text-[12px] text-[#6b7a73]">
+            <p className="mt-2 inline-flex items-center gap-1.5 text-[12px] text-[#6b7a73]">
               <Clock className="h-3.5 w-3.5 text-[#1e6f58]" />
               Saved on this device — you can close this page and return to finish paying.
             </p>
-            {HELIO_PAY_LINK && hostedCryptoHref ? (
-              <a
-                href={hostedCryptoHref}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() =>
-                  trackEvent("checkout_hosted_crypto_click", {
-                    cart_value_usd: Number(done.total.toFixed(2)),
-                    order_id: done.orderId,
-                    provider: "moonpay_helio_crypto",
-                  })
-                }
-                className="mx-auto mt-6 inline-flex h-12 w-full max-w-sm items-center justify-center gap-2 rounded-xl bg-[#1e6f58] px-5 text-[14px] font-semibold text-white transition-colors hover:bg-[#175946]"
-              >
-                <CreditCard className="h-4 w-4" />
-                Pay with hosted crypto
-              </a>
-            ) : null}
             <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#d9e7e0] bg-[#f3f9f6] p-5 text-left">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">
-                {HELIO_PAY_LINK ? "Manual wallet fallback" : "Manual wallet payment"}
-              </p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">Payment reference</p>
               <p className="mt-2 font-serif text-[1.5rem] leading-none text-[#0f1613]">
                 {done.cryptoAmount ? `${done.cryptoAmount} ${done.coin.replace("-ERC", "").replace("-SOL", "")}` : `$${done.total.toFixed(2)} USD`}
               </p>
               <p className="mt-2 text-[12px] text-[#44514b]">
-                Send on <span className="font-medium text-[#0f1613]">{done.paymentLabel} · {done.paymentNetwork}</span> only. Use the hosted crypto button above if available, or copy this exact amount and address for a manual wallet send.
+                Send on <span className="font-medium text-[#0f1613]">{done.paymentLabel} · {done.paymentNetwork}</span> only — using any other network can delay your order.
               </p>
               {qrDataUrl ? (
                 <div className="mt-4 flex flex-col items-center gap-3">
@@ -749,19 +824,16 @@ export default function CheckoutPage() {
                 </button>
               </div>
               <p className="mt-2 text-[11px] leading-5 text-[#6b7a73]">
-                Network must match the option selected at checkout. Keep your transaction hash with this order ID if you pay manually.
+                Network must match the option selected at checkout. Keep your transaction hash with this order ID.
               </p>
             </div>
             <div className="mx-auto mt-8 max-w-sm rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-5 text-left text-[13px] leading-relaxed text-[#44514b]">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">Crypto payment steps</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">What happens next</p>
               <ol className="mt-3 space-y-2.5">
-                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">1.</span><span>Pay with hosted crypto if shown, or copy the exact manual wallet amount and address.</span></li>
-                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">2.</span><span>Use only the selected network. Wrong-network sends require manual review.</span></li>
-                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">3.</span><span>Titan verifies on-chain payment, then emails tracking after dispatch.</span></li>
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">1.</span><span>Send the exact crypto amount above on the selected network.</span></li>
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">2.</span><span>We verify your payment on-chain — usually under 30 minutes.</span></li>
+                <li className="flex gap-2.5"><span className="mt-0.5 text-[#1e6f58]">3.</span><span>Your order ships cold-chain within 24h of confirmation, with tracking by email.</span></li>
               </ol>
-              <p className="mt-4 rounded-lg bg-white px-3 py-2 text-[11px] leading-5 text-[#6b7a73]">
-                Research use only. Not for human or animal use, diagnosis, treatment, or resale claims. International buyers are responsible for local import rules.
-              </p>
             </div>
             <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#e7ece9] bg-white p-5 text-left">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
@@ -773,7 +845,7 @@ export default function CheckoutPage() {
               <div className="mt-3 grid gap-2">
                 <a
                   href={done.mailtoHref}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-[#d9e7e0] bg-white px-4 text-[13px] font-medium text-[#1e6f58] transition-colors hover:bg-[#f3f9f6]"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[#1e6f58] px-4 text-[13px] font-medium text-white transition-colors hover:bg-[#175946]"
                 >
                   Email a backup copy to support
                 </a>
@@ -845,33 +917,13 @@ export default function CheckoutPage() {
 
           {resumeBanner ? <div className="mt-6">{resumeBanner}</div> : null}
 
-          <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <h1 className="font-serif text-[2rem] leading-[1.05] tracking-[-0.02em] text-[#0f1613] sm:text-[2.5rem]">
-                Checkout
-              </h1>
-              <p className="mt-2 max-w-2xl text-[13px] leading-6 text-[#44514b]">
-                Create an unpaid order ID first. No crypto leaves your wallet until the next screen shows the exact amount, network, and payment route.
-              </p>
-            </div>
+          <div className="mt-6 flex items-end justify-between gap-4">
+            <h1 className="font-serif text-[2rem] leading-[1.05] tracking-[-0.02em] text-[#0f1613] sm:text-[2.5rem]">
+              Checkout
+            </h1>
             <div className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a9690]">
               <Globe className="h-3.5 w-3.5 text-[#1e6f58]" />
-              Canada + worldwide shipping
-            </div>
-          </div>
-
-          <div className="mt-5 grid gap-2 rounded-2xl border border-[#e7ece9] bg-[#fafbfa] p-3 text-[12px] text-[#44514b] sm:grid-cols-3">
-            <div className="rounded-xl bg-white px-3 py-2.5 shadow-[0_1px_0_rgba(15,22,19,0.03)]">
-              <p className="font-semibold text-[#0f1613]">1. Contact & shipping</p>
-              <p className="mt-1 text-[#6b7a73]">Name, email, address, destination rate.</p>
-            </div>
-            <div className="rounded-xl bg-white px-3 py-2.5 shadow-[0_1px_0_rgba(15,22,19,0.03)]">
-              <p className="font-semibold text-[#0f1613]">2. Review</p>
-              <p className="mt-1 text-[#6b7a73]">Items, discount, shipping, RUO boundary.</p>
-            </div>
-            <div className="rounded-xl bg-white px-3 py-2.5 shadow-[0_1px_0_rgba(15,22,19,0.03)]">
-              <p className="font-semibold text-[#0f1613]">3. Pay with crypto</p>
-              <p className="mt-1 text-[#6b7a73]">Instructions appear after order creation.</p>
+              Ships worldwide
             </div>
           </div>
 
@@ -910,6 +962,143 @@ export default function CheckoutPage() {
               ) : null}
             </div>
           )}
+
+          <section className="mt-8 overflow-hidden rounded-2xl border border-[#1e6f58]/25 bg-[#f3f9f6] shadow-[0_18px_60px_-46px_rgba(15,22,19,0.42)]">
+            <div className="grid gap-5 p-5 sm:p-6 lg:grid-cols-[220px_1fr] lg:gap-7">
+              <div className="flex flex-col items-center rounded-2xl border border-[#d9e7e0] bg-white p-4">
+                {paymentQrDataUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={paymentQrDataUrl}
+                    alt={`QR code to send ${cryptoAmount ?? total.toFixed(2)} on ${wallet.label} (${wallet.network})`}
+                    width={188}
+                    height={188}
+                    className="h-48 w-48 rounded-xl bg-white"
+                  />
+                ) : (
+                  <div className="flex h-48 w-48 items-center justify-center rounded-xl border border-dashed border-[#d9e7e0] text-[12px] text-[#8a9690]">
+                    Preparing QR...
+                  </div>
+                )}
+                {paymentUri ? (
+                  <a
+                    href={paymentUri}
+                    className="mt-3 inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-lg bg-[#1e6f58] px-3 text-[12px] font-semibold text-white transition-colors hover:bg-[#175946] sm:hidden"
+                  >
+                    <Wallet className="h-3.5 w-3.5" />
+                    Open wallet
+                  </a>
+                ) : null}
+              </div>
+
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">
+                      Pay first, then send order
+                    </p>
+                    <h2 className="mt-2 font-serif text-[1.8rem] leading-none tracking-[-0.02em] text-[#0f1613] sm:text-[2.25rem]">
+                      {cryptoAmount ? (
+                        <>Send exactly {cryptoAmount} {wallet.coin.replace("-ERC", "").replace("-SOL", "")}</>
+                      ) : rateError ? (
+                        <>Send ${total.toFixed(2)} worth of {wallet.label}</>
+                      ) : (
+                        <>Loading exact {wallet.label} amount...</>
+                      )}
+                    </h2>
+                      <p className="mt-2 text-[13px] leading-6 text-[#44514b]">
+                      Total due: <span className="font-semibold text-[#0f1613]">${total.toFixed(2)} USD</span> on <span className="font-semibold text-[#0f1613]">{wallet.label} · {wallet.network}</span>. Shipping details go below after the payment info is already visible.
+                    </p>
+                    {wallet.networkWarning ? (
+                      <p className="mt-2 rounded-lg border border-[#f0d6a1] bg-[#fff8e8] px-3 py-2 text-[11px] leading-5 text-[#6d4b14]">
+                        {wallet.networkWarning}
+                      </p>
+                    ) : null}
+                  </div>
+                  <div className="rounded-xl border border-[#d9e7e0] bg-white px-3 py-2 text-right">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#8a9690]">Reference</p>
+                    <p className="mt-1 font-mono text-[12px] text-[#0f1613]">{draftOrderId || "Generating..."}</p>
+                  </div>
+                </div>
+
+                <div className="mt-4 rounded-xl border border-[#d9e7e0] bg-white p-3">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#8a9690]">Wallet address</p>
+                  <p className="mt-1 break-all font-mono text-[12px] leading-5 text-[#0f1613]">{wallet.address}</p>
+                  <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                    {cryptoAmount ? (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          navigator.clipboard.writeText(cryptoAmount);
+                          setCopied("amount");
+                          setTimeout(() => setCopied(null), 1800);
+                        }}
+                        className="inline-flex h-10 items-center justify-center gap-1.5 rounded-lg border border-[#1e6f58] px-3 text-[12px] font-semibold text-[#1e6f58] transition-colors hover:bg-[#f3f9f6]"
+                      >
+                        {copied === "amount" ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                        {copied === "amount" ? "Amount copied" : "Copy amount"}
+                      </button>
+                    ) : null}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText(wallet.address);
+                        setCopied("address");
+                        setTimeout(() => setCopied(null), 1800);
+                      }}
+                      className="inline-flex h-10 items-center justify-center gap-1.5 rounded-lg border border-[#1e6f58] px-3 text-[12px] font-semibold text-[#1e6f58] transition-colors hover:bg-[#f3f9f6]"
+                    >
+                      {copied === "address" ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                      {copied === "address" ? "Address copied" : "Copy address"}
+                    </button>
+                  </div>
+                </div>
+
+                <details className="mt-4 rounded-xl border border-[#d9e7e0] bg-white/75 px-4 py-3">
+                  <summary className="cursor-pointer select-none text-[12px] font-semibold text-[#44514b] hover:text-[#1e6f58]">
+                    Other coins and payment help
+                  </summary>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {WALLET_OPTIONS.map((w) => {
+                      const active = selectedCoin === w.coin;
+                      const enabled = w.enabled !== false && Boolean(w.address);
+                      return (
+                        <button
+                          key={w.coin}
+                          type="button"
+                          onClick={() => {
+                            if (enabled) setSelectedCoin(w.coin);
+                          }}
+                          disabled={!enabled}
+                          title={enabled ? `${w.label} on ${w.network}` : w.approvalGate}
+                          className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-[12px] font-medium transition-all ${
+                            active
+                              ? "border-[#1e6f58] bg-[#f3f9f6] text-[#1e6f58]"
+                              : enabled
+                                ? "border-[#e7ece9] bg-white text-[#44514b] hover:border-[#1e6f58]/40"
+                                : "cursor-not-allowed border-[#e7ece9] bg-[#f7faf8] text-[#9aa5a0]"
+                          }`}
+                        >
+                          <span>{w.icon}</span>
+                          <span>{w.label}</span>
+                          <span className="text-[10px] uppercase text-[#8a9690]">{w.network}</span>
+                          {!enabled ? <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#b6851f]">Soon</span> : null}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <p className="mt-3 rounded-lg border border-[#f0d6a1] bg-[#fff8e8] px-3 py-2 text-[11px] leading-5 text-[#6d4b14]">
+                    ETH and TRON/TRC20 are staged here, but not enabled until Titan has dedicated receiving wallets and matching payment monitoring. Do not send to an old or guessed address.
+                  </p>
+                  <ol className="mt-4 grid gap-2 text-[12px] leading-5 text-[#44514b] sm:grid-cols-3">
+                    <li><span className="font-semibold text-[#0f1613]">1.</span> Use the exact network shown here.</li>
+                    <li><span className="font-semibold text-[#0f1613]">2.</span> Scan the QR or copy the address.</li>
+                    <li><span className="font-semibold text-[#0f1613]">3.</span> Submit shipping below after payment.</li>
+                  </ol>
+                </details>
+              </div>
+            </div>
+          </section>
 
           <form onSubmit={handleSubmit} className="mt-8 grid gap-10 lg:grid-cols-[1fr_380px]">
             <div className="space-y-8">
@@ -1011,11 +1200,27 @@ export default function CheckoutPage() {
                         Free shipping to {COUNTRIES.find((c) => c.code === country)?.name ?? country}
                       </p>
                     )}
-                    <p className="mt-1.5 text-[11px] leading-5 text-[#6b7a73]">
-                      Canada and international destinations are accepted when listed here. Restricted destinations are omitted; buyers remain responsible for local import rules.
-                    </p>
                   </div>
                 </div>
+              </section>
+
+              <section>
+                <details className="rounded-xl border border-[#e7ece9] bg-[#fafbfa] px-4 py-3">
+                  <summary className="cursor-pointer select-none text-[12px] font-semibold text-[#44514b] hover:text-[#1e6f58]">
+                    Optional: add transaction hash
+                  </summary>
+                  <label htmlFor="tx" className="mt-3 block text-[12px] font-medium text-[#44514b]">
+                    Transaction hash
+                  </label>
+                  <input
+                    id="tx"
+                    type="text"
+                    value={txHash}
+                    onChange={(e) => setTxHash(e.target.value)}
+                    className="mt-1.5 h-11 w-full rounded-lg border border-[#e5e5e5] bg-white px-4 font-mono text-[12px] text-[#0f1613] transition-colors focus:border-[#1e6f58] focus:outline-none"
+                    placeholder="Optional after payment"
+                  />
+                </details>
               </section>
 
               {/* Discount code */}
@@ -1051,7 +1256,7 @@ export default function CheckoutPage() {
                           <div>
                             <p className="text-[12px] font-semibold text-[#0f1613]">First Titan order?</p>
                             <p className="mt-1 text-[12px] leading-5 text-[#44514b]">
-                              Apply <span className="font-semibold text-[#1e6f58]">FIRST10</span> now and take 10% off before you create the order ID.
+                              Apply <span className="font-semibold text-[#1e6f58]">FIRST10</span> now and take 10% off before you submit the order.
                             </p>
                           </div>
                           <button
@@ -1088,16 +1293,69 @@ export default function CheckoutPage() {
                 </div>
               </section>
 
-              {/* Payment method toggle */}
-              <section>
+              {/* Payment details now appear first above the form. This older in-form payment panel is kept out of the primary path. */}
+              <section className="hidden" aria-hidden="true">
                 <h2 className="flex items-center gap-2 text-[16px] font-semibold text-[#0f1613]">
                   <Lock className="h-4 w-4 text-[#1e6f58]" />
                   Payment
                 </h2>
 
-                <p className="mt-2 text-[13px] leading-6 text-[#44514b]">
-                  Review the payment route now. The actual hosted crypto button, wallet QR, amount, and copy controls appear only after the unpaid order ID is created.
-                </p>
+                {/* ─── Hosted MoonPay/Helio checkout — only renders when a live
+                       Pay Link is configured via NEXT_PUBLIC_HELIO_PAY_LINK.
+                       Current link is crypto-hosted; fiat card remains pending
+                       real MoonPay Ramps credentials/approval. ─── */}
+                {HELIO_PAY_LINK && (
+                  <>
+                    <div className="mt-4 overflow-hidden rounded-2xl border border-[#1e6f58]/30 bg-gradient-to-b from-[#f3f9f6] to-white shadow-[0_1px_0_rgba(30,111,88,0.06)]">
+                      <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:gap-5 sm:p-6">
+                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[#d9e7e0] bg-white text-[#1e6f58]">
+                          <CreditCard className="h-6 w-6" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <h3 className="font-serif text-[1.3rem] leading-tight text-[#0f1613]">
+                              Hosted crypto checkout
+                            </h3>
+                            <span className="rounded-full bg-[#1e6f58] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-white">
+                              Fastest crypto option
+                            </span>
+                          </div>
+                          <p className="mt-1.5 text-[13px] leading-6 text-[#44514b]">
+                            Checkout through MoonPay Commerce / Helio with a hosted crypto payment page. Your order total of <span className="font-medium text-[#0f1613]">${total.toFixed(2)} USD</span> is carried over automatically, and manual wallet payment stays available below as a fallback.
+                          </p>
+                        </div>
+                        <a
+                          href={buildHelioCheckoutUrl(total, "")}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={() =>
+                            trackEvent("checkout_hosted_crypto_click", {
+                              cart_value_usd: Number(total.toFixed(2)),
+                              item_count: items.reduce((n, i) => n + i.quantity, 0),
+                              provider: "moonpay_helio_crypto",
+                            })
+                          }
+                          className="inline-flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-[#1e6f58] px-6 text-[14px] font-semibold text-white transition-colors hover:bg-[#185a48] sm:w-auto"
+                        >
+                          <CreditCard className="h-4 w-4" />
+                          Pay ${total.toFixed(2)} with hosted crypto
+                        </a>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-[#d9e7e0] bg-white/60 px-5 py-3 text-[11px] text-[#6b7a73] sm:px-6">
+                        <span className="inline-flex items-center gap-1.5"><ShieldCheck className="h-3.5 w-3.5 text-[#1e6f58]" /> Hosted MoonPay/Helio checkout</span>
+                        <span className="inline-flex items-center gap-1.5"><Lock className="h-3.5 w-3.5 text-[#1e6f58]" /> Wallet details stay off Titan</span>
+                        <span className="inline-flex items-center gap-1.5"><Globe className="h-3.5 w-3.5 text-[#1e6f58]" /> Fiat card remains pending Ramps approval</span>
+                      </div>
+                    </div>
+
+                    {/* Divider into the manual wallet fallback */}
+                    <div className="mt-5 flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.14em] text-[#8a9690]">
+                      <span className="h-px flex-1 bg-[#e7ece9]" />
+                      Or use manual wallet payment
+                      <span className="h-px flex-1 bg-[#e7ece9]" />
+                    </div>
+                  </>
+                )}
 
                 {/* ─── Crypto payment section ─── */}
                 {paymentMethod === "crypto" && (
@@ -1140,7 +1398,7 @@ export default function CheckoutPage() {
                             {wallet.label} · {wallet.network}
                           </h3>
                           <p className="mt-2 text-[13px] leading-6 text-[#44514b]">
-                            We create your order ID first, then show the exact amount, wallet address, QR code, and copy buttons on the confirmation screen. That keeps your payment tied to a support record before any crypto is sent.
+                            Your order reference is generated automatically. The exact amount, wallet address, QR code, and copy buttons are already shown above so payment is not blocked by shipping fields.
                           </p>
                           <div className="mt-4 grid gap-2 text-[12px] text-[#44514b] sm:grid-cols-3">
                             <div className="rounded-xl border border-[#d9e7e0] bg-white px-3 py-2.5">
@@ -1163,12 +1421,12 @@ export default function CheckoutPage() {
                             </div>
                             <div className="rounded-xl border border-[#d9e7e0] bg-white px-3 py-2.5">
                               <p className="text-[10px] uppercase tracking-[0.12em] text-[#8a9690]">Next step</p>
-                              <p className="mt-1 font-medium text-[#0f1613]">Get your wallet QR</p>
+                              <p className="mt-1 font-medium text-[#0f1613]">Use the QR above</p>
                             </div>
                           </div>
                           {cryptoAmount ? (
                             <p className="mt-2 text-[11px] leading-5 text-[#6b7a73]">
-                              Live {wallet.label} rate · Confirm your wallet has at least this amount on {wallet.network} before submitting. Final amount locks on the next screen.
+                              Live {wallet.label} rate · Confirm your wallet has at least this amount on {wallet.network}; the QR above updates when the total changes.
                             </p>
                           ) : rateError ? (
                             <p className="mt-2 text-[11px] leading-5 text-[#6b7a73]">
@@ -1176,12 +1434,74 @@ export default function CheckoutPage() {
                             </p>
                           ) : null}
                           <p className="mt-4 rounded-xl border border-[#f0d6a1] bg-[#fff8e8] px-4 py-3 text-[12px] leading-5 text-[#6d4b14]">
-                            Don&apos;t send crypto yet — tap Create order ID below to lock your exact amount and get your wallet QR. Your order details send to Titan automatically.
+                            Payment details are already visible above. After sending, submit shipping below so Titan can match the transfer and ship the order.
                           </p>
                         </div>
                       </div>
 
+                      {/* TX hash */}
+                      <div className="mt-5 border-t border-[#d9e7e0] pt-5">
+                        <label htmlFor="tx-hidden" className="block text-[12px] font-medium text-[#44514b]">
+                          Transaction hash <span className="text-[#8a9690]">(optional backup field)</span>
+                        </label>
+                        <input
+                          id="tx-hidden"
+                          type="text"
+                          value={txHash}
+                          onChange={(e) => setTxHash(e.target.value)}
+                          className="mt-1.5 h-11 w-full rounded-lg border border-[#e5e5e5] bg-white px-4 font-mono text-[12px] text-[#0f1613] transition-colors focus:border-[#1e6f58] focus:outline-none"
+                          placeholder="Optional after payment confirmation"
+                        />
+                      </div>
                     </div>
+
+                    {/* New to crypto? */}
+                    <button
+                      type="button"
+                      onClick={() => setCryptoHelpOpen((v) => !v)}
+                      className="mt-3 flex w-full items-center gap-2 rounded-xl border border-[#e7ece9] bg-white px-4 py-3 text-left text-[13px] text-[#44514b] transition-colors hover:bg-[#fafbfa]"
+                    >
+                      <HelpCircle className="h-4 w-4 shrink-0 text-[#1e6f58]" />
+                      <span className="flex-1 font-medium">New to crypto? Here&apos;s how to pay in 3 minutes</span>
+                      <ChevronDown className={`h-4 w-4 text-[#8a9690] transition-transform ${cryptoHelpOpen ? "rotate-180" : ""}`} />
+                    </button>
+                    {cryptoHelpOpen && (
+                      <div className="mt-2 rounded-xl border border-[#e7ece9] bg-[#fafbfa] p-5 text-[13px] leading-relaxed text-[#44514b]">
+                        <ol className="space-y-3">
+                          <li className="flex gap-3">
+                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1e6f58] text-[11px] font-bold text-white">1</span>
+                            <div>
+                              <p className="font-medium text-[#0f1613]">Get a wallet app</p>
+                              <p className="mt-0.5 text-[12px] text-[#8a9690]">
+                                Download <a href="https://phantom.app" target="_blank" rel="noreferrer" className="text-[#1e6f58] underline">Phantom</a> (easiest, works on phone, supports SOL, USDC, and BTC). Takes 60 seconds.
+                              </p>
+                            </div>
+                          </li>
+                          <li className="flex gap-3">
+                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1e6f58] text-[11px] font-bold text-white">2</span>
+                            <div>
+                              <p className="font-medium text-[#0f1613]">Buy USDC</p>
+                              <p className="mt-0.5 text-[12px] text-[#8a9690]">
+                                Inside Phantom, tap &quot;Buy&quot; and purchase USDC with your card. USDC = 1 dollar, no price swings.
+                              </p>
+                            </div>
+                          </li>
+                          <li className="flex gap-3">
+                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1e6f58] text-[11px] font-bold text-white">3</span>
+                            <div>
+                              <p className="font-medium text-[#0f1613]">Scan the QR or copy the address</p>
+                              <p className="mt-0.5 text-[12px] text-[#8a9690]">
+                                Send the exact amount shown above. On phone, just tap the QR code to open your wallet. That&apos;s it.
+                              </p>
+                            </div>
+                          </li>
+                        </ol>
+                        <p className="mt-4 flex items-start gap-2 rounded-lg bg-[#f3f9f6] px-3 py-2 text-[11px] text-[#1e6f58]">
+                          <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                          We recommend USDC on Solana — fastest, cheapest fees (under $0.01), and 1 USDC always = $1.
+                        </p>
+                      </div>
+                    )}
                   </>
                 )}
               </section>
@@ -1221,7 +1541,7 @@ export default function CheckoutPage() {
                   ) : (
                     <>
                       <Lock className="h-4 w-4" />
-                      Create order ID · ${total.toFixed(2)}
+                      I paid - send my order · ${total.toFixed(2)}
                     </>
                   )}
                 </button>
@@ -1265,8 +1585,8 @@ export default function CheckoutPage() {
               </div>
             </aside>
 
-            {/* Mobile sticky CTA */}
-            <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#e7ece9] bg-white/95 px-4 py-3 backdrop-blur lg:hidden">
+            {/* Mobile CTA */}
+            <div className="rounded-2xl border border-[#d9e7e0] bg-white p-3 shadow-[0_18px_50px_-38px_rgba(15,22,19,0.28)] lg:hidden">
               {formError && (
                 <p role="alert" className="mb-2 text-center text-[12px] font-medium text-[#c0392b]">
                   {formError}
@@ -1275,7 +1595,7 @@ export default function CheckoutPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex h-13 w-full items-center justify-center gap-2 rounded-xl bg-[#1e6f58] text-[15px] font-semibold text-white transition-colors hover:bg-[#175946] disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#1e6f58] text-[15px] font-semibold text-white transition-colors hover:bg-[#175946] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {submitting ? (
                   <>
@@ -1285,7 +1605,7 @@ export default function CheckoutPage() {
                 ) : (
                   <>
                     <Lock className="h-4 w-4" />
-                    Create order ID · ${total.toFixed(2)}
+                    I paid - send my order · ${total.toFixed(2)}
                   </>
                 )}
               </button>
