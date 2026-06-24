@@ -38,6 +38,8 @@ import { FreeShippingProgress } from "@/components/site/free-shipping-progress";
 // Solana Pay USDC mint (public, well-known) — used to build SPL-token deep-links
 // so Phantom/Solflare/etc. open with the correct token + amount pre-filled.
 const USDC_SOL_MINT = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
+const ETH_EVM_RECEIVING_ADDRESS = "0x05b828a8cd9480b923B8c58a03B66Fe4005FebD8";
+const TRON_TRC20_RECEIVING_ADDRESS = "TQQitFc8qZfYiT8JKFnmZQWxhdwa9UMjQp";
 
 function buildPaymentUri(
   coin: Coin,
@@ -80,6 +82,8 @@ type WalletOption = {
   enabled?: boolean;
   approvalGate?: string;
   networkWarning?: string;
+  amountLabel?: string;
+  helpText?: string;
 };
 
 const WALLET_OPTIONS: WalletOption[] = [
@@ -116,30 +120,29 @@ const WALLET_OPTIONS: WalletOption[] = [
     enabled: true,
     networkWarning: "Send native Bitcoin only. Do not send wrapped BTC or BTC on another chain.",
   },
-  // Staged only: Shamil asked for easier ETH/TRON options, but these cannot be
-  // enabled until there are dedicated order-receiving addresses and the paid
-  // detector/admin workflow monitors them. No live address is displayed here.
   {
     coin: "ETH",
-    label: "ETH",
-    network: "Ethereum",
-    address: "",
+    label: "ETH / EVM",
+    network: "Ethereum + major EVM L2s",
+    address: ETH_EVM_RECEIVING_ADDRESS,
     priceKey: "ethereum",
     icon: "ETH",
-    enabled: false,
-    approvalGate: "Needs dedicated Titan ETH receiving wallet + on-chain paid detector before activation.",
-    networkWarning: "ETH and ERC-20 stablecoins must use Ethereum only when enabled.",
+    enabled: true,
+    networkWarning: "Send native ETH, ERC-20 USDC, or ERC-20 USDT to this address on Ethereum. Major EVM L2s use the same address, but confirm your wallet network before sending.",
+    amountLabel: "ETH",
+    helpText: "For ERC-20 USDC or USDT, send the USD total shown here as tokens. For native ETH, send the exact ETH amount.",
   },
   {
     coin: "USDT-TRC20",
     label: "USDT",
     network: "TRON TRC20",
-    address: "",
+    address: TRON_TRC20_RECEIVING_ADDRESS,
     priceKey: "usd-coin",
     icon: "TRON",
-    enabled: false,
-    approvalGate: "Needs dedicated Titan TRON/TRC20 receiving address + TRC20 monitor before activation.",
+    enabled: true,
     networkWarning: "TRC20 means TRON only. ERC-20/BEP-20 USDT sent to a TRON address will not arrive.",
+    amountLabel: "USDT",
+    helpText: "TRON/TRC20 is the low-fee USDT rail for international buyers. Send the exact USDT amount shown.",
   },
 ];
 
@@ -215,6 +218,7 @@ type OrderState = {
   paymentNetwork: string;
   paymentAddress: string;
   cryptoAmount: string | null;
+  paymentAmountText: string;
   receipt: string;
   mailtoHref: string;
 };
@@ -382,6 +386,7 @@ export default function CheckoutPage() {
     () => WALLET_OPTIONS.find((w) => w.coin === selectedCoin)!,
     [selectedCoin],
   );
+  const walletAmountLabel = wallet.amountLabel ?? wallet.coin.replace("-ERC", "").replace("-SOL", "").replace("-TRC20", "");
 
   const cryptoAmount = useMemo(() => {
     const price = prices[wallet.priceKey];
@@ -391,6 +396,14 @@ export default function CheckoutPage() {
     if (wallet.priceKey === "bitcoin") return amt.toFixed(6);
     return amt.toFixed(4);
   }, [prices, wallet.priceKey, total]);
+
+  const paymentAmountText = useMemo(() => {
+    if (!cryptoAmount) return `$${total.toFixed(2)} USD`;
+    if (selectedCoin === "ETH") {
+      return `${cryptoAmount} ETH native OR ${total.toFixed(2)} USDC/USDT ERC-20`;
+    }
+    return `${cryptoAmount} ${walletAmountLabel}`;
+  }, [cryptoAmount, selectedCoin, total, walletAmountLabel]);
 
   const paymentUri = useMemo(
     () => buildPaymentUri(selectedCoin, wallet.address, cryptoAmount),
@@ -441,7 +454,7 @@ export default function CheckoutPage() {
       `Total: $${total.toFixed(2)}`,
       ``,
       `Payment: ${wallet.label} (${wallet.network})`,
-      `${cryptoAmount ? `Send: ${cryptoAmount} ${wallet.coin}` : `Amount: $${total.toFixed(2)} USD`}`,
+      `Send: ${paymentAmountText}`,
       `To address: ${wallet.address}`,
       `TX hash: ${txHash || "(will send after transfer)"}`,
       ...(attribution.oc_touch_id ? [`Touch ID: ${attribution.oc_touch_id}`] : []),
@@ -460,6 +473,7 @@ export default function CheckoutPage() {
       paymentNetwork: wallet.network,
       paymentAddress: wallet.address,
       cryptoAmount,
+      paymentAmountText,
       receipt,
       mailtoHref,
     };
@@ -628,7 +642,7 @@ export default function CheckoutPage() {
       total: `$${total.toFixed(2)}`,
       paymentCoin: `${wallet.label} (${wallet.network})`,
       paymentAddress: wallet.address,
-      cryptoAmount: cryptoAmount ? `${cryptoAmount} ${wallet.coin}` : `$${total.toFixed(2)} USD`,
+      cryptoAmount: paymentAmountText,
       txHash: txHash || "(will send after transfer)",
       ocTouchId: attribution.oc_touch_id || "",
       refCode: attribution.ref || "",
@@ -701,7 +715,7 @@ export default function CheckoutPage() {
         paymentMethod,
         paymentCoin: `${wallet.label} (${wallet.network})`,
         paymentAddress: wallet.address,
-        cryptoAmount: cryptoAmount ? `${cryptoAmount} ${wallet.coin}` : undefined,
+        cryptoAmount: paymentAmountText,
         txHash: txHash || undefined,
       };
       try {
@@ -765,7 +779,7 @@ export default function CheckoutPage() {
             <div className="mx-auto mt-6 max-w-sm rounded-2xl border border-[#d9e7e0] bg-[#f3f9f6] p-5 text-left">
               <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1e6f58]">Payment reference</p>
               <p className="mt-2 font-serif text-[1.5rem] leading-none text-[#0f1613]">
-                {done.cryptoAmount ? `${done.cryptoAmount} ${done.coin.replace("-ERC", "").replace("-SOL", "")}` : `$${done.total.toFixed(2)} USD`}
+                {done.paymentAmountText || (done.cryptoAmount ? `${done.cryptoAmount} ${done.coin.replace("-ERC", "").replace("-SOL", "")}` : `$${done.total.toFixed(2)} USD`)}
               </p>
               <p className="mt-2 text-[12px] text-[#44514b]">
                 Send on <span className="font-medium text-[#0f1613]">{done.paymentLabel} · {done.paymentNetwork}</span> only — using any other network can delay your order.
@@ -775,7 +789,7 @@ export default function CheckoutPage() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={qrDataUrl}
-                    alt={`QR code to send ${done.cryptoAmount ?? ""} on ${done.paymentLabel} (${done.paymentNetwork}) to Titan order ${done.orderId}`}
+                    alt={`QR code to send ${done.paymentAmountText || done.cryptoAmount || ""} on ${done.paymentLabel} (${done.paymentNetwork}) to Titan order ${done.orderId}`}
                     width={192}
                     height={192}
                     className="h-48 w-48 rounded-xl border border-[#d9e7e0] bg-white p-2"
@@ -800,7 +814,7 @@ export default function CheckoutPage() {
                   <button
                     type="button"
                     onClick={() => {
-                      navigator.clipboard.writeText(done.cryptoAmount ?? "");
+                      navigator.clipboard.writeText(done.paymentAmountText || done.cryptoAmount || "");
                       setCopied("amount");
                       setTimeout(() => setCopied(null), 1800);
                     }}
@@ -999,7 +1013,11 @@ export default function CheckoutPage() {
                     </p>
                     <h2 className="mt-2 font-serif text-[1.8rem] leading-none tracking-[-0.02em] text-[#0f1613] sm:text-[2.25rem]">
                       {cryptoAmount ? (
-                        <>Send exactly {cryptoAmount} {wallet.coin.replace("-ERC", "").replace("-SOL", "")}</>
+                        selectedCoin === "ETH" ? (
+                          <>Send {cryptoAmount} ETH or ${total.toFixed(2)} USDC/USDT</>
+                        ) : (
+                          <>Send exactly {cryptoAmount} {walletAmountLabel}</>
+                        )
                       ) : rateError ? (
                         <>Send ${total.toFixed(2)} worth of {wallet.label}</>
                       ) : (
@@ -1012,6 +1030,11 @@ export default function CheckoutPage() {
                     {wallet.networkWarning ? (
                       <p className="mt-2 rounded-lg border border-[#f0d6a1] bg-[#fff8e8] px-3 py-2 text-[11px] leading-5 text-[#6d4b14]">
                         {wallet.networkWarning}
+                      </p>
+                    ) : null}
+                    {wallet.helpText ? (
+                      <p className="mt-2 text-[11px] leading-5 text-[#44514b]">
+                        {wallet.helpText}
                       </p>
                     ) : null}
                   </div>
@@ -1029,7 +1052,7 @@ export default function CheckoutPage() {
                       <button
                         type="button"
                         onClick={() => {
-                          navigator.clipboard.writeText(cryptoAmount);
+                          navigator.clipboard.writeText(paymentAmountText);
                           setCopied("amount");
                           setTimeout(() => setCopied(null), 1800);
                         }}
@@ -1088,7 +1111,7 @@ export default function CheckoutPage() {
                     })}
                   </div>
                   <p className="mt-3 rounded-lg border border-[#f0d6a1] bg-[#fff8e8] px-3 py-2 text-[11px] leading-5 text-[#6d4b14]">
-                    ETH and TRON/TRC20 are staged here, but not enabled until Titan has dedicated receiving wallets and matching payment monitoring. Do not send to an old or guessed address.
+                    Use only the network shown on the selected rail. ETH/EVM uses the same receiving address on Ethereum and major EVM L2s; TRON USDT must be TRC20.
                   </p>
                   <ol className="mt-4 grid gap-2 text-[12px] leading-5 text-[#44514b] sm:grid-cols-3">
                     <li><span className="font-semibold text-[#0f1613]">1.</span> Use the exact network shown here.</li>
@@ -1411,7 +1434,11 @@ export default function CheckoutPage() {
                               </p>
                               <p className="mt-1 font-medium text-[#0f1613]" aria-live="polite">
                                 {cryptoAmount ? (
-                                  <>≈ {cryptoAmount} <span className="text-[#1e6f58]">{wallet.coin.replace("-ERC", "").replace("-SOL", "")}</span></>
+                                  selectedCoin === "ETH" ? (
+                                    <>{cryptoAmount} <span className="text-[#1e6f58]">ETH</span> or ${total.toFixed(2)} <span className="text-[#1e6f58]">USDC/USDT</span></>
+                                  ) : (
+                                    <>≈ {cryptoAmount} <span className="text-[#1e6f58]">{walletAmountLabel}</span></>
+                                  )
                                 ) : rateError ? (
                                   <>${total.toFixed(2)} <span className="text-[#1e6f58]">worth of {wallet.label}</span></>
                                 ) : (
