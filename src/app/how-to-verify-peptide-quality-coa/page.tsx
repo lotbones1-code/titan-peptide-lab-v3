@@ -205,6 +205,8 @@ export default function HowToVerifyPeptideQualityCoaPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1e6f58]">Related reading</p>
             <h2 className="mt-4 font-serif text-[clamp(1.9rem,4vw,3rem)] leading-[1.02] tracking-[-0.035em]">Verify before you buy.</h2>
             <ul className="mt-7 space-y-3 text-[14px] leading-7 text-[#1e6f58]">
+              <li><Link className="hover:underline" href="/janoshik-coa-verification/?ref=how-to-verify-coa">How to verify a Janoshik report at the source →</Link></li>
+              <li><Link className="hover:underline" href="/current-lot-coa-checklist-research-peptides/?ref=how-to-verify-coa">Match the COA to the current lot →</Link></li>
               <li><Link className="hover:underline" href="/coa-verified-peptide-supplier/?ref=how-to-verify-coa">What a COA-verified peptide supplier looks like →</Link></li>
               <li><Link className="hover:underline" href="/peptide-supplier-checklist/?ref=how-to-verify-coa">The full peptide-supplier checklist →</Link></li>
               <li><Link className="hover:underline" href="/lab-testing/?ref=how-to-verify-coa">Titan&apos;s lab-testing standard →</Link></li>
