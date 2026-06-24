@@ -194,12 +194,12 @@ export default function PT141GuidePage() {
               The practical benefits mirror those of other peptide nasal sprays:
               no reconstitution, no injection equipment, rapid onset, and
               simpler protocol compliance for researchers running extended
-              studies. For a deeper comparison of delivery methods, see our{" "}
+              studies. For a deeper comparison of PT-141 delivery formats, see our{" "}
               <Link
-                href="/blog/peptide-nasal-sprays-vs-injections"
+                href="/pt-141-nasal-spray-vs-injection/?ref=pt141-guide"
                 className="text-[oklch(0.68_0.17_78)] underline decoration-stone-300 underline-offset-4 hover:decoration-[oklch(0.68_0.17_78)]"
               >
-                nasal sprays vs. injections analysis
+                PT-141 nasal spray vs. injection route comparison
               </Link>
               .
             </p>

@@ -178,6 +178,7 @@ export default function WhereToBuyPt141SprayPage() {
             <h2 className="mt-4 font-serif text-[clamp(1.9rem,4vw,3rem)] leading-[1.02] tracking-[-0.035em]">Before you check out.</h2>
             <ul className="mt-7 space-y-3 text-[14px] leading-7 text-[#1e6f58]">
               <li><Link className="hover:underline" href="/blog/pt-141-nasal-spray-research-guide/?ref=buy-pt141-spray">PT-141 nasal spray research guide →</Link></li>
+              <li><Link className="hover:underline" href="/pt-141-nasal-spray-vs-injection/?ref=buy-pt141-spray">PT-141 nasal spray vs injection route comparison →</Link></li>
               <li><Link className="hover:underline" href="/peptide-nasal-spray-supplier/?ref=buy-pt141-spray">Peptide nasal spray supplier overview →</Link></li>
               <li><Link className="hover:underline" href="/where-to-buy-bpc-157-nasal-spray/?ref=buy-pt141-spray">Where to buy BPC-157 nasal spray →</Link></li>
               <li><Link className="hover:underline" href="/peptide-supplier-checklist/?ref=buy-pt141-spray">Research peptide supplier checklist →</Link></li>

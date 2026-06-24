@@ -47,6 +47,7 @@ const GROUPS: { heading: string; items: Comparison[] }[] = [
     items: [
       { slug: "semax-vs-selank", label: "Semax vs Selank" },
       { slug: "selank-vs-oxytocin-nasal-spray", label: "Selank vs Oxytocin Spray" },
+      { slug: "pt-141-nasal-spray-vs-injection", label: "PT-141 Spray vs Injection" },
       { slug: "pt-141-vs-oxytocin-nasal-spray", label: "PT-141 vs Oxytocin Spray" },
       { slug: "dsip-vs-oxytocin-nasal-spray", label: "DSIP vs Oxytocin Spray" },
       { slug: "dsip-vs-selank-nasal-spray", label: "DSIP vs Selank Spray" },

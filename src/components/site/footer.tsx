@@ -37,6 +37,7 @@ const COMPARE_LINKS = [
   ["Retatrutide for sale", "/retatrutide-for-sale"],
   ["Where to buy BPC-157 spray", "/where-to-buy-bpc-157-nasal-spray"],
   ["Where to buy PT-141 spray", "/where-to-buy-pt-141-nasal-spray"],
+  ["PT-141 spray vs injection", "/pt-141-nasal-spray-vs-injection"],
   ["BPC-157 spray vs vial", "/bpc-157-nasal-spray-vs-vial"],
   ["TB-500 vs BPC-157", "/tb-500-vs-bpc-157"],
   ["GLP-1 research peptides", "/glp-1-research-peptides"],

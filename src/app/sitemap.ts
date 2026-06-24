@@ -42,6 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/retatrutide-vs-tirzepatide/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/retatrutide-vs-semaglutide/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/where-to-buy-pt-141-nasal-spray/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE}/pt-141-nasal-spray-vs-injection/`, lastModified: now, changeFrequency: "weekly", priority: 0.89 },
     { url: `${BASE}/where-to-buy-retatrutide/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/retatrutide-for-sale/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/bpc-157-for-sale/`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
